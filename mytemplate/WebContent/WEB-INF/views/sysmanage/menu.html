@@ -1,0 +1,189 @@
+<div class="widget-box widget-color-green2">
+	<div class="widget-header clearfix">
+		<h5 class="widget-title">菜单配置</h5>
+		<div class="widget-toolbar">
+			<a href="#" data-action="fullscreen" class="orange2"> <i
+				class="ace-icon fa fa-expand"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
+			<form method="post" class="form-search" id="findMenu-form"
+				action="menu/list">
+				<div class="input-group" style="line-height: 0px;">
+					<span class="input-group-btn">
+						<button type="button" class=" btn  btn-success btn-sm"
+							id="findMenu-btn-all">
+							 显示全部 
+						</button> 
+					</span>
+					<input type="text" class="form-control search-query"
+						name="resourceName" placeholder="菜单名称">
+						<span class="input-group-btn">
+						<button type="button" class="btn  btn-success btn-sm"
+							id="findMenu-btn">
+							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+						</button>
+					</span>
+				</div>
+				<input type="hidden" name="pageNum" value="1" /> 
+				<input type="hidden" name="pageSize" value="10" />
+				<input type="hidden" name="resourceId" />
+			</form>
+		</div>
+	</div>
+
+	<div class="widget-body">
+		<div class="widget-main padding-8">
+			<div class="row">
+				<div class="col-sm-3">
+					<div>
+						<ul id="treeMenu" class="ztree"></ul>
+					</div>
+				</div>
+				<div class="col-sm-9" id="menu-page">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var setting = {
+		view:{
+			selectedMulti : false,
+			addHoverDom: addHoverDom,
+			removeHoverDom: removeHoverDom
+		},
+		edit: {
+			enable: true,
+			editNameSelectAll: true,
+			showRemoveBtn: function(treeId,treeNode){
+				return treeNode.level == 0 ? false:true;
+			},
+			showRenameBtn: function(treeId,treeNode){
+				return treeNode.level == 0 ? false:true;
+			},
+			removeTitle : "删除",
+			renameTitle : "编辑"
+		},
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid"
+			}
+		},
+		callback: {
+			onClick: onClickNode,
+			beforeRemove:beforeRemove,
+			beforeEditName: beforeEditName,
+			beforeDrag: function(){return false;}
+		}
+	};
+	
+	//编辑菜单
+	function beforeEditName(treeId, treeNode) {
+		cuslayer({
+			title:"编辑菜单",
+			backfill:{
+				url:"menu/toeditlayer",
+				data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
+			},
+			mode:"edit",
+			fromId:"#menu-edit",
+			width:500,
+			maxHeight:600
+		});
+		return false;
+	}
+	
+	//删除菜单
+	function beforeRemove(treeId, treeNode){
+		var resourceId = treeNode.id;
+		cuslayer({
+			mode:"delete",
+			delText:"你确定删除此节点及其所有的子节点吗?(慎重操作)",
+			delParam:{url:"menu/dels",data:{"resourceId":resourceId}}
+		});
+		return false;
+	}
+	
+	//划过显示添加按钮,添加菜单
+	function addHoverDom(treeId, treeNode) {
+		var sObj = $("#" + treeNode.tId + "_span");
+		if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+		var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+			+ "' title='添加' onfocus='this.blur();'></span>";
+		sObj.after(addStr);
+		var btn = $("#addBtn_"+treeNode.tId);
+		if (btn) btn.bind("click", function(){
+			cuslayer({
+				title:"添加菜单",
+				backfill:{
+					url:"menu/toaddlayer",
+					data:{"pResourceId":treeNode.id}
+				},
+				mode:"add",
+				fromId:"#menu-add",
+				width:500,
+				maxHeight:600
+			});	
+			return false;
+		});
+	};
+	
+	//移除添加按钮
+	function removeHoverDom(treeId, treeNode) {
+		$("#addBtn_"+treeNode.tId).unbind().remove();
+	};
+	
+	//节点点击事件
+	function onClickNode(event, treeId, treeNode) {
+		$("#findMenu-form").find("input[name=resourceName]").val("");
+		var resourceId = treeNode.id;
+		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+		var sNodes = treeObj.getSelectedNodes();
+		var node;
+		if (sNodes.length > 0) {
+			node = sNodes[0].getParentNode();
+		}
+		$("#findMenu-form").find("input[name=resourceId]").val(resourceId);
+		$("#findMenu-form").formReload(); //刷新表单
+	};
+	
+	//树结构初始化
+	$.fn.zTree.init($("#treeMenu"), setting, ${menuTreeList});
+	var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+	
+	//分页
+	$("#findMenu-btn-all").click(function(){
+		$("#findMenu-form").find("input[name=resourceId]").val("");
+		$("#findMenu-form").find("input[name=resourceName]").val("");
+		$("#findMenu-form").ajaxForms({
+			target:"#menu-page",
+			btn:"#findMenu-btn",
+			btnClickFn:function(){
+				$("#findMenu-form").find("input[name=resourceId]").val("");
+				var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+				treeObj.cancelSelectedNode();
+			}
+		});
+		var node = treeObj.getNodeByParam("id", 0);
+		treeObj.selectNode(node,false);
+	}).trigger("click");
+	
+	//既时搜索
+	/* $(("input[name=resourceName]")).bind("input propertychange",function(){
+		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+		treeObj.cancelSelectedNode();
+		$this = $(this);
+		$("#findMenu-form").find("input[name=resourceId]").val("");
+		$("#findMenu-form").formReload();
+		if($(this).val()==""){
+			var node = treeObj.getNodeByParam("id", 0);
+			treeObj.selectNode(node,false);
+		}
+	}); */
+	
+</script>

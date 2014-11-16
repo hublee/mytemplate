@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd 
+	    http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+    
+     <!-- 创建GroupTemplate -->
+	<bean name="groupTemplate" class="org.fox.beetl.ext.spring.core.GroupTemplateFactoryBean">
+		<!-- ClassPath访问 -->
+		<property name="configFileResource" value="classpath:beetl/beetl.properties"/>
+		
+		<!-- 下面的几个参数目的都是将Beetl各种主键委派给Spring的Bean来处理以获取Spring的功能 -->
+		<!-- 允许注入ResourceLoader实现，如果未指定将使用beetl配置文件中指定的ResourceLoader -->
+		<!-- 通过这个方式可以结合Spring的功能实现更强大的ResourceLoader，比如把模版放入数据库中并被事务保护，或使用Spring Cache模块管理等 -->
+		<property name="resourceLoader">
+			<bean class="org.fox.beetl.ext.spring.resource.SpringServletContextResourceLoader"/>
+		</property>
+		
+		<!-- 共享变量 -->
+		<property name="sharedVars">
+			<map>
+				<entry key="adminPath">
+					<value>${adminPath}</value>
+				</entry>
+			</map>
+		</property>
+
+		<!-- 异常处理器		
+		<property name="errorHandler">
+			<bean class="org.beetl.core.ConsoleErrorHandler"/>
+		</property>
+		-->
+		
+		<!-- 自定义Function，允许把function实现对象由Spring管理，以获取Spring的特性 -->
+		<!-- <property name="functions">
+			<map>
+				<entry key="spel"><bean class="org.fox.beetl.ext.spring.function.SpELFunction"/></entry>
+			</map>
+		</property> -->
+
+		<!-- 自定义格式化器和类型默认格式化器
+		<property name="formats">
+			<map>
+				<entry key="name"><bean class="org.beetl.ext.format.DateFormat"/></entry>
+			</map>
+		</property>
+		<property name="typeFormats">
+			<map>
+				<entry key="java.util.Date"><bean class="org.beetl.ext.format.DateFormat"/></entry>
+			</map>
+		</property>
+		 -->
+		 <!-- 自定义标签，额外提供了一个SpringBeanTagFactory将Spring的Bean作为Tag对象交给Beetl处理 -->
+		 <!--
+		<property name="tagFactorys">
+			<map>
+				<entry key="spel">
+					<bean class="org.fox.beetl.ext.spring.tag.SpringBeanTagFactory">
+						<property name="name" value="spelTag"/>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		-->
+		
+		<!-- 自定义函数包 -->
+		<!-- <property name="functionPackages">
+			<map>
+				<entry key="shiro">
+					<bean class="com.tg.webapp.web.shiro.ShiroExt" />
+				</entry>
+			</map>
+		</property>  -->
+		<!-- 自定义虚拟属性执行器
+		<property name="virtualAttributeEvals"></property> -->
+		<!-- 自定义虚拟属性
+		<property name="virtualClassAttributes"></property> -->
+	</bean>
+		
+	<!-- 页面解析器 -->
+	<bean name="beetlViewResolver" class="org.fox.beetl.ext.spring.mvc.BeetlViewResolver">
+		<!-- <property name="prefix" value="/WEB-INF/views/"/> -->
+		<property name="suffix" value=".html"/>
+		<property name="groupTemplate" ref="groupTemplate"/>
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
+	
+	<!-- <bean name="beetlViewResolver" class="org.fox.beetl.ext.spring.BeetlViewResolver">
+		多视图解析器，需要设置viewNames和order
+		<property name="viewNames">
+			<list>
+				<value>template/**</value>
+			</list>
+		</property>
+		<property name="order" value="0"/>
+		多GroupTemplate，需要指定使用的bean
+		<property name="groupTemplate" ref="groupTemplate"/>
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".html"/>
+	</bean> 
+	
+	<bean name="JSPViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		注意JSP的这个视图解析器order必须在最后
+		<property name="order" value="256"/>
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean> -->
+    
+</beans>

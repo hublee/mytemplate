@@ -1,0 +1,36 @@
+.radio label{max-width: none;}
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float: none;text-align: center;}
+.ui-dialog .ui-dialog-buttonpane{padding: 0px;margin: 0px;}
+.ui-dialog .ui-dialog-buttonpane button{margin: 5px 15px;}
+.layer{padding: 10px 20px;}
+.layer .FormData {
+border-bottom: 1px dotted #E8E8E8;
+}
+.layer .FormData > td {
+padding-top: 6px;
+padding-bottom: 6px;
+}
+.layer .CaptionTD {
+font-size: 14px;
+text-align: right;
+color: #666;
+}
+.layer .CaptionTD {
+vertical-align: middle;
+border: 0 none;
+padding: 2px;
+white-space: nowrap;
+}
+.layer .FormData > td {
+padding-top: 6px;
+padding-bottom: 6px;
+}
+.layer .DataTD {
+padding: 2px;
+border: 0 none;
+vertical-align: top;
+}
+.layer .DataTD input{width:90%;}

@@ -1,0 +1,26 @@
+@for(menu in para0){
+	<li data-level="${menu.level!}">
+	
+		<a 
+			@if(menu.hasChild){
+				href="javascript:void(0);" class="dropdown-toggle"
+			@}else{
+				href="${menu.url!'javascript:void(0);'}" id="menu_${menu.url!}" 
+				data-trigger="ajax" data-target="#fill-main-content"
+			@}
+		>
+			<i class="menu-icon fa ${menu.icon!'fa-caret-right'}"></i>
+			<span class="menu-text"> ${menu.name!} </span>
+			@if(menu.hasChild){
+			<b class="arrow fa fa-angle-down"></b>
+			@}
+		</a>
+		<b class="arrow"></b>
+		
+		@if(menu.hasChild){
+		<ul class="submenu">
+			@menuTree(menu.items);
+		</ul>
+		@}
+	</li>
+@}elsefor{}

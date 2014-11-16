@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.dao.SysResourceMapper">
+
+	<sql id="sysResourceColumns">
+		id,code,description,icon,name,pid,sort,state,type,url
+	</sql>
+	
+	<sql id="AliasColumns">
+		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.pid,sr.sort,sr.state,sr.type,sr.url
+	</sql>
+
+	<sql id="where">
+		<where>
+			<if test=" id!=null and id!='' ">id=#{id}</if>
+			<if test=" code!=null and code!='' ">and code=#{code}</if>
+			<if test=" description!=null and description!='' ">and description=#{description}</if>
+			<if test=" icon!=null and icon!='' ">and icon=#{icon}</if>
+			<if test=" name!=null and name!='' ">and name=#{name}</if>
+			<if test=" pid!=null and pid!='' ">and pid=#{pid}</if>
+			<if test=" sort!=null and sort!='' ">and sort=#{sort}</if>
+			<if test=" state!=null and state!='' ">and state=#{state}</if>
+			<if test=" type!=null and type!='' ">and type=#{type}</if>
+			<if test=" url!=null and url!='' ">and url=#{url}</if>
+		</where>
+	</sql>
+
+	<!-- 新增sysResource -->
+	<insert id="insertSysResource" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_resource(
+		<include refid="sysResourceColumns" />
+		) values (
+		#{id,jdbcType=NUMERIC},
+		#{code,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{pid,jdbcType=NUMERIC},
+		#{sort,jdbcType=INTEGER},
+		#{state,jdbcType=INTEGER},
+		#{type,jdbcType=INTEGER},
+		#{url,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改sysResource -->
+	<update id="updateSysResource">
+		update sys_resource
+		<set>
+			<if test="code!=null">code=#{code},</if>
+			<if test="description!=null">description=#{description},</if>
+			<if test="icon!=null">icon=#{icon},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="pid!=null">pid=#{pid},</if>
+			<if test="sort!=null">sort=#{sort},</if>
+			<if test="state!=null">state=#{state},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="url!=null">url=#{url}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 根据id查询单个sysResource -->
+	<delete id="deleteSysResource" parameterType="java.lang.Long">
+		delete from
+		sys_resource where id=#{id}
+	</delete>
+
+	<!-- 根据id集合删除多个sysResource -->
+	<delete id="deleteSysResources" parameterType="java.util.List">
+		DELETE FROM sys_resource WHERE id IN
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id,jdbcType=NUMERIC}
+		</foreach>
+	</delete>
+
+	<!-- 根据id查询单个sysOrganization -->
+	<select id="findSysResourceById" resultType="com.template.web.model.SysResource">
+		select
+		<include refid="sysResourceColumns" />
+		from sys_resource
+		where id=#{id}
+	</select>
+
+	<!-- 根据条件查询查询sysOrganization列表 -->
+	<select id="findSysResourceListByParams" resultType="com.template.web.model.SysResource">
+		select
+		<include refid="sysResourceColumns" />
+		from sys_resource
+		<include refid="where" />
+	</select>
+	
+	<!-- 菜单管理分页显示筛选查询 -->
+	<select id="findMenuPageById" resultType="com.template.web.model.SysResource">
+		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,
+		sr.state,sr.type,sr.url,srp.name pname,srp.id pid
+		from sys_resource sr 
+			LEFT JOIN sys_resource srp
+		ON sr.pid=srp.id
+		<where>
+			<if test="resourceName != ''">
+				sr.name LIKE '%' || #{resourceName} || '%'
+			</if>
+		</where>
+		<!-- <if test="resourceId != 0 and @Ognl@isBlank(resourceName) and @Ognl@isNotBlank(resourceId)">
+			start with sr.RESOURCE_ID = #{resourceId}
+			connect by prior  sr.RESOURCE_ID = sr.RESOURCE_PID
+		</if> -->
+	</select>
+
+</mapper>

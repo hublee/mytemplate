@@ -1,0 +1,27 @@
+<!-- 头部 -->
+@layout("/layout/header.html"){
+	<link rel="stylesheet" href="${ctxPath!}/static/switch/bootstrap-switch.min.css" />
+	<link rel="stylesheet" href="${ctxPath!}/static/ztree/metro.css" />
+	<link rel="stylesheet" href="${ctxPath!}/static/css/custom.css" />
+@}
+
+<!-- 顶部条 -->
+@layout("/layout/navbar.html"){}
+
+<!-- 主体 -->
+@layout("/layout/main.html",{menuList:menuList!}){
+	<div id="fill-main-content"></div>
+@}
+
+<!-- 底部 -->
+@layout("/layout/footer.html"){
+	<script type="text/javascript" src="${ctxPath!}/static/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/sco.ajax.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/spin.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/page-util.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/ztree/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/switch/bootstrap-switch.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/jquery.autosize.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/main.js"></script>
+@}		

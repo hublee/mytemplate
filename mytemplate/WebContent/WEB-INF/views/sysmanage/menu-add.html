@@ -1,0 +1,165 @@
+<div class="layer ">
+	<form  id="menu-add" class="FormGrid"
+		onsubmit="return false;" style="overflow: auto; position: relative;" 
+		action="menu/add">
+		
+		<table id="TblGrid_grid-table" class="EditTable" cellspacing="0"
+			cellpadding="0" border="0" width="100%">
+			<tbody>
+				<tr id="FormError" style="display: none">
+					<td class="ui-state-error"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单名称</td>
+					<td class="DataTD">&nbsp;<input type="text"
+						name="name" 
+						class="FormElement ui-widget-content ui-corner-all"
+						value=""></td>
+				</tr>
+				<tr  class="FormData">
+					<td class="CaptionTD">菜单url</td>
+					<td class="DataTD">&nbsp;<input type="text" size="20"
+						 id="name" name="url" role="textbox"
+						class="FormElement ui-widget-content ui-corner-all"
+						value="" placeholder="没有子节点或者子节点全部是非菜单资源可填写"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">父级菜单</td>
+					<td colspan="1" class="DataTD">
+					&nbsp;<input class="FormElement" 
+							 type="text" id="menu-edit-pname" value="${pResource.name!}" readonly 
+							 onclick="showMenu();">
+							 <input id="menu-pid" type="hidden" name="pid" 
+							 value="${pResource.id!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单类型</td>
+					<td colspan="1" class="DataTD">
+					<div class="radio inline">
+							<label>
+								<input name="type" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 菜单资源 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="resourceType" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 按钮资源</span>
+							</label>
+						</div>
+					</td>
+				</tr>
+				<tr  class="FormData">
+					<td class="CaptionTD">菜单图标</td>
+					<td class="DataTD">
+					&nbsp;<span class="input-icon input-icon-right" style="width:45%;">
+							<input type="text" name="icon" style="padding-right: 0px;width:100%;" 
+							value="" id="resourceInput">
+							<i class="ace-icon fa green" id="resourceIcon" style="top:3px;"></i>
+						</span>
+						<a href="http://fontawesome.io/icons/" 
+						class="inline" target="_blank">http://fontawesome.io/icons/</a>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单序号</td>
+					<td class="DataTD">
+						&nbsp;<input class="FormElement"
+						id="id_g" type="text" name="sort" value=""
+						onkeyup="this.value=this.value.replace(/\D/g,'')" 
+						onafterpaste="this.value=this.value.replace(/\D/g,'')"
+						>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">使用状态</td>
+					<td class="DataTD">
+						<div class="switch" style="margin-left: 2px;">
+						    <input type="checkbox"  class="dxswitch"  
+						    data-on-text="正常" data-off-text="禁用"
+						    data-on-color="info" data-off-color="danger" 
+						    checked/>
+						    <input type="hidden" 
+						    value="0" name="state" id="resourceState"/>
+						</div>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control " style="resize: none;">${info.RESOURCE_DESCRIPTION!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<div id="menuContent" class="menuContent"style="display:none; position: absolute; 
+		background-color: whiteSmoke;z-index: 9998;max-height: 250px; overflow-y:auto;overflow-x:hidden">
+		<ul id="treeMenuChoose" class="ztree"></ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+//
+$("#treeMenuChoose").width($("#menu-edit-pname").width());
+//图标切换改变
+$("#resourceInput").on("input propertychange",function(){
+	var icon = $(this).val();
+	$("#resourceIcon").attr("class","ace-icon fa "+icon+" green bigger-120");
+}).trigger("change");
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+//单选按钮
+$('.dxswitch').bootstrapSwitch();
+$('.dxswitch').on('switchChange.bootstrapSwitch', function (event, state) {
+	if(state){
+		$("#state").val("0");
+	}else{
+		$("#state").val("1");
+	}
+});
+
+var setting = {
+	view: {
+		dblClickExpand: false
+	},
+	data: {
+		simpleData : {
+			enable : true,
+			idKey : "id",
+			pIdKey : "pid"
+		}
+	},
+	callback: {
+		onClick: onClick
+	}
+};
+
+function onClick(e, treeId, treeNode) {
+	var menuPid = $("#menu-pid");
+	var menuPname = $("#menu-edit-pname");
+	var pid = treeNode.id == 0 ? "":treeNode.id;
+	menuPid.attr("value", pid);
+	menuPname.val(treeNode.name);
+}
+
+function showMenu() {
+	var menuPid = $("#menu-edit-pname");
+	var cityOffset = $("#menu-edit-pname").position();
+	$("#menuContent").css({left:cityOffset.left +20 + "px", top:cityOffset.top + menuPid.outerHeight()+13 + "px"}).slideDown("fast");
+
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!$(event.target).is("span.switch")) {
+		hideMenu();
+	}
+}
+
+$.fn.zTree.init($("#treeMenuChoose"), setting, ${menuTreeList});
+</script>
