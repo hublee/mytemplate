@@ -31,7 +31,9 @@ function paging(formId,pageNo){
 					if(self.opt.spinner === undefined){
 						self.opt.spinner = new Spinner({color: '#3d9bce',width:20,radius:20}).spin($(self.opt.target)[0]);
 					}
+					console.log(options)
 					var queryString = $.param(formData);
+					console.log(queryString)
 					return true;
 				};
 			}

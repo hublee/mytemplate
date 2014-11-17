@@ -30,7 +30,7 @@
 							 type="text" id="menu-edit-pname" value="${pResource.name!}" readonly 
 							 onclick="showMenu();">
 							 <input id="menu-pid" type="hidden" name="pid" 
-							 value="${pResource.id!}">
+							 value="${pResource.id!0}">
 					</td>
 				</tr>
 				<tr class="FormData">
@@ -66,7 +66,7 @@
 					<td class="CaptionTD">菜单序号</td>
 					<td class="DataTD">
 						&nbsp;<input class="FormElement"
-						id="id_g" type="text" name="sort" value=""
+						id="id_g" type="text" name="sort" value="1"
 						onkeyup="this.value=this.value.replace(/\D/g,'')" 
 						onafterpaste="this.value=this.value.replace(/\D/g,'')"
 						>
@@ -139,8 +139,7 @@ var setting = {
 function onClick(e, treeId, treeNode) {
 	var menuPid = $("#menu-pid");
 	var menuPname = $("#menu-edit-pname");
-	var pid = treeNode.id == 0 ? "":treeNode.id;
-	menuPid.attr("value", pid);
+	menuPid.attr("value", treeNode.id);
 	menuPname.val(treeNode.name);
 }
 

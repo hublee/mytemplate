@@ -141,7 +141,7 @@ public class TreeNode {
 
 		final TreeNode root = new TreeNode();
 		root.level = 0;
-		nodes.put(null, root);
+		nodes.put(0L, root);
 
 		for(TreeNode node : list){
 		    final TreeNode parent = nodes.get(node.pid);

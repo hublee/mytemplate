@@ -129,7 +129,7 @@ $(document).ready(function(){
 				modal:true, //遮盖
 				resizable: false,  //改变尺寸
 				draggable:true,   //拖动
-				dialogClass: "no-close", //隐藏右上角关闭
+				//dialogClass: "no-close", //隐藏右上角关闭
 				width:'auto',
 				//closeOnEscape:false,
 				close : function() {

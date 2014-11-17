@@ -1,7 +1,6 @@
 package com.template.web.controller;
 
 import com.template.core.base.BaseController;
-import com.template.core.base.Entity;
 import com.template.core.paging.PageInfo;
 import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +68,6 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody Integer add(@RequestParam Map<String, Object> params) {
-		if(StringUtils.isBlank(params.get("pid").toString())) params.remove("pid");
 		return sysResourceService.insertSysResource(params);
 	}
 
@@ -83,7 +80,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody Integer update(@RequestParam Map<String, Object> params) {
 		Integer count = 0;
-		if (params.containsKey("resourceId")) {
+		if (params.containsKey("id")) {
 			count = sysResourceService.updateSysResource(params);
 		}
 		return count;

@@ -41,7 +41,7 @@
 							 type="text" id="menu-edit-pname" value="${pResource.name!}" readonly 
 							 onclick="showMenu();">
 							 <input id="menu-pid" type="hidden" name="pid" 
-							 value="${sysResource.pid!}">
+							 value="${sysResource.pid!0}">
 					</td>
 				</tr>
 				<tr class="FormData">
@@ -105,7 +105,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">菜单描述</td>
 					<td class="DataTD">
-						<textarea name="resourceDescription" class="autosize-transition form-control " 
+						<textarea name="description" class="autosize-transition form-control " 
 						style="resize: none;">${sysResource.description!}</textarea>	
 					</td>
 				</tr>
@@ -157,8 +157,7 @@ function onClick(e, treeId, treeNode) {
 	if("${sysResource.id!}" == treeNode.id) return false;
 	var menuPid = $("#menu-pid");
 	var menuPname = $("#menu-edit-pname");
-	var pid = treeNode.id == 0 ? "":treeNode.id;
-	menuPid.attr("value", pid);
+	menuPid.attr("value", treeNode.id);
 	menuPname.val(treeNode.name);
 }
 
