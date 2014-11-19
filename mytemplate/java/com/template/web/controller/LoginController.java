@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.beetl.core.GroupTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,8 @@ public class LoginController {
 	private SysResourceService sysResourceService;
 	@Resource
 	private SysUserService sysUserService;
+	@Resource
+	private GroupTemplate template;
 
 	@RequestMapping("${adminPath}/login")
 	public String toLogin() {
@@ -38,7 +41,6 @@ public class LoginController {
 	* @param username
 	* @param password
 	* @param code
-	* @param request
 	* @return
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
@@ -63,6 +65,16 @@ public class LoginController {
 			msg.put("msg", "用户名或密码错误");
 		}
 		return msg;
+	}
+	
+	/**
+	 * 用户退出
+	* @return 跳转到登录页面
+	 */
+	@RequestMapping("${adminPath}/logout")
+	public String logout(HttpServletRequest request){
+		request.getSession().removeAttribute(Global.getSessionUserKey());
+		return "redirect:/"+Global.getAdminPath()+"/login";
 	}
 
 	/**

@@ -43,6 +43,8 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
+	<bean class="com.template.core.spring.SpringContextHolder" lazy-init="false" />
+	
 	<!-- <mvc:view-controller path="/" view-name="redirect:${adminPath}"/> -->
 	
 	<!-- 过滤静态资源 -->

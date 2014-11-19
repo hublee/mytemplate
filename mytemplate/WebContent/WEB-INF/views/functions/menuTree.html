@@ -3,7 +3,7 @@
 	
 		<a 
 			@if(menu.hasChild){
-				href="javascript:void(0);" class="dropdown-toggle"
+				href="javascript:void(0);" class="dropdown-toggle" id="menu_${menu.url!}"
 			@}else{
 				href="${menu.url!'javascript:void(0);'}" id="menu_${menu.url!}" 
 				data-trigger="ajax" data-target="#fill-main-content"

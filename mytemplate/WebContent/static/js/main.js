@@ -1,12 +1,5 @@
 $(document).ready(function(){
 	
-	//得到url的参数
-	function getQueryString(name) {
-	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-	    var r = window.location.search.substr(1).match(reg);
-	    if (r != null) return unescape(r[2]); return null;
-	}
-	
 	//数组操作
 	Array.prototype.indexOf = function(val) {              
 	    for (var i = 0; i < this.length; i++) {  
@@ -75,7 +68,8 @@ $(document).ready(function(){
 			delParam = $this.attr("cus-delParam"),
 			delParamUrl = $this.attr("cus-delParam-url"),
 			delParamData = eval('('+$this.attr("cus-delParam-data")+')'),
-			delText = $this.attr("cus-text");
+			delText = $this.attr("cus-text"),
+			modeSuccess = $this.attr("cus-mode-success");
 		
 		switch (mode) {
 		case "add":
@@ -87,6 +81,7 @@ $(document).ready(function(){
 					data:backfillData || {}
 				},
 				mode:mode,
+				modeSuccess:modeSuccess,
 				fromId:formId,
 				width:width || 'auto',
 				maxHeight:maxHeight || false
@@ -96,6 +91,7 @@ $(document).ready(function(){
 			cuslayer({
 				mode:mode,
 				delText:delText,
+				modeSuccess:modeSuccess,
 				delParam:{url:delParamUrl,data:delParamData || {}}
 			});
 			break;
@@ -110,7 +106,8 @@ $(document).ready(function(){
 			ok:确定按钮事件,
 			okText:确定按钮文本,默认"确定"
 			okClass:确定按钮class,
-			cancelText:取消按钮事件,默认"关闭窗口"
+			cancel:取消按钮事件
+			cancelText:取消按钮文本,默认"关闭窗口"
 			cancelClass:取消按钮class,
 			isBackfill:是否为ajax回填html模式,默认 true,
 			backfill:{url:'请求url',data:{附带参数}},此参数isBackfill:true有效,
@@ -240,7 +237,8 @@ function cuslayer(params){
 	var mode = params.mode, //模式
 		fromId = params.formId,  //请求表单的id
 		beforeFn = params.beforeFn, //请求之前回调
-		delText = params.delText || "确定要删除此数据吗?";
+		delText = params.delText || "确定要删除此数据吗?",
+		modeSuccess = params.modeSuccess;
 	if(mode != null && mode != undefined){
 		var prompt = (params.mode=="add")?"添加成功":"编辑成功";
 		switch (mode) {
@@ -259,8 +257,11 @@ function cuslayer(params){
 							data:params.delParam['data'] || {},
 					 		success:function(data){
 								if(parseInt(data) >= 1){
-									alert("留位置做回调,展示刷新页面，看看效果");
-									window.location.href = "index";
+									if(undefined != modeSuccess && null != modeSuccess){
+										modeSuccess.call($(this), this);
+									}else{
+										$curmenu.trigger('click');
+									}
 								}else{
 									alert("操作失败");
 								}
@@ -286,7 +287,14 @@ function cuslayer(params){
 		    						width:200,
 		    						content:"<div style='text-align: center;line-height: 69px;'>"+
 		    						"<span class='center label label-xlg label-success " +
-		    						"arrowed arrowed-right'>"+prompt+"</span></div>"
+		    						"arrowed arrowed-right'>"+prompt+"</span></div>",
+		    						ok:function(){
+		    							if(undefined != modeSuccess && null != modeSuccess){
+		    								modeSuccess.call($(this), this);
+										}else{
+											$curmenu.trigger('click');
+										}
+		    						}
 		    					});
 		    					return;
 		    				}
@@ -302,3 +310,9 @@ function cuslayer(params){
 	$.gdialog(params);
 }
 
+//得到url的参数
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
