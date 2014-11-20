@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.beetl.core.GroupTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +27,6 @@ public class LoginController {
 	private SysResourceService sysResourceService;
 	@Resource
 	private SysUserService sysUserService;
-	@Resource
-	private GroupTemplate template;
 
 	@RequestMapping("${adminPath}/login")
 	public String toLogin() {
