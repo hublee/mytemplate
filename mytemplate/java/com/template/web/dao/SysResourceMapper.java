@@ -43,5 +43,7 @@ public interface SysResourceMapper {
 	 * 菜单管理分页显示筛选查询
 	 */
 	public List<SysResource> findMenuPageById(Map<String, Object> params);
+	
+	public int deleteResourceByRootId(Long id);
 
 }

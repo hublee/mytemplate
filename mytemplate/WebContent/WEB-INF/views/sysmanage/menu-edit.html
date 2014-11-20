@@ -91,14 +91,14 @@
 						    <input type="checkbox"  class="dxswitch"  
 						    data-on-text="可用" data-off-text="禁用"
 						    data-on-color="info" data-off-color="danger"
-						    @if(!isEmpty(sysResource.state)){
-						    	@if(sysResource.state == 0){
+						    @if(!isEmpty(sysResource.status)){
+						    	@if(sysResource.status == 0){
 						    		checked
 						    	@}
 						    @}
 						    />
 						    <input type="hidden" 
-						    value="${sysResource.state!}" name="state" id="resourceState"/>
+						    value="${sysResource.status!0}" name="status" id="status"/>
 						</div>
 					</td>
 				</tr>
@@ -131,9 +131,9 @@ $('textarea[class*=autosize]').autosize({append: "\n"});
 $('.dxswitch').bootstrapSwitch();
 $('.dxswitch').on('switchChange.bootstrapSwitch', function (event, state) {
 	if(state){
-		$("#resourceState").val("是");
+		$("#status").val("0");
 	}else{
-		$("#resourceState").val("否");
+		$("#status").val("1");
 	}
 });
 

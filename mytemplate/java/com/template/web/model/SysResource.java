@@ -28,7 +28,7 @@ public class SysResource extends Entity {
 
     private Integer sort; //sort <排序号>
 
-    private Integer state; //state <状态>
+    private Integer status; //status <状态>
 
     private Integer type; //type <类型(0.菜单 1.按钮)>
 
@@ -92,12 +92,12 @@ public class SysResource extends Entity {
 		this.set("sort", sort);
     }
 
-	public Integer getState() {
+	public Integer getStatus() {
 		return this.getInteger("state");
     }
    
-    public void setState(Integer state) {
-		this.set("state", state);
+    public void setStatus(Integer status) {
+		this.set("status", status);
     }
 
 	public Integer getType() {

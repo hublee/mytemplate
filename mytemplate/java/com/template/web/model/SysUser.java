@@ -40,7 +40,7 @@ public class SysUser extends Entity {
 
     private String salt; //salt <加密盐>
 
-    private Integer state; //state <账号状态(0.正常 1.禁用)>
+    private Integer status; //status <账号状态(0.正常 1.禁用)>
 
     private String username; //username <账号>
 
@@ -142,12 +142,12 @@ public class SysUser extends Entity {
 		this.set("salt", salt);
     }
 
-	public Integer getState() {
-		return this.getInteger("state");
+	public Integer getStatus() {
+		return this.getInteger("status");
     }
    
-    public void setState(Integer state) {
-		this.set("state", state);
+    public void setStatus(Integer status) {
+		this.set("status", status);
     }
 
 	public String getUsername() {

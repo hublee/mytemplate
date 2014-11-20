@@ -91,14 +91,14 @@ public class MenuController extends BaseController {
 	* @param resourceId 菜单id
 	* @return
 	 */
-	/*@RequestMapping(value="/dels",method=RequestMethod.POST)
+	@RequestMapping(value="/dels",method=RequestMethod.POST)
 	public @ResponseBody Integer dels(Long resourceId){
 		Integer count = 0;
 		if(null != resourceId){
-			count = sysResourceService.delSysResources(resourceId);
+			count = sysResourceService.deleteResourceByRootId(resourceId);
 		}
 		return count;
-	}*/
+	}
 
 
 	/**

@@ -82,6 +82,10 @@ public class SysResourceService {
 	public List<SysResource> findSysResourceListByParams(Map<String,Object> params) {
 	    return sysResourceMapper.findSysResourceListByParams(params);
 	}
+	
+	public int deleteResourceByRootId(Long id){
+		return sysResourceMapper.deleteResourceByRootId(id);
+	}
 /*------------------------------------菜单操作----------------------------------------*/
 	
 	/**

@@ -95,7 +95,7 @@
 			width:500,
 			maxHeight:600,
 			modeSuccess:function(){
-				window.location.href = window.location.href;
+				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 			}
 		});
 		return false;
@@ -109,7 +109,7 @@
 			delText:"你确定删除此节点及其所有的子节点吗?(慎重操作)",
 			delParam:{url:"menu/dels",data:{"resourceId":resourceId}},
 			modeSuccess:function(){
-				window.location.href = window.location.href;
+				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 			}
 		});
 		return false;
@@ -135,7 +135,7 @@
 				width:500,
 				maxHeight:600,
 				modeSuccess:function(){
-					window.location.href = window.location.href+"?menuid="+$curmenu.attr("id");
+					window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 				}
 			});	
 			return false;

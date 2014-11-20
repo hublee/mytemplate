@@ -81,7 +81,7 @@
 						    data-on-color="info" data-off-color="danger" 
 						    checked/>
 						    <input type="hidden" 
-						    value="0" name="state" id="resourceState"/>
+						    value="0" name="status" id="status"/>
 						</div>
 					</td>
 				</tr>
@@ -114,9 +114,9 @@ $('textarea[class*=autosize]').autosize({append: "\n"});
 $('.dxswitch').bootstrapSwitch();
 $('.dxswitch').on('switchChange.bootstrapSwitch', function (event, state) {
 	if(state){
-		$("#state").val("0");
+		$("#status").val("0");
 	}else{
-		$("#state").val("1");
+		$("#status").val("1");
 	}
 });
 

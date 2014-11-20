@@ -3,7 +3,7 @@
 <mapper namespace="com.template.web.dao.SysUserMapper">
 
 	<sql id="sysUserColumns">
-		id,age,area,city_id,code,gender,name,password,phone,province_id,regtime,salt,state,username
+		id,age,area,city_id,code,gender,name,password,phone,province_id,regtime,salt,status,username
 	</sql>
 
 	<sql id="where">
@@ -20,7 +20,7 @@
 			<if test=" provinceId!=null and provinceId!='' ">and province_id=#{provinceId}</if>
 			<if test=" regtime!=null and regtime!='' ">and regtime=#{regtime}</if>
 			<if test=" salt!=null and salt!='' ">and salt=#{salt}</if>
-			<if test=" state!=null and state!='' ">and state=#{state}</if>
+			<if test=" status!=null and status!='' ">and status=#{status}</if>
 			<if test=" username!=null and username!='' ">and username=#{username}</if>
 		</where>
 	</sql>
@@ -46,7 +46,7 @@
 		#{provinceId,jdbcType=VARCHAR},
 		#{regtime,jdbcType=TIMESTAMP},
 		#{salt,jdbcType=VARCHAR},
-		#{state,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
 		#{username,jdbcType=VARCHAR})
 	</insert>
 
@@ -65,7 +65,7 @@
 			<if test="provinceId!=null">province_id=#{provinceId},</if>
 			<if test="regtime!=null">regtime=#{regtime},</if>
 			<if test="salt!=null">salt=#{salt},</if>
-			<if test="state!=null">state=#{state},</if>
+			<if test="status!=null">status=#{status},</if>
 			<if test="username!=null">username=#{username}</if>
 		</set>
 		where id=#{id}
