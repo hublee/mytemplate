@@ -69,7 +69,7 @@ $(document).ready(function(){
 			delParamUrl = $this.attr("cus-delParam-url"),
 			delParamData = eval('('+$this.attr("cus-delParam-data")+')'),
 			delText = $this.attr("cus-text"),
-			modeSuccess = $this.attr("cus-mode-success");
+			modeSuccess = new Function('return '+ $this.attr("cus-mode-success"));
 		
 		switch (mode) {
 		case "add":
@@ -315,4 +315,9 @@ function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
+}
+
+//刷新url
+function reloadUrl(){
+	window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 }

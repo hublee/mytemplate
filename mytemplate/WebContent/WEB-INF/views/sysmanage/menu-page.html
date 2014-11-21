@@ -49,7 +49,9 @@
 							cus-backfill-url="menu/toeditlayer" 
 							cus-backfill-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
 							cus-width="500" cus-maxHeight="600"
-							cus-fromId="#menu-edit">
+							cus-fromId="#menu-edit"
+							cus-mode-success="reloadUrl();"
+						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>
 
@@ -57,7 +59,9 @@
 							cus-mode="delete"
 							cus-text="你确定删除此节点及其所有的子节点吗?(慎重操作)"
 							cus-delParam-url="menu/dels"
-							cus-delParam-data="{resourceId:'${menu.id}'}">
+							cus-delParam-data="{resourceId:'${menu.id}'}"
+							cus-mode-success="reloadUrl();"
+						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
 						</a>
 					</div>

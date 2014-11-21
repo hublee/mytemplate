@@ -105,12 +105,12 @@
 		ON sr.pid=srp.id
 		<where>
 			<if test="resourceName != ''">
-				sr.name concat( '%' , #{resourceName} , '%' )
+				sr.name like concat( '%' , #{resourceName} , '%' )
+			</if>
+			<if test="resourceId != 0 and @Ognl@isBlank(resourceName) and @Ognl@isNotBlank(resourceId) "> 
+				FIND_IN_SET(sr.id,getChildrenId(#{resourceId}))
 			</if>
 		</where>
-		<!-- <if test="resourceId != 0 and @Ognl@isBlank(resourceName) and @Ognl@isNotBlank(resourceId)"> 
-			start with sr.RESOURCE_ID = #{resourceId} connect by prior sr.RESOURCE_ID 
-			= sr.RESOURCE_PID </if> -->
 	</select>
 
 </mapper>
