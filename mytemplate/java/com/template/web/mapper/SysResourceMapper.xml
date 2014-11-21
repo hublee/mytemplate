@@ -93,7 +93,7 @@
 	
 	<!-- 根据父节点删除全部的孩子节点 -->
 	<delete id="deleteResourceByRootId">
-		DELETE FROM sys_resource WHERE FIND_IN_SET( id , select getChildrenId(#{id}) )
+		DELETE FROM sys_resource WHERE FIND_IN_SET( id , getChildrenId(#{id}) )
 	</delete>
 
 	<!-- 菜单管理分页显示筛选查询 -->
