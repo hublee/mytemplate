@@ -16,6 +16,33 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`template` /*!40100 DEFAULT CHARACTER SE
 
 USE `template`;
 
+/*Table structure for table `sys_area` */
+
+DROP TABLE IF EXISTS `sys_area`;
+
+CREATE TABLE `sys_area` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `parent_id` varchar(64) NOT NULL COMMENT '父级编号',
+  `parent_ids` varchar(2000) NOT NULL COMMENT '所有父级编号',
+  `code` varchar(100) DEFAULT NULL COMMENT '区域编码',
+  `name` varchar(100) NOT NULL COMMENT '区域名称',
+  `type` char(1) DEFAULT NULL COMMENT '区域类型',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`),
+  KEY `sys_area_parent_id` (`parent_id`),
+  KEY `sys_area_parent_ids` (`parent_ids`(255)),
+  KEY `sys_area_del_flag` (`del_flag`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COMMENT='区域表';
+
+/*Data for the table `sys_area` */
+
+insert  into `sys_area`(`id`,`parent_id`,`parent_ids`,`code`,`name`,`type`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,'0','0,','100000','中国','1','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(2,'1','0,1,','110000','北京市','2','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(3,'2','0,1,2,','110101','东城区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,'2','0,1,2,','110102','西城区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,'2','0,1,2,','110103','朝阳区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,'2','0,1,2,','110104','丰台区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(7,'2','0,1,2,','110105','海淀区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(8,'1','0,1,','370000','山东省','2','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(9,'8','0,1,2,','370531','济南市','3','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(10,'8','0,1,2,','370532','历城区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(11,'8','0,1,2,','370533','历城区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(12,'8','0,1,2,','370534','历下区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(13,'8','0,1,2,','370535','天桥区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(14,'8','0,1,2,','370536','槐荫区','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(83,'14','0,1,2,14,','','00','3','1','2014-10-05 17:29:10','1','2014-10-05 17:29:10','','0');
+
 /*Table structure for table `sys_resource` */
 
 DROP TABLE IF EXISTS `sys_resource`;
@@ -23,20 +50,22 @@ DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `sys_resource` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '资源名称',
-  `code` varchar(64) DEFAULT NULL COMMENT '唯一键',
+  `pos` bigint(20) DEFAULT NULL COMMENT '权限位,相当于对权限分组,从0开始',
+  `common` int(11) DEFAULT '0' COMMENT '是否是公共资源(0.不是 1.是)',
+  `code` bigint(20) DEFAULT NULL COMMENT '权限码 1<<n',
   `icon` varchar(64) DEFAULT NULL COMMENT '图标',
-  `sort` int(11) DEFAULT NULL COMMENT '排序号',
+  `sort` int(11) DEFAULT '1' COMMENT '排序号',
   `pid` bigint(20) DEFAULT NULL COMMENT '父级id',
   `type` int(11) DEFAULT '0' COMMENT '类型(0.菜单 1.按钮)',
   `url` varchar(255) DEFAULT NULL COMMENT '链接',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `status` int(11) DEFAULT '0' COMMENT '状态(0.正常 1.禁用)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_resource` */
 
-insert  into `sys_resource`(`id`,`name`,`code`,`icon`,`sort`,`pid`,`type`,`url`,`description`,`status`) values (1,'菜单配置',NULL,NULL,NULL,0,0,'menu',NULL,0),(10,'测试2ddddd',NULL,'',1,0,0,'ss','',0),(11,'测试3ddd',NULL,'',1,0,0,'','',0),(12,'测试4',NULL,'',1,0,0,'','',0),(13,'测试5',NULL,'',1,0,0,'','',0),(14,'测试6',NULL,'',1,0,0,'','',0),(15,'测试7',NULL,'',1,0,0,'','',0),(16,'测试8',NULL,'',1,0,0,'','',0),(17,'sdsd',NULL,'',1,0,0,'','',0),(18,'sdsd',NULL,'',1,0,0,'','',0),(19,'sds22',NULL,'',1,0,0,'','',0),(20,'ss',NULL,'',1,0,0,'','',0),(26,'df22',NULL,'',1,10,0,'','',0),(32,'1111111',NULL,'',1,10,0,'','',0),(33,'22222222',NULL,'',1,32,0,'','',0);
+insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`pid`,`type`,`url`,`description`,`status`) values (1,'菜单配置',0,0,1,'fa-caret-right',11,0,0,'menu','',0),(75,'机构用户',0,0,2,'',1,0,0,'','',0),(76,'区域管理',0,0,4,'',1,75,0,'area','',0);
 
 /*Table structure for table `sys_role` */
 
@@ -91,7 +120,7 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`id`,`code`,`age`,`phone`,`city_id`,`province_id`,`gender`,`username`,`password`,`regtime`,`salt`,`area`,`status`,`name`) values (1,NULL,NULL,NULL,NULL,NULL,NULL,'admin','c7122a1349c22cb3c009da3613d242ab',NULL,NULL,NULL,0,'韩馨');
+insert  into `sys_user`(`id`,`code`,`age`,`phone`,`city_id`,`province_id`,`gender`,`username`,`password`,`regtime`,`salt`,`area`,`status`,`name`) values (1,NULL,NULL,NULL,NULL,NULL,NULL,'admin','86f3059b228c8acf99e69734b6bb32cc',NULL,NULL,NULL,0,'韩馨');
 
 /*Table structure for table `sys_user_role` */
 
