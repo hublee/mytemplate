@@ -1,0 +1,86 @@
+<div style="padding: 20px 0px;">
+<div class="profile-user-info profile-user-info-striped">
+	<div class="profile-info-row">
+		<div class="profile-info-name">ID</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.id!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">名称</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.name!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">url</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.url!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限码</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.code!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限位</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.pos!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">资源类型</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${decode(sysResource.type,0,'菜单资源','按钮资源')}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限类型</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${decode(sysResource.common,0,'权限','公共')}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">图标</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click"><i class="ace-icon fa ${sysResource.icon!} blue bigger-120"></i></span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">排序号</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.sort!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">状态</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${decode(sysResource.status!,0,'正常','禁用')}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">父级ID</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${pResource.id!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">父级名称</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${pResource.name}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">描述</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.description!}</span>
+		</div>
+	</div>
+</div>
+</div>

@@ -87,11 +87,11 @@
 		cuslayer({
 			title:"编辑菜单",
 			backfill:{
-				url:"menu/toeditlayer",
+				url:"menu/edit/showlayer",
 				data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
 			},
 			mode:"edit",
-			fromId:"#menu-edit",
+			fromId:"#menu-addorupdate",
 			width:500,
 			maxHeight:600,
 			modeSuccess:function(){
@@ -127,11 +127,11 @@
 			cuslayer({
 				title:"添加菜单",
 				backfill:{
-					url:"menu/toaddlayer",
+					url:"menu/add/showlayer",
 					data:{"pResourceId":treeNode.id}
 				},
 				mode:"add",
-				fromId:"#menu-add",
+				fromId:"#menu-addorupdate",
 				width:500,
 				maxHeight:600,
 				modeSuccess:function(){

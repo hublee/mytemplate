@@ -16,7 +16,9 @@ public class SysResource extends Entity {
 
     private Long id; //id <>
 
-    private String code; //code <唯一键>
+    private Long code; //code <权限码 1<<n>
+
+    private Integer common; //common <是否是公共资源(0.不是 1.是)>
 
     private String description; //description <描述>
 
@@ -26,9 +28,11 @@ public class SysResource extends Entity {
 
     private Long pid; //pid <父级id>
 
+    private Long pos; //pos <权限位,相当于对权限分组,从0开始>
+
     private Integer sort; //sort <排序号>
 
-    private Integer status; //status <状态>
+    private Integer status; //status <状态(0.正常 1.禁用)>
 
     private Integer type; //type <类型(0.菜单 1.按钮)>
 
@@ -44,12 +48,20 @@ public class SysResource extends Entity {
 		this.set("id", id);
     }
 
-	public String getCode() {
-		return this.getString("code");
+	public Long getCode() {
+		return this.getLong("code");
     }
    
-    public void setCode(String code) {
+    public void setCode(Long code) {
 		this.set("code", code);
+    }
+
+	public Integer getCommon() {
+		return this.getInteger("common");
+    }
+   
+    public void setCommon(Integer common) {
+		this.set("common", common);
     }
 
 	public String getDescription() {
@@ -84,6 +96,14 @@ public class SysResource extends Entity {
 		this.set("pid", pid);
     }
 
+	public Long getPos() {
+		return this.getLong("pos");
+    }
+   
+    public void setPos(Long pos) {
+		this.set("pos", pos);
+    }
+
 	public Integer getSort() {
 		return this.getInteger("sort");
     }
@@ -93,7 +113,7 @@ public class SysResource extends Entity {
     }
 
 	public Integer getStatus() {
-		return this.getInteger("state");
+		return this.getInteger("status");
     }
    
     public void setStatus(Integer status) {

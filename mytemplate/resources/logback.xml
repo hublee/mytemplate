@@ -31,7 +31,7 @@
 	<!-- <logger name="com.blueland" level="error" /> -->
 	<!-- 下面配置一些第三方包的日志过滤级别 -->
 	<logger name="jdbc.sqlonly" level="DEBUG" />
-	<logger name="com.template" level="WARN" additivity="false"/>
+	<logger name="com.template" level="INFO" />
 	<logger name="jdbc.sqltiming" level="WARN" />
 	<logger name="jdbc.audit" level="WARN" />
 	<logger name="jdbc.resultset" level="WARN" />

@@ -72,6 +72,7 @@ $(document).ready(function(){
 			modeSuccess = new Function('return '+ $this.attr("cus-mode-success"));
 		
 		switch (mode) {
+		case "detail":
 		case "add":
 		case "edit":
 			cuslayer({
@@ -98,6 +99,7 @@ $(document).ready(function(){
 		default:
 			break;
 		}
+		return false;
 	});
 	
 	/*
@@ -302,7 +304,6 @@ function cuslayer(params){
 					});
 				}; 
 				break;
-				
 			default:
 				break;
 		}

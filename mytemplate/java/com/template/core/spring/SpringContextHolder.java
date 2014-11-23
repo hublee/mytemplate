@@ -1,5 +1,6 @@
 package com.template.core.spring;
 
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -7,7 +8,7 @@ import org.springframework.context.ApplicationContextAware;
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
  * 
  */
-public class SpringContextHolder implements ApplicationContextAware {
+public class SpringContextHolder implements ApplicationContextAware,DisposableBean {
 	private static ApplicationContext applicationContext;
 
 	/**
@@ -15,17 +16,6 @@ public class SpringContextHolder implements ApplicationContextAware {
 	 */
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		SpringContextHolder.applicationContext = applicationContext; // NOSONAR
-		/*DataSource ds = (DataSource) applicationContext.getBean(DataSource.class);
-		try {
-			Statement stmt = ds.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery("select sysdate from dual");
-			rs.next();
-			Date date = rs.getTimestamp(1);
-			
-			System.out.println(date);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
 	}
 
 	/**
@@ -67,4 +57,10 @@ public class SpringContextHolder implements ApplicationContextAware {
 					"applicaitonContext未注入,请在applicationContext.xml中定义SpringContextHolder");
 		}
 	}
+
+	@Override
+	public void destroy() throws Exception {
+		SpringContextHolder.cleanApplicationContext();
+	}
+	
 }

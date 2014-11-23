@@ -6,6 +6,7 @@
 			<th class="center">菜单url</th>
 			<th class="center">父级菜单</th>
 			<th class="center">资源类型</th>
+			<th class="center">权限类型</th>
 			<th class="center">菜单图标</th>
 			<th class="center">菜单序号</th>
 			<th class="center">使用状态</th>
@@ -17,7 +18,14 @@
 		@for(menu in page.list){
 			<tr>
 				<td class="center">${menu.id}</td>
-				<td class="center"><a href="">${menu.name}</a></td>
+				<td class="center">
+					<a href="javascript:;" title="查看<${menu.name!}>详情"
+						cus-mode="detail" cus-title="<${menu.name!}>详情"
+						cus-backfill-url="menu/detail/showlayer" 
+						cus-backfill-data="{resourceId:'${menu.id}'}"
+						cus-width="350" cus-maxHeight="600"
+					>${menu.name}</a>
+				</td>
 				<td class="center">
 					${ menu.url!}
 				</td>
@@ -25,11 +33,10 @@
 					${menu.pname! }
 				</td>
 				<td class="center">
-					@if(menu.type == 0){
-						菜单资源
-					@}else{
-						按钮资源
-					@}
+					${decode(menu.type,0,'菜单资源','按钮资源')}
+				</td>
+				<td class="center">
+					${decode(menu.common,0,'权限','公共')}
 				</td>
 				<td class="center">
 					@if(isEmpty(menu.icon)){
@@ -45,8 +52,8 @@
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
-							cus-mode="edit" cus-title="编辑菜单"
-							cus-backfill-url="menu/toeditlayer" 
+							cus-mode="edit" cus-title="<${menu.name!}>编辑"
+							cus-backfill-url="menu/edit/showlayer" 
 							cus-backfill-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
 							cus-width="500" cus-maxHeight="600"
 							cus-fromId="#menu-edit"
@@ -57,7 +64,7 @@
 
 						<a class="red" href="javascript:void(0);" 
 							cus-mode="delete"
-							cus-text="你确定删除此节点及其所有的子节点吗?(慎重操作)"
+							cus-text="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
 							cus-delParam-url="menu/dels"
 							cus-delParam-data="{resourceId:'${menu.id}'}"
 							cus-mode-success="reloadUrl();"

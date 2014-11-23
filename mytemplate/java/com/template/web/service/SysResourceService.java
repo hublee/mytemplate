@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,18 +30,17 @@ public class SysResourceService {
 	private SysResourceMapper sysResourceMapper;
 	
 	/**
-	 *新增SysResource
+	 *新增or更新SysResource
 	 */
-	public int insertSysResource(Map<String,Object> params){
-	     return sysResourceMapper.insertSysResource(params);
-	}
-	
-	/**
-	 *更新SysResource
-	 *@param {"id":""}
-	 */
-	public int updateSysResource(Map<String,Object> params){
-	     return sysResourceMapper.updateSysResource(params);
+	public int insertOrUpdateSysResource(Map<String,Object> params){
+		int count = 0;
+		if(StringUtils.isBlank(params.get("id").toString())){
+			params.put("id", null);
+			count = sysResourceMapper.insertSysResource(params);
+		}else{
+			count = sysResourceMapper.updateSysResource(params);
+		}
+		return count;
 	}
 	
 	/**

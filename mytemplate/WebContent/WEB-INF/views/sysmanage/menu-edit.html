@@ -1,16 +1,16 @@
 <script type="text/javascript">
 	$(function(){
 	   //初始化菜单类别
-	   var resourceType='${sysResource.type}';
+	   var resourceType='${sysResource.type!0}',common = '${sysResource.common!0}';
 	   $("input:radio[name=type][value="+resourceType+"]")[0].checked=true;
-	   
+	   $("input:radio[name=common][value="+common+"]")[0].checked=true;
 	});
 </script>
 
 <div class="layer">
-	<form name="FormPost" id="menu-edit" class="FormGrid"
+	<form name="FormPost" id="menu-addorupdate" class="FormGrid"
 		onsubmit="return false;" style="overflow: auto; position: relative;" 
-		action="menu/update">
+		action="menu/addorupdate">
 		
 		<input type="hidden" value="${sysResource.id!}" name="id"/>
 		<table id="TblGrid_grid-table" class="EditTable" cellspacing="0"
@@ -61,6 +61,23 @@
 						</div>
 					</td>
 				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">权限类型</td>
+					<td colspan="1" class="DataTD">
+					<div class="radio inline">
+							<label>
+								<input name="common" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 权限资源 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="common" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 公共资源</span>
+							</label>
+						</div>
+					</td>
+				</tr>
 				<tr  class="FormData">
 					<td class="CaptionTD">菜单图标</td>
 					<td class="DataTD">
@@ -91,10 +108,10 @@
 						    <input type="checkbox"  class="dxswitch"  
 						    data-on-text="可用" data-off-text="禁用"
 						    data-on-color="info" data-off-color="danger"
-						    @if(!isEmpty(sysResource.status)){
-						    	@if(sysResource.status == 0){
-						    		checked
-						    	@}
+						    @if(!isEmpty(sysResource)){
+						    	${decode(sysResource.status,0,'checked','')}
+						    @}else{
+						    	checked
 						    @}
 						    />
 						    <input type="hidden" 

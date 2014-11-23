@@ -3,21 +3,23 @@
 <mapper namespace="com.template.web.dao.SysResourceMapper">
 
 	<sql id="sysResourceColumns">
-		id,code,description,icon,name,pid,sort,status,type,url
+		id,code,common,description,icon,name,pid,pos,sort,status,type,url
 	</sql>
 
 	<sql id="AliasColumns">
-		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.pid,sr.sort,sr.status,sr.type,sr.url
+		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.pid,sr.sort,sr.status,sr.type,sr.url,sr.common,sr.pos
 	</sql>
 
 	<sql id="where">
 		<where>
 			<if test=" id!=null and id!='' ">id=#{id}</if>
 			<if test=" code!=null and code!='' ">and code=#{code}</if>
+			<if test=" common!=null and common!='' ">and common=#{common}</if>
 			<if test=" description!=null and description!='' ">and description=#{description}</if>
 			<if test=" icon!=null and icon!='' ">and icon=#{icon}</if>
 			<if test=" name!=null and name!='' ">and name=#{name}</if>
 			<if test=" pid!=null and pid!='' ">and pid=#{pid}</if>
+			<if test=" pos!=null and pos!='' ">and pos=#{pos}</if>
 			<if test=" sort!=null and sort!='' ">and sort=#{sort}</if>
 			<if test=" status!=null and status!='' ">and status=#{status}</if>
 			<if test=" type!=null and type!='' ">and type=#{type}</if>
@@ -32,11 +34,13 @@
 		<include refid="sysResourceColumns" />
 		) values (
 		#{id,jdbcType=NUMERIC},
-		#{code,jdbcType=VARCHAR},
+		#{code,jdbcType=NUMERIC},
+		#{common,jdbcType=INTEGER},
 		#{description,jdbcType=VARCHAR},
 		#{icon,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
 		#{pid,jdbcType=NUMERIC},
+		#{pos,jdbcType=NUMERIC},
 		#{sort,jdbcType=INTEGER},
 		#{status,jdbcType=INTEGER},
 		#{type,jdbcType=INTEGER},
@@ -48,10 +52,12 @@
 		update sys_resource
 		<set>
 			<if test="code!=null">code=#{code},</if>
+			<if test="common!=null">common=#{common},</if>
 			<if test="description!=null">description=#{description},</if>
 			<if test="icon!=null">icon=#{icon},</if>
 			<if test="name!=null">name=#{name},</if>
 			<if test="pid!=null">pid=#{pid},</if>
+			<if test="pos!=null">pos=#{pos},</if>
 			<if test="sort!=null">sort=#{sort},</if>
 			<if test="status!=null">status=#{status},</if>
 			<if test="type!=null">type=#{type},</if>
@@ -95,10 +101,10 @@
 	<delete id="deleteResourceByRootId">
 		DELETE FROM sys_resource WHERE FIND_IN_SET( id , getChildrenId(#{id}) )
 	</delete>
-
+	
 	<!-- 菜单管理分页显示筛选查询 -->
 	<select id="findMenuPageById" resultType="com.template.web.model.SysResource">
-		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,
+		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,sr.common,sr.pos,
 		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
 		from sys_resource sr
 		LEFT JOIN sys_resource srp

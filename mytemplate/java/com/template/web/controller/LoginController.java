@@ -76,6 +76,7 @@ public class LoginController {
 
 	/**
 	 * 管理主页
+	 * @param 父类id
 	* @param model
 	* @param request
 	* @return

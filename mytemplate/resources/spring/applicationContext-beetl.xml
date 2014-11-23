@@ -17,14 +17,6 @@
 	
 	<bean id="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
 		<property name="configFileResource" value="classpath:beetl/beetl.properties"/>
-		<!-- 共享变量 -->
-		<property name="sharedVars">
-			<map>
-				<entry key="adminPath">
-					<value>${adminPath}</value>
-				</entry>
-			</map>
-		</property>
 	</bean>
 	
 	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">

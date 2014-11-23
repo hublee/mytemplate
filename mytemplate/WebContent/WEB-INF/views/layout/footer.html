@@ -34,6 +34,7 @@
 				$("#ace-settings-sidebar").trigger("click");//固定左侧菜单
 				$("#ace-settings-navbar").trigger("click");//固定头部导航栏
 				$("#ace-settings-breadcrumbs").trigger("click");//固定子菜单
+				$("#ace-settings-highlight").trigger("click");
 			};
 			//菜单
 			var $curmenu;
@@ -47,9 +48,12 @@
 						$sibling.find("ul.nav-show").attr("class","submenu nav-hide").hide();
 					}
 					if($this.attr('haschild') == "false"){
+						$this.closest("li[data-level='1']").addClass("open");
+						var pul = $this.parents("ul.submenu");
+						pul.attr("class","submenu nav-show").show();
 						$("#sidebar-menu").find("li").removeClass("active");
 						pli.addClass("active");
-						var mtext = pli.find("span.menu-text");
+						var mtext = pli.children("a").find("span.menu-text");
 						$("#breadcrumb").empty();
 						mtext.each(function(i){
 							var last = '';
@@ -59,7 +63,9 @@
 					}
 				});
 				var triggerMenu = getQueryString("menuid");
-				if(null != triggerMenu) $("#"+triggerMenu).trigger('click'); 
+				if(null != triggerMenu) {
+					$("#"+triggerMenu).trigger('click'); 
+				}
 			});
 		</script>
 	</body>

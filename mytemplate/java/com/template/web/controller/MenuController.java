@@ -2,6 +2,7 @@ package com.template.web.controller;
 
 import com.template.core.base.BaseController;
 import com.template.core.paging.PageInfo;
+import com.template.core.spring.SpringContextHolder;
 import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
@@ -9,8 +10,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +43,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping
 	public String toMenu(Model model) {
+		SpringContextHolder.getBean(SysResourceService.class);
 		model.addAttribute("menuTreeList",
 				this.jsonStr(sysResourceService.getMenuTreeList()));
 		return "sysmanage/menu";
@@ -62,31 +66,16 @@ public class MenuController extends BaseController {
 	}
 	
 	/**
-	 * 添加菜单
+	 * 添加或更新菜单
 	 * 
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/addorupdate", method = RequestMethod.POST)
 	public @ResponseBody Integer add(@RequestParam Map<String, Object> params) {
-		return sysResourceService.insertSysResource(params);
+		return sysResourceService.insertOrUpdateSysResource(params);
 	}
 
-	/**
-	 * 更新菜单
-	 * 
-	 * @param params
-	 * @return
-	 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody Integer update(@RequestParam Map<String, Object> params) {
-		Integer count = 0;
-		if (params.containsKey("id")) {
-			count = sysResourceService.updateSysResource(params);
-		}
-		return count;
-	}
-	
 	/**
 	 * 删除菜单及其子菜单
 	* @param resourceId 菜单id
@@ -101,46 +90,31 @@ public class MenuController extends BaseController {
 		return count;
 	}
 
-
 	/**
-	 * 菜单添加弹窗
-	* @param pResourceId 菜单的父级id
+	 * 弹窗
+	* @param resourceId id
+	* @param pResourceId 父类id
+	* @param mode 模式(add,edit,detail)
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value = "/toaddlayer", method = RequestMethod.POST)
-	public String toAddLayer(Long pResourceId, Model model) {
-		if (null != pResourceId) {
-			SysResource pResource = sysResourceService
-					.findSysResourceById(pResourceId);
-			model.addAttribute("pResource", pResource);
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
+	public String showLayer(Long resourceId,Long pResourceId,@PathVariable("mode") String mode, Model model){
+		SysResource resource = null, pResource = null;
+		if(StringUtils.equalsIgnoreCase(mode, "add")){
+			pResource = sysResourceService.findSysResourceById(pResourceId);
+			model.addAttribute("menuTreeList",this.jsonStr(sysResourceService.getMenuTreeList()));
+		}else if(StringUtils.equalsIgnoreCase(mode, "edit")){
+			resource = sysResourceService.findSysResourceById(resourceId);
+			pResource = sysResourceService.findSysResourceById(pResourceId);
+			model.addAttribute("menuTreeList",this.jsonStr(sysResourceService.getMenuTreeList()));
+		}else if(StringUtils.equalsIgnoreCase(mode, "detail")){
+			resource = sysResourceService.findSysResourceById(resourceId);
+			pResource = sysResourceService.findSysResourceById(resource.getPid());
 		}
-		model.addAttribute("menuTreeList",
-				this.jsonStr(sysResourceService.getMenuTreeList()));
-		return "sysmanage/menu-add";
-	}
-
-	/**
-	 * 菜单编辑弹窗
-	* @param resourceId 菜单id
-	* @param pResourceId 父级菜单id
-	* @param model
-	* @return
-	 */
-	@RequestMapping(value = "/toeditlayer", method = RequestMethod.POST)
-	public String toEditLayer(Long resourceId,Long pResourceId, Model model) {
-		if(null != resourceId){
-			SysResource resource = sysResourceService.findSysResourceById(resourceId);
-			model.addAttribute("sysResource", resource);
-		}
-		if(null != pResourceId && !pResourceId.equals("0")){
-			SysResource pResource = sysResourceService
-					.findSysResourceById(pResourceId);
-			model.addAttribute("pResource", pResource);
-		}
-		model.addAttribute("menuTreeList",
-				this.jsonStr(sysResourceService.getMenuTreeList()));
-		return "sysmanage/menu-edit";
+		model.addAttribute("pResource", pResource)
+			.addAttribute("sysResource", resource);
+		return mode.equals("detail")?"sysmanage/menu-detail":"sysmanage/menu-edit";
 	}
 
 }
