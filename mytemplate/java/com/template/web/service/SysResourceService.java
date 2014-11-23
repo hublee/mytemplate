@@ -84,7 +84,8 @@ public class SysResourceService {
 	}
 	
 	public int deleteResourceByRootId(Long id){
-		return sysResourceMapper.deleteResourceByRootId(id);
+		List<Long> idList = sysResourceMapper.findResourceByRootId(id);
+		return sysResourceMapper.deleteSysResources(idList);
 	}
 /*------------------------------------菜单操作----------------------------------------*/
 	

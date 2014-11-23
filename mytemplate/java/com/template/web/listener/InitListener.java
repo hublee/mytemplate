@@ -24,7 +24,7 @@ import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
 @Component
-public class InitSysResourceListener implements
+public class InitListener implements
 		ApplicationListener<ApplicationEvent>, ServletContextAware {
 
 	private static final Logger logger = LoggerFactory

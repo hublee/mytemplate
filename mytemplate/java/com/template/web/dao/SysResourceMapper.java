@@ -38,9 +38,9 @@ public interface SysResourceMapper {
     *根据条件查询查询sysResource列表
     */ 
 	public List<SysResource> findSysResourceListByParams(Map<String, Object> params);
+	
+	public List<Long> findResourceByRootId(Long id);
    
 	public List<SysResource> findMenuPageById(Map<String, Object> params);
 	
-	public int deleteResourceByRootId(Long id);
-
 }
