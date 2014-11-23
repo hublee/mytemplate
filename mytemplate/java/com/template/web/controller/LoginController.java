@@ -30,7 +30,7 @@ public class LoginController {
 
 	@RequestMapping("${adminPath}/login")
 	public String toLogin() {
-		return "sysmanage/login";
+		return "login";
 	}
 
 	/**

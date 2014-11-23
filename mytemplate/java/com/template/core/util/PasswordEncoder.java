@@ -6,11 +6,17 @@ public class PasswordEncoder {
 		return encrypt(src, String.valueOf(salt));
 	}
 
+	/**
+	 * 密码加密
+	* @param src 密码
+	* @param salt 账号
+	* @return
+	 */
 	public static String encrypt(String src, String salt) {
 		return EncryptUtil.MD5_HEX(EncryptUtil.MD5_HEX(src) + salt);
 	}
 
 	public static void main(String[] args) {
-		System.out.println(encrypt("123456", "admin"));
+		System.out.println(encrypt("admin", "admin"));
 	}
 }

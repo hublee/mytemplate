@@ -43,4 +43,6 @@ public interface SysResourceMapper {
    
 	public List<SysResource> findMenuPageById(Map<String, Object> params);
 	
+	public SysResource findMaxCodeAndMaxPos();
+	
 }

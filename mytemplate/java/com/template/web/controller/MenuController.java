@@ -98,7 +98,7 @@ public class MenuController extends BaseController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
+	@RequestMapping(value="/{mode}/showlayer",method=RequestMethod.POST)
 	public String showLayer(Long resourceId,Long pResourceId,@PathVariable("mode") String mode, Model model){
 		SysResource resource = null, pResource = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
