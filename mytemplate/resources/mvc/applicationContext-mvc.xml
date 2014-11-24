@@ -20,7 +20,7 @@
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/constants.properties"/>
 
 	<mvc:annotation-driven>
-		<!-- <mvc:message-converters register-defaults="true">
+		<mvc:message-converters register-defaults="true">
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -34,7 +34,7 @@
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
 			</bean>
-		</mvc:message-converters> -->
+		</mvc:message-converters>
 	</mvc:annotation-driven>
 
 	<!-- 只扫描Controller 注解 -->

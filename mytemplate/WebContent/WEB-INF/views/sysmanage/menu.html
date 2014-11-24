@@ -8,7 +8,7 @@
 		</div>
 		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
 			<form method="post" class="form-search" id="findMenu-form"
-				action="menu/list">
+				action="${adminPath}/menu/list">
 				<div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
 						<button type="button" class=" btn  btn-success btn-sm"
@@ -87,11 +87,11 @@
 		cuslayer({
 			title:"编辑菜单",
 			backfill:{
-				url:"menu/edit/showlayer",
+				url:"${adminPath}/menu/edit/showlayer",
 				data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
 			},
 			mode:"edit",
-			fromId:"#menu-addorupdate",
+			formId:"menu-addorupdate",
 			width:500,
 			maxHeight:600,
 			modeSuccess:function(){
@@ -107,7 +107,7 @@
 		cuslayer({
 			mode:"delete",
 			delText:"你确定删除此节点及其所有的子节点吗?(慎重操作)",
-			delParam:{url:"menu/dels",data:{"resourceId":resourceId}},
+			delParam:{url:"${adminPath}/menu/dels",data:{"resourceId":resourceId}},
 			modeSuccess:function(){
 				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 			}
@@ -127,11 +127,11 @@
 			cuslayer({
 				title:"添加菜单",
 				backfill:{
-					url:"menu/add/showlayer",
+					url:"${adminPath}/menu/add/showlayer",
 					data:{"pResourceId":treeNode.id}
 				},
 				mode:"add",
-				fromId:"#menu-addorupdate",
+				formId:"menu-addorupdate",
 				width:500,
 				maxHeight:600,
 				modeSuccess:function(){
@@ -171,7 +171,7 @@
 		$("#findMenu-form").find("input[name=resourceName]").val("");
 		$("#findMenu-form").ajaxForms({
 			target:"#menu-page",
-			btn:"#findMenu-btn",
+			btnId:"#findMenu-btn",
 			btnClickFn:function(){
 				$("#findMenu-form").find("input[name=resourceId]").val("");
 				var treeObj = $.fn.zTree.getZTreeObj("treeMenu");

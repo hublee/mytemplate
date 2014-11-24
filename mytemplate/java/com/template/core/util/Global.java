@@ -18,4 +18,12 @@ public class Global {
 		return SysConstant.getValue("session.user");
 	}
 	
+	/**
+	 * 全部资源的key
+	* @return
+	 */
+	public static String getSysResourceKey(){
+		return SysConstant.getValue("system.resource");
+	}
+	
 }

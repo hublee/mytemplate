@@ -21,7 +21,7 @@
 				<td class="center">
 					<a href="javascript:;" title="查看<${menu.name!}>详情"
 						cus-mode="detail" cus-title="<${menu.name!}>详情"
-						cus-backfill-url="menu/detail/showlayer" 
+						cus-backfill-url="${adminPath}/menu/detail/showlayer" 
 						cus-backfill-data="{resourceId:'${menu.id}'}"
 						cus-width="350" cus-maxHeight="600"
 					>${menu.name}</a>
@@ -53,10 +53,10 @@
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
 							cus-mode="edit" cus-title="<${menu.name!}>编辑"
-							cus-backfill-url="menu/edit/showlayer" 
+							cus-backfill-url="${adminPath}/menu/edit/showlayer" 
 							cus-backfill-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
 							cus-width="500" cus-maxHeight="600"
-							cus-fromId="#menu-edit"
+							cus-formId="menu-addorupdate"
 							cus-mode-success="reloadUrl();"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
@@ -65,7 +65,7 @@
 						<a class="red" href="javascript:void(0);" 
 							cus-mode="delete"
 							cus-text="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
-							cus-delParam-url="menu/dels"
+							cus-delParam-url="${adminPath}/menu/dels"
 							cus-delParam-data="{resourceId:'${menu.id}'}"
 							cus-mode-success="reloadUrl();"
 						>

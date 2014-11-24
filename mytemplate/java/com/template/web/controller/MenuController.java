@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping("menu")
+@RequestMapping("${adminPath}/menu")
 public class MenuController extends BaseController {
 
 	@Resource

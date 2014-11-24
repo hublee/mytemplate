@@ -20,11 +20,11 @@ function paging(formId,pageNo){
 			
 			var $this = $(this),self = this;
 			
-			if(self.opt.btn === undefined ){
+			if(self.opt.btnId === undefined ){
 				if($("#"+$this.attr("id")+"-btn").size() == 0){
 					$this.after("<button style='display:none;' id='"+$this.attr("id")+"-btn'></button>");
 				}
-				self.opt.btn = "#"+$this.attr("id")+"-btn";
+				self.opt.btnId = "#"+$this.attr("id")+"-btn";
 			}
 			if(self.opt.beforeSubmit === undefined){
 				self.opt.beforeSubmit = function(formData, jqForm, options){
@@ -56,7 +56,7 @@ function paging(formId,pageNo){
 			//阻止默认的表单提交
 			$(document).bind("submit",function(){return false;});
 			
-			$(document).off("click",self.opt.btn).on("click",self.opt.btn,function(){
+			$(document).off("click",self.opt.btnId).on("click",self.opt.btnId,function(){
 				if(self.opt.btnClickFn != undefined){
 					self.opt.btnClickFn();
 				}
@@ -69,7 +69,7 @@ function paging(formId,pageNo){
 			});
 			
 			if(self.opt.trigger){
-				$(self.opt.btn).trigger("click");
+				$(self.opt.btnId).trigger("click");
 			}
 		});
 	};
@@ -87,7 +87,7 @@ function paging(formId,pageNo){
 		resetForm:false,  //提交成功后重置表单域
 		beforeSubmit:$.noop(),  //ajax提交表单前的操作
 		success:$.noop(), //成功后的回调,不设置默认回填html 参数 (data, statusText, xhr, $form)
-		btn:undefined,  //触发提交表单的按钮,如不设置默认添加一个btn提交,格式: "#btn"
+		btnId:undefined,  //触发提交表单的按钮,如不设置默认添加一个btn提交,格式: "#btn"
 		trigger:true, //是否立即触发提交，默认是
 		spinner:undefined, //loading样式
 		btnClickFn:$.noop(),  //按钮提交切入自定义函数

@@ -64,7 +64,7 @@ $(document).ready(function(){
 			width = parseInt($this.attr("cus-width")),
 			height = parseInt($this.attr("cus-height")),
 			maxHeight = parseInt($this.attr("cus-maxHeight")),
-			formId = $this.attr("cus-fromId"),
+			formId = $this.attr("cus-formId"),
 			delParam = $this.attr("cus-delParam"),
 			delParamUrl = $this.attr("cus-delParam-url"),
 			delParamData = eval('('+$this.attr("cus-delParam-data")+')'),
@@ -83,7 +83,7 @@ $(document).ready(function(){
 				},
 				mode:mode,
 				modeSuccess:modeSuccess,
-				fromId:formId,
+				formId:formId,
 				width:width || 'auto',
 				maxHeight:maxHeight || false
 			});
@@ -237,12 +237,12 @@ $(document).ready(function(){
  */
 function cuslayer(params){
 	var mode = params.mode, //模式
-		fromId = params.formId,  //请求表单的id
+		formId = "#"+params.formId,  //请求表单的id
 		beforeFn = params.beforeFn, //请求之前回调
 		delText = params.delText || "确定要删除此数据吗?",
 		modeSuccess = params.modeSuccess;
 	if(mode != null && mode != undefined){
-		var prompt = (params.mode=="add")?"添加成功":"编辑成功";
+		var prompt = (mode=="add")?"添加成功":"编辑成功";
 		switch (mode) {
 			case "delete":
 				$.gdialog({
@@ -279,7 +279,7 @@ function cuslayer(params){
 					params.beforeFn.call($(this),this);
 				}*/
 				params['ok'] = function(){
-					$(params.fromId).ajaxForms({
+					$(formId).ajaxForms({
 		        		isPage:false,
 		    			success:function(data){
 		    				if(parseInt(data) >= 1 || null!=data){
