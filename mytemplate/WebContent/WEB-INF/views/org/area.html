@@ -42,7 +42,7 @@
 
 						<div class="col-sm-9">
 							<div class="input-group col-sm-5">
-								<input type="text" class="form-control search-query">
+								<input type="text" class="form-control search-query" name="name">
 							</div>
 						</div>
 					</div>
@@ -51,19 +51,27 @@
 
 						<div class="col-sm-9">
 							<div class="input-group col-sm-5">
-								<input type="text" class="form-control search-query">
+								<input type="text" class="form-control search-query" name="code">
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right">区域类型:</label>
-
 						<div class="col-sm-9">
 							<div class="input-group col-sm-5">
-								<select class="chosen-select">
-									<option value="">df</option>
-									<option value="">df</option>
+								<select class="chosen-select" name="type">
+									@for(item in dict){
+										<option value="${item.value!}">${item.label!}</option>
+									@}
 								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">备注:</label>
+						<div class="col-sm-9">
+							<div class="input-group col-sm-5">
+								<textarea class="width-100" style="height:100px;" name="remarks"></textarea>
 							</div>
 						</div>
 					</div>
