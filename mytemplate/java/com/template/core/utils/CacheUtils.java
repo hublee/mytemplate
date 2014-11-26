@@ -1,63 +1,73 @@
 package com.template.core.utils;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.Cache;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+
 import com.template.core.spring.SpringContextHolder;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 
-/**
- * Cache工具类
- */
+
 public class CacheUtils {
-	
-	private static CacheManager cacheManager = ((CacheManager)SpringContextHolder.getBean("cacheManager"));
 
-	private static final String SYS_CACHE = "sysCache";
-
-	public static Object get(String key) {
-		return get(SYS_CACHE, key);
+	/**
+	 * 
+	* @Title: put  
+	* @Description: 添加到缓存中
+	* @param @param cacheName 配置的缓存name
+	* @param @param key  存储缓存key
+	* @param @param value  值
+	* @return void     
+	* @throws
+	 */
+	public static <T> void put(String cacheName,String key,T value) {
+		 
+		if (StringUtils.isNotBlank(key)) {
+			getCache(cacheName).put(key, value);
+		}
 	}
 
-	public static void put(String key, Object value) {
-		put(SYS_CACHE, key, value);
-	}
-
-	public static void remove(String key) {
-		remove(SYS_CACHE, key);
-	}
-	
-	public static Object get(String cacheName, String key) {
-		Element element = getCache(cacheName).get(key);
-		return element==null?null:element.getObjectValue();
-	}
-
-	public static void put(String cacheName, String key, Object value) {
-		Element element = new Element(key, value);
-		getCache(cacheName).put(element);
-	}
-
-	public static void remove(String cacheName, String key) {
-		getCache(cacheName).remove(key);
+	/**
+	 * 
+	* @Title: evict  
+	* @Description: 删除缓存中的信息 
+	* @param @param cacheName
+	* @param @param key      
+	* @return void     
+	* @throws
+	 */
+	public static <T> void evict(String cacheName,String key) {
+		if (StringUtils.isNotBlank(key)) {
+			getCache(cacheName).evict(key);
+		}
 	}
 	
 	/**
-	 * 获得一个Cache，没有则创建一个。
-	 * @param cacheName
-	 * @return
+	 * 
+	* @Title: get  
+	* @Description: 得到缓存中的信息
+	* @param @param cacheName
+	* @param @param key
+	* @param @return      
+	* @return T     
+	* @throws
 	 */
-	private static Cache getCache(String cacheName){
-		Cache cache = cacheManager.getCache(cacheName);
-		if (cache == null){
-			cacheManager.addCache(cacheName);
-			cache = cacheManager.getCache(cacheName);
-			cache.getCacheConfiguration().setEternal(true);
+	@SuppressWarnings("unchecked")
+	public static <T> T get(String cacheName,String key) {
+		T value = null;
+		if (StringUtils.isNotBlank(key)) {
+			ValueWrapper val = getCache(cacheName).get(key);
+			if (val != null) {
+				value = (T) val.get();
+			}
 		}
-		return cache;
+		return value;
 	}
 
-	public static CacheManager getCacheManager() {
-		return cacheManager;
+	protected static Cache getCache(String cacheName) {
+		EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
+		return cacheManager.getCache(cacheName);
 	}
-	
+
 }

@@ -33,7 +33,12 @@ public class DictFunction implements Function{
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put("type", paras[0]);
 			params.put(Constant.FIELD_DEL_FLAG, Constant.DEL_FLAG_NORMAL);
-			List<SysDict> dicts = sysDictService.findSysDictListByParams(params);
+			List<SysDict> dicts = null;
+			try {
+				dicts = sysDictService.findSysDictListByParams(params);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return dicts;
 		} catch (Exception e) {
 			throw new RuntimeException();

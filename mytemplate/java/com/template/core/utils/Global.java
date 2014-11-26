@@ -26,4 +26,5 @@ public class Global {
 		return SysConstant.getValue("system.resource");
 	}
 	
+	
 }
