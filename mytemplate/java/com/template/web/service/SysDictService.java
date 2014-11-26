@@ -4,6 +4,7 @@ package com.template.web.service;
 
 import com.template.core.paging.PageHelper;
 import com.template.core.paging.PageInfo;
+import com.template.core.utils.CacheUtils;
 import com.template.web.dao.SysDictMapper;
 import com.template.web.model.SysDict;
 
@@ -77,7 +78,7 @@ public class SysDictService {
 	/**
 	 * 根据条件查询SysDict列表（不分页）
 	 */
-	@Cacheable(value="${system.cache}",key="")
+	@Cacheable(value="sysCache",key="ss")
 	public List<SysDict> findSysDictListByParams(Map<String,Object> params) {
 		List<SysDict> dicts = sysDictMapper.findSysDictListByParams(params);
 	    return dicts;

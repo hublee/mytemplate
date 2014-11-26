@@ -41,7 +41,7 @@
 	<logger name="org.apache" level="WARN" />
 	<logger name="ch.qos" level="WARN" />
 	<logger name="log4jdbc" level="WARN" />
-	<logger name="net.sf.ehcache" level="WARN" />
+	<!-- <logger name="net.sf.ehcache" level="WARN" /> -->
 	
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
