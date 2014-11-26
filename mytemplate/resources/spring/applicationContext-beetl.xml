@@ -17,6 +17,11 @@
 	
 	<bean id="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
 		<property name="configFileResource" value="classpath:beetl/beetl.properties"/>
+		<property name="functions">
+             <map>
+               <entry key="dictFn" value-ref="dictFunction"/>
+            </map>
+        </property>
 	</bean>
 	
 	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">

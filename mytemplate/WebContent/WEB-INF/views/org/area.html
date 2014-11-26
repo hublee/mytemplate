@@ -15,8 +15,7 @@
 
 	<div class="tab-content">
 		<div id="list" class="tab-pane active">
-			<p>Raw denim you probably haven't heard of them jean shorts
-				Austin.</p>
+			<p>列表待添加</p>
 		</div>
 
 		<div id="add" class="tab-pane clearfix">
@@ -60,7 +59,8 @@
 						<div class="col-sm-9">
 							<div class="input-group col-sm-5">
 								<select class="chosen-select" name="type">
-									@for(item in dict){
+									@var dicts = dictFn("sys_area_type");
+									@for(item in dicts){
 										<option value="${item.value!}">${item.label!}</option>
 									@}
 								</select>

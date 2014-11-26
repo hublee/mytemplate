@@ -21,7 +21,7 @@ import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
 @Component
-public class InitListener implements ApplicationListener<ApplicationEvent>{
+public class InitListener implements ApplicationListener<ApplicationEvent> {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(InitListener.class);
@@ -33,11 +33,11 @@ public class InitListener implements ApplicationListener<ApplicationEvent>{
 
 		// ApplicationContext初始化或刷新完成后触发的事件（容器初始化完成后调用）
 		if (event instanceof ContextRefreshedEvent) {
-			
+
 			ApplicationContext parentContext = ((ContextRefreshedEvent) event)
 					.getApplicationContext().getParent();
-			
-			//子容器初始化时(spring-mvc)
+
+			// 子容器初始化时(spring-mvc)
 			if (null != parentContext) {
 				List<SysResource> resList = sysResourceService
 						.findSysResourceListByParams(null);
@@ -48,19 +48,21 @@ public class InitListener implements ApplicationListener<ApplicationEvent>{
 
 				// 设置共享变量
 				BeetlUtil.addBeetlSharedVars("adminPath", Global.getAdminPath());
-				BeetlUtil.addBeetlSharedVars(Global.getSysResourceKey(), AllResourceMap);
+				BeetlUtil.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
 				logger.info("--------------------------------------------------------------------------");
-				logger.info("初始化管理根路径:(key:adminPath,value:"+Global.getAdminPath()+")");
-				logger.info("初始化系统资源:(key:"+Global.getSysResourceKey()+",value:Map<资源url, SysResource>)");
+				logger.info("初始化管理根路径:(key:adminPath,value:"
+						+ Global.getAdminPath() + ")");
+				logger.info("初始化系统资源:(key:" + Global.getSysResourceKey()
+						+ ",value:Map<资源url, SysResource>)");
 				logger.info("--------------------------------------------------------------------------");
 			}
 
 		} else if (event instanceof ContextClosedEvent) { // spring容器关闭(web容器关闭会触发spring容器关闭)
 			ApplicationContext parentContext = ((ContextClosedEvent) event)
 					.getApplicationContext().getParent();
-			if(null != parentContext) {
+			if (null != parentContext) {
 				logger.info("-----------------spring子容器关闭-----------------");
-			}else{
+			} else {
 				logger.info("-----------------spring父容器关闭-----------------");
 			}
 		}

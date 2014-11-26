@@ -7,12 +7,12 @@ import com.template.core.paging.PageInfo;
 import com.template.web.dao.SysDictMapper;
 import com.template.web.model.SysDict;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -77,9 +77,8 @@ public class SysDictService {
 	/**
 	 * 根据条件查询SysDict列表（不分页）
 	 */
+	@Cacheable(value="",key="")
 	public List<SysDict> findSysDictListByParams(Map<String,Object> params) {
-		params.put("delFlag", 0);
-		params.put("type", "sys_area_type");
 	    return sysDictMapper.findSysDictListByParams(params);
 	}
 	

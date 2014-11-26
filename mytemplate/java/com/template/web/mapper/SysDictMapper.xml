@@ -95,5 +95,5 @@
 		from sys_dict
 		<include refid="where" />
 	</select>
-
+	
 </mapper>
