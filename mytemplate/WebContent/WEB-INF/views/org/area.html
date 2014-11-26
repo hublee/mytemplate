@@ -59,8 +59,7 @@
 						<div class="col-sm-9">
 							<div class="input-group col-sm-5">
 								<select class="chosen-select" name="type">
-									@var dicts = dictFn("sys_area_type");
-									@for(item in dicts){
+									@for(item in dictFn("sys_area_type")){
 										<option value="${item.value!}">${item.label!}</option>
 									@}
 								</select>
