@@ -1,4 +1,4 @@
-package com.template.core.util;
+package com.template.core.utils;
 
 import java.util.Properties;
 

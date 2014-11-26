@@ -1,4 +1,4 @@
-package com.template.core.util;
+package com.template.core.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 
 import com.template.core.spring.SpringContextHolder;
 
-public class BeetlUtil {
+public class BeetlUtils {
 	
 	private static final Map<String, Object> sharedVars = new HashMap<String, Object>();
 

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.template.core.util.Global;
-import com.template.core.util.PasswordEncoder;
+import com.template.core.utils.Global;
+import com.template.core.utils.PasswordEncoder;
 import com.template.web.model.SysUser;
 import com.template.web.service.SysResourceService;
 import com.template.web.service.SysUserService;

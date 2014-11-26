@@ -1,10 +1,10 @@
-package com.template.core.util;
+package com.template.core.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-public class EncryptUtil {
+public class EncryptUtils {
 
 	public static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
 			'7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };

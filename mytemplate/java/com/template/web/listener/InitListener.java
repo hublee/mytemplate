@@ -15,8 +15,8 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.template.core.util.BeetlUtil;
-import com.template.core.util.Global;
+import com.template.core.utils.BeetlUtils;
+import com.template.core.utils.Global;
 import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
@@ -47,8 +47,8 @@ public class InitListener implements ApplicationListener<ApplicationEvent> {
 				}
 
 				// 设置共享变量
-				BeetlUtil.addBeetlSharedVars("adminPath", Global.getAdminPath());
-				BeetlUtil.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
+				BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());
+				BeetlUtils.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
 				logger.info("--------------------------------------------------------------------------");
 				logger.info("初始化管理根路径:(key:adminPath,value:"
 						+ Global.getAdminPath() + ")");

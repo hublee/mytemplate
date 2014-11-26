@@ -5,7 +5,7 @@ package com.template.web.service;
 import com.template.core.base.TreeNode;
 import com.template.core.paging.PageHelper;
 import com.template.core.paging.PageInfo;
-import com.template.core.util.CodeUtil;
+import com.template.core.utils.CodeUtils;
 import com.template.web.dao.SysResourceMapper;
 import com.template.web.model.SysResource;
 
@@ -36,7 +36,7 @@ public class SysResourceService {
 	public int insertOrUpdateSysResource(Map<String,Object> params){
 		int count = 0;
 		if(StringUtils.isBlank(params.get("id").toString())){
-			Long[] cp = CodeUtil.getCodeAndPos(sysResourceMapper.findMaxCodeAndMaxPos());
+			Long[] cp = CodeUtils.getCodeAndPos(sysResourceMapper.findMaxCodeAndMaxPos());
 			params.put("code", cp[0]);
 			params.put("pos", cp[1]);
 			params.put("id", null);

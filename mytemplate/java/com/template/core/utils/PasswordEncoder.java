@@ -1,4 +1,4 @@
-package com.template.core.util;
+package com.template.core.utils;
 
 public class PasswordEncoder {
 
@@ -13,7 +13,7 @@ public class PasswordEncoder {
 	* @return
 	 */
 	public static String encrypt(String src, String salt) {
-		return EncryptUtil.MD5_HEX(EncryptUtil.MD5_HEX(src) + salt);
+		return EncryptUtils.MD5_HEX(EncryptUtils.MD5_HEX(src) + salt);
 	}
 
 	public static void main(String[] args) {

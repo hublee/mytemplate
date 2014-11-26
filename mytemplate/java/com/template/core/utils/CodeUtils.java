@@ -1,8 +1,8 @@
-package com.template.core.util;
+package com.template.core.utils;
 
 import com.template.web.model.SysResource;
 
-public class CodeUtil {
+public class CodeUtils {
 	
 	public static Long[] getCodeAndPos(SysResource resource){
 		long pos = 0,code = 1L;
