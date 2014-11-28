@@ -305,6 +305,7 @@ function cuslayer(params){
 				}; 
 				break;
 			default:
+				$.gdialog(params);
 				break;
 		}
 	};

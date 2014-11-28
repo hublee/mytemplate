@@ -29,10 +29,12 @@
 							<div class="input-group col-sm-5">
 								<input type="text" class="form-control search-query" readonly>
 								<span class="input-group-btn">
-									<button type="button" class="btn btn-purple btn-sm">
+									<button type="button" class="btn btn-purple btn-sm" id="choose-area">
 										<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
 									</button>
 								</span>
+								<#treeselect id="choose-area" modelId="id" 
+								modelName="name" treeurl="area/tree" />
 							</div>
 						</div>
 					</div>
