@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.template.core.utils.JsonUtils;
 import com.template.web.model.SysArea;
 import com.template.web.service.SysAreaService;
 
@@ -27,9 +26,9 @@ public class AreaController {
 	}
 	
 	@RequestMapping("tree")
-	public @ResponseBody String getAreaTreeList(){
+	public @ResponseBody List<SysArea> getAreaTreeList(){
 		List<SysArea> list = sysAreaService.findSysAreaListByParams(null);
-		return JsonUtils.getInstance().toJson(list);
+		return list;
 	}
 	
 	
