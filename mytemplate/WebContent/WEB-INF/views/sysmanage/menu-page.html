@@ -23,7 +23,7 @@
 						cus-mode="detail" cus-title="<${menu.name!}>详情"
 						cus-backfill-url="${adminPath}/menu/detail/showlayer" 
 						cus-backfill-data="{resourceId:'${menu.id}'}"
-						cus-width="350" cus-maxHeight="600"
+						cus-width="350" cus-maxHeight="600" class="menu-info"
 					>${menu.name}</a>
 				</td>
 				<td class="center">
@@ -56,7 +56,7 @@
 							cus-backfill-url="${adminPath}/menu/edit/showlayer" 
 							cus-backfill-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
 							cus-width="500" cus-maxHeight="600"
-							cus-formId="menu-addorupdate"
+							cus-formId="menu-save"
 							cus-mode-success="reloadUrl();"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
@@ -78,4 +78,11 @@
 	</tbody>
 </table>
 <div class="space-8"></div>
-<#paginate page="${page}" formId="${formId}" />
+<#paginate page="${page}" formId="menu-form" />
+<script>
+$(".menu-info").click(function(){
+	$.cuslayer({
+		pageUrl:adminPath+'/test'
+	});
+});
+</script>

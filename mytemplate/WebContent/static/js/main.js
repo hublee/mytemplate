@@ -139,10 +139,11 @@ $(document).ready(function(){
 			  	    	text: params.okText || "确定",
 			  	    	"class": params.okClass || "btn btn-primary btn-minier",
 			  	    	click: function() {
+			  	    		var flag = true;
 			  	    		if(undefined != params.ok && null != params.ok){
-			  	    			params.ok.call($(this), this);
+			  	    			flag = params.ok.call($(this), this);
 			  	    		}
-			  	    		$(this).dialog( "destroy" );
+			  	    		if(flag || flag == undefined) $(this).dialog( "destroy" );
 			  	    	}
 			  	    },
 			  	    {
@@ -305,7 +306,6 @@ function cuslayer(params){
 				}; 
 				break;
 			default:
-				$.gdialog(params);
 				break;
 		}
 	};
@@ -323,3 +323,31 @@ function getQueryString(name) {
 function reloadUrl(){
 	window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 }
+
+//分页
+function paging(formId,pageNo){
+	var $form = $("#"+formId),$target = $("#"+$form.attr('target')),spinner;
+	var pageNoInput = $form.find('input[name="pageNum"]');
+	if(pageNoInput.size() == 0){
+		$form.append("<input type='hidden'  name = 'pageNum' value='1'/>");
+		pageNoInput = $form.find('input[name="pageNum"]');
+	}
+	pageNoInput.val(pageNo);
+	$.ajax({
+		url:$form.attr('action'),
+		type:'post',
+		dataType:'html',
+		data:$form.serialize(),
+		beforeSend:function(){
+			spinner = new Spinner({color: '#3d9bce',width:20,radius:20}).spin($target[0]);
+		}
+	}).done(function(data){
+		if ($target) {
+			$target.stop();
+		}
+		$target.html(data);
+	}).fail(function(error){
+		alert("请求错误!");
+	})
+	return false;
+};

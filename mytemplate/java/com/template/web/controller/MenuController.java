@@ -3,6 +3,7 @@ package com.template.web.controller;
 import com.template.core.base.BaseController;
 import com.template.core.paging.PageInfo;
 import com.template.core.spring.SpringContextHolder;
+import com.template.core.utils.JsonUtils;
 import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
@@ -45,7 +46,7 @@ public class MenuController extends BaseController {
 	public String toMenu(Model model) {
 		SpringContextHolder.getBean(SysResourceService.class);
 		model.addAttribute("menuTreeList",
-				this.jsonStr(sysResourceService.getMenuTreeList()));
+				JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		return "sysmanage/menu";
 	}
 
@@ -60,8 +61,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
 		PageInfo<SysResource> page = sysResourceService.findMenuPageById(params);
-		model.addAttribute("page", page).addAttribute("formId",
-				params.get("formId"));
+		model.addAttribute("page", page);
 		return "sysmanage/menu-page";
 	}
 	
@@ -71,8 +71,8 @@ public class MenuController extends BaseController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/addorupdate", method = RequestMethod.POST)
-	public @ResponseBody Integer add(@RequestParam Map<String, Object> params) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public @ResponseBody Integer save(@RequestParam Map<String, Object> params) {
 		return sysResourceService.insertOrUpdateSysResource(params);
 	}
 
@@ -98,16 +98,16 @@ public class MenuController extends BaseController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value="/{mode}/showlayer",method=RequestMethod.POST)
+	@RequestMapping(value="/{mode}/showlayer")
 	public String showLayer(Long resourceId,Long pResourceId,@PathVariable("mode") String mode, Model model){
 		SysResource resource = null, pResource = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
 			pResource = sysResourceService.findSysResourceById(pResourceId);
-			model.addAttribute("menuTreeList",this.jsonStr(sysResourceService.getMenuTreeList()));
+			model.addAttribute("menuTreeList",JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		}else if(StringUtils.equalsIgnoreCase(mode, "edit")){
 			resource = sysResourceService.findSysResourceById(resourceId);
 			pResource = sysResourceService.findSysResourceById(pResourceId);
-			model.addAttribute("menuTreeList",this.jsonStr(sysResourceService.getMenuTreeList()));
+			model.addAttribute("menuTreeList",JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		}else if(StringUtils.equalsIgnoreCase(mode, "detail")){
 			resource = sysResourceService.findSysResourceById(resourceId);
 			pResource = sysResourceService.findSysResourceById(resource.getPid());

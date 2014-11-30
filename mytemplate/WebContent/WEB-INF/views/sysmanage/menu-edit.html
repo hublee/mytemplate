@@ -8,21 +8,20 @@
 </script>
 
 <div class="layer">
-	<form name="FormPost" id="menu-addorupdate" class="FormGrid"
-		onsubmit="return false;" style="overflow: auto; position: relative;" 
-		action="${adminPath}/menu/addorupdate">
+	<form name="FormPost" id="menu-save" class="FormGrid"  method="post"
+		action="${adminPath}/menu/save">
 		
 		<input type="hidden" value="${sysResource.id!}" name="id"/>
 		<table id="TblGrid_grid-table" class="EditTable" cellspacing="0"
 			cellpadding="0" border="0" width="100%">
 			<tbody>
-				<tr id="FormError" style="display: none">
-					<td class="ui-state-error"></td>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">菜单名称</td>
-					<td class="DataTD">&nbsp;<input type="text"
-						name="name" 
+					<td class="DataTD width-100">&nbsp;<input type="text"
+						name="name" datatype="*"  nullmsg="请输入菜单名称！"
 						class="FormElement ui-widget-content ui-corner-all"
 						value="${sysResource.name!}"></td>
 				</tr>
@@ -136,6 +135,7 @@
 </div>
 
 <script type="text/javascript">
+	
 $("#treeMenuChoose").width($("#menu-edit-pname").width());
 //图标切换改变
 $("#resourceInput").on("input propertychange",function(){

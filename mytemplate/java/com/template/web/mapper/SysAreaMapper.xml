@@ -24,11 +24,7 @@
 	</sql>
 
 	<!-- 新增sysArea -->
-	<insert id="insertSysArea">
-		<selectKey keyProperty="id" resultType="java.lang.Long"
-			order="BEFORE">
-			SELECT SEQ_sys_area.NEXTVAL FROM DUAL
-		</selectKey>
+	<insert id="insertSysArea" keyProperty="id" useGeneratedKeys="true">
 		insert into sys_area(
 		<include refid="sysAreaColumns" />
 		) values (

@@ -12,7 +12,7 @@ import com.template.core.base.Entity;
  */
 
 @SuppressWarnings({ "unused"})
-public class SysArea extends Entity {
+public class SysArea extends Entity{
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,13 +40,12 @@ public class SysArea extends Entity {
 
     private Date updateDate; //update_date <更新时间>
 
-
-
 	public Long getId() {
 		return this.getLong("id");
     }
    
     public void setId(Long id) {
+    	this.id = id;
 		this.set("id", id);
     }
 
@@ -55,6 +54,7 @@ public class SysArea extends Entity {
     }
    
     public void setCode(String code) {
+    	this.code = code;
 		this.set("code", code);
     }
 
@@ -63,6 +63,7 @@ public class SysArea extends Entity {
     }
    
     public void setCreateBy(String createBy) {
+    	this.createBy = createBy;
 		this.set("create_by", createBy);
     }
 
@@ -71,6 +72,7 @@ public class SysArea extends Entity {
     }
    
     public void setCreateDate(Date createDate) {
+    	this.createDate = createDate;
 		this.set("create_date", createDate);
     }
 
@@ -79,6 +81,7 @@ public class SysArea extends Entity {
     }
    
     public void setDelFlag(String delFlag) {
+    	this.delFlag = delFlag;
 		this.set("del_flag", delFlag);
     }
 
@@ -87,6 +90,7 @@ public class SysArea extends Entity {
     }
    
     public void setName(String name) {
+    	this.name = name;
 		this.set("name", name);
     }
 
@@ -95,6 +99,7 @@ public class SysArea extends Entity {
     }
    
     public void setParentId(String parentId) {
+    	this.parentId = parentId;
 		this.set("parent_id", parentId);
     }
 
@@ -103,6 +108,7 @@ public class SysArea extends Entity {
     }
    
     public void setParentIds(String parentIds) {
+    	this.parentIds = parentIds; 
 		this.set("parent_ids", parentIds);
     }
 
@@ -111,6 +117,7 @@ public class SysArea extends Entity {
     }
    
     public void setRemarks(String remarks) {
+    	this.remarks = remarks;
 		this.set("remarks", remarks);
     }
 
@@ -119,6 +126,7 @@ public class SysArea extends Entity {
     }
    
     public void setType(String type) {
+    	this.type = type;
 		this.set("type", type);
     }
 
@@ -127,6 +135,7 @@ public class SysArea extends Entity {
     }
    
     public void setUpdateBy(String updateBy) {
+    	this.updateBy = updateBy;
 		this.set("update_by", updateBy);
     }
 
@@ -135,6 +144,7 @@ public class SysArea extends Entity {
     }
    
     public void setUpdateDate(Date updateDate) {
+    	this.updateDate = updateDate;
 		this.set("update_date", updateDate);
     }
 

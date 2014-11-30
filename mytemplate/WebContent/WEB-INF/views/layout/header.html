@@ -13,9 +13,11 @@
 		<link rel="stylesheet" href="${ctxPath!}/static/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="${ctxPath!}/static/css/font-awesome.min.css" />
 		
-		<link rel="stylesheet" href="${ctxPath!}/static/css/jquery-ui.min.css" />
+		<!-- <link rel="stylesheet" href="${ctxPath!}/static/css/jquery-ui.min.css" /> -->
 		
 		<link rel="stylesheet" href="${ctxPath!}/static/chosen/chosen.min.css" />
+		
+		<link rel="stylesheet" href="${ctxPath!}/static/gritter/jquery.gritter.css" />
 		
 		<!-- ace styles -->
 		<link rel="stylesheet" href="${ctxPath!}/static/ace/css/ace.min.css" id="main-ace-style" />
@@ -29,12 +31,12 @@
 		<!--[if lte IE 9]>
 		 	<link rel="stylesheet" href="${ctxPath!}/static/ace/css/ace-ie.min.css" />
 		<![endif]-->
+		
+		${layoutContent!}
 
 		<!-- ace settings handler -->
 		<script src="${ctxPath!}/static/ace/js/ace-extra.min.js"></script>
 		
-		${layoutContent!}
-
 		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 		
 		<!--[if lte IE 8]>
@@ -43,4 +45,4 @@
 		<![endif]-->
 	</head>
 
-	<body class="skin-2">
+	<body class="skin-2" id="body-content">

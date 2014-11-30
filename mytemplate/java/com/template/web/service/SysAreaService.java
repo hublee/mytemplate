@@ -6,9 +6,13 @@ import com.template.core.paging.PageHelper;
 import com.template.core.paging.PageInfo;
 import com.template.web.dao.SysAreaMapper;
 import com.template.web.model.SysArea;
+
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,18 +27,16 @@ public class SysAreaService {
 	private SysAreaMapper sysAreaMapper;
 	
 	/**
-	 *新增SysArea
+	 *新增或更新SysArea
 	 */
-	public int insertSysArea(Map<String,Object> params){
-	     return sysAreaMapper.insertSysArea(params);
-	}
-	
-	/**
-	 *更新SysArea
-	 *@param {"id":""}
-	 */
-	public int updateSysArea(Map<String,Object> params){
-	     return sysAreaMapper.updateSysArea(params);
+	public int insertOrUpdateSysArea(Map<String,Object> params){
+		int count = 0;
+		if( params.containsKey("id") && StringUtils.isNotBlank(params.get("id").toString())){
+			count = sysAreaMapper.updateSysArea(params);
+		}else{
+			count = sysAreaMapper.insertSysArea(params);
+		}
+	    return count;
 	}
 	
 	/**

@@ -21,20 +21,21 @@
 		<div id="add" class="tab-pane clearfix">
 			
 			<div class="col-xs-12">
-				<form class="form-horizontal">
+				<form class="form-horizontal" action="${adminPath}/area/save" id="area-save-form">
 					<div class="form-group">
 						<label class="col-sm-4 control-label no-padding-right">上级区域:</label>
 
 						<div class="col-sm-8">
 							<div class="input-group col-sm-5">
-								<input type="text" class="form-control search-query" readonly>
+								<input type="text" class="form-control search-query" readonly 
+								id="parea-name"  placeholder="若不选择，默认添加国家">
 								<span class="input-group-btn">
 									<button type="button" class="btn btn-purple btn-sm" id="choose-area">
 										<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
 									</button>
 								</span>
-								<#treeselect id="choose-area" modelId="id" 
-								modelName="name" treeurl="area/tree" />
+								<#treeselect id="choose-area" modelIdName="parentId" 
+								 treeurl="area/tree" inputId="parea-name" title="选择上级区域" />
 							</div>
 						</div>
 					</div>
@@ -43,7 +44,9 @@
 
 						<div class="col-sm-8">
 							<div class="input-group col-sm-5">
-								<input type="text" class="form-control search-query" name="name">
+								<input type="text" 
+								class="form-control search-query" name="name" 
+								datatype="*"  nullmsg="请输入用户名！">
 							</div>
 						</div>
 					</div>
@@ -76,13 +79,35 @@
 							</div>
 						</div>
 					</div>
-						<button class="btn btn-primary btn-block  bigger-140">保 存</button>
+						<button class="btn btn-primary btn-block  bigger-140" id="add-area-btn">保 存</button>
 				</form>
 			</div>
 			
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
-$(".chosen-select").chosen({width: "100%"}); 
+$(function(){
+	$("#area-save-form").Validform({
+	   ajaxPost:true
+	});
+	
+	$(".chosen-select").chosen({width: "100%"}); 
+	$("#area-save-form").ajaxForms({
+		isPage:false,
+		btnId:"#add-area-btn",
+		btnClickFn:function(){
+			//这里验证
+			$("#area-save-form").submit();
+			
+			return false;
+		},
+		success:function(data){
+			if(data>0) reloadUrl();
+		}
+	});
+	
+})
+
 </script>

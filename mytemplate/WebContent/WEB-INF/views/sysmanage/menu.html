@@ -7,7 +7,7 @@
 			</a>
 		</div>
 		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
-			<form method="post" class="form-search" id="findMenu-form"
+			<form method="post" class="form-search" id="menu-form" target="menu-page"
 				action="${adminPath}/menu/list">
 				<div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
@@ -20,7 +20,7 @@
 						name="resourceName" placeholder="菜单名称">
 						<span class="input-group-btn">
 						<button type="button" class="btn  btn-success btn-sm"
-							id="findMenu-btn">
+							id="menu-btn">
 							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
 						</button>
 					</span>
@@ -84,34 +84,48 @@
 	
 	//编辑菜单
 	function beforeEditName(treeId, treeNode) {
-		cuslayer({
+		$.cuslayer({
+			mode:'save',
+			title:'<'+(treeNode.name)+'>编辑',
+			height:'480',
+			pageUrl:adminPath+'/menu/edit/showlayer',
+			pageData:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
+		});
+		/* cuslayer({
 			title:"编辑菜单",
 			backfill:{
 				url:"${adminPath}/menu/edit/showlayer",
 				data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
 			},
 			mode:"edit",
-			formId:"menu-addorupdate",
+			formId:"menu-save",
 			width:500,
 			maxHeight:600,
 			modeSuccess:function(){
 				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 			}
-		});
+		}); */
 		return false;
 	}
 	
 	//删除菜单
 	function beforeRemove(treeId, treeNode){
 		var resourceId = treeNode.id;
-		cuslayer({
+		$.cuslayer({
+			mode:'del',
+			msg:'你确定删除sdsdsdsds?',
+			title:'删除操作',
+			pageUrl:adminPath+'/menu/dels',
+			pageData:{"resourceId":resourceId}
+		});
+		/* cuslayer({
 			mode:"delete",
 			delText:"你确定删除此节点及其所有的子节点吗?(慎重操作)",
 			delParam:{url:"${adminPath}/menu/dels",data:{"resourceId":resourceId}},
 			modeSuccess:function(){
 				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 			}
-		});
+		}); */
 		return false;
 	}
 	
@@ -124,20 +138,27 @@
 		sObj.after(addStr);
 		var btn = $("#addBtn_"+treeNode.tId);
 		if (btn) btn.bind("click", function(){
-			cuslayer({
+			$.cuslayer({
+				mode:'save',
+				title:'添加资源',
+				height:'480',
+				pageUrl:adminPath+'/menu/add/showlayer',
+				pageData:{"pResourceId":treeNode.id}
+			});
+			/* cuslayer({
 				title:"添加菜单",
 				backfill:{
 					url:"${adminPath}/menu/add/showlayer",
 					data:{"pResourceId":treeNode.id}
 				},
 				mode:"add",
-				formId:"menu-addorupdate",
+				formId:"menu-save",
 				width:500,
 				maxHeight:600,
 				modeSuccess:function(){
 					window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
 				}
-			});	
+			});	 */
 			return false;
 		});
 	};
@@ -149,7 +170,7 @@
 	
 	//节点点击事件
 	function onClickNode(event, treeId, treeNode) {
-		$("#findMenu-form").find("input[name=resourceName]").val("");
+		$("#menu-form").find("input[name=resourceName]").val("");
 		var resourceId = treeNode.id;
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		var sNodes = treeObj.getSelectedNodes();
@@ -157,8 +178,8 @@
 		if (sNodes.length > 0) {
 			node = sNodes[0].getParentNode();
 		}
-		$("#findMenu-form").find("input[name=resourceId]").val(resourceId);
-		$("#findMenu-form").formReload(); //刷新表单
+		$("#menu-form").find("input[name=resourceId]").val(resourceId);
+		paging("menu-form",1); //刷新表单
 	};
 	
 	//树结构初始化
@@ -167,32 +188,32 @@
 	
 	//分页
 	$("#findMenu-btn-all").click(function(){
-		$("#findMenu-form").find("input[name=resourceId]").val("");
-		$("#findMenu-form").find("input[name=resourceName]").val("");
-		$("#findMenu-form").ajaxForms({
-			target:"#menu-page",
-			btnId:"#findMenu-btn",
-			btnClickFn:function(){
-				$("#findMenu-form").find("input[name=resourceId]").val("");
-				var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-				treeObj.cancelSelectedNode();
-			}
-		});
+		$("#menu-form").find("input[name=resourceId]").val("");
+		$("#menu-form").find("input[name=resourceName]").val("");
+		paging("menu-form",1);
 		var node = treeObj.getNodeByParam("id", 0);
 		treeObj.selectNode(node,false);
 	}).trigger("click");
 	
+	$("#menu-btn").click(function(){
+		$("#menu-form").find("input[name=resourceId]").val("");
+		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+		treeObj.cancelSelectedNode();
+		paging("menu-form",1);
+	});
+	
 	//既时搜索
-	/* $(("input[name=resourceName]")).bind("input propertychange",function(){
+	$(("input[name=resourceName]")).bind("input propertychange",function(){
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		treeObj.cancelSelectedNode();
 		$this = $(this);
-		$("#findMenu-form").find("input[name=resourceId]").val("");
-		$("#findMenu-form").formReload();
+		$("#menu-form").find("input[name=resourceId]").val("");
+		paging("menu-form",1);
 		if($(this).val()==""){
 			var node = treeObj.getNodeByParam("id", 0);
 			treeObj.selectNode(node,false);
+			$this.focus();
 		}
-	}); */
+	});
 	
 </script>

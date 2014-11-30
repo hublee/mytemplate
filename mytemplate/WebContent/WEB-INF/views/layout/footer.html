@@ -25,10 +25,13 @@
 		</script>
 		<script src="${ctxPath!}/static/bootstrap/bootstrap.min.js"></script>
 
+		<script src="${ctxPath!}/static/gritter/jquery.gritter.min.js"></script>
+		
 		<!-- ace scripts -->
 		<script src="${ctxPath!}/static/ace/js/ace-elements.min.js"></script>
 		<script src="${ctxPath!}/static/ace/js/ace.min.js"></script>
 		${layoutContent!}
+		
 		<script type="text/javascript">
 			window.onload=function(){
 				$("#ace-settings-sidebar").trigger("click");//固定左侧菜单
@@ -36,8 +39,8 @@
 				$("#ace-settings-breadcrumbs").trigger("click");//固定子菜单
 				$("#ace-settings-highlight").trigger("click");
 			};
-			//菜单
-			var $curmenu;
+			
+			var $curmenu,ctxPath = "${ctxPath!}",adminPath = "${adminPath!}";
 			$(function(){
 				var a = $("#sidebar-menu a[id]");
 				a.on("click",function(){

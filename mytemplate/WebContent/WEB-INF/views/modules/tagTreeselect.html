@@ -2,7 +2,7 @@
 var key, lastValue = "", nodeList = [];
 var tree, setting = {
 		view:{selectedMulti:false},
-		check:{enable:"${checked!false}",nocheckInherit:true},
+		check:{enable:eval("${checked!}"),nocheckInherit:true},
 		data:{
 			simpleData:{
 				enable:true,
@@ -12,7 +12,7 @@ var tree, setting = {
 		},
 		view:{
 			fontCss:function(treeId, treeNode) {
-				return (!!treeNode.highlight) ? {"font-weight":"bold"} : {"font-weight":"normal"};
+				return (!!treeNode.highlight) ? {"font-weight":"bold","color":"red"} : {"font-weight":"normal","color":"#333"};
 			}
 		},
 		callback:{
@@ -30,7 +30,7 @@ var tree, setting = {
 $(document).ready(function(){
 	$.get("${ctxPath}/${adminPath}/${url}?t="+new Date().getTime(), function(zNodes){
 		// 初始化树结构
-		tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+		tree = $.fn.zTree.init($("#select-tree"), setting, zNodes);
 		
 		// 默认展开一级节点
 		var nodes = tree.getNodesByParam("level", 0);
@@ -99,18 +99,18 @@ function updateNodes(highlight) {
 	}
 };
 function search() {
-	$("#search").slideToggle(200);
+	$("#search").removeClass('hide');
 	$("#txt").toggle();
 	$("#key").focus();
 };
 </script>
 <div>
 	<div style="position:absolute;right:8px;top:5px;cursor:pointer;" onclick="search();">
-		<i class="icon-search"></i><label id="txt">搜索</label>
+		<button class="btn btn-xs btn-primary" id="txt"><i class="ace-icon fa fa-search"></i>搜索</button>
 	</div>
 	<div id="search" class="control-group hide" style="padding:10px 0 0 15px;">
 		<label for="key" class="control-label" style="float:left;padding:5px 5px 3px;">关键字：</label>
 		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:180px;">
 	</div>
-	<div id="tree" class="ztree" style="padding:15px 20px;"></div>
+	<ul id="select-tree" class="ztree" style="padding:15px 20px;"></ul>
 </div>
