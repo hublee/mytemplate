@@ -114,7 +114,7 @@ public class MenuController extends BaseController {
 		}
 		model.addAttribute("pResource", pResource)
 			.addAttribute("sysResource", resource);
-		return mode.equals("detail")?"sysmanage/menu-detail":"sysmanage/menu-edit";
+		return mode.equals("detail")?"sysmanage/menu-detail":"sysmanage/menu-save";
 	}
 
 }

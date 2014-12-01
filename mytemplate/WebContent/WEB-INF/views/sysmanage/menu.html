@@ -48,7 +48,6 @@
 </div>
 
 <script type="text/javascript">
-
 	var setting = {
 		view:{
 			selectedMulti : false,
@@ -87,24 +86,10 @@
 		$.cuslayer({
 			mode:'save',
 			title:'<'+(treeNode.name)+'>编辑',
-			height:'480',
-			pageUrl:adminPath+'/menu/edit/showlayer',
-			pageData:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
+			height:'530',
+			url:adminPath+'/menu/edit/showlayer',
+			data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
 		});
-		/* cuslayer({
-			title:"编辑菜单",
-			backfill:{
-				url:"${adminPath}/menu/edit/showlayer",
-				data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
-			},
-			mode:"edit",
-			formId:"menu-save",
-			width:500,
-			maxHeight:600,
-			modeSuccess:function(){
-				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
-			}
-		}); */
 		return false;
 	}
 	
@@ -113,19 +98,12 @@
 		var resourceId = treeNode.id;
 		$.cuslayer({
 			mode:'del',
-			msg:'你确定删除sdsdsdsds?',
+			msg:'你确定删除此节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
-			pageUrl:adminPath+'/menu/dels',
-			pageData:{"resourceId":resourceId}
+			url:adminPath+'/menu/dels',
+			data:{"resourceId":resourceId},
+			reloadUrl:true
 		});
-		/* cuslayer({
-			mode:"delete",
-			delText:"你确定删除此节点及其所有的子节点吗?(慎重操作)",
-			delParam:{url:"${adminPath}/menu/dels",data:{"resourceId":resourceId}},
-			modeSuccess:function(){
-				window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
-			}
-		}); */
 		return false;
 	}
 	
@@ -141,24 +119,10 @@
 			$.cuslayer({
 				mode:'save',
 				title:'添加资源',
-				height:'480',
-				pageUrl:adminPath+'/menu/add/showlayer',
-				pageData:{"pResourceId":treeNode.id}
+				height:'530',
+				url:adminPath+'/menu/add/showlayer',
+				data:{"pResourceId":treeNode.id}
 			});
-			/* cuslayer({
-				title:"添加菜单",
-				backfill:{
-					url:"${adminPath}/menu/add/showlayer",
-					data:{"pResourceId":treeNode.id}
-				},
-				mode:"add",
-				formId:"menu-save",
-				width:500,
-				maxHeight:600,
-				modeSuccess:function(){
-					window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
-				}
-			});	 */
 			return false;
 		});
 	};

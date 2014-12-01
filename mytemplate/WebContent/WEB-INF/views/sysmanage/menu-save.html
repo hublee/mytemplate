@@ -30,7 +30,7 @@
 					<td class="DataTD">&nbsp;<span class="red" style="width:30%">${ctxPath!}/${adminPath}/</span>
 						<input type="text" style="width:58%" id="name" name="url" role="textbox"
 						class="FormElement ui-widget-content ui-corner-all"
-						value="${sysResource.url!}"
+						value="${sysResource.url!}" 
 						placeholder=""></td>
 				</tr>
 				<tr class="FormData">
@@ -121,7 +121,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">菜单描述</td>
 					<td class="DataTD">
-						<textarea name="description" class="autosize-transition form-control " 
+						<textarea name="description" class="autosize-transition form-control "
 						style="resize: none;">${sysResource.description!}</textarea>	
 					</td>
 				</tr>
@@ -132,7 +132,9 @@
 		background-color: whiteSmoke;z-index: 9998;max-height: 250px; overflow-y:auto;overflow-x:hidden;">
 		<ul id="treeMenuChoose" class="ztree"></ul>
 	</div>
+	<#save formid="menu-save" reloadUrl="true" />
 </div>
+
 
 <script type="text/javascript">
 	
