@@ -22,7 +22,7 @@ public class TagController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping("/treeselect")
+	@RequestMapping("treeselect")
 	public String treeSelect(HttpServletRequest request,Model model){
 		model.addAttribute("id", request.getParameter("id")); //提交的id,必填
 		model.addAttribute("nameId", request.getParameter("nameId")); //选择的节点名称id,必填
@@ -33,6 +33,11 @@ public class TagController {
 		model.addAttribute("idKey",  request.getParameter("idKey")); //id属性名称
 		model.addAttribute("pIdKey", request.getParameter("pIdKey")); //pid属性名称
 		return "modules/tagTreeselect";
+	}
+	
+	@RequestMapping("fontawesome")
+	public String fontAwesome(){
+		return "modules/fontawesome";
 	}
 
 }
