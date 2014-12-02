@@ -42,9 +42,9 @@ public class InitListener implements ApplicationListener<ApplicationEvent> {
 				List<SysResource> resList = sysResourceService
 						.findSysResourceListByParams(null);
 				Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
-				/*for (SysResource res : resList) {
+				for (SysResource res : resList) {
 					AllResourceMap.put(res.getUrl(), res);
-				}*/
+				}
 				
 				// 设置共享变量
 				BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());

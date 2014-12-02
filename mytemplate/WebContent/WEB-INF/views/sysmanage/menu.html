@@ -84,7 +84,7 @@
 	//编辑菜单
 	function beforeEditName(treeId, treeNode) {
 		$.cuslayer({
-			mode:'save',
+			mode:'page',
 			title:'<'+(treeNode.name)+'>编辑',
 			height:'530',
 			url:adminPath+'/menu/edit/showlayer',
@@ -98,11 +98,11 @@
 		var resourceId = treeNode.id;
 		$.cuslayer({
 			mode:'del',
-			msg:'你确定删除此节点及其所有的子节点吗?(慎重操作)?',
+			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
 			url:adminPath+'/menu/dels',
 			data:{"resourceId":resourceId},
-			reloadUrl:true
+			reloadurl:true
 		});
 		return false;
 	}
@@ -117,7 +117,7 @@
 		var btn = $("#addBtn_"+treeNode.tId);
 		if (btn) btn.bind("click", function(){
 			$.cuslayer({
-				mode:'save',
+				mode:'page',
 				title:'添加资源',
 				height:'530',
 				url:adminPath+'/menu/add/showlayer',
@@ -167,7 +167,7 @@
 	});
 	
 	//既时搜索
-	$(("input[name=resourceName]")).bind("input propertychange",function(){
+	/* $(("input[name=resourceName]")).bind("input propertychange",function(){
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		treeObj.cancelSelectedNode();
 		$this = $(this);
@@ -178,6 +178,6 @@
 			treeObj.selectNode(node,false);
 			$this.focus();
 		}
-	});
+	}); */
 	
 </script>

@@ -19,11 +19,13 @@
 			<tr>
 				<td class="center">${menu.id}</td>
 				<td class="center">
-					<a href="javascript:;" title="查看<${menu.name!}>详情"
-						cus-mode="detail" cus-title="<${menu.name!}>详情"
-						cus-backfill-url="${adminPath}/menu/detail/showlayer" 
-						cus-backfill-data="{resourceId:'${menu.id}'}"
-						cus-width="350" cus-maxHeight="600" class="menu-info"
+					<a href="javascript:;" 
+						data-title="<${menu.name!}>详情" data-mode="page"
+						data-url="${adminPath}/menu/detail/showlayer"
+						data-data="{resourceId:'${menu.id}'}"
+						data-width="350" data-height="510"
+						data-maxmin="false" data-closeBtn="[1,true]"
+						class="menu-info"
 					>${menu.name}</a>
 				</td>
 				<td class="center">
@@ -52,22 +54,19 @@
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
-							cus-mode="edit" cus-title="<${menu.name!}>编辑"
-							cus-backfill-url="${adminPath}/menu/edit/showlayer" 
-							cus-backfill-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
-							cus-width="500" cus-maxHeight="600"
-							cus-formId="menu-save"
-							cus-mode-success="reloadUrl();"
+							data-mode="page" data-title="<menu.name)>编辑"
+							data-url="${adminPath}/menu/edit/showlayer"
+							data-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
+							data-height="530"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>
 
 						<a class="red" href="javascript:void(0);" 
-							cus-mode="delete"
-							cus-text="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
-							cus-delParam-url="${adminPath}/menu/dels"
-							cus-delParam-data="{resourceId:'${menu.id}'}"
-							cus-mode-success="reloadUrl();"
+							data-mode="del" data-title="删除操作"
+							data-msg="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
+							data-url="${adminPath}/menu/dels" data-data="{resourceId:'${menu.id}'}"
+							data-reloadurl="true"
 						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
 						</a>
@@ -78,4 +77,4 @@
 	</tbody>
 </table>
 <div class="space-8"></div>
-<#paginate page="${page}" formId="menu-form" />
+<#paginate page="${page}" formid="menu-form" />

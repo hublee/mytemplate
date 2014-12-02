@@ -15,20 +15,24 @@
 			btns:2,
 			btn:['确 定','取 消'],
 			msg:'',
-			reloadUrl:false //是否url刷新,默认false当前右侧刷新
+			reloadurl:false //是否url刷新,默认false当前右侧刷新
 		};
 		
 		params = $.extend(defaults, params);
 		
 		var mode = params.mode;
 		
-		if(mode == 'del' || mode == 'delete' || mode == 'save'){
+		if(undefined != params.closebtn){
+			params.closeBtn = params.closebtn;
+		}
+		
+		if(mode == 'del' || mode == 'delete' || mode == 'page'){
 			if(undefined == params.url) {
 				alert("请求url未填写");
 				return false;
 			}
 		}
-		
+		console.log(params)
 		if(mode == 'del' || mode == 'delete'){
 			layer.confirm(params.msg,function(index){
 				$.ajax({
@@ -36,7 +40,7 @@
 				}).done(function(data){
         			if(data>0) {
         				layer.msg('删除成功', 1, 1,function(){
-        					if(params.reloadUrl){
+        					if(params.reloadurl){
         						reloadUrl();
         					}else{
         						$curmenu.trigger('click');
@@ -48,8 +52,7 @@
         		});
 			},params.title);
 		}
-		
-		if(mode == 'save'){
+		if(mode == 'page'){
 			params.height = parseInt(params.height)+35+'';
 			$.ajax({
 				url:params.url,data:params.data,type:'post'
@@ -72,6 +75,9 @@
 				    },
 				    restore: function(layero){
 				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				    },
+				    close: function(index){
+				    	layer.closeTips();
 				    }
 				});
 				
@@ -84,6 +90,14 @@
 	$.cuslayer = cuslayer;
 })(jQuery);
 
+//属性模式
+$(document).on('click','a[data-mode]',function(){
+	var data = $(this).data();
+	if(undefined != data['data'] && typeof data['data'] != "object") {
+		data['data'] = eval("("+data.data+")");
+	}
+	$.cuslayer(data);
+});
 
 //得到url的参数
 function getQueryString(name) {
