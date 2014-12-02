@@ -1,12 +1,14 @@
 package com.template.web.controller;
 
 import com.template.core.base.BaseController;
+import com.template.core.base.TreeNode;
 import com.template.core.paging.PageInfo;
 import com.template.core.spring.SpringContextHolder;
 import com.template.core.utils.JsonUtils;
 import com.template.web.model.SysResource;
 import com.template.web.service.SysResourceService;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -48,6 +50,15 @@ public class MenuController extends BaseController {
 		model.addAttribute("menuTreeList",
 				JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		return "sysmanage/menu";
+	}
+	
+	/**
+	 * 菜单树
+	* @return
+	 */
+	@RequestMapping("tree")
+	public @ResponseBody List<TreeNode> tree(){
+		return sysResourceService.getMenuTreeList();
 	}
 
 	/**
@@ -103,14 +114,12 @@ public class MenuController extends BaseController {
 		SysResource resource = null, pResource = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
 			pResource = sysResourceService.findSysResourceById(pResourceId);
-			model.addAttribute("menuTreeList",JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		}else if(StringUtils.equalsIgnoreCase(mode, "edit")){
 			resource = sysResourceService.findSysResourceById(resourceId);
 			pResource = sysResourceService.findSysResourceById(pResourceId);
-			model.addAttribute("menuTreeList",JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
 		}else if(StringUtils.equalsIgnoreCase(mode, "detail")){
 			resource = sysResourceService.findSysResourceById(resourceId);
-			pResource = sysResourceService.findSysResourceById(resource.getPid());
+			pResource = sysResourceService.findSysResourceById(resource.getParentId());
 		}
 		model.addAttribute("pResource", pResource)
 			.addAttribute("sysResource", resource);

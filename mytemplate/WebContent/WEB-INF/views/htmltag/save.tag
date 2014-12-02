@@ -55,10 +55,11 @@ $(function(){
 		layer.closeAll();
 		return false;
 	});
-
-	$("#${formid} input,#${formid} textarea").click(function() {
+	
+	$("#${formid} input,#${formid} textarea").blur(function(){
 		layer.closeTips();
 		return false;
-	});
+	})
+
 });
 </script>

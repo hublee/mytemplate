@@ -23,7 +23,7 @@
 						data-title="<${menu.name!}>详情" data-mode="page"
 						data-url="${adminPath}/menu/detail/showlayer"
 						data-data="{resourceId:'${menu.id}'}"
-						data-width="350" data-height="510"
+						data-width="350" data-height="520"
 						data-maxmin="false" data-closeBtn="[1,true]"
 						class="menu-info"
 					>${menu.name}</a>
@@ -56,7 +56,7 @@
 						<a class="green" href="javascript:void(0);" 
 							data-mode="page" data-title="<menu.name)>编辑"
 							data-url="${adminPath}/menu/edit/showlayer"
-							data-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
+							data-data="{resourceId:'${menu.id}',pResourceId:'${menu.parent_id}'}"
 							data-height="530"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>

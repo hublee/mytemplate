@@ -1,9 +1,11 @@
 <script type="text/javascript">
 	$(function(){
-	   //初始化菜单类别
-	   var resourceType='${sysResource.type!0}',common = '${sysResource.common!0}';
+	   //初始化单选
+	   var resourceType='${sysResource.type!0}',common = '${sysResource.common!0}',
+	   status = '${sysResource.status!0}';
 	   $("input:radio[name=type][value="+resourceType+"]")[0].checked=true;
 	   $("input:radio[name=common][value="+common+"]")[0].checked=true;
+	   $("input:radio[name=status][value="+status+"]")[0].checked=true;
 	});
 </script>
 
@@ -12,22 +14,21 @@
 		action="${adminPath}/menu/save">
 		
 		<input type="hidden" value="${sysResource.id!}" name="id"/>
-		<table id="TblGrid_grid-table" class="EditTable" cellspacing="0"
-			cellpadding="0" border="0" width="100%">
+		<table class="EditTable" width="100%">
 			<tbody>
 				<tr style="display: none;">
 					<td class="ui-state-error" id="FormError"></td>
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">菜单名称</td>
-					<td class="DataTD width-100">&nbsp;<input type="text"
+					<td class="DataTD width-100"><input type="text"
 						name="name" datatype="*"  nullmsg="请输入菜单名称！"
 						class="FormElement ui-widget-content ui-corner-all"
 						value="${sysResource.name!}"></td>
 				</tr>
 				<tr  class="FormData">
-					<td class="CaptionTD">菜单url</td>
-					<td class="DataTD">&nbsp;<span class="red" style="width:30%">${ctxPath!}/${adminPath}/</span>
+					<td class="CaptionTD">菜单链接</td>
+					<td class="DataTD"><span class="red" style="width:30%">${ctxPath!}/${adminPath}/</span>
 						<input type="text" style="width:58%" id="name" name="url" role="textbox"
 						class="FormElement ui-widget-content ui-corner-all"
 						value="${sysResource.url!}" 
@@ -35,18 +36,15 @@
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">父级菜单</td>
-					<td colspan="1" class="DataTD">
-					&nbsp;<input class="FormElement" 
-							 type="text" id="menu-edit-pname" value="${pResource.name!}" readonly 
-							 onclick="showMenu();">
-							 <input id="menu-pid" type="hidden" name="pid" 
-							 value="${pResource.id!0}">
+					<td class="DataTD">
+					<#treeselect url="menu/tree" modelNameValue="${pResource.name!}" 
+							modelIdValue="${pResource.id!0}" pIdKey="parentId"/>
 					</td>
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">菜单类型</td>
-					<td colspan="1" class="DataTD">
-					<div class="radio inline">
+					<td class="DataTD">
+						<div class="radio inline">
 							<label>
 								<input name="type" type="radio" class="ace" checked value="0"/>
 								<span class="lbl"> 菜单资源 </span>
@@ -62,8 +60,8 @@
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">权限类型</td>
-					<td colspan="1" class="DataTD">
-					<div class="radio inline">
+					<td class="DataTD">
+						<div class="radio inline">
 							<label>
 								<input name="common" type="radio" class="ace" checked value="0"/>
 								<span class="lbl"> 权限资源 </span>
@@ -80,7 +78,7 @@
 				<tr  class="FormData">
 					<td class="CaptionTD">菜单图标</td>
 					<td class="DataTD">
-					&nbsp;<span class="input-icon input-icon-right" style="width:45%;">
+					<span class="input-icon input-icon-right" style="width:45%;">
 							<input type="text" name="icon" style="padding-right: 0px;width:100%;" 
 							value="${sysResource.icon!}" id="resourceInput">
 							<i class="ace-icon fa ${sysResource.icon!} green" 
@@ -93,7 +91,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">菜单序号</td>
 					<td class="DataTD">
-						&nbsp;<input class="FormElement"
+						<input class="FormElement"
 						id="id_g" type="text" name="sort" value="${sysResource.sort!1}"
 						onkeyup="this.value=this.value.replace(/\D/g,'')" 
 						onafterpaste="this.value=this.value.replace(/\D/g,'')"
@@ -103,18 +101,17 @@
 				<tr class="FormData">
 					<td class="CaptionTD">使用状态</td>
 					<td class="DataTD">
-						<div class="switch" style="margin-left: 2px;">
-						    <input type="checkbox"  class="dxswitch"  
-						    data-on-text="可用" data-off-text="禁用"
-						    data-on-color="info" data-off-color="danger"
-						    @if(!isEmpty(sysResource)){
-						    	${decode(sysResource.status,0,'checked','')}
-						    @}else{
-						    	checked
-						    @}
-						    />
-						    <input type="hidden" 
-						    value="${sysResource.status!0}" name="status" id="status"/>
+						<div class="radio inline">
+							<label>
+								<input name="status" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 正常 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="status" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 禁用</span>
+							</label>
 						</div>
 					</td>
 				</tr>
@@ -145,63 +142,5 @@ $("#resourceInput").on("input propertychange",function(){
 }).trigger("change");
 //描述框自动扩张高度
 $('textarea[class*=autosize]').autosize({append: "\n"});
-//单选按钮
-$('.dxswitch').bootstrapSwitch();
-$('.dxswitch').on('switchChange.bootstrapSwitch', function (event, state) {
-	if(state){
-		$("#status").val("0");
-	}else{
-		$("#status").val("1");
-	}
-});
 
-var setting = {
-	view: {
-		dblClickExpand: false
-	},
-	data: {
-		simpleData : {
-			enable : true,
-			idKey : "id",
-			pIdKey : "pid"
-		}
-	},
-	callback: {
-		onClick: onClick
-	}
-};
-
-function onClick(e, treeId, treeNode) {
-	if("${sysResource.id!}" == treeNode.id) return false;
-	var menuPid = $("#menu-pid");
-	var menuPname = $("#menu-edit-pname");
-	menuPid.attr("value", treeNode.id);
-	menuPname.val(treeNode.name);
-}
-
-function showMenu() {
-	var menuPid = $("#menu-edit-pname");
-	var cityOffset = $("#menu-edit-pname").position();
-	$("#menuContent").css({left:cityOffset.left+20 + "px", top:cityOffset.top + menuPid.outerHeight()+13 + "px"}).slideDown("fast");
-
-	$("body").bind("mousedown", onBodyDown);
-}
-function hideMenu() {
-	$("#menuContent").fadeOut("fast");
-	$("body").unbind("mousedown", onBodyDown);
-}
-function onBodyDown(event) {
-	if (!$(event.target).is("span.switch")) {
-		hideMenu();
-	}
-}
-
-/* $("#treeMenuChoose").niceScroll({
-	cursorwidth : '8px',
-	cursoropacitymax:1,
-	zindex:9999,
-	cursorcolor:"#428BCA"
-}); */
-
-$.fn.zTree.init($("#treeMenuChoose"), setting, ${menuTreeList});
 </script>

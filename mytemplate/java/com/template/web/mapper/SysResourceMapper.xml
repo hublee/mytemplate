@@ -3,11 +3,11 @@
 <mapper namespace="com.template.web.dao.SysResourceMapper">
 
 	<sql id="sysResourceColumns">
-		id,code,common,description,icon,name,pid,pos,sort,status,type,url
+		id,code,common,description,icon,name,parent_id,pos,sort,status,type,url
 	</sql>
 
 	<sql id="AliasColumns">
-		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.pid,sr.sort,sr.status,sr.type,sr.url,sr.common,sr.pos
+		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,sr.status,sr.type,sr.url,sr.common,sr.pos
 	</sql>
 
 	<sql id="where">
@@ -18,7 +18,7 @@
 			<if test=" description!=null and description!='' ">and description=#{description}</if>
 			<if test=" icon!=null and icon!='' ">and icon=#{icon}</if>
 			<if test=" name!=null and name!='' ">and name=#{name}</if>
-			<if test=" pid!=null and pid!='' ">and pid=#{pid}</if>
+			<if test=" parentId!=null and parentId!='' ">and parent_id=#{parentId}</if>
 			<if test=" pos!=null and pos!='' ">and pos=#{pos}</if>
 			<if test=" sort!=null and sort!='' ">and sort=#{sort}</if>
 			<if test=" status!=null and status!='' ">and status=#{status}</if>
@@ -28,22 +28,19 @@
 	</sql>
 
 	<!-- 新增sysResource -->
-	<insert id="insertSysResource" useGeneratedKeys="true"
-		keyProperty="id">
-		insert into sys_resource(
-		<include refid="sysResourceColumns" />
-		) values (
+	<insert id="insertSysResource" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_resource(<include refid="sysResourceColumns"/>) values (
 		#{id,jdbcType=NUMERIC},
 		#{code,jdbcType=NUMERIC},
-		#{common,jdbcType=INTEGER},
+		#{common,jdbcType=VARCHAR},
 		#{description,jdbcType=VARCHAR},
 		#{icon,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
-		#{pid,jdbcType=NUMERIC},
+		#{parentId,jdbcType=NUMERIC},
 		#{pos,jdbcType=NUMERIC},
 		#{sort,jdbcType=INTEGER},
-		#{status,jdbcType=INTEGER},
-		#{type,jdbcType=INTEGER},
+		#{status,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
 		#{url,jdbcType=VARCHAR})
 	</insert>
 
@@ -56,7 +53,7 @@
 			<if test="description!=null">description=#{description},</if>
 			<if test="icon!=null">icon=#{icon},</if>
 			<if test="name!=null">name=#{name},</if>
-			<if test="pid!=null">pid=#{pid},</if>
+			<if test="parentId!=null">parent_id=#{parentId},</if>
 			<if test="pos!=null">pos=#{pos},</if>
 			<if test="sort!=null">sort=#{sort},</if>
 			<if test="status!=null">status=#{status},</if>
@@ -114,7 +111,7 @@
 		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
 		from sys_resource sr
 		LEFT JOIN sys_resource srp
-		ON sr.pid=srp.id
+		ON sr.parent_id=srp.id
 		<where>
 			<if test="resourceName != ''">
 				sr.name like concat( '%' , #{resourceName} , '%' )

@@ -75,8 +75,8 @@
 				    	layero.find('.xuboxPageHtml').css({
 				    		'overflowY':'auto',
 				    		'height':parseInt(params.height)-35,
-				    		'width':params.width
-				    		//'paddingBottom':'10px'
+				    		'width':params.width,
+				    		'paddingBottom':'30px'
 				    		});
 				    },
 				    full:function(layero){
@@ -103,14 +103,61 @@
 	$.cuslayer = cuslayer;
 })(jQuery);
 
-//属性模式
-$(document).on('click','[data-mode]',function(){
-	var data = $(this).data();
-	if(undefined != data['data'] && typeof data['data'] != "object") {
-		data['data'] = eval("("+data.data+")");
-	}
-	$.cuslayer(data);
+$(function(){
+	//数组操作
+	Array.prototype.indexOf = function(val) {              
+	    for (var i = 0; i < this.length; i++) {  
+	        if (this[i] == val) return i;  
+	    }  
+	    return -1;  
+	};
+	Array.prototype.remove = function(val) {  
+	    var index = this.indexOf(val);  
+	    if (index > -1) {  
+	        this.splice(index, 1);  
+	    }  
+	};
+	
+	// 禁用Enter键表单自动提交
+	document.onkeydown = function(event) {
+		var target, code, tag;
+		if (!event) {
+			event = window.event; // 针对ie浏览器
+			target = event.srcElement;
+			code = event.keyCode;
+			if (code == 13) {
+				tag = target.tagName;
+				if (tag == "TEXTAREA") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} else {
+			target = event.target; // 针对遵循w3c标准的浏览器，如Firefox
+			code = event.keyCode;
+			if (code == 13) {
+				tag = target.tagName;
+				if (tag == "INPUT") {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		}
+	};
+	
+	//属性模式
+	$(document).on('click','[data-mode]',function(){
+		var data = $(this).data();
+		if(undefined != data['data'] && typeof data['data'] != "object") {
+			data['data'] = eval("("+data.data+")");
+		}
+		$.cuslayer(data);
+	});
+	
 });
+
 
 //得到url的参数
 function getQueryString(name) {

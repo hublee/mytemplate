@@ -120,7 +120,7 @@ public class SysResourceService {
 			TreeNode tn = new TreeNode();
 			SysResource res = resList.get(i);
 			tn.setId(res.getId());
-			tn.setPid(res.getPid() == null ? 0L : res.getPid());
+			tn.setParentId(res.getParentId() == null ? 0L : res.getParentId());
 			tn.setName(res.getName());
 			menuList.add(tn);
 		}
@@ -144,7 +144,7 @@ public class SysResourceService {
 		for(int i=0;i<list.size();i++){
 			SysResource res = list.get(i);
 			TreeNode node = new TreeNode(res.getId(),
-					res.getPid(), res.getName(),
+					res.getParentId(), res.getName(),
 					res.getUrl(), res.getIcon());
 			menuList.add(node);
 		}

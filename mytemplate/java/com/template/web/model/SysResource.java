@@ -18,7 +18,7 @@ public class SysResource extends Entity {
 
     private Long code; //code <权限码 1<<n>
 
-    private Integer common; //common <是否是公共资源(0.不是 1.是)>
+    private String common; //common <是否是公共资源(0.不是 1.是)>
 
     private String description; //description <描述>
 
@@ -26,15 +26,15 @@ public class SysResource extends Entity {
 
     private String name; //name <资源名称>
 
-    private Long pid; //pid <父级id>
+    private Long parentId; //parent_id <父级id>
 
     private Long pos; //pos <权限位,相当于对权限分组,从0开始>
 
     private Integer sort; //sort <排序号>
 
-    private Integer status; //status <状态(0.正常 1.禁用)>
+    private String status; //status <状态(0.正常 1.禁用)>
 
-    private Integer type; //type <类型(0.菜单 1.按钮)>
+    private String type; //type <类型(0.菜单 1.按钮)>
 
     private String url; //url <链接>
 
@@ -56,11 +56,11 @@ public class SysResource extends Entity {
 		this.set("code", code);
     }
 
-	public Integer getCommon() {
-		return this.getInteger("common");
+	public String getCommon() {
+		return this.getString("common");
     }
    
-    public void setCommon(Integer common) {
+    public void setCommon(String common) {
 		this.set("common", common);
     }
 
@@ -88,12 +88,12 @@ public class SysResource extends Entity {
 		this.set("name", name);
     }
 
-	public Long getPid() {
-		return this.getLong("pid");
+	public Long getParentId() {
+		return this.getLong("parent_id");
     }
    
-    public void setPid(Long pid) {
-		this.set("pid", pid);
+    public void setParentId(Long parentId) {
+		this.set("parent_id", parentId);
     }
 
 	public Long getPos() {
@@ -112,19 +112,19 @@ public class SysResource extends Entity {
 		this.set("sort", sort);
     }
 
-	public Integer getStatus() {
-		return this.getInteger("status");
+	public String getStatus() {
+		return this.getString("status");
     }
    
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
 		this.set("status", status);
     }
 
-	public Integer getType() {
-		return this.getInteger("type");
+	public String getType() {
+		return this.getString("type");
     }
    
-    public void setType(Integer type) {
+    public void setType(String type) {
 		this.set("type", type);
     }
 

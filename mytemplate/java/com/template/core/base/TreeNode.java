@@ -8,7 +8,7 @@ import java.util.Map;
 public class TreeNode {
 
 	private Long id;
-	private Long pid; //父级id
+	private Long parentId; //父级id
 	private String name; //名称
 	private String url; //链接
 	private String icon = "fa fa-home"; //图标
@@ -20,10 +20,10 @@ public class TreeNode {
 	
 	
 	public TreeNode(){}
-	public TreeNode(Long id, Long pid, String name, String url, String icon) {
+	public TreeNode(Long id, Long parentId, String name, String url, String icon) {
 		super();
 		this.id = id;
-		this.pid = pid;
+		this.parentId = parentId;
 		this.name = name;
 		this.url = url;
 		this.icon = icon;
@@ -37,14 +37,12 @@ public class TreeNode {
 		this.id = id;
 	}
 
-	public Long getPid() {
-		return pid;
+	public Long getParentId() {
+		return parentId;
 	}
-
-	public void setPid(Long pid) {
-		this.pid = pid;
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -118,7 +116,7 @@ public class TreeNode {
 	    }
 	    if(level == -1){
 	        node.level  = -2;
-	        level = node.level = resolveLevel(nodes.get(node.getPid()),nodes) +1;
+	        level = node.level = resolveLevel(nodes.get(node.getParentId()),nodes) +1;
 	    }else{
 	    	node.hasChild = true;
 	    }
@@ -144,7 +142,7 @@ public class TreeNode {
 		nodes.put(0L, root);
 
 		for(TreeNode node : list){
-		    final TreeNode parent = nodes.get(node.pid);
+		    final TreeNode parent = nodes.get(node.parentId);
 			if(parent == null){
 				throw new RuntimeException("子节点有父级id，却没有找到此父级的对象");
 			}
