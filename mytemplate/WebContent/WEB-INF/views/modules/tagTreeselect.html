@@ -2,12 +2,12 @@
 var key, lastValue = "", nodeList = [];
 var tree, setting = {
 		view:{selectedMulti:false},
-		check:{enable:eval("${checked!}"),nocheckInherit:true},
+		check:{enable:eval("${checked!'false'}"),nocheckInherit:true},
 		data:{
 			simpleData:{
 				enable:true,
-				idKey:"${treeId!'id'}",
-				pIdKey:"${treePid!'parent_id'}"
+				idKey:"${idKey!'id'}",
+				pIdKey:"${pIdKey!'parent_id'}"
 			}
 		},
 		view:{
@@ -21,9 +21,6 @@ var tree, setting = {
 					tree.checkNode(node, !node.checked, true, true);
 					return false;
 				}
-			}, 
-			onDblClick:function(){
-				//top.$.jBox.getBox().find("button[value='ok']").trigger("click");
 			}
 		}
 };
@@ -41,7 +38,7 @@ $(document).ready(function(){
 		var ids = "${selectIds!}".split(",");
 		for(var i=0; i<ids.length; i++) {
 			var node = tree.getNodeByParam("id", ids[i]);
-			if("${checked}" == "true"){
+			if("${checked!}" == "true"){
 				try{tree.checkNode(node, true, true);}catch(e){}
 				tree.selectNode(node, false);
 			}else{
@@ -52,6 +49,16 @@ $(document).ready(function(){
 	key = $("#key");
 	key.bind("focus", focusKey).bind("blur", blurKey)
 	.bind("change keydown cut input propertychange", searchNode);
+	$("#${id}-save").click(function(){
+		node = tree.getSelectedNodes()[0];
+		if(undefined == node || null == node){
+			layer.msg('请选择区域', 2, 0);
+			return false;
+		}
+		$("#${nameId}").val(node.name);
+		$("#${id}").val(node["${idKey!'id'}"]);
+		layer.close(layer.index);
+	});
 });
 
 function focusKey(e) {
@@ -98,19 +105,16 @@ function updateNodes(highlight) {
 		tree.expandNode(nodeList[i].getParentNode(), true, false, false);
 	}
 };
-function search() {
-	$("#search").removeClass('hide');
-	$("#txt").toggle();
-	$("#key").focus();
-};
 </script>
 <div>
-	<div style="position:absolute;right:8px;top:5px;cursor:pointer;" onclick="search();">
-		<button class="btn btn-xs btn-primary" id="txt"><i class="ace-icon fa fa-search"></i>搜索</button>
-	</div>
-	<div id="search" class="control-group hide" style="padding:10px 0 0 15px;">
+	<div id="search" class="control-group" style="padding:10px 0 0 15px;">
 		<label for="key" class="control-label" style="float:left;padding:5px 5px 3px;">关键字：</label>
-		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:180px;">
+		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:75%;">
 	</div>
 	<ul id="select-tree" class="ztree" style="padding:15px 20px;"></ul>
+	<div class="width-100" style="padding-top: 15px; bottom: 0px; position:absolute;">
+		<button class="btn btn-primary btn-sm bigger-110 btn-block" id="${id}-save">
+			确 定
+		</button>
+	</div>
 </div>

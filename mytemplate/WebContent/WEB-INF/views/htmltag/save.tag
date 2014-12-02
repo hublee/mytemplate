@@ -1,12 +1,12 @@
 @var formid = formid!'save-form'; //form表单id
 @var reloadurl = reloadurl!'false'; //是否url刷新,默认false当前右侧刷新
 
-<div class="center" style="padding-top: 15px;">
-	<button class="btn btn-primary btn-sm bigger-110" style="margin-right: 20px;" id="${formid}-save">
+<div class="width-100 clearfix" style="position: absolute;bottom: 0px;left: 0px;padding-top: 15px;">
+	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${formid}-save">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 确 定
 	</button>
-	<button class="btn btn-primary btn-sm bigger-110" style="margin-left: 20px;" id="${formid}-cancel">
-		<i class="ace-icon fa fa-times align-top bigger-125"></i> 取 消
+	<button class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formid}-cancel">
+		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
 	</button>
 </div>
 <script type="text/javascript">
@@ -37,7 +37,7 @@ $(function(){
 				if (o.type != 2) {
 					layer.tips(msg, o.obj, {
 						guide:0,
-						time: 5,
+						time: 4,
 						style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
 					});
 				}

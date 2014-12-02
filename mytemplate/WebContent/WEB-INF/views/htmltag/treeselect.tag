@@ -1,50 +1,25 @@
-@var id = id!'treeselectId'; //触发弹窗的id
-@var inputId = inputId; //显示
-@var modelIdName = modelIdName!;  //提交的id属性名
-@var checked = checked!'false'; //是否显示checkbox
-@var treePid = treePid!'parent_id'; //父id属性名称
-@var treeId = treeId!'id'; //id属性名称
-@var name = name!'name'; //节点名称的属性名称
-@var treeurl = treeurl!; //请求返回树结构的url
-@var title = title!; //弹窗标题
-@var height = height!'400'; //弹窗高度
-@var width = width!'300'; //弹窗宽度
-<div class="input-append">
-	<input type="hidden" name="${modelIdName}" value="0" />
-</div>
+@var class = class!'';
+@var width = width!'350';
+@var height = height!'350';
+@var modelId = modelId!'parentId'; //隐藏要提交的id
+@var modelName = modelName!''; //要提交的name
+@var modelIdValue = modelIdValue!'0'; //id初始值
+@var modelNameValue = modelNameValue!''; //name初始值
+@var id = id!'treeselectpid'; 
+@var nameId = nameId!'treeselectname';
+@var url = url!''; //树数据url
 
-<script type="text/javascript">
-	$("#${id}").click(function(){
-		cuslayer({
-			title:"${title}",
-			height:"${height}",
-			width:"${width}",
-			backfill:{
-				url:"${ctxPath}/${adminPath}/tag/treeselect",
-				data:{
-					"url":"${treeurl}",
-					"checked":"${checked}",
-					"treeId":"${treeId}",
-					"treePid":"${treePid}"
-				}
-			},
-			ok:function(){
-				node = tree.getSelectedNodes()[0];
-				if(undefined == node || null == node){
-					$.gritter.add({
-						text: '<h1 class="center">请选择区域</h1>',
-						class_name: 'gritter-error gritter-center',
-						fade:'fast',
-						time:'3000',
-						before_open: function(){
-							if($('.gritter-item-wrapper').length >= 1) return false;
-						},
-					});
-					return false;
-				}
-				$("#${inputId}").val(node["${name}"]);
-				$("input[name='${modelIdName}']").val(node["${treeId}"]);
-			}
-		});
-	});
-</script>
+<div class="input-group ${class}">
+	<input type="text" class="form-control search-query" readonly 
+	id="${nameId}" name="${modelName}" value="${modelNameValue}">
+	<span class="input-group-btn">
+		<button type="button" class="btn btn-purple btn-sm"
+		data-mode="page" data-url="${ctxPath}/${adminPath}/tag/treeselect"
+		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}'}" 
+		data-title="请选择" data-width="350" data-height="350"
+		>
+			<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+		</button>
+	</span>
+	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
+</div>

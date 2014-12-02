@@ -32,7 +32,6 @@
 				return false;
 			}
 		}
-		console.log(params)
 		if(mode == 'del' || mode == 'delete'){
 			layer.confirm(params.msg,function(index){
 				$.ajax({
@@ -54,10 +53,17 @@
 		}
 		if(mode == 'page'){
 			params.height = parseInt(params.height)+35+'';
+			var loadi;
 			$.ajax({
-				url:params.url,data:params.data,type:'post'
+				url:params.url,
+				data:params.data,
+				type:'post',
+				dataType:'html',
+				beforeSend:function(){
+					loadi = layer.load(5,0);
+				}
 			}).done(function(data){
-				
+				layer.close(loadi);
 				var index = $.layer({
 				    type : 1,
 				    title : params.title,
@@ -66,15 +72,22 @@
 				    area : [params.width,params.height],
 				    page : {html:data},
 				    success:function(layero){
-				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':parseInt(params.height)-35});
+				    	layero.find('.xuboxPageHtml').css({
+				    		'overflowY':'auto',
+				    		'height':parseInt(params.height)-35,
+				    		'width':params.width
+				    		//'paddingBottom':'10px'
+				    		});
 				    },
 				    full:function(layero){
 				    	setTimeout(function() {
-				    		layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				    		layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35,
+				    			'width':layero.width()});
 				        },101);
 				    },
 				    restore: function(layero){
-				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35,
+				    		'width':layero.width()});
 				    },
 				    close: function(index){
 				    	layer.closeTips();
@@ -91,7 +104,7 @@
 })(jQuery);
 
 //属性模式
-$(document).on('click','a[data-mode]',function(){
+$(document).on('click','[data-mode]',function(){
 	var data = $(this).data();
 	if(undefined != data['data'] && typeof data['data'] != "object") {
 		data['data'] = eval("("+data.data+")");

@@ -24,12 +24,14 @@ public class TagController {
 	 */
 	@RequestMapping("/treeselect")
 	public String treeSelect(HttpServletRequest request,Model model){
+		model.addAttribute("id", request.getParameter("id")); //提交的id,必填
+		model.addAttribute("nameId", request.getParameter("nameId")); //选择的节点名称id,必填
 		model.addAttribute("url", request.getParameter("url")); 	// 树结构数据URL
 		model.addAttribute("extId", request.getParameter("extId")); // 排除的编号ID
 		model.addAttribute("checked", request.getParameter("checked")); // 是否可复选
 		model.addAttribute("selectIds", request.getParameter("selectIds")); // 指定默认选中的ID
-		model.addAttribute("treeId",  request.getParameter("treeId")); //id属性名称
-		model.addAttribute("treePid", request.getParameter("treePid")); //pid属性名称
+		model.addAttribute("idKey",  request.getParameter("idKey")); //id属性名称
+		model.addAttribute("pIdKey", request.getParameter("pIdKey")); //pid属性名称
 		return "modules/tagTreeselect";
 	}
 

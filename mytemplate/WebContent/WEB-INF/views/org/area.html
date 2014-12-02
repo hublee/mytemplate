@@ -26,17 +26,7 @@
 						<label class="col-sm-4 control-label no-padding-right">上级区域:</label>
 
 						<div class="col-sm-8">
-							<div class="input-group col-sm-5">
-								<input type="text" class="form-control search-query" readonly 
-								id="parea-name"  placeholder="若不选择，默认添加国家">
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-purple btn-sm" id="choose-area">
-										<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
-									</button>
-								</span>
-								<#treeselect id="choose-area" modelIdName="parentId" 
-								 treeurl="area/tree" inputId="parea-name" title="选择上级区域" />
-							</div>
+							<#treeselect url="area/tree" class="col-sm-5" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -86,8 +76,8 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
+ 
+<!-- <script type="text/javascript">
 $(function(){
 	$("#area-save-form").Validform({
 	   ajaxPost:true
@@ -101,7 +91,6 @@ $(function(){
 			//这里验证
 			$("#area-save-form").submit();
 			
-			return false;
 		},
 		success:function(data){
 			if(data>0) reloadUrl();
@@ -110,4 +99,4 @@ $(function(){
 	
 })
 
-</script>
+</script> -->
