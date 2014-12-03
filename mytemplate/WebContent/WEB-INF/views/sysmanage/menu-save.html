@@ -78,14 +78,7 @@
 				<tr  class="FormData">
 					<td class="CaptionTD">菜单图标</td>
 					<td class="DataTD">
-					<span class="input-icon input-icon-right" style="width:45%;">
-							<input type="text" name="icon" style="padding-right: 0px;width:100%;" 
-							value="${sysResource.icon!}" id="resourceInput">
-							<i class="ace-icon fa ${sysResource.icon!} green" 
-							id="resourceIcon" style="top:3px;"></i>
-						</span>
-						<a href="http://fontawesome.io/icons/" 
-						class="inline" target="_blank">http://fontawesome.io/icons/</a>
+					<#iconselect value="${sysResource.icon!}"/>
 					</td>
 				</tr>
 				<tr class="FormData">

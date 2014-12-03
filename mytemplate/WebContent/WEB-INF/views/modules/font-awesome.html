@@ -22,17 +22,20 @@
   		var a = $("#wrap").find("a");
   		a.click(function(){
   			var icon = $(this).text();
-  			alert(icon)
+  			var $input = $('#${id}', window.parent.document);
+  			$input.val(icon);
+  			$input.next().attr('class','ace-icon fa '+icon+' bigger-200 pink');
+  			var index = parent.layer.getFrameIndex(window.name);
+  			parent.layer.close(index);
   		});
   	});
   </script>
 <body>
 <div id="wrap"> 
-
 <div class="container">
 
   <div id="new">
-  <h2 class="page-header">40 New Icons in 4.2</h2>
+  <h2 class="page-header">最新图标</h2>
   
 
   <div class="row fontawesome-icon-list">
@@ -130,7 +133,7 @@
 </div>
 
   <section id="web-application">
-  <h2 class="page-header">Web Application Icons</h2>
+  <h2 class="page-header">web常用图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -781,7 +784,7 @@
 </section>
 
   <section id="file-type">
-  <h2 class="page-header">File Type Icons</h2>
+  <h2 class="page-header">文件图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -828,7 +831,7 @@
 </section>
 
   <section id="spinner">
-  <h2 class="page-header">Spinner Icons</h2>
+  <h2 class="page-header">加载图标</h2>
 
 
   <div class="row fontawesome-icon-list">
@@ -849,7 +852,7 @@
 </section>
 
   <section id="form-control">
-  <h2 class="page-header">Form Control Icons</h2>
+  <h2 class="page-header">表单图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -881,7 +884,7 @@
 </section>
 
   <section id="payment">
-  <h2 class="page-header">Payment Icons</h2>
+  <h2 class="page-header">支付图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -910,7 +913,7 @@
 </section>
 
   <section id="chart">
-  <h2 class="page-header">Chart Icons</h2>
+  <h2 class="page-header">报表图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -931,7 +934,7 @@
 </section>
 
   <section id="currency">
-  <h2 class="page-header">Currency Icons</h2>
+  <h2 class="page-header">货币图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -990,7 +993,7 @@
 </section>
 
   <section id="text-editor">
-  <h2 class="page-header">Text Editor Icons</h2>
+  <h2 class="page-header">文本编辑器图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -1099,7 +1102,7 @@
 </section>
 
   <section id="directional">
-  <h2 class="page-header">Directional Icons</h2>
+  <h2 class="page-header">定向图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -1214,7 +1217,7 @@
 </section>
 
   <section id="video-player">
-  <h2 class="page-header">Video Player Icons</h2>
+  <h2 class="page-header">视频播放图标</h2>
 
   <div class="row fontawesome-icon-list">
     
@@ -1257,7 +1260,7 @@
 </section>
 
   <section id="brand">
-  <h2 class="page-header">Brand Icons</h2>
+  <h2 class="page-header">品牌图标</h2>
 
 
 
@@ -1471,7 +1474,7 @@
 </section>
 
   <section id="medical">
-  <h2 class="page-header">Medical Icons</h2>
+  <h2 class="page-header">医疗图标</h2>
 
   <div class="row fontawesome-icon-list">
     
