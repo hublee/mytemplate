@@ -17,7 +17,7 @@
 						</button> 
 					</span>
 					<input type="text" class="form-control search-query"
-						name="resourceName" placeholder="菜单名称">
+						name="resourceName" placeholder="菜单名称" id="search-input">
 						<span class="input-group-btn">
 						<button type="button" class="btn  btn-success btn-sm"
 							id="menu-btn">
@@ -52,7 +52,10 @@
 		view:{
 			selectedMulti : false,
 			addHoverDom: addHoverDom,
-			removeHoverDom: removeHoverDom
+			removeHoverDom: removeHoverDom,
+			fontCss:function(treeId, treeNode) {
+				return (!!treeNode.highlight) ? {"font-weight":"bold","color":"red"} : {"font-weight":"normal","color":"#333"};
+			}
 		},
 		edit: {
 			enable: true,
@@ -137,13 +140,12 @@
 		$("#menu-form").find("input[name=resourceName]").val("");
 		var resourceId = treeNode.id;
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		var sNodes = treeObj.getSelectedNodes();
-		var node;
-		if (sNodes.length > 0) {
-			node = sNodes[0].getParentNode();
-		}
 		$("#menu-form").find("input[name=resourceId]").val(resourceId);
 		paging("menu-form",1); //刷新表单
+		for(var i=0, l=nodeList.length; i<l; i++) {
+			nodeList[i].highlight = false;				
+			treeObj.updateNode(nodeList[i]);
+		}
 	};
 	
 	//树结构初始化
@@ -159,25 +161,39 @@
 		treeObj.selectNode(node,false);
 	}).trigger("click");
 	
-	$("#menu-btn").click(function(){
+	$("#menu-btn").click(function(e){
 		$("#menu-form").find("input[name=resourceId]").val("");
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		treeObj.cancelSelectedNode();
 		paging("menu-form",1);
+		searchNode(e);
 	});
 	
-	//既时搜索
-	/* $(("input[name=resourceName]")).bind("input propertychange",function(){
-		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		treeObj.cancelSelectedNode();
-		$this = $(this);
-		$("#menu-form").find("input[name=resourceId]").val("");
-		paging("menu-form",1);
-		if($(this).val()==""){
-			var node = treeObj.getNodeByParam("id", 0);
-			treeObj.selectNode(node,false);
-			$this.focus();
+	var key = $("#search-input"),nodeList = [];
+	function searchNode(e) {
+		// 取得输入的关键字的值
+		var value = $.trim(key.get(0).value);
+		
+		// 按名字查询
+		var keyType = "name";
+		if (key.hasClass("empty")) {
+			value = "";
 		}
-	}); */
+		
+		// 如果要查空字串，就退出不查了。
+		if (value === "") {
+			return;
+		}
+		updateNodes(false);
+		nodeList = treeObj.getNodesByParamFuzzy(keyType, value);
+		updateNodes(true);
+	};
+	function updateNodes(highlight) {
+		for(var i=0, l=nodeList.length; i<l; i++) {
+			nodeList[i].highlight = highlight;				
+			treeObj.updateNode(nodeList[i]);
+			treeObj.expandNode(nodeList[i].getParentNode(), true, false, false);
+		}
+	};
 	
 </script>
