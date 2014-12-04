@@ -104,7 +104,8 @@
 
 	<!-- 验证账号密码 -->
 	<select id="checkUser" resultType="com.template.web.model.SysUser">
-		select id,name from sys_user where username = #{username} and password = #{password}
+		select <include refid="sysUserColumns" /> from sys_user 
+		where username = #{username} and password = #{password}
 	</select>
 
 </mapper>
