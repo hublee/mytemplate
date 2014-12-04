@@ -33,9 +33,10 @@ public class SysResourceService {
 	/**
 	 *新增or更新SysResource
 	 */
-	public int insertOrUpdateSysResource(Map<String,Object> params){
+	public int saveSysResource(Map<String,Object> params){
 		int count = 0;
-		if(StringUtils.isBlank(params.get("id").toString())){
+		String id = params.get("id").toString();
+		if(!params.containsKey(id) || StringUtils.isBlank(id)){
 			Long[] cp = CodeUtils.getCodeAndPos(sysResourceMapper.findMaxCodeAndMaxPos());
 			params.put("code", cp[0]);
 			params.put("pos", cp[1]);

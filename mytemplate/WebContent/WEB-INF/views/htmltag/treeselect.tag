@@ -8,7 +8,7 @@
 @var id = id!'treeselectpid'; //隐藏id名,页面多个时候需要指定
 @var nameId = nameId!'treeselectname';  //名称
 @var url = url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
-@var pIdKey = pIdKey!'parent_id'; //父级的model中属性名字
+@var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
 @var selectIds = selectIds!''; //默认选择节点
 
 <div class="width-100 clearfix ${class}">

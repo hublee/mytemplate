@@ -58,25 +58,28 @@
 
 											<div class="space-6"></div>
 
-											<form id="login-form">
+											<form id="login-form" action="${ctxPath!}/${adminPath!}/login" method="post">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" name="username" placeholder="用户名" autocomplete="off"/>
+															<input type="text" class="form-control" name="username" placeholder="用户名" autocomplete="off"
+															datatype="*"  nullmsg="请输入用户名！" data-error="用户名或密码错误"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" name="password" placeholder="密码" autocomplete="off"/>
+															<input type="password" class="form-control" name="password" placeholder="密码" autocomplete="off"
+															datatype="*"  nullmsg="请输入密码！"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
 													
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control width-55 pull-left" name="code" placeholder="验证码" autocomplete="off"/>
+															<input type="text" class="form-control width-55 pull-left" name="code" placeholder="验证码" autocomplete="off"
+															datatype="*"  nullmsg="请输入验证码！" data-error="验证码错误"/>
 															<img src="${ctxPath!}/code.image?width=120&height=32" onclick="javascript:refresh(this);" id="code"
 															class="pull-right" title="点击换一张" style="cursor: pointer;border: 1px solid rgb(181, 181, 181);"/>
 														</span>
@@ -155,45 +158,45 @@
 			if('ontouchstart' in document.documentElement) document.write("<script src='${ctxPath!}/static/jquery/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
 
-		<!-- inline scripts related to this page -->
+		<script type="text/javascript" src="${ctxPath!}/static/layer/layer.min.js"></script>
+		<script type="text/javascript" src="${ctxPath}/static/validate/Validform_v5.3.2_min.js"></script>
+		
 		<script type="text/javascript">
 			function refresh(obj) {
 		        obj.src = "${ctxPath!}/code.image?width=120&height=32&"+Math.random();
-		    }
+		    };
 			jQuery(function($) {
-				
-				$("#login-btn").click(function(){
-					$this = $(this);
-					username = $.trim($("input[name='username']").val());
-					pwd = $.trim($("input[name='password']").val());
-					code = $.trim($("input[name='code']").val());
-					if(null == username || "" == username){
-						$("#msg").html("<i class='ace-icon fa fa-times-circle red'></i><span class='red'> 用户名不能为空</span>");
-						return false;
-					}
-					if(null == pwd || "" == pwd){
-						$("#msg").html("<i class='ace-icon fa fa-times-circle red'></i><span class='red'> 密码不能为空</span>");
-						return false;
-					}
-					if(null == code || "" == code){
-						$("#msg").html("<i class='ace-icon fa fa-times-circle red'></i><span class='red'> 验证码不能为空</span>");
-						return false;
-					}
-					$this.attr("disabled","disabled").find("span").text("登录中…");
-					$.ajax({url:"${ctxPath!}/${adminPath!}/login",type:"post",dataType:"json",data:$("#login-form").serialize()})
-						.done(function(data){
-							$this.removeAttr("disabled").find("span").text("登 录");
-							if(undefined === data.msg){
-								window.location.href="${ctxPath!}/${adminPath!}";
-							}else{
-								error = "<i class='ace-icon fa fa-times-circle red'></i><span class='red'> "+data.msg+"</span>";
-								$("#msg").html(error);
-								$("input[name='code']").val("");
-								refresh($("#code")[0]);
+				$("#login-form").Validform({
+					btnSubmit:"#login-btn",
+					ajaxPost:true,
+					beforeSubmit:function(curform){
+						$("#login-btn").attr("disabled","disabled").find("span").text("登录中…");
+					},
+					callback:function(data){
+						if(undefined != data.error){
+							$("#login-btn").removeAttr("disabled").find("span").text("登 录");
+							var obj = $("#login-form input[data-error='"+data.error+"']");
+							layer.tips(data.error,obj, {
+								guide:0,
+								time: 4,
+								style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
+							});
+						}else{
+							window.location.href="${ctxPath!}/${adminPath!}";
+						}
+					},
+					tiptype : function(msg, o, cssctl) {
+						if (!o.obj.is("form")) {
+							if (o.type != 2) {
+								layer.tips(msg, o.obj, {
+									guide:3,
+									time: 4,
+									style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
+								});
 							}
-						}).fail(function(){
-							alert("未知错误，请联系管理员");
-						});
+						}
+					},
+					tipSweep : true
 				});
 				
 				$("#login-form").keydown(function(e){

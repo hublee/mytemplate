@@ -54,9 +54,9 @@
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
-							data-mode="page" data-title="<menu.name)>编辑"
+							data-mode="page" data-title="<${menu.name!}>编辑"
 							data-url="${adminPath}/menu/edit/showlayer"
-							data-data="{resourceId:'${menu.id}',pResourceId:'${menu.parent_id}'}"
+							data-data="{resourceId:'${menu.id}',pResourceId:'${menu.pid}'}"
 							data-height="530"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>

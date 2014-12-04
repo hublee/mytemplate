@@ -7,6 +7,7 @@ import com.template.core.paging.PageInfo;
 import com.template.web.dao.SysAreaMapper;
 import com.template.web.model.SysArea;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,57 +27,10 @@ public class SysAreaService {
 	@Resource
 	private SysAreaMapper sysAreaMapper;
 	
-	/**
-	 *新增或更新SysArea
-	 */
-	public int insertOrUpdateSysArea(Map<String,Object> params){
-		int count = 0;
-		if( params.containsKey("id") && StringUtils.isNotBlank(params.get("id").toString())){
-			count = sysAreaMapper.updateSysArea(params);
-		}else{
-			count = sysAreaMapper.insertSysArea(params);
-		}
-	    return count;
-	}
-	
-	/**
-	 *删除单个SysArea
-	 */
-	public int deleteSysArea(Long id){
-	   return sysAreaMapper.deleteSysArea(id);
-	}
-	/**
-	 *批量删除SysArea
-	 */
-	public int deleteSysAreas(List<Long> idList){
-	   return sysAreaMapper.deleteSysAreas(idList);
-	}
-	
-	/**
-	 *根据id查找一个SysArea
-	 */
-	 public SysArea findSysAreaById(Long id){
-	   return sysAreaMapper.findSysAreaById(id);
-	}
-	
-	/**
-	 * 根据条件分页查询SysArea列表
-	 * @param {"pageNum":"页码","pageSize":"条数","isCount":"是否生成count sql",......}
-	 */
-	public PageInfo<SysArea> findSysAreaPageInfo(Map<String,Object> params) {
-		boolean isCount = params.containsKey("isCount")?
-				Boolean.parseBoolean(params.get("isCount").toString()):true;
-        PageHelper.startPage(Integer.parseInt(params.get("pageNum").toString()), 
-        		Integer.parseInt(params.get("pageSize").toString()),isCount);
-        List<SysArea> list=sysAreaMapper.findSysAreaListByParams(params);
-        return new PageInfo<SysArea>(list);
-	}
-	
-	/**
-	 * 根据条件查询SysArea列表（不分页）
-	 */
-	public List<SysArea> findSysAreaListByParams(Map<String,Object> params) {
-	    return sysAreaMapper.findSysAreaListByParams(params);
+	public List<SysArea> findSysArea(){
+		//Map<String, Object> params = new HashMap<String, Object>();
+		//params.put("parentId", 1);
+		return null;//sysAreaMapper.select(params);
 	}
 	
 

@@ -4,6 +4,10 @@ package com.template.web.model;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.template.core.base.Entity;
 
 /**
@@ -12,10 +16,12 @@ import com.template.core.base.Entity;
  */
 
 @SuppressWarnings({ "unused"})
-public class SysArea extends Entity{
+public class SysArea extends Entity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id <编号>
 
     private String code; //code <区域编码>
@@ -24,11 +30,11 @@ public class SysArea extends Entity{
 
     private Date createDate; //create_date <创建时间>
 
-    private String delFlag; //del_flag <删除标记>
+    private String delFlag; //del_flag <删除标记(0活null 正常 1,删除)>
 
     private String name; //name <区域名称>
 
-    private String parentId; //parent_id <父级编号>
+    private Long parentId; //parent_id <父级编号>
 
     private String parentIds; //parent_ids <所有父级编号>
 
@@ -39,6 +45,8 @@ public class SysArea extends Entity{
     private String updateBy; //update_by <更新者>
 
     private Date updateDate; //update_date <更新时间>
+
+
 
 	public Long getId() {
 		return this.getLong("id");
@@ -57,27 +65,27 @@ public class SysArea extends Entity{
     }
 
 	public String getCreateBy() {
-		return this.getString("create_by");
+		return this.getString("createBy");
     }
    
     public void setCreateBy(String createBy) {
-		this.set("create_by", createBy);
+		this.set("createBy", createBy);
     }
 
 	public Date getCreateDate() {
-		return this.getDate("create_date");
+		return this.getDate("createDate");
     }
    
     public void setCreateDate(Date createDate) {
-		this.set("create_date", createDate);
+		this.set("createDate", createDate);
     }
 
 	public String getDelFlag() {
-		return this.getString("del_flag");
+		return this.getString("delFlag");
     }
    
     public void setDelFlag(String delFlag) {
-		this.set("del_flag", delFlag);
+		this.set("delFlag", delFlag);
     }
 
 	public String getName() {
@@ -88,20 +96,20 @@ public class SysArea extends Entity{
 		this.set("name", name);
     }
 
-	public String getParentId() {
-		return this.getString("parent_id");
+	public Long getParentId() {
+		return this.getLong("parentId");
     }
    
-    public void setParentId(String parentId) {
-		this.set("parent_id", parentId);
+    public void setParentId(Long parentId) {
+		this.set("parentId", parentId);
     }
 
 	public String getParentIds() {
-		return this.getString("parent_ids");
+		return this.getString("parentIds");
     }
    
     public void setParentIds(String parentIds) {
-		this.set("parent_ids", parentIds);
+		this.set("parentIds", parentIds);
     }
 
 	public String getRemarks() {
@@ -121,19 +129,19 @@ public class SysArea extends Entity{
     }
 
 	public String getUpdateBy() {
-		return this.getString("update_by");
+		return this.getString("updateBy");
     }
    
     public void setUpdateBy(String updateBy) {
-		this.set("update_by", updateBy);
+		this.set("updateBy", updateBy);
     }
 
 	public Date getUpdateDate() {
-		return this.getDate("update_date");
+		return this.getDate("updateDate");
     }
    
     public void setUpdateDate(Date updateDate) {
-		this.set("update_date", updateDate);
+		this.set("updateDate", updateDate);
     }
 
 

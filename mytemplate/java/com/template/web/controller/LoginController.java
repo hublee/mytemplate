@@ -52,14 +52,14 @@ public class LoginController {
 		String secPwd = PasswordEncoder.encrypt(password, username);
 		String sessionCode = session.getAttribute("code").toString();
 		if (!StringUtils.equalsIgnoreCase(code, sessionCode)){
-			msg.put("msg", "验证码错误");
+			msg.put("error", "验证码错误");
 			return msg;
 		}
 		SysUser user = sysUserService.checkUser(username, secPwd);
 		if(null !=user){
 			session.setAttribute(Global.getSessionUserKey(),user);
 		}else{
-			msg.put("msg", "用户名或密码错误");
+			msg.put("error", "用户名或密码错误");
 		}
 		return msg;
 	}
@@ -71,18 +71,19 @@ public class LoginController {
 	@RequestMapping("${adminPath}/logout")
 	public String logout(HttpServletRequest request){
 		request.getSession().removeAttribute(Global.getSessionUserKey());
+		request.getSession().invalidate();
 		return "redirect:/"+Global.getAdminPath()+"/login";
 	}
 
 	/**
 	 * 管理主页
-	 * @param 父类id
 	* @param model
 	* @param request
 	* @return
 	 */
 	@RequestMapping("${adminPath}")
 	public String toIndex(Model model,HttpServletRequest request) {
+		request.getSession().removeAttribute("code"); //清除code
 		SysUser user = (SysUser)request.getSession().getAttribute(Global.getSessionUserKey());
 		if(null == user) return "redirect:"+Global.getAdminPath()+"/login";
 		model.addAttribute("menuList", sysResourceService.getMenuTree());

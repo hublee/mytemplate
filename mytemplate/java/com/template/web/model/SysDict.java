@@ -51,27 +51,27 @@ public class SysDict extends Entity {
     }
 
 	public String getCreateBy() {
-		return this.getString("create_by");
+		return this.getString("createBy");
     }
    
     public void setCreateBy(String createBy) {
-		this.set("create_by", createBy);
+		this.set("createBy", createBy);
     }
 
 	public Date getCreateDate() {
-		return this.getDate("create_date");
+		return this.getDate("createDate");
     }
    
     public void setCreateDate(Date createDate) {
-		this.set("create_date", createDate);
+		this.set("createDate", createDate);
     }
 
 	public String getDelFlag() {
-		return this.getString("del_flag");
+		return this.getString("delFlag");
     }
    
     public void setDelFlag(String delFlag) {
-		this.set("del_flag", delFlag);
+		this.set("delFlag", delFlag);
     }
 
 	public String getDescription() {
@@ -115,19 +115,19 @@ public class SysDict extends Entity {
     }
 
 	public String getUpdateBy() {
-		return this.getString("update_by");
+		return this.getString("updateBy");
     }
    
     public void setUpdateBy(String updateBy) {
-		this.set("update_by", updateBy);
+		this.set("updateBy", updateBy);
     }
 
 	public Date getUpdateDate() {
-		return this.getDate("update_date");
+		return this.getDate("updateDate");
     }
    
     public void setUpdateDate(Date updateDate) {
-		this.set("update_date", updateDate);
+		this.set("updateDate", updateDate);
     }
 
 	public String getValue() {

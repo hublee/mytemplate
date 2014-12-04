@@ -28,7 +28,7 @@ public class SysUser extends Entity {
 
     private String gender; //gender <性别>
 
-    private String name; //name <姓名>
+    private String name; //name <>
 
     private String password; //password <密码>
 
@@ -71,11 +71,11 @@ public class SysUser extends Entity {
     }
 
 	public String getCityId() {
-		return this.getString("city_id");
+		return this.getString("cityId");
     }
    
     public void setCityId(String cityId) {
-		this.set("city_id", cityId);
+		this.set("cityId", cityId);
     }
 
 	public String getCode() {
@@ -119,11 +119,11 @@ public class SysUser extends Entity {
     }
 
 	public String getProvinceId() {
-		return this.getString("province_id");
+		return this.getString("provinceId");
     }
    
     public void setProvinceId(String provinceId) {
-		this.set("province_id", provinceId);
+		this.set("provinceId", provinceId);
     }
 
 	public Date getRegtime() {

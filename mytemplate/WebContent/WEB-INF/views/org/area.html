@@ -77,26 +77,19 @@
 	</div>
 </div>
  
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 $(function(){
-	$("#area-save-form").Validform({
-	   ajaxPost:true
-	});
-	
+	//初始化区域类型下拉
 	$(".chosen-select").chosen({width: "100%"}); 
-	$("#area-save-form").ajaxForms({
-		isPage:false,
-		btnId:"#add-area-btn",
-		btnClickFn:function(){
-			//这里验证
-			$("#area-save-form").submit();
-			
-		},
-		success:function(data){
-			if(data>0) reloadUrl();
-		}
-	});
 	
-})
-
-</script> -->
+	$("#add-area-btn").click(function(){
+		$.ajax({
+			url:adminPath+"/area/save",
+			data:$("#area-save-form").serialize(),
+			type:'post'
+		}).done(function(data){
+			
+		})
+	});
+});
+</script>

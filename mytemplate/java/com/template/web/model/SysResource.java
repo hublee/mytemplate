@@ -89,11 +89,11 @@ public class SysResource extends Entity {
     }
 
 	public Long getParentId() {
-		return this.getLong("parent_id");
+		return this.getLong("parentId");
     }
    
     public void setParentId(Long parentId) {
-		this.set("parent_id", parentId);
+		this.set("parentId", parentId);
     }
 
 	public Long getPos() {

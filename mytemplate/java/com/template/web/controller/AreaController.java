@@ -34,18 +34,19 @@ public class AreaController {
 	 */
 	@RequestMapping("tree")
 	public @ResponseBody List<SysArea> getAreaTreeList(){
-		List<SysArea> list = sysAreaService.findSysAreaListByParams(null);
+		List<SysArea> list = sysAreaService.findSysArea();
 		return list;
 	}
 	
-	@RequestMapping("list")
+	/*@RequestMapping("list")
 	public List<SysArea> list(){
 		return sysAreaService.findSysAreaListByParams(null);
-	}
+	}*/
 	
 	@RequestMapping(value="save",method=RequestMethod.POST)
-	public @ResponseBody Integer save(@RequestParam Map<String,Object> params){
-		return sysAreaService.insertOrUpdateSysArea(params);
+	public @ResponseBody Integer save(SysArea area,@RequestParam Map<String,Object> params){
+		System.out.println("ceshi");
+		return null;//sysAreaService.insertOrUpdateSysArea(params);
 	}
 	
 	

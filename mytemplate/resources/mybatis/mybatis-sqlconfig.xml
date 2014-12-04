@@ -3,7 +3,8 @@
 
 <configuration>
 	<plugins>
-		<!-- PageHelper类所在包名 -->
+	
+		<!-- 分页拦截器 -->
 		<plugin interceptor="com.template.core.paging.PageHelper">
 			<property name="dialect" value="mysql" />
 			<!-- 该参数默认为false -->
@@ -21,5 +22,14 @@
 			<!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
 			<property name="reasonable" value="true" />
 		</plugin>
+		
+		<!-- 通用crud操作拦截器 -->
+		<plugin interceptor="com.template.core.mapper.MapperInterceptor">
+		    <property name="IDENTITY" value="MYSQL"/>
+		</plugin>
+		
+		<!-- map中的key转驼峰命名 -->
+		<plugin interceptor="com.template.core.mapper.CameHumpInterceptor"></plugin>
+		
 	</plugins>
 </configuration>

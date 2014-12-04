@@ -65,7 +65,6 @@ public class MenuController extends BaseController {
 	 * 分页显示菜单table
 	 * 
 	 * @param params
-	 *            {"formId":"表单id",......}
 	 * @param model
 	 * @return
 	 */
@@ -84,7 +83,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public @ResponseBody Integer save(@RequestParam Map<String, Object> params) {
-		return sysResourceService.insertOrUpdateSysResource(params);
+		return sysResourceService.saveSysResource(params);
 	}
 
 	/**

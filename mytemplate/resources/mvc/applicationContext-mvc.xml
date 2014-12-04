@@ -21,6 +21,9 @@
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -29,10 +32,6 @@
 						<value>text/html;charset=UTF-8</value>
 					</list>
 				</property>
-			</bean>
-
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<constructor-arg value="UTF-8" />
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
