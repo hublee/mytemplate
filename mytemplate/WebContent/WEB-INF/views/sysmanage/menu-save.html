@@ -38,7 +38,8 @@
 					<td class="CaptionTD">父级菜单</td>
 					<td class="DataTD">
 					<#treeselect url="menu/tree" modelNameValue="${pResource.name!}" 
-							modelIdValue="${pResource.id!0}" pIdKey="parentId"/>
+							modelIdValue="${pResource.id!0}" pIdKey="parentId"
+							selectIds="${pResource.id!}"/>
 					</td>
 				</tr>
 				<tr class="FormData">
