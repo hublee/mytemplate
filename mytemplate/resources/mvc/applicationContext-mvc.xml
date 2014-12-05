@@ -24,8 +24,7 @@
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
 			</bean>
-			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
 						<value>application/json;charset=UTF-8</value>
@@ -42,7 +41,7 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
-	<bean class="com.template.core.spring.SpringContextHolder" lazy-init="false" />
+	<bean class="com.template.common.spring.util.SpringContextHolder" lazy-init="false" />
 	
 	<!-- <mvc:view-controller path="/" view-name="redirect:${adminPath}"/> -->
 	

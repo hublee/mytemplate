@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.sys.mapper.SysDictMapper">
+
+	<sql id="sysDictColumns">
+		id,create_by,create_date,del_flag,description,label,remarks,sort,type,update_by,update_date,value
+	</sql>
+
+	<sql id="where">
+		<where>
+			<if test=" id!=null and id!='' ">id=#{id}</if>
+			<if test=" createBy!=null and createBy!='' ">and create_by=#{createBy}</if>
+			<if test=" createDate!=null and createDate!='' ">and create_date=#{createDate}</if>
+			<if test=" delFlag!=null and delFlag!='' ">and del_flag=#{delFlag}</if>
+			<if test=" description!=null and description!='' ">and description=#{description}</if>
+			<if test=" label!=null and label!='' ">and label=#{label}</if>
+			<if test=" remarks!=null and remarks!='' ">and remarks=#{remarks}</if>
+			<if test=" sort!=null and sort!='' ">and sort=#{sort}</if>
+			<if test=" type!=null and type!='' ">and type=#{type}</if>
+			<if test=" updateBy!=null and updateBy!='' ">and update_by=#{updateBy}</if>
+			<if test=" updateDate!=null and updateDate!='' ">and update_date=#{updateDate}</if>
+			<if test=" value!=null and value!='' ">and value=#{value}</if>
+		</where>
+	</sql>
+
+	<!-- 新增sysDict -->
+	<insert id="insertSysDict">
+		<selectKey keyProperty="id" resultType="java.lang.Long"
+			order="BEFORE">
+			SELECT SEQ_sys_dict.NEXTVAL FROM DUAL
+		</selectKey>
+		insert into sys_dict(
+		<include refid="sysDictColumns" />
+		) values (
+		#{id,jdbcType=NUMERIC},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{delFlag,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{label,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR},
+		#{sort,jdbcType=INTEGER},
+		#{type,jdbcType=VARCHAR},
+		#{updateBy,jdbcType=VARCHAR},
+		#{updateDate,jdbcType=TIMESTAMP},
+		#{value,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改sysDict -->
+	<update id="updateSysDict">
+		update sys_dict
+		<set>
+			<if test="createBy!=null">create_by=#{createBy},</if>
+			<if test="createDate!=null">create_date=#{createDate},</if>
+			<if test="delFlag!=null">del_flag=#{delFlag},</if>
+			<if test="description!=null">description=#{description},</if>
+			<if test="label!=null">label=#{label},</if>
+			<if test="remarks!=null">remarks=#{remarks},</if>
+			<if test="sort!=null">sort=#{sort},</if>
+			<if test="type!=null">type=#{type},</if>
+			<if test="updateBy!=null">update_by=#{updateBy},</if>
+			<if test="updateDate!=null">update_date=#{updateDate},</if>
+			<if test="value!=null">value=#{value}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 根据id查询单个sysDict -->
+	<delete id="deleteSysDict" parameterType="java.lang.Long">
+		delete from sys_dict
+		where id=#{id}
+	</delete>
+
+	<!-- 根据id集合删除多个sysDict -->
+	<delete id="deleteSysDicts" parameterType="java.util.List">
+		DELETE FROM sys_dict WHERE id IN
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id,jdbcType=NUMERIC}
+		</foreach>
+	</delete>
+
+	<!-- 根据id查询单个sysOrganization -->
+	<select id="findSysDictById" resultType="com.template.web.sys.model.SysDict">
+		select
+		<include refid="sysDictColumns" />
+		from sys_dict
+		where id=#{id}
+	</select>
+
+	<!-- 根据条件查询查询sysOrganization列表 -->
+	<select id="findSysDictListByParams" resultType="com.template.web.sys.model.SysDict">
+		select
+		<include refid="sysDictColumns" />
+		from sys_dict
+		<include refid="where" />
+	</select>
+
+</mapper>

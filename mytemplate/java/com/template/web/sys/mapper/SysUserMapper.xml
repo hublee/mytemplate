@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.sys.mapper.SysUserMapper">
+
+	<sql id="sysUserColumns">
+		id,age,area,city_id,code,gender,name,password,phone,province_id,regtime,salt,status,username
+	</sql>
+
+	<sql id="where">
+		<where>
+			<if test=" id!=null and id!='' ">id=#{id}</if>
+			<if test=" age!=null and age!='' ">and age=#{age}</if>
+			<if test=" area!=null and area!='' ">and area=#{area}</if>
+			<if test=" cityId!=null and cityId!='' ">and city_id=#{cityId}</if>
+			<if test=" code!=null and code!='' ">and code=#{code}</if>
+			<if test=" gender!=null and gender!='' ">and gender=#{gender}</if>
+			<if test=" name!=null and name!='' ">and name=#{name}</if>
+			<if test=" password!=null and password!='' ">and password=#{password}</if>
+			<if test=" phone!=null and phone!='' ">and phone=#{phone}</if>
+			<if test=" provinceId!=null and provinceId!='' ">and province_id=#{provinceId}</if>
+			<if test=" regtime!=null and regtime!='' ">and regtime=#{regtime}</if>
+			<if test=" salt!=null and salt!='' ">and salt=#{salt}</if>
+			<if test=" status!=null and status!='' ">and status=#{status}</if>
+			<if test=" username!=null and username!='' ">and username=#{username}</if>
+		</where>
+	</sql>
+
+	<!-- 新增sysUser -->
+	<insert id="insertSysUser">
+		<selectKey keyProperty="id" resultType="java.lang.Long"
+			order="BEFORE">
+			SELECT SEQ_sys_user.NEXTVAL FROM DUAL
+		</selectKey>
+		insert into sys_user(
+		<include refid="sysUserColumns" />
+		) values (
+		#{id,jdbcType=NUMERIC},
+		#{age,jdbcType=INTEGER},
+		#{area,jdbcType=VARCHAR},
+		#{cityId,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{provinceId,jdbcType=VARCHAR},
+		#{regtime,jdbcType=TIMESTAMP},
+		#{salt,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER},
+		#{username,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改sysUser -->
+	<update id="updateSysUser">
+		update sys_user
+		<set>
+			<if test="age!=null">age=#{age},</if>
+			<if test="area!=null">area=#{area},</if>
+			<if test="cityId!=null">city_id=#{cityId},</if>
+			<if test="code!=null">code=#{code},</if>
+			<if test="gender!=null">gender=#{gender},</if>
+			<if test="name!=null">name=#{name},</if>
+			<if test="password!=null">password=#{password},</if>
+			<if test="phone!=null">phone=#{phone},</if>
+			<if test="provinceId!=null">province_id=#{provinceId},</if>
+			<if test="regtime!=null">regtime=#{regtime},</if>
+			<if test="salt!=null">salt=#{salt},</if>
+			<if test="status!=null">status=#{status},</if>
+			<if test="username!=null">username=#{username}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 根据id查询单个sysUser -->
+	<delete id="deleteSysUser" parameterType="java.lang.Long">
+		delete from sys_user
+		where id=#{id}
+	</delete>
+
+	<!-- 根据id集合删除多个sysUser -->
+	<delete id="deleteSysUsers" parameterType="java.util.List">
+		DELETE FROM sys_user WHERE id IN
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id,jdbcType=NUMERIC}
+		</foreach>
+	</delete>
+
+	<!-- 根据id查询单个sysOrganization -->
+	<select id="findSysUserById" resultType="com.template.web.sys.model.SysUser">
+		select
+		<include refid="sysUserColumns" />
+		from sys_user
+		where id=#{id}
+	</select>
+
+	<!-- 根据条件查询查询sysOrganization列表 -->
+	<select id="findSysUserListByParams" resultType="com.template.web.sys.model.SysUser">
+		select
+		<include refid="sysUserColumns" />
+		from sys_user
+		<include refid="where" />
+	</select>
+
+	<!-- 验证账号密码 -->
+	<select id="checkUser" resultType="com.template.web.sys.model.SysUser">
+		select <include refid="sysUserColumns" /> from sys_user 
+		where username = #{username} and password = #{password}
+	</select>
+
+</mapper>

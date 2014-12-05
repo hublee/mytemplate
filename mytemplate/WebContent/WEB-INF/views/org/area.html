@@ -21,7 +21,8 @@
 		<div id="add" class="tab-pane clearfix">
 			
 			<div class="col-xs-12">
-				<form class="form-horizontal" action="${adminPath}/area/save" id="area-save-form">
+				<form class="form-horizontal"  id="area-save-form">
+				<input type="text" value="0" name="parentId">
 					<div class="form-group">
 						<label class="col-sm-4 control-label no-padding-right">上级区域:</label>
 
@@ -88,8 +89,9 @@ $(function(){
 			data:$("#area-save-form").serialize(),
 			type:'post'
 		}).done(function(data){
-			
+			alert(data);
 		})
+		return false;
 	});
 });
 </script>

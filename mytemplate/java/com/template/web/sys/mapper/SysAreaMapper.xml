@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.sys.mapper.SysAreaMapper">
+
+	<sql id="sysAreaColumns">
+		id,code,create_by,create_date,del_flag,name,parent_id,parent_ids,remarks,type,update_by,update_date
+	</sql>
+
+	<sql id="where">
+		<where>
+			<if test=" id!=null and id!='' ">id=#{id}</if>
+			<if test=" code!=null and code!='' ">and code=#{code}</if>
+			<if test=" createBy!=null and createBy!='' ">and create_by=#{createBy}</if>
+			<if test=" createDate!=null and createDate!='' ">and create_date=#{createDate}</if>
+			<if test=" delFlag!=null and delFlag!='' ">and del_flag=#{delFlag}</if>
+			<if test=" name!=null and name!='' ">and name=#{name}</if>
+			<if test=" parentId!=null and parentId!='' ">and parent_id=#{parentId}</if>
+			<if test=" parentIds!=null and parentIds!='' ">and parent_ids=#{parentIds}</if>
+			<if test=" remarks!=null and remarks!='' ">and remarks=#{remarks}</if>
+			<if test=" type!=null and type!='' ">and type=#{type}</if>
+			<if test=" updateBy!=null and updateBy!='' ">and update_by=#{updateBy}</if>
+			<if test=" updateDate!=null and updateDate!='' ">and update_date=#{updateDate}</if>
+		</where>
+	</sql>
+
+</mapper>

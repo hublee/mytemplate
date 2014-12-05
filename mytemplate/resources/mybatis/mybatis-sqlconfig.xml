@@ -5,7 +5,7 @@
 	<plugins>
 	
 		<!-- 分页拦截器 -->
-		<plugin interceptor="com.template.core.paging.PageHelper">
+		<plugin interceptor="com.template.common.mybatis.page.PageHelper">
 			<property name="dialect" value="mysql" />
 			<!-- 该参数默认为false -->
 			<!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
@@ -24,12 +24,12 @@
 		</plugin>
 		
 		<!-- 通用crud操作拦截器 -->
-		<plugin interceptor="com.template.core.mapper.MapperInterceptor">
+		<plugin interceptor="com.template.common.mybatis.mapper.MapperInterceptor">
 		    <property name="IDENTITY" value="MYSQL"/>
 		</plugin>
 		
 		<!-- map中的key转驼峰命名 -->
-		<plugin interceptor="com.template.core.mapper.CameHumpInterceptor"></plugin>
+		<plugin interceptor="com.template.common.mybatis.mapper.CameHumpInterceptor"></plugin>
 		
 	</plugins>
 </configuration>
