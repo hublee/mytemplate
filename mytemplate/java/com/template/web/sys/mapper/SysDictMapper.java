@@ -2,9 +2,7 @@
 
 package com.template.web.sys.mapper;
 
-import java.util.List;
-import java.util.Map;
-
+import com.template.common.mybatis.mapper.Mapper;
 import com.template.web.sys.model.SysDict;
 
 /**
@@ -12,32 +10,7 @@ import com.template.web.sys.model.SysDict;
  * @author 
  */
 
-public interface SysDictMapper {
+public interface SysDictMapper extends Mapper<SysDict>{
 
-   /**
-    *新增sysDict
-    */  
-    public int insertSysDict(Map<String,Object> params);
-   /**
-    *修改sysDict
-    */  
-    public int updateSysDict(Map<String,Object> params);
-    /**
-    *根据id删除单个sysDict
-    */ 
-    public int deleteSysDict(Long id);
-   /**
-    *根据id集合删除多个sysDict
-    */ 
-    public int deleteSysDicts(List<Long> idList);
-   /**
-    *根据id查询单个sysDict
-    */ 
-    public SysDict findSysDictById(Long id);
-   /**
-    *根据条件查询查询sysDict列表
-    */ 
-	public List<SysDict> findSysDictListByParams(Map<String, Object> params);
-   
 
 }

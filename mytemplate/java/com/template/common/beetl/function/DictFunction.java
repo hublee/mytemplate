@@ -1,8 +1,6 @@
 package com.template.common.beetl.function;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,12 +28,12 @@ public class DictFunction implements Function{
 	@Override
 	public List<SysDict> call(Object[] paras, Context ctx) {
 		try {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("type", paras[0]);
-			params.put(Constant.FIELD_DEL_FLAG, Constant.DEL_FLAG_NORMAL);
+			SysDict sysDict = new SysDict();
+			sysDict.setType(paras[0].toString());
+			sysDict.setDelFlag(Constant.DEL_FLAG_NORMAL);
 			List<SysDict> dicts = null;
 			try {
-				dicts = sysDictService.findSysDictListByParams(params);
+				dicts = sysDictService.findSysDictListByParams(sysDict);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -21,10 +21,10 @@
   	$(function(){
   		var a = $("#wrap").find("a");
   		a.click(function(){
-  			var icon = $(this).text();
+  			var icon = $(this).find("i").attr('class');
   			var $input = $('#${id}', window.parent.document);
   			$input.val(icon);
-  			$input.next().attr('class','ace-icon fa '+icon+' bigger-200 pink');
+  			$input.next().attr('class','ace-icon '+icon+' bigger-200 pink');
   			var index = parent.layer.getFrameIndex(window.name);
   			parent.layer.close(index);
   		});

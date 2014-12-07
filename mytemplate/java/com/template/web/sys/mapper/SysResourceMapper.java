@@ -16,34 +16,14 @@ import com.template.web.sys.model.SysResource;
 
 public interface SysResourceMapper extends Mapper<SysResource>{
 
-   /**
-    *新增sysResource
-    */  
-    public int insertSysResource(Map<String,Object> params);
-   /**
-    *修改sysResource
-    */  
-    public int updateSysResource(Map<String,Object> params);
-    /**
-    *根据id删除单个sysResource
-    */ 
-    public int deleteSysResource(Long id);
-   /**
-    *根据id集合删除多个sysResource
-    */ 
-    public int deleteSysResources(List<Long> idList);
-   /**
-    *根据id查询单个sysResource
-    */ 
-    public SysResource findSysResourceById(Long id);
-   /**
-    *根据条件查询查询sysResource列表
-    */ 
-	public List<SysResource> findSysResourceListByParams(Map<String, Object> params);
-	
+	/**
+	 * 根据节点Id查询底下全部子节点包括孙子节点
+	* @param id
+	* @return
+	 */
 	public List<Long> findResourceByRootId(Long id);
    
-	public List<SysResource> findMenuPageById(Map<String, Object> params);
+	public List<SysResource> findMenuPageInfo(Map<String, Object> params);
 	
 	public SysResource findMaxCodeAndMaxPos();
 	

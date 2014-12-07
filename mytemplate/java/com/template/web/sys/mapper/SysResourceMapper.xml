@@ -10,91 +10,7 @@
 		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,sr.status,sr.type,sr.url,sr.common,sr.pos
 	</sql>
 
-	<sql id="where">
-		<where>
-			<if test=" id!=null and id!='' ">id=#{id}</if>
-			<if test=" code!=null and code!='' ">and code=#{code}</if>
-			<if test=" common!=null and common!='' ">and common=#{common}</if>
-			<if test=" description!=null and description!='' ">and description=#{description}</if>
-			<if test=" icon!=null and icon!='' ">and icon=#{icon}</if>
-			<if test=" name!=null and name!='' ">and name=#{name}</if>
-			<if test=" parentId!=null and parentId!='' ">and parent_id=#{parentId}</if>
-			<if test=" pos!=null and pos!='' ">and pos=#{pos}</if>
-			<if test=" sort!=null and sort!='' ">and sort=#{sort}</if>
-			<if test=" status!=null and status!='' ">and status=#{status}</if>
-			<if test=" type!=null and type!='' ">and type=#{type}</if>
-			<if test=" url!=null and url!='' ">and url=#{url}</if>
-		</where>
-	</sql>
-
-	<!-- 新增sysResource -->
-	<insert id="insertSysResource" useGeneratedKeys="true" keyProperty="id">
-		insert into sys_resource(<include refid="sysResourceColumns"/>) values (
-		#{id,jdbcType=NUMERIC},
-		#{code,jdbcType=NUMERIC},
-		#{common,jdbcType=VARCHAR},
-		#{description,jdbcType=VARCHAR},
-		#{icon,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR},
-		#{parentId,jdbcType=NUMERIC},
-		#{pos,jdbcType=NUMERIC},
-		#{sort,jdbcType=INTEGER},
-		#{status,jdbcType=VARCHAR},
-		#{type,jdbcType=VARCHAR},
-		#{url,jdbcType=VARCHAR})
-	</insert>
-
-	<!-- 修改sysResource -->
-	<update id="updateSysResource">
-		update sys_resource
-		<set>
-			<if test="code!=null">code=#{code},</if>
-			<if test="common!=null">common=#{common},</if>
-			<if test="description!=null">description=#{description},</if>
-			<if test="icon!=null">icon=#{icon},</if>
-			<if test="name!=null">name=#{name},</if>
-			<if test="parentId!=null">parent_id=#{parentId},</if>
-			<if test="pos!=null">pos=#{pos},</if>
-			<if test="sort!=null">sort=#{sort},</if>
-			<if test="status!=null">status=#{status},</if>
-			<if test="type!=null">type=#{type},</if>
-			<if test="url!=null">url=#{url}</if>
-		</set>
-		where id=#{id}
-	</update>
-
-	<!-- 根据id查询单个sysResource -->
-	<delete id="deleteSysResource" parameterType="java.lang.Long">
-		delete from
-		sys_resource where id=#{id}
-	</delete>
-
-	<!-- 根据id集合删除多个sysResource -->
-	<delete id="deleteSysResources" parameterType="java.util.List">
-		DELETE FROM sys_resource WHERE id in
-		<foreach item="id" index="index" collection="list" open="("
-			separator="," close=")">
-			#{id,jdbcType=NUMERIC}
-		</foreach>
-	</delete>
-
-	<!-- 根据id查询单个sysOrganization -->
-	<select id="findSysResourceById" resultType="com.template.web.sys.model.SysResource">
-		select
-		<include refid="sysResourceColumns" />
-		from sys_resource
-		where id=#{id}
-	</select>
-
-	<!-- 根据条件查询资源列表 -->
-	<select id="findSysResourceListByParams" resultType="com.template.web.sys.model.SysResource">
-		select
-		<include refid="sysResourceColumns" />
-		from sys_resource
-		<include refid="where" />
-	</select>
-	
-	<!-- 根据节点查询底下全部子节点包括孙子节点 -->
+	<!-- 根据节点Id查询底下全部子节点包括孙子节点 -->
 	<select id="findResourceByRootId" resultType="java.lang.Long" >
 		select id from sys_resource where FIND_IN_SET(id,getChildrenId(#{id}))
 	</select>
@@ -106,18 +22,18 @@
 	</select>
 	
 	<!-- 菜单管理分页显示筛选查询 -->
-	<select id="findMenuPageById" resultType="com.template.web.sys.model.SysResource">
+	<select id="findMenuPageInfo" resultType="com.template.web.sys.model.SysResource">
 		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,sr.common,sr.pos,
 		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
 		from sys_resource sr
 		LEFT JOIN sys_resource srp
 		ON sr.parent_id=srp.id
 		<where>
-			<if test="resourceName != ''">
-				sr.name like concat( '%' , #{resourceName} , '%' )
+			<if test="name != ''">
+				sr.name like concat( '%' , #{name} , '%' )
 			</if>
-			<if test="resourceId != 0 and @Ognl@isBlank(resourceName) and @Ognl@isNotBlank(resourceId) "> 
-				FIND_IN_SET(sr.id,getChildrenId(#{resourceId}))
+			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
+				FIND_IN_SET(sr.id,getChildrenId(#{id}))
 			</if>
 		</where>
 	</select>

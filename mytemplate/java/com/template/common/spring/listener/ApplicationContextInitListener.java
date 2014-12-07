@@ -34,8 +34,7 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 
 		// 子容器初始化时(spring-mvc)
 		if (null != parentContext) {
-			List<SysResource> resList = sysResourceService
-					.findSysResourceListByParams(null);
+			List<SysResource> resList = sysResourceService.select(new SysResource());
 			Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
 			for (SysResource res : resList) {
 				AllResourceMap.put(res.getUrl(), res);

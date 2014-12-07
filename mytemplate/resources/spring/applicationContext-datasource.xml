@@ -50,12 +50,4 @@
 		<property name="filters" value="stat" />
 	</bean>
 
-	<!-- 数据库sql语句输出日志 -->
-	<bean id="log4jdbcInterceptor" class="net.sf.log4jdbc.DataSourceSpyInterceptor" />
-	<bean id="dataSourceLog4jdbcAutoProxyCreator"
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="interceptorNames" value="log4jdbcInterceptor"/>
-		<property name="beanNames" value="dataSource" />
-	</bean>
-
 </beans>

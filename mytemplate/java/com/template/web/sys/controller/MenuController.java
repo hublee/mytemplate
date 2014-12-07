@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.common.base.BaseController;
-import com.template.common.base.TreeNode;
 import com.template.common.mybatis.page.PageInfo;
 import com.template.common.spring.util.SpringContextHolder;
 import com.template.common.utils.JsonUtils;
@@ -57,7 +57,7 @@ public class MenuController extends BaseController {
 	* @return
 	 */
 	@RequestMapping("tree")
-	public @ResponseBody List<TreeNode> tree(){
+	public @ResponseBody List<SysResource> tree(){
 		return sysResourceService.getMenuTreeList();
 	}
 
@@ -70,7 +70,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
-		PageInfo<SysResource> page = sysResourceService.findMenuPageById(params);
+		PageInfo<SysResource> page = sysResourceService.findMenuPageInfo(params);
 		model.addAttribute("page", page);
 		return "sysmanage/menu-page";
 	}
@@ -82,8 +82,8 @@ public class MenuController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public @ResponseBody Integer save(@RequestParam Map<String, Object> params) {
-		return sysResourceService.saveSysResource(params);
+	public @ResponseBody Integer save(@ModelAttribute SysResource sysResource) {
+		return sysResourceService.saveSysResource(sysResource);
 	}
 
 	/**
@@ -91,34 +91,34 @@ public class MenuController extends BaseController {
 	* @param resourceId 菜单id
 	* @return
 	 */
-	@RequestMapping(value="/dels",method=RequestMethod.POST)
-	public @ResponseBody Integer dels(Long resourceId){
+	@RequestMapping(value="/del",method=RequestMethod.POST)
+	public @ResponseBody Integer dels(Long id){
 		Integer count = 0;
-		if(null != resourceId){
-			count = sysResourceService.deleteResourceByRootId(resourceId);
+		if(null != id){
+			count = sysResourceService.deleteResourceByRootId(id);
 		}
 		return count;
 	}
 
 	/**
 	 * 弹窗
-	* @param resourceId id
-	* @param pResourceId 父类id
+	* @param id
+	* @param parentId 父类id
 	* @param mode 模式(add,edit,detail)
 	* @param model
 	* @return
 	 */
 	@RequestMapping(value="/{mode}/showlayer")
-	public String showLayer(Long resourceId,Long pResourceId,@PathVariable("mode") String mode, Model model){
+	public String showLayer(Long id,Long parentId,@PathVariable("mode") String mode, Model model){
 		SysResource resource = null, pResource = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
-			pResource = sysResourceService.findSysResourceById(pResourceId);
+			pResource = sysResourceService.selectByPrimaryKey(parentId);
 		}else if(StringUtils.equalsIgnoreCase(mode, "edit")){
-			resource = sysResourceService.findSysResourceById(resourceId);
-			pResource = sysResourceService.findSysResourceById(pResourceId);
+			resource = sysResourceService.selectByPrimaryKey(id);
+			pResource = sysResourceService.selectByPrimaryKey(parentId);
 		}else if(StringUtils.equalsIgnoreCase(mode, "detail")){
-			resource = sysResourceService.findSysResourceById(resourceId);
-			pResource = sysResourceService.findSysResourceById(resource.getParentId());
+			resource = sysResourceService.selectByPrimaryKey(id);
+			pResource = sysResourceService.selectByPrimaryKey(resource.getParentId());
 		}
 		model.addAttribute("pResource", pResource)
 			.addAttribute("sysResource", resource);

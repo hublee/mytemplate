@@ -1,3 +1,4 @@
+var lastIndex;//最后弹窗索引
 ;(function($){
 	var cuslayer = function(params){
 		var defaults = {
@@ -64,7 +65,7 @@
 				}
 			}).done(function(data){
 				layer.close(loadi);
-				var index = $.layer({
+				lastIndex = $.layer({
 				    type : 1,
 				    title : params.title,
 				    maxmin: params.maxmin,
@@ -175,9 +176,13 @@ function reloadUrl(){
 function paging(formId,pageNo){
 	var $form = $("#"+formId),$target = $("#"+$form.attr('target')),spinner;
 	var pageNoInput = $form.find('input[name="pageNum"]');
+	var pageSize = $form.find('input[name="pageSize"]');
 	if(pageNoInput.size() == 0){
 		$form.append("<input type='hidden'  name = 'pageNum' value='1'/>");
 		pageNoInput = $form.find('input[name="pageNum"]');
+	}
+	if(pageSize.size() == 0){
+		$form.append("<input type='hidden'  name = 'pageSize' value='10'/>");
 	}
 	pageNoInput.val(pageNo);
 	$.ajax({

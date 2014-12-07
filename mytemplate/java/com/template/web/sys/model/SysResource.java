@@ -2,6 +2,10 @@
 
 package com.template.web.sys.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.template.common.base.Entity;
 
 
@@ -15,6 +19,8 @@ public class SysResource extends Entity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id <>
 
     private Long code; //code <权限码 1<<n>

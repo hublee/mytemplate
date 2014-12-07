@@ -4,6 +4,10 @@ package com.template.web.sys.model;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.template.common.base.Entity;
 
 
@@ -17,6 +21,8 @@ public class SysUser extends Entity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id <用户Id>
 
     private Integer age; //age <年龄>

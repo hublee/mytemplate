@@ -17,7 +17,7 @@
 						</button> 
 					</span>
 					<input type="text" class="form-control search-query"
-						name="resourceName" placeholder="菜单名称" id="search-input">
+						name="name" placeholder="菜单名称" id="search-input">
 						<span class="input-group-btn">
 						<button type="button" class="btn  btn-success btn-sm"
 							id="menu-btn">
@@ -25,9 +25,7 @@
 						</button>
 					</span>
 				</div>
-				<input type="hidden" name="pageNum" value="1" /> 
-				<input type="hidden" name="pageSize" value="10" />
-				<input type="hidden" name="resourceId" />
+				<input type="hidden" name="id" />
 			</form>
 		</div>
 	</div>
@@ -50,6 +48,7 @@
 <script type="text/javascript">
 	var setting = {
 		view:{
+			expandSpeed:100,
 			selectedMulti : false,
 			addHoverDom: addHoverDom,
 			removeHoverDom: removeHoverDom,
@@ -91,20 +90,20 @@
 			title:'<'+(treeNode.name)+'>编辑',
 			height:'520',
 			url:adminPath+'/menu/edit/showlayer',
-			data:{"resourceId":treeNode.id,"pResourceId":treeNode.getParentNode().id}
+			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
 		return false;
 	}
 	
 	//删除菜单
 	function beforeRemove(treeId, treeNode){
-		var resourceId = treeNode.id;
+		var id = treeNode.id;
 		$.cuslayer({
 			mode:'del',
 			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
-			url:adminPath+'/menu/dels',
-			data:{"resourceId":resourceId},
+			url:adminPath+'/menu/del',
+			data:{"id":id},
 			reloadurl:true
 		});
 		return false;
@@ -124,7 +123,7 @@
 				title:'添加资源',
 				height:'530',
 				url:adminPath+'/menu/add/showlayer',
-				data:{"pResourceId":treeNode.id}
+				data:{"parentId":treeNode.id}
 			});
 			return false;
 		});
@@ -137,10 +136,9 @@
 	
 	//节点点击事件
 	function onClickNode(event, treeId, treeNode) {
-		$("#menu-form").find("input[name=resourceName]").val("");
-		var resourceId = treeNode.id;
+		$("#menu-form").find("input[name=name]").val("");
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		$("#menu-form").find("input[name=resourceId]").val(resourceId);
+		$("#menu-form").find("input[name=id]").val(treeNode.id);
 		paging("menu-form",1); //刷新表单
 		for(var i=0, l=nodeList.length; i<l; i++) {
 			nodeList[i].highlight = false;				
@@ -154,15 +152,15 @@
 	
 	//分页
 	$("#findMenu-btn-all").click(function(){
-		$("#menu-form").find("input[name=resourceId]").val("");
-		$("#menu-form").find("input[name=resourceName]").val("");
+		$("#menu-form").find("input[name=id]").val("");
+		$("#menu-form").find("input[name=name]").val("");
 		paging("menu-form",1);
 		var node = treeObj.getNodeByParam("id", 0);
 		treeObj.selectNode(node,false);
 	}).trigger("click");
 	
 	$("#menu-btn").click(function(e){
-		$("#menu-form").find("input[name=resourceId]").val("");
+		$("#menu-form").find("input[name=id]").val("");
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		treeObj.cancelSelectedNode();
 		paging("menu-form",1);

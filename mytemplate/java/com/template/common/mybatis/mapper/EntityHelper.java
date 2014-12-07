@@ -1,11 +1,12 @@
 package com.template.common.mybatis.mapper;
 
 import javax.persistence.*;
+
+import com.template.common.utils.StringConvert;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 实体类工具类
@@ -209,7 +210,7 @@ public class EntityHelper {
             Table table = entityClass.getAnnotation(Table.class);
             entityClassTableName.put(entityClass, table.name());
         } else {
-            entityClassTableName.put(entityClass, camelhumpToUnderline(entityClass.getSimpleName()).toUpperCase());
+            entityClassTableName.put(entityClass, StringConvert.camelhumpToUnderline(entityClass.getSimpleName()));
         }
         //列
         List<Field> fieldList = getAllField(entityClass, null);
@@ -229,7 +230,7 @@ public class EntityHelper {
                 Column column = field.getAnnotation(Column.class);
                 columnName = column.name();
             } else {
-                columnName = camelhumpToUnderline(field.getName());
+                columnName = StringConvert.camelhumpToUnderline(field.getName());
             }
             entityColumn.setProperty(field.getName());
             entityColumn.setColumn(columnName.toUpperCase());
@@ -277,38 +278,6 @@ public class EntityHelper {
         entityClassPKColumns.put(entityClass, pkColumnList);
     }
 
-    /**
-     * 将驼峰风格替换为下划线风格
-     */
-    public static String camelhumpToUnderline(String str) {
-        Matcher matcher = Pattern.compile("[A-Z]").matcher(str);
-        StringBuilder builder = new StringBuilder(str);
-        for (int i = 0; matcher.find(); i++) {
-            builder.replace(matcher.start() + i, matcher.end() + i, "_" + matcher.group().toLowerCase());
-        }
-        if (builder.charAt(0) == '_') {
-            builder.deleteCharAt(0);
-        }
-        return builder.toString();
-    }
-
-    /**
-     * 将下划线风格替换为驼峰风格
-     *
-     * @param str
-     * @return
-     */
-    public static String underlineToCamelhump(String str) {
-        Matcher matcher = Pattern.compile("_[a-z]").matcher(str);
-        StringBuilder builder = new StringBuilder(str);
-        for (int i = 0; matcher.find(); i++) {
-            builder.replace(matcher.start() - i, matcher.end() - i, matcher.group().substring(1).toUpperCase());
-        }
-        if (Character.isUpperCase(builder.charAt(0))) {
-            builder.replace(0, 1, String.valueOf(Character.toLowerCase(builder.charAt(0))));
-        }
-        return builder.toString();
-    }
 
     /**
      * 获取全部的Field
@@ -339,4 +308,16 @@ public class EntityHelper {
         }
         return fieldList;
     }
+    
+    //拼接的if判断
+    public static String IfSqlString(EntityColumn column){
+    	Class<?> propertyType = column.getJavaType();
+    	String propertyName = column.getProperty();
+    	StringBuilder builder = new StringBuilder( propertyName + " != null " );
+    	if(String.class == propertyType){
+    		builder.append("and " + propertyName + " != '' ");
+    	}
+    	return builder.toString();
+    }
+    
 }

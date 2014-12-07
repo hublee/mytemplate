@@ -1,7 +1,7 @@
 <script>
 var key, lastValue = "", nodeList = [];
 var tree, setting = {
-		view:{selectedMulti:false},
+		view:{selectedMulti:false,expandSpeed:100},
 		check:{enable:eval("${checked!'false'}"),nocheckInherit:true},
 		data:{
 			simpleData:{
@@ -52,11 +52,16 @@ $(document).ready(function(){
 	$("#${id}-save").click(function(){
 		node = tree.getSelectedNodes()[0];
 		if(undefined == node || null == node){
-			layer.msg('请选择区域', 2, 0);
+			layer.tips("请选择一个节点", $("#select-tree"), {
+				guide:0,
+				time: 4,
+				style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
+			});
 			return false;
 		}
 		$("#${nameId}").val(node.name);
 		$("#${id}").val(node["${idKey!'id'}"]);
+		layer.close(lastIndex);
 		layer.close(layer.index);
 	});
 });

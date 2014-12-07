@@ -36,11 +36,11 @@ public class AreaController {
 	 * 区域树
 	* @return
 	 */
-	/*@RequestMapping("tree")
+	@RequestMapping("tree")
 	public @ResponseBody List<SysArea> getAreaTreeList(){
-		List<SysArea> list = sysAreaService.findSysArea();
+		List<SysArea> list = sysAreaService.select(new SysArea());
 		return list;
-	}*/
+	}
 	
 	/*@RequestMapping("list")
 	public List<SysArea> list(){
@@ -52,12 +52,13 @@ public class AreaController {
 		//sysAreaService.insertSelective(params);
 		//SysArea a = new SysArea();
 		//a.put("parentId", '0');
+		System.out.println(sysArea);
 		List<SysArea> areas = sysAreaService.select(sysArea);
 		System.out.println("select:"+areas);
-		System.out.println(sysAreaService.selectCount(sysArea));
+		//System.out.println(sysAreaService.selectCount(sysArea));
 		//sysAreaService.insertSelective(sysArea);
 		//sysAreaService.deleteByPrimaryKey(333333L);
-		System.out.println(sysArea);
+		
 		return 1;//sysAreaService
 	}
 	

@@ -26,10 +26,8 @@
 		<!-- 通用crud操作拦截器 -->
 		<plugin interceptor="com.template.common.mybatis.mapper.MapperInterceptor">
 		    <property name="IDENTITY" value="MYSQL"/>
+		    <property name="cameHumpMap" value="true"/>
 		</plugin>
-		
-		<!-- map中的key转驼峰命名 -->
-		<plugin interceptor="com.template.common.mybatis.mapper.CameHumpInterceptor"></plugin>
 		
 	</plugins>
 </configuration>

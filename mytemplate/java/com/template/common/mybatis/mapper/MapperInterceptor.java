@@ -28,7 +28,12 @@ public class MapperInterceptor implements Interceptor {
         String msId = ms.getId();
         //不需要拦截的方法直接返回
         if (!mapperHelper.isMapperMethod(msId)) {
-            return invocation.proceed();
+        	Object result = invocation.proceed();
+        	//是否对Map类型的实体处理返回结果，例如USER_NAME=>userName
+        	if(mapperHelper.isCameHumpMap() && "SELECT".equalsIgnoreCase(ms.getSqlCommandType().toString())){
+        		mapperHelper.cameHumpMap(result, ms);
+        	}
+            return result;
         }
         //第一次经过处理后，就不会是ProviderSqlSource了，一开始高并发时可能会执行多次，但不影响。以后就不会在执行了
         if (ms.getSqlSource() instanceof ProviderSqlSource) {

@@ -15,6 +15,8 @@ import org.apache.ibatis.scripting.xmltags.*;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
+import com.template.common.utils.StringConvert;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -429,7 +431,7 @@ public class MapperHelper {
         boolean first = true;
         for (EntityHelper.EntityColumn column : columnList) {
             StaticTextSqlNode columnNode = new StaticTextSqlNode((first ? "" : " AND ") + column.getColumn() + " = #{" + column.getProperty() + "} ");
-            IfSqlNode ifSqlNode = new IfSqlNode(columnNode, column.getProperty() + " != null and "+column.getProperty()+" !='' ");
+            IfSqlNode ifSqlNode = new IfSqlNode(columnNode, EntityHelper.IfSqlString(column));
             ifNodes.add(ifSqlNode);
             first = false;
         }
@@ -454,7 +456,7 @@ public class MapperHelper {
         boolean first = true;
         for (EntityHelper.EntityColumn column : columnList) {
             StaticTextSqlNode columnNode = new StaticTextSqlNode((first ? "" : " AND ") + column.getColumn() + " = #{" + column.getProperty() + "} ");
-            IfSqlNode ifSqlNode = new IfSqlNode(columnNode, column.getProperty() + " != null and "+column.getProperty()+" !='' ");
+            IfSqlNode ifSqlNode = new IfSqlNode(columnNode, EntityHelper.IfSqlString(column));
             ifNodes.add(ifSqlNode);
             first = false;
         }
@@ -589,7 +591,7 @@ public class MapperHelper {
         boolean first = true;
         for (EntityHelper.EntityColumn column : columnList) {
             StaticTextSqlNode columnNode = new StaticTextSqlNode((first ? "" : " AND ") + column.getColumn() + " = #{" + column.getProperty() + "} ");
-            ifNodes.add(new IfSqlNode(columnNode, column.getProperty() + " != null and "+column.getProperty()+" !='' "));
+            ifNodes.add(new IfSqlNode(columnNode, EntityHelper.IfSqlString(column)));
             first = false;
         }
         sqlNodes.add(new WhereSqlNode(ms.getConfiguration(), new MixedSqlNode(ifNodes)));
@@ -784,7 +786,7 @@ public class MapperHelper {
         while (iterator.hasNext()) {
             Map.Entry entry = iterator.next();
             String key = (String) entry.getKey();
-            String cameHumpKey = EntityHelper.underlineToCamelhump(key.toLowerCase());
+            String cameHumpKey = StringConvert.underlineToCamelhump(key);
             if (!key.equals(cameHumpKey)) {
                 cameHumpMap.put(cameHumpKey, entry.getValue());
                 iterator.remove();
@@ -810,7 +812,7 @@ public class MapperHelper {
             if (propertySet.contains(key)) {
                 continue;
             }
-            String cameHumpKey = EntityHelper.underlineToCamelhump(key.toLowerCase());
+            String cameHumpKey = StringConvert.underlineToCamelhump(key);
             if (!key.equals(cameHumpKey)) {
                 cameHumpMap.put(cameHumpKey, entry.getValue());
                 iterator.remove();

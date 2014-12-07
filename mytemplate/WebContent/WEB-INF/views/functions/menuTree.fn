@@ -11,7 +11,7 @@
 				data-trigger="ajax" data-target="#fill-main-content" haschild="${menu.hasChild}"
 			@}
 		>
-			<i class="menu-icon fa ${menu.icon!'fa-caret-right'}"></i>
+			<i class="menu-icon ${menu.icon!'fa-caret-right'}"></i>
 			<span class="menu-text"> ${menu.name!} </span>
 			@if(menu.hasChild){
 			<b class="arrow fa fa-angle-down"></b>

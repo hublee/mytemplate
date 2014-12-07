@@ -11,7 +11,7 @@ public class TreeNode {
 	private Long parentId; //父级id
 	private String name; //名称
 	private String url; //链接
-	private String icon = "fa fa-home"; //图标
+	private String icon; //图标
 	private int order; //排序
 	private int level=-1; //深度
 	private boolean open = false; //是否打开

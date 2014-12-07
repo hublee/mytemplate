@@ -3,7 +3,7 @@
 @var value = value!'';
 <div class="width-100 clearfix ${class!}">
 	<input type="hidden" value="${value}" name="${name}" id="${name}-input"/>
-	<i class="ace-icon fa ${value} bigger-200 pink" style="vertical-align: middle;padding-right: 10px;"></i>
+	<i class="ace-icon ${value} bigger-200 pink" style="vertical-align: middle;padding-right: 10px;"></i>
 	<button class="btn btn-sm btn-purple" type="button" id="${name}-icon-btn">
 		<i class="ace-icon fa fa-search bigger-110"></i>查找
 	</button>
