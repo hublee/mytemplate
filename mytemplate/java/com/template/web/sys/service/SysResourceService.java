@@ -34,13 +34,17 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	 */
 	public int saveSysResource(SysResource sysResource){
 		int count = 0;
+		sysResource.setParentIds(sysResource.getParentIds()+sysResource.getParentId()+","); //新的parentIds
 		if(null == sysResource.getId()){
 			Long[] cp = CodeUtils.getCodeAndPos(sysResourceMapper.findMaxCodeAndMaxPos());
 			sysResource.setPos(cp[1]);
 			sysResource.setCode(cp[0]);
 			count = this.insertSelective(sysResource);
 		}else{
-			count = this.updateByPrimaryKeySelective(sysResource);
+			SysResource cur = this.selectByPrimaryKey(sysResource.getId());
+			this.updateByPrimaryKeySelective(sysResource); //先更新parentId，此节点的parentIds以更新
+			sysResource.set("oldParentIds", cur.getParentIds());
+			count = sysResourceMapper.updateParentIds(sysResource); //批量更新子节点的parentIds
 		}
 		return count;
 	}

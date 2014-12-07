@@ -44,6 +44,8 @@ public class SysResource extends Entity {
     private String type; //type <类型(0.菜单 1.按钮)>
 
     private String url; //url <链接>
+    
+    private String parentIds;
 
 
 
@@ -143,5 +145,12 @@ public class SysResource extends Entity {
 		this.set("url", url);
     }
 
+    public String getParentIds() {
+		return this.getString("parentIds");
+    }
+   
+    public void setParentIds(String parentIds) {
+		this.set("parentIds", parentIds);
+    }
 
 }

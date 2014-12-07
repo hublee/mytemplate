@@ -15,12 +15,9 @@ import com.template.web.sys.model.SysResource;
  */
 
 public interface SysResourceMapper extends Mapper<SysResource>{
-
-	/**
-	 * 根据节点Id查询底下全部子节点包括孙子节点
-	* @param id
-	* @return
-	 */
+	
+	public int updateParentIds(SysResource sysResource);
+	
 	public List<Long> findIdsByRootId(Long id);
    
 	public List<SysResource> findPageInfo(Map<String, Object> params);

@@ -105,8 +105,8 @@ public class AreaController {
 			area = sysAreaService.selectByPrimaryKey(id);
 			pArea = sysAreaService.selectByPrimaryKey(area.getParentId());
 		}
-		model.addAttribute("pResource", pArea)
-			.addAttribute("sysResource", area);
+		model.addAttribute("pArea", pArea)
+			.addAttribute("area", area);
 		return mode.equals("detail")?"sys/area/area-detail":"sys/area/area-save";
 	}
 	

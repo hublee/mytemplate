@@ -14,7 +14,7 @@
 		action="${adminPath}/menu/save">
 		
 		<input type="hidden" value="${sysResource.id!}" name="id"/>
-		<input type="hidden" value="${pResource.parentIds!}" name="parentIds" />
+		<input type="hidden" value="${sysResource.parentIds!}" name="parentIds" />
 		<table class="EditTable" width="100%">
 			<tbody>
 				<tr style="display: none;">
@@ -124,7 +124,7 @@
 		<ul id="treeMenuChoose" class="ztree"></ul>
 	</div>
 </div>
-<#save formid="menu-save" reloadurl="true" />
+<#save formid="menu-save" />
 
 <script type="text/javascript">
 	

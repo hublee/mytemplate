@@ -8,7 +8,8 @@ var tree, setting = {
 				enable:true,
 				idKey:"${idKey!'id'}",
 				pIdKey:"${pIdKey!'parentId'}"
-			}
+			},
+			key:{url:"abcd11"}
 		},
 		view:{
 			fontCss:function(treeId, treeNode) {
@@ -61,6 +62,7 @@ $(document).ready(function(){
 		}
 		$("#${nameId}").val(node.name);
 		$("#${id}").val(node["${idKey!'id'}"]);
+		$("input[name='parentIds']").val(node.parentIds);
 		layer.close(lastIndex);
 		layer.close(layer.index);
 	});
