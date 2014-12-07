@@ -51,7 +51,7 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	* @return
 	 */
 	public int deleteResourceByRootId(Long id){
-		List<Long> idList = sysResourceMapper.findResourceByRootId(id);
+		List<Long> idList = sysResourceMapper.findIdsByRootId(id);
 		int count = 0;
 		for(Long cid : idList){
 			this.deleteByPrimaryKey(cid);
@@ -65,14 +65,14 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	 * 菜单管理分页显示筛选查询
 	 * 
 	 * @param params
-	 *            {"resourceName":"菜单名字","resourceId":"菜单id"}
+	 *            {"name":"菜单名字","id":"菜单id"}
 	 * @return
 	 */
-	public PageInfo<SysResource> findMenuPageInfo(Map<String, Object> params) {
+	public PageInfo<SysResource> findPageInfo(Map<String, Object> params) {
 		PageHelper.startPage(
 				Integer.parseInt(params.get("pageNum").toString()),
 				Integer.parseInt(params.get("pageSize").toString()));
-		List<SysResource> list = sysResourceMapper.findMenuPageInfo(params);
+		List<SysResource> list = sysResourceMapper.findPageInfo(params);
 		return new PageInfo<SysResource>(list);
 	}
 	

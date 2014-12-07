@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.common.base.BaseController;
 import com.template.common.mybatis.page.PageInfo;
-import com.template.common.spring.util.SpringContextHolder;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
@@ -46,10 +45,9 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping
 	public String toMenu(Model model) {
-		SpringContextHolder.getBean(SysResourceService.class);
-		model.addAttribute("menuTreeList",
+		model.addAttribute("treeList",
 				JsonUtils.getInstance().toJson(sysResourceService.getMenuTreeList()));
-		return "sysmanage/menu";
+		return "sys/menu/menu";
 	}
 	
 	/**
@@ -70,9 +68,9 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
-		PageInfo<SysResource> page = sysResourceService.findMenuPageInfo(params);
+		PageInfo<SysResource> page = sysResourceService.findPageInfo(params);
 		model.addAttribute("page", page);
-		return "sysmanage/menu-page";
+		return "sys/menu/menu-list";
 	}
 	
 	/**
@@ -122,7 +120,7 @@ public class MenuController extends BaseController {
 		}
 		model.addAttribute("pResource", pResource)
 			.addAttribute("sysResource", resource);
-		return mode.equals("detail")?"sysmanage/menu-detail":"sysmanage/menu-save";
+		return mode.equals("detail")?"sys/menu/menu-detail":"sys/menu/menu-save";
 	}
 
 }

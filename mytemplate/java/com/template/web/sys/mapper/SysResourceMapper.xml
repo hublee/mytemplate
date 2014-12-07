@@ -11,7 +11,7 @@
 	</sql>
 
 	<!-- 根据节点Id查询底下全部子节点包括孙子节点 -->
-	<select id="findResourceByRootId" resultType="java.lang.Long" >
+	<select id="findIdsByRootId" resultType="java.lang.Long" >
 		select id from sys_resource where FIND_IN_SET(id,getChildrenId(#{id}))
 	</select>
 	
@@ -22,11 +22,11 @@
 	</select>
 	
 	<!-- 菜单管理分页显示筛选查询 -->
-	<select id="findMenuPageInfo" resultType="com.template.web.sys.model.SysResource">
+	<select id="findPageInfo" resultType="com.template.web.sys.model.SysResource">
 		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,sr.common,sr.pos,
 		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
 		from sys_resource sr
-		LEFT JOIN sys_resource srp
+		left join sys_resource srp
 		ON sr.parent_id=srp.id
 		<where>
 			<if test="name != ''">

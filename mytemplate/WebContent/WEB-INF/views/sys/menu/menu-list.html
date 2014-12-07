@@ -20,7 +20,7 @@
 				<td class="center">${menu.id}</td>
 				<td class="center">
 					<a href="javascript:;" 
-						data-title="<${menu.name!}>详情" data-mode="page"
+						data-title="${menu.name!}详情" data-mode="page"
 						data-url="${adminPath}/menu/detail/showlayer"
 						data-data="{id:'${menu.id}'}"
 						data-width="350" data-height="520"
@@ -54,7 +54,7 @@
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
-							data-mode="page" data-title="<${menu.name!}>编辑"
+							data-mode="page" data-title="${menu.name!}编辑"
 							data-url="${adminPath}/menu/edit/showlayer"
 							data-data="{id:'${menu.id}',parentId:'${menu.pid}'}"
 							data-height="530"
@@ -65,7 +65,7 @@
 						<a class="red" href="javascript:void(0);" 
 							data-mode="del" data-title="删除操作"
 							data-msg="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
-							data-url="${adminPath}/menu/dels" data-data="{id:'${menu.id}'}"
+							data-url="${adminPath}/menu/del" data-data="{id:'${menu.id}'}"
 							data-reloadurl="true"
 						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
@@ -77,4 +77,4 @@
 	</tbody>
 </table>
 <div class="space-8"></div>
-<#paginate page="${page}" formid="menu-form" />
+<#paginate page="${page}" />

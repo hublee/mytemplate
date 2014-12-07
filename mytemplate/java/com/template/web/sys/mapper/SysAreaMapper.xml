@@ -5,5 +5,30 @@
 	<sql id="sysAreaColumns">
 		id,code,create_by,create_date,del_flag,name,parent_id,parent_ids,remarks,type,update_by,update_date
 	</sql>
+	<sql id="sysAreaAliasColumns">
+		a.id,a.code,a.create_by,a.create_date,a.del_flag,a.name,a.parent_id,a.parent_ids,
+		a.remarks,a.type,a.update_by,a.update_date
+	</sql>
+	
+	<!-- 根据节点Id查询底下全部子节点包括孙子节点Id -->
+	<select id="findIdsByRootId" resultType="java.lang.Long" >
+		select id from sys_area where FIND_IN_SET(id,getChildrenId(#{id}))
+	</select>
+	
+	<!-- 菜单管理分页显示筛选查询 -->
+	<select id="findPageInfo" resultType="com.template.web.sys.model.SysArea">
+		select <include refid="sysAreaAliasColumns"/>,a2.name pname,a2.id pid
+		from sys_area a
+		left join sys_area a2
+		ON a.parent_id=a2.id
+		<where>
+			<if test="name != ''">
+				a.name like concat( '%' , #{name} , '%' )
+			</if>
+			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
+				FIND_IN_SET(a.id,getChildrenId(#{id}))
+			</if>
+		</where>
+	</select>
 
 </mapper>

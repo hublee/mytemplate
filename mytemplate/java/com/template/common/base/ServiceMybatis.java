@@ -1,5 +1,6 @@
 package com.template.common.base;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,22 @@ public abstract class ServiceMybatis<T extends Entity> {
     public int updateByPrimaryKeySelective(T record){
     	return mapper.updateByPrimaryKeySelective(record);
     }
+    
+    /**
+     * 保存或者更新，根据传入id主键是不是null来确认
+    * @param record
+    * @return 影响行数
+     */
+    public int save(T record){
+		int count = 0;
+		if(record.get("id") == null){
+			record.set("createDate", new Date());
+			count = this.insertSelective(record);
+		}else{
+			record.set("updateDate", new Date());
+			count = this.updateByPrimaryKeySelective(record);
+		}
+		return count;
+	}
 
 }

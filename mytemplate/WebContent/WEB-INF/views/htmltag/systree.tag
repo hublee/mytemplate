@@ -1,49 +1,11 @@
-<div class="widget-box widget-color-green2">
-	<div class="widget-header clearfix">
-		<h5 class="widget-title">菜单配置</h5>
-		<div class="widget-toolbar">
-			<a href="#" data-action="fullscreen" class="orange2"> <i
-				class="ace-icon fa fa-expand"></i>
-			</a>
-		</div>
-		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
-			<form method="post" class="form-search" id="menu-form" target="menu-page"
-				action="${adminPath}/menu/list">
-				<div class="input-group" style="line-height: 0px;">
-					<span class="input-group-btn">
-						<button type="button" class=" btn  btn-success btn-sm"
-							id="findMenu-btn-all">
-							 显示全部 
-						</button> 
-					</span>
-					<input type="text" class="form-control search-query"
-						name="name" placeholder="菜单名称" id="search-input">
-						<span class="input-group-btn">
-						<button type="button" class="btn  btn-success btn-sm"
-							id="menu-btn">
-							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
-						</button>
-					</span>
-				</div>
-				<input type="hidden" name="id" />
-			</form>
-		</div>
-	</div>
-
-	<div class="widget-body">
-		<div class="widget-main padding-8">
-			<div class="row">
-				<div class="col-sm-3">
-					<div>
-						<ul id="treeMenu" class="ztree"></ul>
-					</div>
-				</div>
-				<div class="col-sm-9" id="menu-page">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+@var editUrl=editUrl!; //  示例menu/edit/showlayer
+@var delUrl=delUrl!;
+@var addUrl=addUrl!;
+@var treeData=treeData!;
+@var form=form!'search-form';
+@var searchBtn=searchBtn!'search-btn';
+@var searchInput=searchInput!'search-input';
+@var searchAllBtn=searchAllBtn!'search-all-btn';
 
 <script type="text/javascript">
 	var setting = {
@@ -87,9 +49,9 @@
 	function beforeEditName(treeId, treeNode) {
 		$.cuslayer({
 			mode:'page',
-			title:'<'+(treeNode.name)+'>编辑',
+			title:(treeNode.name)+'编辑',
 			height:'520',
-			url:adminPath+'/menu/edit/showlayer',
+			url:adminPath+'/${editUrl}',
 			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
 		return false;
@@ -102,7 +64,7 @@
 			mode:'del',
 			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
-			url:adminPath+'/menu/del',
+			url:adminPath+'/${delUrl}',
 			data:{"id":id},
 			reloadurl:true
 		});
@@ -122,7 +84,7 @@
 				mode:'page',
 				title:'添加资源',
 				height:'530',
-				url:adminPath+'/menu/add/showlayer',
+				url:adminPath+'/${addUrl}',
 				data:{"parentId":treeNode.id}
 			});
 			return false;
@@ -136,38 +98,45 @@
 	
 	//节点点击事件
 	function onClickNode(event, treeId, treeNode) {
-		$("#menu-form").find("input[name=name]").val("");
+		$("#${form}").find("input[name=name]").val("");
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		$("#menu-form").find("input[name=id]").val(treeNode.id);
-		paging("menu-form",1); //刷新表单
+		$("#${form}").find("input[name=id]").val(treeNode.id);
+		paging("${form}",1); //刷新表单
 		for(var i=0, l=nodeList.length; i<l; i++) {
 			nodeList[i].highlight = false;				
 			treeObj.updateNode(nodeList[i]);
 		}
 	};
-	
-	//树结构初始化
-	$.fn.zTree.init($("#treeMenu"), setting, ${menuTreeList});
-	var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+	var treeObj;
+	$(function(){
+		//树结构初始化
+		$.fn.zTree.init($("#treeMenu"), setting, ${treeData});
+		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+		// 默认展开一级节点
+		var nodes = treeObj.getNodesByParam("level", 0);
+		for(var i=0; i<nodes.length; i++) {
+			treeObj.expandNode(nodes[i], true, false, false);
+		}
+	});
 	
 	//分页
-	$("#findMenu-btn-all").click(function(){
-		$("#menu-form").find("input[name=id]").val("");
-		$("#menu-form").find("input[name=name]").val("");
-		paging("menu-form",1);
+	$("#${searchAllBtn}").click(function(){
+		$("#${form}").find("input[name=id]").val("");
+		$("#${form}").find("input[name=name]").val("");
+		paging("${form}",1);
 		var node = treeObj.getNodeByParam("id", 0);
 		treeObj.selectNode(node,false);
 	}).trigger("click");
 	
-	$("#menu-btn").click(function(e){
-		$("#menu-form").find("input[name=id]").val("");
+	$("#${searchBtn}").click(function(e){
+		$("#${form}").find("input[name=id]").val("");
 		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		treeObj.cancelSelectedNode();
-		paging("menu-form",1);
+		paging("${form}",1);
 		searchNode(e);
 	});
 	
-	var key = $("#search-input"),nodeList = [];
+	var key = $("#${searchInput}"),nodeList = [];
 	function searchNode(e) {
 		// 取得输入的关键字的值
 		var value = $.trim(key.get(0).value);

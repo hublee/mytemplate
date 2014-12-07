@@ -2,6 +2,9 @@
 
 package com.template.web.sys.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import com.template.common.mybatis.mapper.Mapper;
 import com.template.web.sys.model.SysArea;
 
@@ -11,6 +14,9 @@ import com.template.web.sys.model.SysArea;
  */
 
 public interface SysAreaMapper extends Mapper<SysArea>{
+	
+	public List<Long> findIdsByRootId(Long id);
 
-
+	public List<SysArea> findPageInfo(Map<String, Object> params);
+	
 }

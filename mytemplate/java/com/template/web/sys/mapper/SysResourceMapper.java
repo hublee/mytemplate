@@ -21,9 +21,9 @@ public interface SysResourceMapper extends Mapper<SysResource>{
 	* @param id
 	* @return
 	 */
-	public List<Long> findResourceByRootId(Long id);
+	public List<Long> findIdsByRootId(Long id);
    
-	public List<SysResource> findMenuPageInfo(Map<String, Object> params);
+	public List<SysResource> findPageInfo(Map<String, Object> params);
 	
 	public SysResource findMaxCodeAndMaxPos();
 	

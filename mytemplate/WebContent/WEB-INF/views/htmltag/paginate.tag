@@ -1,7 +1,7 @@
 @   var currentPage = page.pageNum;   // 当前页
 @   var totalPage = page.pages;     // 总页数
 @   var totalResult = page.total; //总记录数
-@	var formid = formid; //当前的表单
+@	var formid = formid!'search-form'; //当前的表单id,一个页面多个分页需要定义
 
 @if(totalResult != 0){
 <div class="clearfix">
