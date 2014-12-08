@@ -55,13 +55,7 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	* @return
 	 */
 	public int deleteResourceByRootId(Long id){
-		List<Long> idList = sysResourceMapper.findIdsByRootId(id);
-		int count = 0;
-		for(Long cid : idList){
-			this.deleteByPrimaryKey(cid);
-			count++;
-		}
-		return count;
+		return sysResourceMapper.deleteIdsByRootId(id);
 	}
 /*------------------------------------菜单操作----------------------------------------*/
 	

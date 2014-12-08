@@ -10,10 +10,17 @@
 		a.remarks,a.type,a.update_by,a.update_date
 	</sql>
 	
-	<!-- 根据节点Id查询底下全部子节点包括孙子节点Id -->
-	<select id="findIdsByRootId" resultType="java.lang.Long" >
-		select id from sys_area where FIND_IN_SET(id,getChildrenId(#{id}))
-	</select>
+	<!-- 修改父节点字符串 -->
+	<update id="updateParentIds">
+		update sys_area
+		set parent_ids = REPLACE(parent_ids, #{oldParentIds}, #{parentIds}) 
+		where parent_ids like CONCAT(#{oldParentIds},'%') 
+	</update>
+	
+	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
+	<delete id="deleteIdsByRootId">
+		delete from sys_area where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+	</delete>
 	
 	<!-- 菜单管理分页显示筛选查询 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysArea">
@@ -26,7 +33,7 @@
 				a.name like concat( '%' , #{name} , '%' )
 			</if>
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
-				FIND_IN_SET(a.id,getChildrenId(#{id}))
+				FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id}
 			</if>
 		</where>
 	</select>

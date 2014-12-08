@@ -18,10 +18,10 @@
 		where parent_ids like CONCAT(#{oldParentIds},'%') 
 	</update>
 
-	<!-- 根据节点Id查询底下全部子节点包括孙子节点 -->
-	<select id="findIdsByRootId" resultType="java.lang.Long" >
-		select id from sys_resource where FIND_IN_SET(id,getChildrenId(#{id}))
-	</select>
+	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
+	<delete id="deleteIdsByRootId">
+		delete from sys_resource where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+	</delete>
 	
 	<!-- 查找偏移量最大的权限码和偏移量 -->
 	<select id="findMaxCodeAndMaxPos" resultType="com.template.web.sys.model.SysResource">
@@ -41,7 +41,7 @@
 				sr.name like concat( '%' , #{name} , '%' )
 			</if>
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
-				FIND_IN_SET(sr.id,getChildrenId(#{id}))
+				FIND_IN_SET(#{id},sr.parent_ids) or sr.id = #{id}
 			</if>
 		</where>
 	</select>

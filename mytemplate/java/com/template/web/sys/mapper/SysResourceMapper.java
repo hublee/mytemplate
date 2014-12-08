@@ -18,7 +18,7 @@ public interface SysResourceMapper extends Mapper<SysResource>{
 	
 	public int updateParentIds(SysResource sysResource);
 	
-	public List<Long> findIdsByRootId(Long id);
+	public int deleteIdsByRootId(Long id);
    
 	public List<SysResource> findPageInfo(Map<String, Object> params);
 	

@@ -119,16 +119,11 @@
 			</tbody>
 		</table>
 	</form>
-	<div id="menuContent" class="menuContent"  style="display:none; position: absolute; 
-		background-color: whiteSmoke;z-index: 9998;max-height: 250px; overflow-y:auto;overflow-x:hidden;">
-		<ul id="treeMenuChoose" class="ztree"></ul>
-	</div>
 </div>
 <#save formid="menu-save" reloadurl="true" />
 
 <script type="text/javascript">
 	
-$("#treeMenuChoose").width($("#menu-edit-pname").width());
 //图标切换改变
 $("#resourceInput").on("input propertychange",function(){
 	var icon = $(this).val();

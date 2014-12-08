@@ -27,18 +27,29 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	private SysAreaMapper sysAreaMapper;
 	
 	/**
+	 *新增or更新SysArea
+	 */
+	public int saveSysArea(SysArea sysArea){
+		int count = 0;
+		sysArea.setParentIds(sysArea.getParentIds()+sysArea.getParentId()+","); //新的parentIds
+		if(null == sysArea.getId()){
+			count = this.insertSelective(sysArea);
+		}else{
+			SysArea cur = this.selectByPrimaryKey(sysArea.getId());
+			this.updateByPrimaryKeySelective(sysArea); //先更新parentId，此节点的parentIds以更新
+			sysArea.set("oldParentIds", cur.getParentIds());
+			count = sysAreaMapper.updateParentIds(sysArea); //批量更新子节点的parentIds
+		}
+		return count;
+	}
+	
+	/**
 	 * 根据父id删除自身已经所有子节点
 	* @param id
 	* @return
 	 */
 	public int deleteAreaByRootId(Long id){
-		List<Long> idList = sysAreaMapper.findIdsByRootId(id);
-		int count = 0;
-		for(Long cid : idList){
-			this.deleteByPrimaryKey(cid);
-			count++;
-		}
-		return count;
+		return sysAreaMapper.deleteIdsByRootId(id);
 	}
 	
 	/**

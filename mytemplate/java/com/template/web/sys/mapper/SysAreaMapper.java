@@ -15,7 +15,9 @@ import com.template.web.sys.model.SysArea;
 
 public interface SysAreaMapper extends Mapper<SysArea>{
 	
-	public List<Long> findIdsByRootId(Long id);
+	public int updateParentIds(SysArea sysArea);
+	
+	public int deleteIdsByRootId(Long id);
 
 	public List<SysArea> findPageInfo(Map<String, Object> params);
 	

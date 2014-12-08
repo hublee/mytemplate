@@ -68,7 +68,7 @@ public class AreaController {
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysArea sysArea) {
-		return sysAreaService.save(sysArea);
+		return sysAreaService.saveSysArea(sysArea);
 	}
 
 	/**
