@@ -13,7 +13,6 @@ import java.util.*;
 /**
  * MyBatis Map类型大写下划线Key转小写驼峰形式
  *
- * @author huangyong
  * @since 1.0.0
  */
 @Intercepts(
