@@ -15,7 +15,7 @@
 	<update id="updateParentIds">
 		update sys_resource
 		set parent_ids = REPLACE(parent_ids, #{oldParentIds}, #{parentIds}) 
-		where parent_ids like CONCAT(#{oldParentIds},'%') 
+		where parent_ids like CONCAT( '%,' , #{id} , ',%' ) 
 	</update>
 
 	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->

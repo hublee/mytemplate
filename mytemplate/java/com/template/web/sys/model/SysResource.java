@@ -5,6 +5,9 @@ package com.template.web.sys.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import net.sf.ehcache.pool.sizeof.annotations.IgnoreSizeOf;
 
 import com.template.common.base.Entity;
 
@@ -46,7 +49,9 @@ public class SysResource extends Entity {
     private String url; //url <链接>
     
     private String parentIds;
-
+    
+    @Transient
+    private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
 
 	public Long getId() {
@@ -151,6 +156,14 @@ public class SysResource extends Entity {
    
     public void setParentIds(String parentIds) {
 		this.set("parentIds", parentIds);
+    }
+    
+    public String getOldParentIds() {
+		return this.getString("oldParentIds");
+    }
+   
+    public void setOldParentIds(String oldParentIds) {
+		this.set("oldParentIds", oldParentIds);
     }
 
 }

@@ -13,6 +13,7 @@ import com.template.web.sys.model.SysArea;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,14 +32,18 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 */
 	public int saveSysArea(SysArea sysArea){
 		int count = 0;
-		sysArea.setParentIds(sysArea.getParentIds()+sysArea.getParentId()+","); //新的parentIds
+		//新的parentIds
+		sysArea.setParentIds(sysArea.getParentIds()+sysArea.getParentId()+","); 
 		if(null == sysArea.getId()){
 			count = this.insertSelective(sysArea);
 		}else{
-			SysArea cur = this.selectByPrimaryKey(sysArea.getId());
-			this.updateByPrimaryKeySelective(sysArea); //先更新parentId，此节点的parentIds以更新
-			sysArea.set("oldParentIds", cur.getParentIds());
-			count = sysAreaMapper.updateParentIds(sysArea); //批量更新子节点的parentIds
+			//getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
+			//先更新parentId，此节点的parentIds以更新
+			count = this.updateByPrimaryKeySelective(sysArea); 
+			//不移动节点不更新子节点的pids
+			if(!StringUtils.equals(sysArea.getOldParentIds(), sysArea.getParentIds())){
+				sysAreaMapper.updateParentIds(sysArea); //批量更新子节点的parentIds
+			}
 		}
 		return count;
 	}

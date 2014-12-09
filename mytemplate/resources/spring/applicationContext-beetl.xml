@@ -19,7 +19,7 @@
 		<property name="configFileResource" value="classpath:beetl/beetl.properties"/>
 		<property name="functions">
              <map>
-               <entry key="dictFn" value-ref="dictFunction"/>
+               <entry key="getDictListByType" value-ref="dictFunction"/>
             </map>
         </property>
 	</bean>

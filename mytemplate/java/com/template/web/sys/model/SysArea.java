@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.template.common.base.Entity;
 
@@ -47,6 +48,8 @@ public class SysArea extends Entity {
 
     private Date updateDate; //update_date <更新时间>
 
+    @Transient
+    private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
 
 	public Long getId() {
@@ -145,5 +148,12 @@ public class SysArea extends Entity {
 		this.set("updateDate", updateDate);
     }
 
+    public String getOldParentIds() {
+		return this.getString("oldParentIds");
+    }
+   
+    public void setOldParentIds(String oldParentIds) {
+		this.set("oldParentIds", oldParentIds);
+    }
 
 }

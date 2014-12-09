@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.template.common.base.ServiceMybatis;
@@ -34,17 +35,21 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	 */
 	public int saveSysResource(SysResource sysResource){
 		int count = 0;
-		sysResource.setParentIds(sysResource.getParentIds()+sysResource.getParentId()+","); //新的parentIds
+		//新的parentIds
+		sysResource.setParentIds(sysResource.getParentIds()+sysResource.getParentId()+","); 
 		if(null == sysResource.getId()){
 			Long[] cp = CodeUtils.getCodeAndPos(sysResourceMapper.findMaxCodeAndMaxPos());
 			sysResource.setPos(cp[1]);
 			sysResource.setCode(cp[0]);
 			count = this.insertSelective(sysResource);
 		}else{
-			SysResource cur = this.selectByPrimaryKey(sysResource.getId());
-			this.updateByPrimaryKeySelective(sysResource); //先更新parentId，此节点的parentIds以更新
-			sysResource.set("oldParentIds", cur.getParentIds());
-			count = sysResourceMapper.updateParentIds(sysResource); //批量更新子节点的parentIds
+			//getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
+			//先更新parentId，此节点的parentIds以更新
+			count = this.updateByPrimaryKeySelective(sysResource); 
+			//不移动节点不更新子节点的pids
+			if(!StringUtils.equals(sysResource.getOldParentIds(), sysResource.getParentIds())){
+				sysResourceMapper.updateParentIds(sysResource); //批量更新子节点的parentIds
+			}
 		}
 		return count;
 	}
