@@ -15,71 +15,63 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">区域编码</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${area.url!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
-		<div class="profile-info-name">权限码(code)</div>
-		<div class="profile-info-value">
 			<span class="editable editable-click">${area.code!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">权限位(pos)</div>
-		<div class="profile-info-value">
-			<span class="editable editable-click">${area.pos!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
-		<div class="profile-info-name">资源类型</div>
+		<div class="profile-info-name">区域类型</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${decode(area.type,0,'菜单资源','按钮资源')}
+			<#dict dictMode="showName" value="${area.type!}" type="sys_area_type"/>
 			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">权限类型</div>
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${area.createBy!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${decode(area.common,0,'权限','公共')}
+			${darea.createDate!}
 			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">图标</div>
+		<div class="profile-info-name">更新者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click"><i class="ace-icon fa ${area.icon!} blue bigger-120"></i></span>
+			<span class="editable editable-click">
+			${area.updateBy!}
+			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">排序号</div>
+		<div class="profile-info-name">更新时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${area.sort!}</span>
+			<span class="editable editable-click">
+			${darea.updateDate!}
+			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">状态</div>
+		<div class="profile-info-name">备注</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${decode(area.status!,0,'正常','禁用')}</span>
+			<span class="editable editable-click">${area.remarks!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">父级ID</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${pResource.id!}</span>
+			<span class="editable editable-click">${pArea.id!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
-		<div class="profile-info-name">父级名称</div>
+		<div class="profile-info-name">父级区域</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${pResource.name!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
-		<div class="profile-info-name">描述</div>
-		<div class="profile-info-value">
-			<span class="editable editable-click">${area.description!}</span>
+			<span class="editable editable-click">${pArea.name!}</span>
 		</div>
 	</div>
 </div>

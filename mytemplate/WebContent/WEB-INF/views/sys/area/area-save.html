@@ -26,14 +26,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">区域类型</td>
 					<td class="DataTD width-100">
-						<select class="chosen-select" name="type">
-							@for(item in dictFn("sys_area_type")){
-								<option value="${item.value!}" 
-									${decode(area.type!,item.value,'selected','')}>
-								${item.label!}
-								</option>
-							@}
-						</select>
+					<#dict value="${area.type!}" type="sys_area_type" />
 					</td>
 				</tr>
 				<tr class="FormData">
@@ -54,7 +47,7 @@
 		</table>
 	</form>
 </div>
-<#save formid="area-save" />
+<#save formId="area-save" />
 
 <script type="text/javascript">
 

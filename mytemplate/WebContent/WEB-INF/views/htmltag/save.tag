@@ -1,27 +1,27 @@
-@var formid = formid!'save-form'; //form表单id
-@var reloadurl = reloadurl!'false'; //是否url刷新,默认false当前右侧刷新
+@var formId = formId!'save-form'; //form表单id
+@var reloadUrl = reloadUrl!'false'; //是否url刷新,默认false当前右侧刷新
 
 <div class="width-100 clearfix" style="position: absolute;bottom: 0px;left: 0px;padding-top: 15px;">
-	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${formid}-save">
+	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${formId}-save">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 确 定
 	</button>
-	<button class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formid}-cancel">
+	<button class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
 		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
 	</button>
 </div>
 <script type="text/javascript">
 $(function(){
-	$("#${formid}").Validform({
+	$("#${formId}").Validform({
 		ajaxPost : true,
 		beforeSubmit:function(curform){
 			var loadi = layer.load(5,2);
-			$("#${formid}").data('loadi',loadi);
+			$("#${formId}").data('loadi',loadi);
 		},
 		callback:function(data){
-			layer.close($("#${formid}").data('loadi'));
+			layer.close($("#${formId}").data('loadi'));
 			if(data>0) {
 				layer.msg('操作成功', 1, 1,function(){
-					if("${reloadurl}" == "true"){
+					if("${reloadUrl}" == "true"){
 						reloadUrl();
 					}else{
 						$curmenu.trigger('click');
@@ -46,17 +46,17 @@ $(function(){
 		tipSweep : true
 	});
 
-	$("#${formid}-save").click(function() {
-		$("#${formid}").submit();
+	$("#${formId}-save").click(function() {
+		$("#${formId}").submit();
 		return false;
 	});
 	
-	$("#${formid}-cancel").click(function(){
+	$("#${formId}-cancel").click(function(){
 		layer.closeAll();
 		return false;
 	});
 	
-	$("#${formid} input,#${formid} textarea").blur(function(){
+	$("#${formId} input,#${formId} textarea").blur(function(){
 		layer.closeTips();
 		return false;
 	})

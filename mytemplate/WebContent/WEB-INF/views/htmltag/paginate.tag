@@ -1,7 +1,7 @@
 @   var currentPage = page.pageNum;   // 当前页
 @   var totalPage = page.pages;     // 总页数
 @   var totalResult = page.total; //总记录数
-@	var formid = formid!'search-form'; //当前的表单id,一个页面多个分页需要定义
+@	var formId = formId!'search-form'; //当前的表单id,一个页面多个分页需要定义
 
 @if(totalResult != 0){
 <div class="clearfix">
@@ -18,8 +18,8 @@
 						<li class="prev disabled"><a href="javascript:void(0);" onclick="return false;">首页</a></li>
 						<li class="prev disabled"><a href="javascript:void(0);" onclick="return false;">上一页</a></li>
 		@			}else{
-						<li><a href="javascript:void(0);" onclick="paging('${formid}',1);return false;">首页</a></li>
-						<li><a href="javascript:void(0);" onclick="paging('${formid}',${currentPage - 1});return false;">上一页</a></li>
+						<li><a href="javascript:void(0);" onclick="paging('${formId}',1);return false;">首页</a></li>
+						<li><a href="javascript:void(0);" onclick="paging('${formId}',${currentPage - 1});return false;">上一页</a></li>
 		@			}
 		@	      if(totalPage <= 8){
 		@	       var i = 1;
@@ -27,7 +27,7 @@
 		@	         if(currentPage == i){
 			         	<li class="active"><a href="javascript:void(0);" onclick="return false;">${currentPage}</a></li>
 		@	         }else{
-			         	<li><a href="javascript:void(0);" onclick="paging('${formid}',${i});return false;">${i}</a></li>         	
+			         	<li><a href="javascript:void(0);" onclick="paging('${formId}',${i});return false;">${i}</a></li>         	
 		@	         }
 		@			i = i+1;
 		@	       }
@@ -38,14 +38,14 @@
 		@	         		if(currentPage==j){
 			         			<li class="active"><a href="javascript:void(0);" onclick="return false;">${currentPage}</a></li>
 		@	         		}else{
-			         			<li><a href="javascript:void(0);" onclick="paging('${formid}',${j});return false;">${j}</a></li>
+			         			<li><a href="javascript:void(0);" onclick="paging('${formId}',${j});return false;">${j}</a></li>
 		@	         		}
 		@	     			j = j+1;
 		@	     		}
 			     		<li><a href="javascript:void(0);">…</a></li>
 		@	      	}else{
-			      		<li><a href="javascript:void(0);" onclick="paging('${formid}',1);return false;">1</a></li>
-						<li><a href="javascript:void(0);" onclick="paging('${formid}',2);return false;">2</a></li>
+			      		<li><a href="javascript:void(0);" onclick="paging('${formId}',1);return false;">1</a></li>
+						<li><a href="javascript:void(0);" onclick="paging('${formId}',2);return false;">2</a></li>
 						<li><a href="javascript:void(0);" onclick="return false;">…</a></li>
 						
 		@					var begin = currentPage - 2;
@@ -64,24 +64,24 @@
 		@						if(currentPage == m){
 									<li class="active"><a href="javascript:void(0);" onclick="return false;">${currentPage}</a></li>
 		@						}else{
-									<li><a href="javascript:void(0);" onclick="paging('${formid}',${m});return false;">${m}</a></li>
+									<li><a href="javascript:void(0);" onclick="paging('${formId}',${m});return false;">${m}</a></li>
 		@						}
 		@						m = m+1;
 		@					}
 		@					if(end != totalPage){
 							   <li><a href="javascript:void(0);">…</a></li>
-							   <li><a href="javascript:void(0);" onclick="paging('${formid}',${totalPage-1});return false;">${totalPage-1}</a></li>
-							   <li><a href="javascript:void(0);" onclick="paging('${formid}',${totalPage});return false;">${totalPage}</a></li>
+							   <li><a href="javascript:void(0);" onclick="paging('${formId}',${totalPage-1});return false;">${totalPage-1}</a></li>
+							   <li><a href="javascript:void(0);" onclick="paging('${formId}',${totalPage});return false;">${totalPage}</a></li>
 		@					}
 		@	      		}
 		
 		@	      }
 		@		    if(currentPage == totalPage){
 						<li class="next disabled"><a href="javascript:void(0);" onclick="return false;">下一页</a></li>
-						<li class="next disabled"><a href="javascript:void(0);" onclick="paging('${formid}',${totalPage});return false;">尾页</a></li>
+						<li class="next disabled"><a href="javascript:void(0);" onclick="paging('${formId}',${totalPage});return false;">尾页</a></li>
 		@			}else{
-						<li><a href="javascript:void(0);" onclick="paging('${formid}',${currentPage + 1});return false;">下一页</a></li>
-						<li><a href="javascript:void(0);" onclick="paging('${formid}',${totalPage});return false;">尾页</a></li>
+						<li><a href="javascript:void(0);" onclick="paging('${formId}',${currentPage + 1});return false;">下一页</a></li>
+						<li><a href="javascript:void(0);" onclick="paging('${formId}',${totalPage});return false;">尾页</a></li>
 		@			}
 			</div>
 		

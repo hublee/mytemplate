@@ -17,9 +17,9 @@
 				<td class="center">
 					<a href="javascript:;" 
 						data-title="<${item.name!}>详情" data-mode="page"
-						data-url="${adminPath}/item/detail/showlayer"
+						data-url="${adminPath}/area/detail/showlayer"
 						data-data="{id:'${item.id}'}"
-						data-width="350" data-height="520"
+						data-width="350" data-height="430"
 						data-maxmin="false" data-closeBtn="[1,true]"
 						class="item-info"
 					>${item.name}</a>
@@ -31,7 +31,7 @@
 					${item.pname! }
 				</td>
 				<td class="center">
-					${item.type!}
+					<#dict dictMode="showName" value="${item.type!}" type="sys_area_type"/>
 				</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
@@ -39,7 +39,7 @@
 							data-mode="page" data-title="<${item.name!}>编辑"
 							data-url="${adminPath}/area/edit/showlayer"
 							data-data="{id:'${item.id}',parentId:'${item.pid}'}"
-							data-height="530"
+							data-height="320"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>

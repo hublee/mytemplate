@@ -6,6 +6,8 @@
 @var searchBtn=searchBtn!'search-btn';
 @var searchInput=searchInput!'search-input';
 @var searchAllBtn=searchAllBtn!'search-all-btn';
+@var height = height!'520';
+@var width = width!'600';
 
 <script type="text/javascript">
 	var setting = {
@@ -50,7 +52,7 @@
 		$.cuslayer({
 			mode:'page',
 			title:(treeNode.name)+'编辑',
-			height:'520',
+			height:"${height}",
 			url:adminPath+'/${editUrl}',
 			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
@@ -83,7 +85,7 @@
 			$.cuslayer({
 				mode:'page',
 				title:'添加资源',
-				height:'530',
+				height:"${height}",
 				url:adminPath+'/${addUrl}',
 				data:{"parentId":treeNode.id}
 			});
