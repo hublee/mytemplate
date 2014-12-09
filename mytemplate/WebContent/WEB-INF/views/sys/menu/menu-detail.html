@@ -34,7 +34,7 @@
 		<div class="profile-info-name">资源类型</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${decode(sysResource.type,0,'菜单资源','按钮资源')}
+			${decode(sysResource.type,'0','菜单资源','按钮资源')}
 			</span>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 		<div class="profile-info-name">权限类型</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${decode(sysResource.common,0,'权限','公共')}
+			${decode(sysResource.common,'0','权限','公共')}
 			</span>
 		</div>
 	</div>
@@ -61,7 +61,7 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">状态</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${decode(sysResource.status!,0,'正常','禁用')}</span>
+			<span class="editable editable-click">${decode(sysResource.status!,'0','正常','禁用')}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">

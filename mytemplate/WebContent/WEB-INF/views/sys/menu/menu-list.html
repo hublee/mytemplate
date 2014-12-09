@@ -17,7 +17,7 @@
 	<tbody>
 		@for(menu in page.list){
 			<tr>
-				<td class="center">${menu.id}</td>
+				<td class="center">${menu.id!}</td>
 				<td class="center">
 					<a href="javascript:;" 
 						data-title="${menu.name!}详情" data-mode="page"
@@ -26,7 +26,7 @@
 						data-width="350" data-height="520"
 						data-maxmin="false" data-closeBtn="[1,true]"
 						class="menu-info"
-					>${menu.name}</a>
+					>${menu.name!}</a>
 				</td>
 				<td class="center">
 					${ menu.url!}
@@ -35,10 +35,10 @@
 					${menu.pname! }
 				</td>
 				<td class="center">
-					${decode(menu.type,0,'菜单资源','按钮资源')}
+					${decode(menu.type!,'0','菜单资源','按钮资源')}
 				</td>
 				<td class="center">
-					${decode(menu.common,0,'权限','公共')}
+					${decode(menu.common!,'0','权限','公共')}
 				</td>
 				<td class="center">
 					@if(isEmpty(menu.icon)){
@@ -48,9 +48,9 @@
 					@}
 				</td>
 				<td class="center">
-					${menu.sort}
+					${menu.sort!}
 				</td>
-				<td class="center">${decode(menu.status,0,"正常","禁用")}</td>
+				<td class="center">${decode(menu.status!,'0',"正常","禁用")}</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
