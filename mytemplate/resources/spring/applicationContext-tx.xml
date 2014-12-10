@@ -37,8 +37,7 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="pc"
-			expression="execution(* com.template..*Service.*(..))" />
+		<aop:pointcut id="pc" expression="execution(* com.template..*Service.*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
 	</aop:config>
 

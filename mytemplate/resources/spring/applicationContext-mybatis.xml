@@ -13,18 +13,43 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="false">
-	
+
 	<!-- mybatis配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml"/>
-		<property name="mapperLocations" value="classpath:com/template/web/**/*.xml"/>
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml" />
+		<property name="mapperLocations" value="classpath:com/template/web/**/*.xml" />
+		<!-- <property name="plugins">
+			<array>
+				<bean class="com.template.common.mybatis.page.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property> -->
 	</bean>
 
 	<!-- 自动扫描映射器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	    <property name="basePackage" value="com.template.web.*.mapper,com.template.common.mybatis.mapper"/>
-	    
+		<property name="basePackage"
+			value="com.template.web.*.mapper,com.template.common.mybatis.mapper" />
 	</bean>
-	
+
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean class="com.template.common.mybatis.test.MapperSpring">
+		<property name="properties">
+			<value>
+				mappers=com.template.common.mybatis.test.Mapper
+			</value>
+		</property>
+	</bean> -->
+
+
 </beans>

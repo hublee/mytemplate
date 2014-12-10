@@ -42,7 +42,7 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 			
 			// 设置共享变量
 			BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());
-			BeetlUtils.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
+			//BeetlUtils.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
 			logger.info("--------------------------------------------------------------------------");
 			logger.info("初始化管理根路径:(key:adminPath,value:"
 					+ Global.getAdminPath() + ")");
