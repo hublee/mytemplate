@@ -16,9 +16,9 @@
 	id="${nameId}" name="${modelName}" value="${modelNameValue}">
 	<span class="input-group-btn pull-left width-20">
 		<button class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
-		data-mode="page" data-url="${ctxPath}/${adminPath}/tag/treeselect"
+		data-mode="page" data-url="${rootPath}/tag/treeselect"
 		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}'}" 
-		data-title="请选择" data-width="350" data-height="350">
+		data-title="请选择" data-width="${width!}" data-height="${height}">
 			<i class="ace-icon fa fa-search bigger-110"></i>查找
 		</button>
 	</span>

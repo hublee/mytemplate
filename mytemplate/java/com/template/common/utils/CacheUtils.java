@@ -63,7 +63,7 @@ public class CacheUtils {
 		return value;
 	}
 
-	protected static Cache getCache(String cacheName) {
+	public static Cache getCache(String cacheName) {
 		EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
 		return cacheManager.getCache(cacheName);
 	}

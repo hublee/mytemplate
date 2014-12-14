@@ -8,7 +8,7 @@
 		</div>
 		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
 			<form method="post" class="form-search" id="search-form" target="list-page"
-				action="${adminPath}/area/list">
+				action="${rootPath}/area/list">
 				<div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
 						<button type="button" class=" btn  btn-success btn-sm"
@@ -44,6 +44,6 @@
 		</div>
 	</div>
 </div>
-<#systree editUrl="area/edit/showlayer" delUrl="area/del" 
-	addUrl="area/add/showlayer" treeData="${treeList}" height="320"/>
+<#systree editUrl="${rootPath!}/area/edit/showlayer" delUrl="${rootPath!}/area/del" 
+	addUrl="${rootPath!}/area/add/showlayer" treeData="${treeList}" height="320"/>
 	

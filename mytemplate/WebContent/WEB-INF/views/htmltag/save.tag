@@ -1,14 +1,18 @@
 @var formId = formId!'save-form'; //form表单id
 @var reloadUrl = reloadUrl!'false'; //是否url刷新,默认false当前右侧刷新
+@var isHide = isHide!'no';
+@var subBtnId = subBtnId!formId+'-save';
 
-<div class="width-100 clearfix" style="position: absolute;bottom: 0px;left: 0px;padding-top: 15px;">
-	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${formId}-save">
+@if(isHide == "no"){
+<div class="width-100 clearfix" style="bottom: 0px;left: 0px;position:absolute;">
+	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 确 定
 	</button>
 	<button class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
 		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
 	</button>
 </div>
+@}
 <script type="text/javascript">
 $(function(){
 	$("#${formId}").Validform({
@@ -46,7 +50,7 @@ $(function(){
 		tipSweep : true
 	});
 
-	$("#${formId}-save").click(function() {
+	$("#${subBtnId}").click(function() {
 		$("#${formId}").submit();
 		return false;
 	});

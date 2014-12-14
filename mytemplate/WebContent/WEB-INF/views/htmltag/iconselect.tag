@@ -15,7 +15,7 @@ $(function(){
 		    type: 2,
 		    title: '请单击选择图标',
 		    maxmin: true,
-		    iframe: {src : adminPath+'/tag/fontawesome?id=${name}-input'},
+		    iframe: {src : rootPath+'/tag/fontawesome?id=${name}-input'},
 		    area: ['1000px' , '550px']
 		}); 
 	});

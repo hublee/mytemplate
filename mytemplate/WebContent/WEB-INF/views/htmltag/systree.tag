@@ -53,7 +53,8 @@
 			mode:'page',
 			title:(treeNode.name)+'编辑',
 			height:"${height}",
-			url:adminPath+'/${editUrl}',
+			width:"${width}",
+			url:"${editUrl}",
 			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
 		return false;
@@ -66,7 +67,7 @@
 			mode:'del',
 			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
-			url:adminPath+'/${delUrl}',
+			url:'${delUrl}',
 			data:{"id":id},
 			reloadurl:true
 		});
@@ -86,7 +87,8 @@
 				mode:'page',
 				title:'添加资源',
 				height:"${height}",
-				url:adminPath+'/${addUrl}',
+				width:"${width}",
+				url:'${addUrl}',
 				data:{"parentId":treeNode.id}
 			});
 			return false;

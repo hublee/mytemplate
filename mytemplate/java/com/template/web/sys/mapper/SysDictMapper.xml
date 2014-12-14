@@ -5,5 +5,12 @@
 	<sql id="sysDictColumns">
 		id,create_by,create_date,del_flag,description,label,remarks,sort,type,update_by,update_date,value
 	</sql>
+	
+	<select id="findPageInfo" resultType="com.template.web.sys.model.SysDict">
+		select <include refid="sysDictColumns"/> from sys_dict 
+		<where>
+			<if test=""></if>
+		</where>
+	</select>
 
 </mapper>

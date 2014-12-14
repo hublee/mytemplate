@@ -50,7 +50,6 @@ public class AreaController {
 	 * 分页显示区域table
 	 * 
 	 * @param params
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)

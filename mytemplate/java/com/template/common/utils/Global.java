@@ -9,6 +9,14 @@ public class Global {
 	public static String getAdminPath(){
 		return SysConstant.getValue("adminPath");
 	}
+	
+	/**
+	 * web上下文
+	* @return
+	 */
+	public static String getCtxPath(){
+		return SysConstant.getValue("ctxPath");
+	}
 
 	/**
 	 * session中用户的key
@@ -25,6 +33,5 @@ public class Global {
 	public static String getSysResourceKey(){
 		return SysConstant.getValue("system.resource");
 	}
-	
 	
 }

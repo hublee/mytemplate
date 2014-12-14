@@ -17,10 +17,13 @@
 	<!-- mybatis配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml" />
+		<!-- <property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml" />  -->
 		<property name="mapperLocations" value="classpath:com/template/web/**/*.xml" />
-		<!-- <property name="plugins">
+		<property name="plugins">
 			<array>
+				<!-- 转驼峰拦截器 -->
+				<bean class="com.template.common.mybatis.mapper.CameHumpInterceptor"/>
+				<!-- 分页拦截器 -->
 				<bean class="com.template.common.mybatis.page.PageHelper">
 					<property name="properties">
 						<value>
@@ -30,7 +33,7 @@
 					</property>
 				</bean>
 			</array>
-		</property> -->
+		</property>
 	</bean>
 
 	<!-- 自动扫描映射器 -->
@@ -39,17 +42,21 @@
 			value="com.template.web.*.mapper,com.template.common.mybatis.mapper" />
 	</bean>
 
-	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		scope="prototype">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
-	<bean class="com.template.common.mybatis.test.MapperSpring">
-		<property name="properties">
-			<value>
-				mappers=com.template.common.mybatis.test.Mapper
-			</value>
+	<!-- 通用crud -->
+	<bean class="com.template.common.mybatis.mapper.MapperHelper" depends-on="sqlSession"
+		init-method="initMapper" scope="singleton" lazy-init="false">
+		<property name="mappers">
+			<array>
+				<value>com.template.common.mybatis.mapper.Mapper</value>
+			</array>
 		</property>
-	</bean> -->
+		<property name="sqlSessions" ref="sqlSession" />
+	</bean>
 
 
 </beans>

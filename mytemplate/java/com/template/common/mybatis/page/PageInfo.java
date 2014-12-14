@@ -1,5 +1,6 @@
 package com.template.common.mybatis.page;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,8 @@ import java.util.List;
  * @since 3.2.2
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class PageInfo<T> {
+public class PageInfo<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
     //当前页
     private int pageNum;
     //每页的数量

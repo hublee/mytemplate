@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public interface BaseService<T extends Entity> {
-
+	
 	/**
 	 * 根据实体类不为null的字段进行查询,条件全部使用=号and条件
 	* @param <T extend T>
@@ -69,11 +69,12 @@ public interface BaseService<T extends Entity> {
 	 */
     public int updateByPrimaryKeySelective(T record);
     
+
     /**
      * 保存或者更新，根据传入id主键是不是null来确认
     * @param record
     * @return 影响行数
      */
     public int save(T record);
-	
+    
 }

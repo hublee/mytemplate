@@ -34,6 +34,7 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 
 		// 子容器初始化时(spring-mvc)
 		if (null != parentContext) {
+			//读取全部资源
 			List<SysResource> resList = sysResourceService.select(new SysResource());
 			Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
 			for (SysResource res : resList) {
@@ -42,10 +43,13 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 			
 			// 设置共享变量
 			BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());
-			//BeetlUtils.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
+			BeetlUtils.addBeetlSharedVars("rootPath", "/"+Global.getCtxPath()+"/"+Global.getAdminPath());
+			BeetlUtils.addBeetlSharedVars(Global.getSysResourceKey(),AllResourceMap);
 			logger.info("--------------------------------------------------------------------------");
 			logger.info("初始化管理根路径:(key:adminPath,value:"
-					+ Global.getAdminPath() + ")");
+					+ BeetlUtils.getBeetlSharedVars("adminPath").toString() + ")");
+			logger.info("初始化根路径:(key:rootPath,value:"
+					+ BeetlUtils.getBeetlSharedVars("rootPath").toString() + ")");
 			logger.info("初始化系统资源:(key:" + Global.getSysResourceKey()
 					+ ",value:Map<资源url, SysResource>)");
 			logger.info("--------------------------------------------------------------------------");

@@ -6,7 +6,7 @@ var lastIndex;//最后弹窗索引
 			type:1, //0：信息框（默认），1：页面层，2：iframe层，3：加载层，4：tips层。
 			title:false,
 			shade: [0.5, '#000'], //[遮罩透明度, 遮罩颜色]
-			border:[5, 0.5, '#666'],
+			border:[3, 0.5, '#666'],
 			closeBtn:[0, true],
 			url:undefined, //请求回来弹窗的url
 			data:{}, //请求弹窗携带的参数
@@ -52,8 +52,12 @@ var lastIndex;//最后弹窗索引
         		});
 			},params.title);
 		}
-		if(mode == 'page'){
-			params.height = parseInt(params.height)+35+'';
+		if(mode == 'page' || mode == 'detail'){
+			var height = $.trim(params.height),width = $.trim(params.width);
+			if(height.substr(height.length-1,1) != "%"){
+				height = parseInt(height)+35+'';
+			}
+			var paddingBottom = (mode=='detail')?'0px':'30px';
 			var loadi;
 			$.ajax({
 				url:params.url,
@@ -70,31 +74,29 @@ var lastIndex;//最后弹窗索引
 				    title : params.title,
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
-				    area : [params.width,params.height],
+				    area : [width,height],
+				    border:[2, 0.5, '#888'],//params.border,
 				    page : {html:data},
 				    success:function(layero){
 				    	layero.find('.xuboxPageHtml').css({
 				    		'overflowY':'auto',
-				    		'height':parseInt(params.height)-35,
-				    		'width':params.width,
-				    		'paddingBottom':'30px'
+				    		'height':layero.height()-35,
+				    		'paddingBottom':paddingBottom
 				    		});
+				    	layero.find('.xubox_page').css({'width':'100%'});
 				    },
 				    full:function(layero){
 				    	setTimeout(function() {
-				    		layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35,
-				    			'width':layero.width()});
+				    		layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
 				        },101);
 				    },
 				    restore: function(layero){
-				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35,
-				    		'width':layero.width()});
+				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
 				    },
 				    close: function(index){
 				    	layer.closeTips();
 				    }
 				});
-				
 			}).fail(function(err){
 				layer.msg('操作失败', 2, 8);
 			});

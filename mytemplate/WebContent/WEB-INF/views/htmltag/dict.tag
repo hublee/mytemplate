@@ -1,6 +1,7 @@
 @var type = type!'';
 @var value = value!'';
 @var dictMode = dictMode!"showSelect";
+@var width = width!'100%';
 
 @if(dictMode == "showSelect"){ //显示下拉模式
 <select class="chosen-select" name="type">
@@ -19,3 +20,6 @@
 		@}
 	@}elsefor{}
 @}
+<script type="text/javascript">
+$(".chosen-select").chosen({width: "${width}"}); 
+</script>

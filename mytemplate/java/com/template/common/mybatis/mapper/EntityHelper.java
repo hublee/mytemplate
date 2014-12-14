@@ -1,18 +1,83 @@
+/*
+	The MIT License (MIT)
+
+	Copyright (c) 2014 abel533@gmail.com
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+*/
+
 package com.template.common.mybatis.mapper;
 
 import javax.persistence.*;
-
-import com.template.common.utils.StringConvert;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
- * 实体类工具类
+ * 实体类工具类 - 处理实体和数据库表以及字段关键的一个类
+ *
+ * <p>项目地址 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
+ *
+ * @author liuzh
  */
 public class EntityHelper {
 
+    /**
+     * 实体对应表的配置信息
+     */
+    public static class EntityTable {
+        private String name;
+        private String catalog;
+        private String schema;
+
+        public void setTable(Table table){
+            this.name = table.name();
+            this.catalog = table.catalog();
+            this.schema = table.schema();
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getCatalog() {
+            return catalog;
+        }
+
+        public String getSchema() {
+            return schema;
+        }
+
+        public String getPrefix() {
+            if (catalog != null && catalog.length() > 0) {
+                return catalog;
+            }
+            if (schema != null && schema.length() > 0) {
+                return catalog;
+            }
+            return "";
+        }
+    }
+
+    /**
+     * 实体字段对应数据库列的信息
+     */
     public static class EntityColumn {
         private String property;
         private String column;
@@ -89,9 +154,9 @@ public class EntityHelper {
     }
 
     /**
-     * 实体类 => 表名
+     * 实体类 => 表对象
      */
-    private static final Map<Class<?>, String> entityClassTableName = new HashMap<Class<?>, String>();
+    private static final Map<Class<?>, EntityTable> entityTableMap = new HashMap<Class<?>, EntityTable>();
 
     /**
      * 实体类 => 全部列属性
@@ -104,21 +169,21 @@ public class EntityHelper {
     private static final Map<Class<?>, List<EntityColumn>> entityClassPKColumns = new HashMap<Class<?>, List<EntityColumn>>();
 
     /**
-     * 获取表名
+     * 获取表对象
      *
      * @param entityClass
      * @return
      */
-    public static String getTableName(Class<?> entityClass) {
-        String tableName = entityClassTableName.get(entityClass);
-        if (tableName == null) {
+    public static EntityTable getEntityTable(Class<?> entityClass) {
+        EntityTable entityTable = entityTableMap.get(entityClass);
+        if (entityTable == null) {
             initEntityNameMap(entityClass);
-            tableName = entityClassTableName.get(entityClass);
+            entityTable = entityTableMap.get(entityClass);
         }
-        if (tableName == null) {
+        if (entityTable == null) {
             throw new RuntimeException("无法获取实体类" + entityClass.getCanonicalName() + "对应的表名!");
         }
-        return tableName;
+        return entityTable;
     }
 
     /**
@@ -129,7 +194,7 @@ public class EntityHelper {
      */
     public static List<EntityColumn> getColumns(Class<?> entityClass) {
         //可以起到初始化的作用
-        getTableName(entityClass);
+        getEntityTable(entityClass);
         return entityClassColumns.get(entityClass);
     }
 
@@ -141,7 +206,7 @@ public class EntityHelper {
      */
     public static List<EntityColumn> getPKColumns(Class<?> entityClass) {
         //可以起到初始化的作用
-        getTableName(entityClass);
+        getEntityTable(entityClass);
         return entityClassPKColumns.get(entityClass);
     }
 
@@ -191,7 +256,7 @@ public class EntityHelper {
         List<EntityHelper.EntityColumn> entityColumns = EntityHelper.getPKColumns(entityClass);
         StringBuilder whereBuilder = new StringBuilder();
         for (EntityHelper.EntityColumn column : entityColumns) {
-            whereBuilder.append(column.getColumn()).append(" = ?").append(" and ");
+            whereBuilder.append(column.getColumn()).append(" = ?").append(" AND ");
         }
         return whereBuilder.substring(0, whereBuilder.length() - 4);
     }
@@ -202,16 +267,23 @@ public class EntityHelper {
      * @param entityClass
      */
     public static synchronized void initEntityNameMap(Class<?> entityClass) {
-        if (entityClassTableName.get(entityClass) != null) {
+        if (entityTableMap.get(entityClass) != null) {
             return;
         }
         //表名
+        EntityTable entityTable = null;
         if (entityClass.isAnnotationPresent(Table.class)) {
             Table table = entityClass.getAnnotation(Table.class);
-            entityClassTableName.put(entityClass, table.name());
-        } else {
-            entityClassTableName.put(entityClass, StringConvert.camelhumpToUnderline(entityClass.getSimpleName()));
+            if (!table.name().equals("")) {
+                entityTable = new EntityTable();
+                entityTable.setTable(table);
+            }
         }
+        if (entityTable == null) {
+            entityTable = new EntityTable();
+            entityTable.name = camelhumpToUnderline(entityClass.getSimpleName()).toUpperCase();
+        }
+        entityTableMap.put(entityClass, entityTable);
         //列
         List<Field> fieldList = getAllField(entityClass, null);
         List<EntityColumn> columnList = new ArrayList<EntityColumn>();
@@ -230,7 +302,7 @@ public class EntityHelper {
                 Column column = field.getAnnotation(Column.class);
                 columnName = column.name();
             } else {
-                columnName = StringConvert.camelhumpToUnderline(field.getName());
+                columnName = camelhumpToUnderline(field.getName());
             }
             entityColumn.setProperty(field.getName());
             entityColumn.setColumn(columnName.toUpperCase());
@@ -278,6 +350,43 @@ public class EntityHelper {
         entityClassPKColumns.put(entityClass, pkColumnList);
     }
 
+    public static void main(String[] args) {
+        System.out.println(camelhumpToUnderline("userName"));
+        System.out.println(camelhumpToUnderline("userPassWord"));
+        System.out.println(camelhumpToUnderline("ISO9001"));
+        System.out.println(camelhumpToUnderline("hello_world"));
+    }
+
+    /**
+     * 将驼峰风格替换为下划线风格
+     */
+    public static String camelhumpToUnderline(String str) {
+        final int size;
+        final char[] chars;
+        final StringBuilder sb = new StringBuilder(
+                (size = (chars = str.toCharArray()).length) * 3 / 2 + 1);
+        char c;
+        for (int i = 0; i < size; i++) {
+            c = chars[i];
+            if (isUppercaseAlpha(c)) {
+                sb.append('_').append(c);
+            } else {
+                sb.append(toUpperAscii(c));
+            }
+        }
+        return sb.charAt(0) == '_'? sb.substring(1): sb.toString();
+    }
+
+    public static boolean isUppercaseAlpha(char c) {
+        return (c >= 'A') && (c <= 'Z');
+    }
+
+    public static char toUpperAscii(char c) {
+        if (isUppercaseAlpha(c)) {
+            c -= (char) 0x20;
+        }
+        return c;
+    }
 
     /**
      * 获取全部的Field
@@ -308,16 +417,4 @@ public class EntityHelper {
         }
         return fieldList;
     }
-    
-    //拼接的if判断
-    public static String IfSqlString(EntityColumn column){
-    	Class<?> propertyType = column.getJavaType();
-    	String propertyName = column.getProperty();
-    	StringBuilder builder = new StringBuilder( propertyName + " != null " );
-    	if(String.class == propertyType){
-    		builder.append("and " + propertyName + " != '' ");
-    	}
-    	return builder.toString();
-    }
-    
 }
