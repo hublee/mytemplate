@@ -54,7 +54,7 @@
 			title:(treeNode.name)+'编辑',
 			height:"${height}",
 			width:"${width}",
-			url:"${editUrl}",
+			url:"${rootPath!}/"+"${editUrl}",
 			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
 		return false;
@@ -67,7 +67,7 @@
 			mode:'del',
 			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
 			title:'删除操作',
-			url:'${delUrl}',
+			url:"${rootPath!}/"+'${delUrl}',
 			data:{"id":id},
 			reloadurl:true
 		});
@@ -88,7 +88,7 @@
 				title:'添加资源',
 				height:"${height}",
 				width:"${width}",
-				url:'${addUrl}',
+				url:"${rootPath!}/"+'${addUrl}',
 				data:{"parentId":treeNode.id}
 			});
 			return false;
@@ -123,13 +123,18 @@
 		}
 	});
 	
-	//分页
 	$("#${searchAllBtn}").click(function(){
 		$("#${form}").find("input[name=id]").val("");
 		$("#${form}").find("input[name=name]").val("");
 		paging("${form}",1);
 		var node = treeObj.getNodeByParam("id", 0);
 		treeObj.selectNode(node,false);
+		if(undefined != nodeList) {
+			for(var i=0, l=nodeList.length; i<l; i++) {
+				nodeList[i].highlight = false;				
+				treeObj.updateNode(nodeList[i]);
+			}
+		}
 	}).trigger("click");
 	
 	$("#${searchBtn}").click(function(e){
