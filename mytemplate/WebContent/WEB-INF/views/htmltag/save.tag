@@ -1,6 +1,6 @@
 @var formId = formId!'save-form'; //form表单id
 @var reloadUrl = reloadUrl!'false'; //是否url刷新,默认false当前右侧刷新
-@var isHide = isHide!'no';
+@var isHide = isHide!'no'; //是否隐藏按钮 默认no
 @var subBtnId = subBtnId!formId+'-save';
 
 @if(isHide == "no"){
