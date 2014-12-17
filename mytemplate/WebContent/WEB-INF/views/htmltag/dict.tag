@@ -2,26 +2,28 @@
 @var value = value!'';
 @var dictMode = dictMode!"showSelect";
 @var width = width!'100%';
-@var isValue = isValue!'yes'; //option是否是填充value,默认是,否则是填充id
 @var isDefault = isDefault!"";
+@var showType = showType!false;
 
 @if(dictMode == "showSelect"){ //显示下拉模式
-<select class="chosen-select" name="${decode(isValue,"yes","type","id")}">
+<select class="chosen-select" name="type">
 	@if(!isEmpty(isDefault)) {
-	<option>全部</option>
+	<option value="">全部</option>
 	@}
-	@for(item in getDictListByType(type)){
-		@if(isValue == "yes"){
+	@if(!showType){
+		@for(item in getDictListByType(type)){
 			<option value="${item.value!}" 
 				${decode(value!,item.value,'selected','')}>
 			${item.label!}
 			</option>
-		@}else{
-			<option value="${item.id!}">
-			${item.label!}
+		@}
+	@}else{
+		@for(item in getDictListByType(type,"group")){
+			<option value="${item.type!}">
+				${item.type!}
 			</option>
 		@}
-	@}elsefor{}
+	@}
 </select>
 @}else if(dictMode == "showName"){ //显示类型名称
 	@for(item in getDictListByType(type)){

@@ -9,7 +9,9 @@
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysDict">
 		select <include refid="sysDictColumns"/> from sys_dict 
 		<where>
-			<if test=""></if>
+			<if test=" type!=null and type!='' ">
+				type
+			</if>
 		</where>
 	</select>
 

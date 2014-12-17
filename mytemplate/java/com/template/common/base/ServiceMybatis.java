@@ -4,9 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.template.common.mybatis.mapper.Mapper;
+import com.template.common.mybatis.page.PageHelper;
+import com.template.common.mybatis.page.PageInfo;
 
 public abstract class ServiceMybatis<T extends Entity> implements BaseService<T> {
 	
@@ -111,5 +117,17 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 		}
 		return count;
 	}
+    
+    /**
+     * 单表分页
+    * @param pageNum 页码
+    * @param pageSize 条数
+    * @param record 条件实体
+    * @return
+     */
+	public PageInfo<T> selectPage(int pageNum,int pageSize,T record){
+    	PageHelper.startPage(pageNum, pageSize);
+    	return new PageInfo<T>(mapper.select(record));
+    }
 
 }

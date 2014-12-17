@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.template.common.mybatis.page.PageInfo;
 import com.template.web.sys.model.SysDict;
 import com.template.web.sys.service.SysDictService;
 
@@ -40,11 +41,11 @@ public class DictController {
 	 * @param params
 	 * @return
 	 */
-	/*@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(@RequestParam Map<String, Object> params, Model model) {
-		PageInfo<SysArea> page = sysAreaService.findPageInfo(params);
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public String list(int pageNum,int pageSize,@ModelAttribute SysDict sysDict, Model model) {
+		PageInfo<SysDict> page = sysDictService.selectPage(pageNum, pageSize, sysDict);
 		model.addAttribute("page", page);
-		return "sys/area/area-list";
-	}*/
+		return "sys/dict/dict-list";
+	}
 	
 }

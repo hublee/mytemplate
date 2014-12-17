@@ -1,6 +1,9 @@
 package com.template.common.beetl.function;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -34,6 +37,19 @@ public class DictFunction implements Function{
 			List<SysDict> dicts = null;
 			try {
 				dicts = sysDictService.findSysDictListByParams(sysDict);
+				if(paras.length>1){
+					if("group".equals(paras[1])){
+						Map<String, Object> map = new HashMap<String, Object>();
+						List<SysDict> newDicts = new ArrayList<SysDict>();
+						for(SysDict dict : dicts){
+							map.put(dict.getType(), dict);
+						}
+						for(Object sd : map.values()){
+							newDicts.add((SysDict)sd);
+						}
+						return newDicts;
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

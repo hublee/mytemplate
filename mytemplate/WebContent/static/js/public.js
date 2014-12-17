@@ -205,3 +205,13 @@ function paging(formId,pageNo){
 	})
 	return false;
 };
+
+//条件查询分页
+function findPage(json){
+	var btnId = json.btnId,formId=json.formId,trigger=json.trigger == undefined?false:true;
+	$("#"+btnId).on('click',function(){
+		paging(formId,1);
+		return false;
+	});
+	if(trigger) $("#"+btnId).trigger('click');
+}

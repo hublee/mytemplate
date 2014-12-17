@@ -9,13 +9,23 @@
 	</ul>
 
 	<div class="tab-content">
-		<div id="home" class="tab-pane active">
-			<form action="">
-				<div>
-				<label>标签：</label>
-					<#dict width="20%" isValue="no" isDefault="yes"/>
+		<div id="home" class="tab-pane active clearfix">
+			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
+				<div class="pull-left width-25">
+					<label>类型：</label>
+					<#dict width="60%" showType="${true}" isDefault="yes"/>
 				</div>
+				<div class="pull-left width-30">
+					<label>描述：</label>
+					<input type="text" class="width-80" name="description"/>
+				</div>
+				<div class="pull-left"><button class="btn btn-info btn-sm " id="search-btn">查 询</button></div>
 			</form>
+			<hr/>
+			<div id="list-page"></div>
+			<script type="text/javascript">
+				findPage({"btnId":"search-btn","formId":"search-form","trigger":"true"})
+			</script>
 		</div>
 
 		<div id="profile" class="tab-pane">
