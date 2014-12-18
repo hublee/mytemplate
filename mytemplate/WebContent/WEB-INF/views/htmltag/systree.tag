@@ -111,39 +111,6 @@
 			treeObj.updateNode(nodeList[i]);
 		}
 	};
-	var treeObj;
-	$(function(){
-		//树结构初始化
-		$.fn.zTree.init($("#treeMenu"), setting, ${treeData});
-		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		// 默认展开一级节点
-		var nodes = treeObj.getNodesByParam("level", 0);
-		for(var i=0; i<nodes.length; i++) {
-			treeObj.expandNode(nodes[i], true, false, false);
-		}
-	});
-	
-	$("#${searchAllBtn}").click(function(){
-		$("#${form}").find("input[name=id]").val("");
-		$("#${form}").find("input[name=name]").val("");
-		paging("${form}",1);
-		var node = treeObj.getNodeByParam("id", 0);
-		treeObj.selectNode(node,false);
-		if(undefined != nodeList) {
-			for(var i=0, l=nodeList.length; i<l; i++) {
-				nodeList[i].highlight = false;				
-				treeObj.updateNode(nodeList[i]);
-			}
-		}
-	}).trigger("click");
-	
-	$("#${searchBtn}").click(function(e){
-		$("#${form}").find("input[name=id]").val("");
-		var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
-		treeObj.cancelSelectedNode();
-		paging("${form}",1);
-		searchNode(e);
-	});
 	
 	var key = $("#${searchInput}"),nodeList = [];
 	function searchNode(e) {
@@ -171,5 +138,41 @@
 			treeObj.expandNode(nodeList[i].getParentNode(), true, false, false);
 		}
 	};
+	
+	var treeObj;
+	$(function(){
+		//树结构初始化
+		nodeList=[]; //清除缓存
+		$.fn.zTree.init($("#treeMenu"), setting, ${treeData});
+		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+		// 默认展开一级节点
+		var nodes = treeObj.getNodesByParam("level", 0);
+		for(var i=0; i<nodes.length; i++) {
+			treeObj.expandNode(nodes[i], true, false, false);
+		}
+		
+		$("#${searchAllBtn}").click(function(){
+			$("#${form}").find("input[name=id]").val("");
+			$("#${form}").find("input[name=name]").val("");
+			paging("${form}",1);
+			var node = treeObj.getNodeByParam("id", 0);
+			treeObj.selectNode(node,false);
+			if(undefined != nodeList) {
+				for(var i=0, l=nodeList.length; i<l; i++) {
+					nodeList[i].highlight = false;				
+					treeObj.updateNode(nodeList[i]);
+				}
+			}
+		}).trigger("click");
+		
+		$("#${searchBtn}").click(function(e){
+			$("#${form}").find("input[name=id]").val("");
+			var treeObj = $.fn.zTree.getZTreeObj("treeMenu");
+			treeObj.cancelSelectedNode();
+			paging("${form}",1);
+			searchNode(e);
+		});
+		
+	});
 	
 </script>
