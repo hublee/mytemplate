@@ -37,6 +37,16 @@ public class DictController {
 	}
 	
 	/**
+	 * 删除字典
+	* @param id
+	* @return
+	 */
+	@RequestMapping(value="/del",method=RequestMethod.POST)
+	public @ResponseBody Integer del(@ModelAttribute SysDict sysDict){
+		return sysDictService.deleteSysDict(sysDict);
+	}
+	
+	/**
 	 * 分页显示字典table
 	 * @param params
 	 * @return
@@ -46,6 +56,13 @@ public class DictController {
 		PageInfo<SysDict> page = sysDictService.selectPage(pageNum, pageSize, sysDict);
 		model.addAttribute("page", page);
 		return "sys/dict/dict-list";
+	}
+	
+	@RequestMapping(value="/{mode}/showlayer")
+	public String showLayer(Long id, Model model){
+		SysDict dict = sysDictService.selectByPrimaryKey(id);
+		model.addAttribute("dict", dict);
+		return "sys/dict/dict-save";
 	}
 	
 }

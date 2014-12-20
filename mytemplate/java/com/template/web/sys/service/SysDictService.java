@@ -40,6 +40,14 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 		return this.save(sysDict);
 	}
 	
+	@Caching(evict = {
+			@CacheEvict(value="sysCache",key="'dict_'+#sysDict['type']"),
+			@CacheEvict(value="sysCache",key="'dict_'")	
+	})
+	public int deleteSysDict(SysDict sysDict){
+		return this.delete(sysDict);
+	}
+	
 	/**
 	 * 根据字典类型查询,做一下缓存
 	 */

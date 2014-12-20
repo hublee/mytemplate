@@ -207,11 +207,21 @@ function paging(formId,pageNo){
 };
 
 //条件查询分页
-function findPage(json){
-	var btnId = json.btnId,formId=json.formId,trigger=json.trigger == undefined?false:true;
-	$("#"+btnId).on('click',function(){
-		paging(formId,1);
-		return false;
-	});
-	if(trigger) $("#"+btnId).trigger('click');
-}
+;(function($){
+	$.fn.getPageList = function(settings){
+		return this.each(function(){
+			var $this = $(this);
+			this.opt = $.extend({},$.fn.defaults,settings);
+			$("#"+this.opt.submitBtnId).on('click',function(){
+				paging($this.attr("id"),1);
+				return false;
+			});
+			if(this.opt.trigger) $("#"+this.opt.submitBtnId).trigger('click');
+		});
+	}
+	
+	$.fn.defaults = {
+		submitBtnId:"", //提交按钮
+		trigger:true 
+	}
+})(jQuery);

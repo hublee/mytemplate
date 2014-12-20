@@ -12,7 +12,11 @@
 			@}
 		>
 			<i class="menu-icon ${menu.icon!'fa-caret-right'}"></i>
-			<span class="menu-text"> ${menu.name!} </span>
+			<span class="menu-text" 
+			@if(menu.level == 1) {
+				style="vertical-align: middle;"
+			@}
+			> ${menu.name!} </span>
 			@if(menu.hasChild){
 			<b class="arrow fa fa-angle-down"></b>
 			@}

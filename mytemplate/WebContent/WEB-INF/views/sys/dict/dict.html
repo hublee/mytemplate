@@ -19,12 +19,13 @@
 					<label>描述：</label>
 					<input type="text" class="width-80" name="description"/>
 				</div>
+				<input type="hidden" value="0" name="delFlag" />
 				<div class="pull-left"><button class="btn btn-info btn-sm " id="search-btn">查 询</button></div>
 			</form>
 			<hr/>
 			<div id="list-page"></div>
 			<script type="text/javascript">
-				findPage({"btnId":"search-btn","formId":"search-form","trigger":"true"})
+				$("#search-form").getPageList({'submitBtnId':'search-btn'})
 			</script>
 		</div>
 
