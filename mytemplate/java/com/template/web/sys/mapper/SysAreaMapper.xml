@@ -22,7 +22,7 @@
 		delete from sys_area where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
-	<!-- 菜单管理分页显示筛选查询 -->
+	<!-- 分页显示筛选查询 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysArea">
 		select <include refid="sysAreaAliasColumns"/>,a2.name pname,a2.id pid
 		from sys_area a

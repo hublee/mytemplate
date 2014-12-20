@@ -14,6 +14,8 @@ import com.template.web.sys.model.SysArea;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +32,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	/**
 	 *新增or更新SysArea
 	 */
+	@CacheEvict(value="sysCache",key="'area_all'")
 	public int saveSysArea(SysArea sysArea){
 		int count = 0;
 		//新的parentIds
@@ -53,6 +56,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	* @param id
 	* @return
 	 */
+	@CacheEvict(value="sysCache",key="'area_all'")	
 	public int deleteAreaByRootId(Long id){
 		return sysAreaMapper.deleteIdsByRootId(id);
 	}
@@ -70,6 +74,15 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 				Integer.parseInt(params.get("pageSize").toString()));
 		List<SysArea> list = sysAreaMapper.findPageInfo(params);
 		return new PageInfo<SysArea>(list);
+	}
+	
+	/**
+	 * 查询全部的区域
+	* @return
+	 */
+	@Cacheable(value="sysCache",key="'area_all'")
+	public List<SysArea> findAllArea(){
+		return this.select(null);
 	}
 
 }

@@ -32,6 +32,7 @@ public class TagController {
 		model.addAttribute("selectIds", request.getParameter("selectIds")); // 指定默认选中的ID
 		model.addAttribute("idKey",  request.getParameter("idKey")); //id属性名称
 		model.addAttribute("pIdKey", request.getParameter("pIdKey")); //pid属性名称
+		model.addAttribute("curId", request.getParameter("curId")); //当前id
 		return "modules/tree-select";
 	}
 	

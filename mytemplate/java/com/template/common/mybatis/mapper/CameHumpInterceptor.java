@@ -8,6 +8,8 @@ import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import com.template.common.utils.DateUtils;
+
 import java.util.*;
 
 /**
@@ -88,6 +90,9 @@ public class CameHumpInterceptor implements Interceptor {
             String key = (String) entry.getKey();
             if (propertySet.contains(key)) {
                 continue;
+            }
+            if(entry.getValue() instanceof java.sql.Timestamp){
+            	entry.setValue(DateUtils.formatDateTime((Date)entry.getValue()));
             }
             String cameHumpKey = underlineToCamelhump(key);
             if (!key.equals(cameHumpKey)) {

@@ -32,7 +32,7 @@ public class AreaController {
 	@RequestMapping
 	public String toArea(Model model){
 		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(sysAreaService.select(new SysArea())));
+				JsonUtils.getInstance().toJson(sysAreaService.findAllArea()));
 		return "sys/area/area";
 	}
 	
@@ -42,7 +42,7 @@ public class AreaController {
 	 */
 	@RequestMapping("tree")
 	public @ResponseBody List<SysArea> getAreaTreeList(){
-		List<SysArea> list = sysAreaService.select(new SysArea());
+		List<SysArea> list = sysAreaService.findAllArea();
 		return list;
 	}
 	

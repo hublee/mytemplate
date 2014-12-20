@@ -1,6 +1,5 @@
 package com.template.common.beetl.function;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +26,16 @@ public class DictFunction implements Function{
 	
 	@Resource
 	private SysDictService sysDictService;
+	
+	private static final Map<String, Object> map = new HashMap<String, Object>();
 
+	/**
+	 * 字典方法
+	* @param [0]类型 [1]allType
+	* @return
+	 */
 	@Override
-	public List<SysDict> call(Object[] paras, Context ctx) {
+	public Object call(Object[] paras, Context ctx) {
 		try {
 			SysDict sysDict = new SysDict();
 			sysDict.setType(paras[0].toString());
@@ -37,17 +43,12 @@ public class DictFunction implements Function{
 			List<SysDict> dicts = null;
 			try {
 				dicts = sysDictService.findSysDictListByParams(sysDict);
-				if(paras.length>1){
-					if("group".equals(paras[1])){
-						Map<String, Object> map = new HashMap<String, Object>();
-						List<SysDict> newDicts = new ArrayList<SysDict>();
+				if(paras.length>=2){
+					if("allType".equals(paras[1])){
 						for(SysDict dict : dicts){
 							map.put(dict.getType(), dict);
 						}
-						for(Object sd : map.values()){
-							newDicts.add((SysDict)sd);
-						}
-						return newDicts;
+						return map;
 					}
 				}
 			} catch (Exception e) {

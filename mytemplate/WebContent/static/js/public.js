@@ -1,4 +1,58 @@
-var lastIndex;//最后弹窗索引
+var $curmenu,lastIndex;//最后弹窗索引
+$(function(){
+	var aMenu = $("#sidebar-menu a[id]");
+	aMenu.on("click",function(){
+		changeMenu($(this));
+	});
+	
+	var $main_content = $("#fill-main-content");
+	var history = Webit.history;
+	history.add("ajax", function(str, action, token) {
+	   $main_content.html(loadHtmlPage(str));
+	   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
+	   changeMenu(curMenu);
+	});
+	history.init();
+	
+});
+
+function loadHtmlPage(path) {
+    path = adminPath + "/" + path;
+    var result;
+    $.ajax({
+        url: path,
+        dataType: "text",
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+};
+
+function changeMenu(obj){
+	$this = $curmenu = obj,pli = $this.parents("li");
+	var $sibling = $this.closest("li[data-level='1']").siblings("li.open");
+	if($sibling.size()>0){
+		$sibling.removeClass("open").find("li.open").removeClass("open");
+		$sibling.find("ul.nav-show").attr("class","submenu nav-hide").hide();
+	}
+	if($this.attr('haschild') == "false"){
+		$this.closest("li[data-level='1']").addClass("open");
+		var pul = $this.parents("ul.submenu");
+		pul.attr("class","submenu nav-show").show();
+		$("#sidebar-menu").find("li").removeClass("active");
+		pli.addClass("active");
+		var mtext = pli.children("a").find("span.menu-text");
+		$("#breadcrumb").empty();
+		mtext.each(function(i){
+			var last = '';
+			if(i==mtext.length-1) last = 'blue';
+			$("#breadcrumb").append("<li class='active "+last+"'>"+$(this).text()+"</li>");
+		})
+	}
+}
+
 ;(function($){
 	var cuslayer = function(params){
 		var defaults = {
@@ -16,7 +70,7 @@ var lastIndex;//最后弹窗索引
 			btns:2,
 			btn:['确 定','取 消'],
 			msg:'',
-			reloadurl:false //是否url刷新,默认false当前右侧刷新
+			reloadurl:true //是否url刷新,默认false当前右侧刷新
 		};
 		
 		params = $.extend(defaults, params);
@@ -41,14 +95,13 @@ var lastIndex;//最后弹窗索引
         			if(data>0) {
         				layer.msg('删除成功', 1, 1,function(){
         					if(params.reloadurl){
-        						reloadUrl();
+        						location.reload();
         					}else{
-        						$curmenu.trigger('click');
         					}
         				});
         			}
         		}).fail(function(error){
-        			layer.msg('操作失败', 2, 8);
+        			layer.msg('删除失败', 2, 8);
         		});
 			},params.title);
 		}

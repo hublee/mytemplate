@@ -14,14 +14,12 @@
 					<td class="CaptionTD">区域名称</td>
 					<td class="DataTD width-100"><input type="text"
 						name="name" datatype="*"  nullmsg="请输入区域名称！"
-						class="FormElement ui-widget-content ui-corner-all"
 						value="${area.name!}"></td>
 				</tr>
 				<tr class="FormData">
 					<td class="CaptionTD">区域编码</td>
 					<td class="DataTD width-100"><input type="text"
 						name="code" datatype="*"  nullmsg="请输入区域编码！"
-						class="FormElement ui-widget-content ui-corner-all"
 						value="${area.code!}"></td>
 				</tr>
 				<tr class="FormData">
@@ -34,7 +32,8 @@
 					<td class="CaptionTD">上级区域</td>
 					<td class="DataTD">
 					<#treeselect url="area/tree" modelNameValue="${pArea.name!}" 
-							modelIdValue="${pArea.id!0}" selectIds="${pArea.id!}"/>
+							modelIdValue="${pArea.id!0}" selectIds="${pArea.id!}"
+							curId="${area.id!}" />
 					</td>
 				</tr>
 				<tr class="FormData">

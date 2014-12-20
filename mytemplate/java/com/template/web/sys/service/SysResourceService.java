@@ -80,21 +80,6 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	}
 	
 	/**
-	 * 菜单管理模块树结构用于ztree插件
-	 * 
-	 * @return
-	 */
-	public List<SysResource> getMenuTreeList() {
-		SysResource sysResource = new SysResource();
-		List<SysResource> list = this.select(sysResource);
-		sysResource.setId(0L);
-		sysResource.setName("全部资源");
-		sysResource.set("open", true);
-		list.add(sysResource);
-		return list;
-	}
-	
-	/**
 	 * 构造侧边栏菜单树
 	* @return
 	 */

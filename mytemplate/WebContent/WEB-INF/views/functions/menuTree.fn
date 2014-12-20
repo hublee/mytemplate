@@ -6,9 +6,9 @@
 				href="javascript:void(0);" class="dropdown-toggle" 
 				 haschild="${menu.hasChild}"
 			@}else if(!isEmpty(menu.url)){
-				href="${decode(menu.url,'','javascript:void(0);',rootPath+'/'+menu.url)}" 
+				href="${decode(menu.url,'','javascript:void(0);','#/ajax/'+menu.url)}" 
 				id="menu_${strutil.replace(menu.url!'','/','')}" 
-				data-trigger="ajax" data-target="#fill-main-content" haschild="${menu.hasChild!}"
+				haschild="${menu.hasChild!}"
 			@}
 		>
 			<i class="menu-icon ${menu.icon!'fa-caret-right'}"></i>

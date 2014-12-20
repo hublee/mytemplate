@@ -8,7 +8,7 @@
 		timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="true"
 		maxEntriesLocalDisk="100000" />
 
-	<cache name="sysCache" maxElementsInMemory="1000" eternal="true"
+	<cache name="sysCache" maxElementsInMemory="5000" eternal="true"
 		overflowToDisk="true" />
 		
 	<!--  

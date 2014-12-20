@@ -143,7 +143,10 @@
 	$(function(){
 		//树结构初始化
 		nodeList=[]; //清除缓存
-		$.fn.zTree.init($("#treeMenu"), setting, ${treeData});
+		var treeData = ${treeData};
+		var root = {id:0,name:'全部',open:true};
+		treeData[treeData.length] = root;
+		$.fn.zTree.init($("#treeMenu"), setting,treeData);
 		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		// 默认展开一级节点
 		var nodes = treeObj.getNodesByParam("level", 0);

@@ -41,7 +41,8 @@
 					<td class="CaptionTD">父级菜单</td>
 					<td class="DataTD">
 					<#treeselect url="menu/tree" modelNameValue="${pResource.name!}" 
-							modelIdValue="${pResource.id!0}" selectIds="${pResource.id!}"/>
+							modelIdValue="${pResource.id!0}" selectIds="${pResource.id!}"
+							curId="${sysResource.id!}" />
 					</td>
 				</tr>
 				<tr class="FormData">
@@ -122,7 +123,7 @@
 		</table>
 	</form>
 </div>
-<#save formId="menu-save" reloadUrl="true" />
+<#save formId="menu-save" />
 
 <script type="text/javascript">
 	

@@ -62,6 +62,11 @@ public class CacheUtils {
 		}
 		return value;
 	}
+	
+	public static boolean isCacheByKey(String cacheName,String key){
+		ValueWrapper val = getCache(cacheName).get(key);
+		return val==null?false:true;
+	}
 
 	public static Cache getCache(String cacheName) {
 		EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");

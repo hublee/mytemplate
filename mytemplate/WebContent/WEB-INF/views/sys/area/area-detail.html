@@ -1,12 +1,6 @@
 <div>
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
-		<div class="profile-info-name">ID</div>
-		<div class="profile-info-value">
-			<span class="editable editable-click">${area.id!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
 		<div class="profile-info-name">名称</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">${area.name!}</span>
@@ -27,6 +21,12 @@
 		</div>
 	</div>
 	<div class="profile-info-row">
+		<div class="profile-info-name">父级区域</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${pArea.name!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
 		<div class="profile-info-name">创建者</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">${area.createBy!}</span>
@@ -36,7 +36,7 @@
 		<div class="profile-info-name">创建时间</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${darea.createDate!}
+			${area.createDate!}
 			</span>
 		</div>
 	</div>
@@ -52,7 +52,7 @@
 		<div class="profile-info-name">更新时间</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${darea.updateDate!}
+			${area.updateDate!}
 			</span>
 		</div>
 	</div>
@@ -60,18 +60,6 @@
 		<div class="profile-info-name">备注</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">${area.remarks!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
-		<div class="profile-info-name">父级ID</div>
-		<div class="profile-info-value">
-			<span class="editable editable-click">${pArea.id!}</span>
-		</div>
-	</div>
-	<div class="profile-info-row">
-		<div class="profile-info-name">父级区域</div>
-		<div class="profile-info-value">
-			<span class="editable editable-click">${pArea.name!}</span>
 		</div>
 	</div>
 </div>

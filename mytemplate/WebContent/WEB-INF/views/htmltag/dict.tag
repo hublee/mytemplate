@@ -18,16 +18,16 @@
 			</option>
 		@}
 	@}else{
-		@for(item in getDictListByType(type,"group")){
-			<option value="${item.type!}">
-				${item.type!}
+		@for(item in getDictListByType(type,"allType")){
+			<option value="${item.key!}">
+				${item.key!}
 			</option>
 		@}
 	@}
 </select>
 @}else if(dictMode == "showName"){ //显示类型名称
 	@for(item in getDictListByType(type)){
-		@if(type == item.type && value == item.value){
+		@if(value == item.value && type == item.type){
 			${item.label!}
 			@break;
 		@}

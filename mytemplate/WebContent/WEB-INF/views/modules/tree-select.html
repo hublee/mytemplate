@@ -27,6 +27,8 @@ var tree, setting = {
 };
 $(document).ready(function(){
 	$.get("${ctxPath}/${adminPath}/${url}?t="+new Date().getTime(), function(zNodes){
+		var root = {id:0,name:'全部',open:true};
+		zNodes[zNodes.length] = root;
 		// 初始化树结构
 		tree = $.fn.zTree.init($("#select-tree"), setting, zNodes);
 		
@@ -60,9 +62,22 @@ $(document).ready(function(){
 			});
 			return false;
 		}
+		if("${curId}" == node.id){
+			layer.tips("不能选择自己", $("#select-tree"), {
+				guide:0,
+				time: 4,
+				style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
+			});
+			return false;
+		}
+		if(node.id == 0){
+			node['name']="";
+		}
 		$("#${nameId}").val(node.name);
 		$("#${id}").val(node["${idKey!'id'}"]);
-		$("input[name='parentIds']").val(node.parentIds);
+		if("${curId}" != -1){
+			$("input[name='parentIds']").val(node.parentIds);
+		}
 		layer.close(lastIndex);
 		layer.close(layer.index);
 	});

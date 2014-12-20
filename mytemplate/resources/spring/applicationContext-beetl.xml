@@ -20,6 +20,7 @@
 		<property name="functions">
              <map>
                <entry key="getDictListByType" value-ref="dictFunction"/>
+               <entry key="getAllArea" value-ref="areaFunction"/>
             </map>
         </property>
 	</bean>
