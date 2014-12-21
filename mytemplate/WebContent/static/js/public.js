@@ -88,10 +88,17 @@ function changeMenu(obj){
 			}
 		}
 		if(mode == 'del' || mode == 'delete'){
+			var loadi;
 			layer.confirm(params.msg,function(index){
 				$.ajax({
-					url:params.url,data:params.data,type:'post'
+					url:params.url,
+					data:params.data,
+					type:'post',
+					beforeSend:function(){
+						loadi = layer.load(5,0);
+					}
 				}).done(function(data){
+					layer.close(loadi);
         			if(data>0) {
         				layer.msg('删除成功', 1, 1,function(){
         					if(params.reloadurl){

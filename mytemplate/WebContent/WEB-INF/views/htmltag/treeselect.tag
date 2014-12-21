@@ -1,4 +1,4 @@
-@var class = class!''; //样式
+@var class = class!'width-100 '; //样式
 @var width = width!'350'; //弹窗宽度
 @var height = height!'350'; //弹窗的高度
 @var modelId = modelId!'parentId'; //隐藏要提交的id (实体属性)
@@ -11,9 +11,15 @@
 @var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
 @var selectIds = selectIds!''; //默认选择节点
 @var curId = curId!'-1'; //当前节点的id,如要验证不能选择当前节点需要填写,多个时必须填写，详见office-save页面
-@var isCheck = isCheck!'';
+@var isCheck = isCheck!''; //是否验证不为空
+@var style = style!'';
+@var checked = checked!'false'; //是都显示复选框
+@var isLayer = isLayer!'true'; //是否为弹窗
+@var treeSelectId = treeSelectId!; //树id
+@var rootNodeName = rootNodeName!""; //虚拟顶级节点名称
 
-<div class="width-100 clearfix ${class}">
+@if(isLayer == "true"){
+<div class="clearfix ${class}" ${style}>
 	<input class="form-control pull-left width-80" type="text" readonly
 	id="${nameId}" name="${modelName}" value="${modelNameValue}"
 	@if(!isEmpty(isCheck)){
@@ -23,10 +29,25 @@
 	<span class="input-group-btn pull-left width-20">
 		<button class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
 		data-mode="page" data-url="${rootPath}/tag/treeselect"
-		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}'}" 
+		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}'}" 
 		data-title="请选择" data-width="${width!}" data-height="${height}">
 			<i class="ace-icon fa fa-search bigger-110"></i>查找
 		</button>
 	</span>
 	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
 </div>
+@}else{
+	${tagBody!}
+	<script>
+		$.ajax({
+			url:"${rootPath}/tag/treeselect",
+			type:"post",
+			data:{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',
+				selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',isLayer:"false",
+				treeSelectId:'${treeSelectId}',rootNodeName:'${rootNodeName}'},
+			success:function(data){
+				$("#${treeSelectId}").html(data);
+			}
+		});
+	</script>
+@}

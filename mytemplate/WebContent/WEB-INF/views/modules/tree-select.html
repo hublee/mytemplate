@@ -27,10 +27,11 @@ var tree, setting = {
 };
 $(document).ready(function(){
 	$.get("${ctxPath}/${adminPath}/${url}?t="+new Date().getTime(), function(zNodes){
-		var root = {id:0,name:'全部',open:true};
+		var rootName = '${decode(rootNodeName,"","全部",rootNodeName)}';
+		var root = {id:0,name:rootName,open:true};
 		zNodes[zNodes.length] = root;
 		// 初始化树结构
-		tree = $.fn.zTree.init($("#select-tree"), setting, zNodes);
+		tree = $.fn.zTree.init($("#select-tree${treeSelectId!}"), setting, zNodes);
 		
 		// 默认展开一级节点
 		var nodes = tree.getNodesByParam("level", 0);
@@ -129,14 +130,18 @@ function updateNodes(highlight) {
 };
 </script>
 <div>
+@if(isLayer == "ture"){
 	<div id="search" class="control-group" style="padding:10px 0 0 15px;">
 		<label for="key" class="control-label" style="float:left;padding:5px 5px 3px;">关键字：</label>
 		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:75%;">
 	</div>
-	<ul id="select-tree" class="ztree" style="padding:15px 20px;"></ul>
+@}
+	<ul id="select-tree${treeSelectId!}" class="ztree" style="padding:15px 20px;"></ul>
+@if(isLayer == "ture"){
 	<div class="width-100" style="padding-top: 15px; bottom: 0px; position:absolute;">
 		<button class="btn btn-primary btn-sm bigger-110 btn-block" id="${id}-save">
 			确 定
 		</button>
 	</div>
+@}
 </div>

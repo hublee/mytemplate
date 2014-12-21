@@ -5,7 +5,6 @@
 			<th class="center">机构类型</th>
 			<th class="center">上级机构</th>
 			<th class="center">归属区域</th>
-			<th class="center">区域编码</th>
 			<th class="center">负责人</th>
 			<th class="center">电话</th>
 			<th class="center">操作</th>
@@ -21,7 +20,7 @@
 						data-title="<${item.name!}>详情" data-mode="detail"
 						data-url="${rootPath}/office/detail/showlayer"
 						data-data="{id:'${item.id}'}"
-						data-width="350" data-height="511"
+						data-width="350" data-height="477"
 						data-maxmin="false" data-closeBtn="[1,true]"
 						class="item-info"
 					>${item.name}</a>
@@ -34,9 +33,6 @@
 				</td>
 				<td class="center">
 					${map[item.areaId].name!}
-				</td>
-				<td class="center">
-					${item.code! }
 				</td>
 				<td class="center">
 					${item.master! }

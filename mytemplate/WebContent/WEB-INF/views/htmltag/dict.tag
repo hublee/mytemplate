@@ -4,9 +4,12 @@
 @var width = width!'100%';
 @var isDefault = isDefault!"";
 @var showType = showType!false;
+@var class = class!'';
+@var id = id!'chosen-select';
+@var name = name!'type';
 
 @if(dictMode == "showSelect"){ //显示下拉模式
-<select class="chosen-select" name="type">
+<select class="chosen-select ${class}" name="${name}" id="${id}">
 	@if(!isEmpty(isDefault)) {
 	<option value="">全部</option>
 	@}
@@ -34,5 +37,5 @@
 	@}elsefor{}
 @}
 <script type="text/javascript">
-$(".chosen-select").chosen({width: "${width}"}); 
+$("#${id}").chosen({width: "${width}"}); 
 </script>

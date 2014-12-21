@@ -33,6 +33,9 @@ public class TagController {
 		model.addAttribute("idKey",  request.getParameter("idKey")); //id属性名称
 		model.addAttribute("pIdKey", request.getParameter("pIdKey")); //pid属性名称
 		model.addAttribute("curId", request.getParameter("curId")); //当前id
+		model.addAttribute("isLayer", request.getParameter("isLayer")); //是否弹窗模式
+		model.addAttribute("treeSelectId", request.getParameter("treeSelectId")); //ul树的id
+		model.addAttribute("rootNodeName", request.getParameter("rootNodeName")); //顶级节点名称
 		return "modules/tree-select";
 	}
 	
