@@ -39,7 +39,7 @@
 @}
 <script type="text/javascript">
 $("#${id}").chosen({width: "${width}"}); 
-@if("${isScript}" == "true"){
+@if(isScript == "true"){
 	${tagBody!}
 @}
 </script>

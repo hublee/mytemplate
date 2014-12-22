@@ -1,8 +1,10 @@
 <script>
+@var tree = treeSelectId!id+'tree';
+@var setting = (treeSelectId!id)+"setting";
 var key, lastValue = "", nodeList = [];
-var tree, setting = {
+var ${tree}, ${setting} = {
 		view:{selectedMulti:false,expandSpeed:100},
-		check:{enable:eval("${checked!'false'}"),nocheckInherit:true},
+		check:{enable:${checked!'false'},nocheckInherit:true},
 		data:{
 			simpleData:{
 				enable:true,
@@ -19,7 +21,8 @@ var tree, setting = {
 		callback:{
 			beforeClick:function(id, node){
 				if("${checked!}" == "true"){
-					tree.checkNode(node, !node.checked, true, true);
+					console.log(node.checked);
+					${tree}.checkNode(node, !node.checked, true, true);
 					return false;
 				}
 			}
@@ -31,22 +34,22 @@ $(document).ready(function(){
 		var root = {id:0,name:rootName,open:true};
 		zNodes[zNodes.length] = root;
 		// 初始化树结构
-		tree = $.fn.zTree.init($("#select-tree${treeSelectId!}"), setting, zNodes);
+		${tree} = $.fn.zTree.init($("#select-tree${treeSelectId!}"), ${setting}, zNodes);
 		
 		// 默认展开一级节点
-		var nodes = tree.getNodesByParam("level", 0);
+		var nodes = ${tree}.getNodesByParam("level", 0);
 		for(var i=0; i<nodes.length; i++) {
-			tree.expandNode(nodes[i], true, false, false);
+			${tree}.expandNode(nodes[i], true, false, false);
 		}
 		// 默认选择节点
 		var ids = "${selectIds!}".split(",");
 		for(var i=0; i<ids.length; i++) {
-			var node = tree.getNodeByParam("id", ids[i]);
+			var node = ${tree}.getNodeByParam("id", ids[i]);
 			if("${checked!}" == "true"){
-				try{tree.checkNode(node, true, true);}catch(e){}
-				tree.selectNode(node, false);
+				try{${tree}.checkNode(node, true, true);}catch(e){}
+				${tree}.selectNode(node, false);
 			}else{
-				tree.selectNode(node, true);
+				${tree}.selectNode(node, true);
 			}
 		}
 	});
@@ -54,7 +57,7 @@ $(document).ready(function(){
 	key.bind("focus", focusKey).bind("blur", blurKey)
 	.bind("change keydown cut input propertychange", searchNode);
 	$("#${id}-save").click(function(){
-		node = tree.getSelectedNodes()[0];
+		node = ${tree}.getSelectedNodes()[0];
 		if(undefined == node || null == node){
 			layer.tips("请选择一个节点", $("#select-tree"), {
 				guide:0,
@@ -118,14 +121,14 @@ function searchNode(e) {
 		return;
 	}
 	updateNodes(false);
-	nodeList = tree.getNodesByParamFuzzy(keyType, value);
+	nodeList = ${tree}.getNodesByParamFuzzy(keyType, value);
 	updateNodes(true);
 };
 function updateNodes(highlight) {
 	for(var i=0, l=nodeList.length; i<l; i++) {
 		nodeList[i].highlight = highlight;				
-		tree.updateNode(nodeList[i]);
-		tree.expandNode(nodeList[i].getParentNode(), true, false, false);
+		${tree}.updateNode(nodeList[i]);
+		${tree}.expandNode(nodeList[i].getParentNode(), true, false, false);
 	}
 };
 </script>

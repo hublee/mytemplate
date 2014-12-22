@@ -13,11 +13,7 @@
 			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
-					<#dict width="60%" showType="${true}" isDefault="yes" change="true">
-						$("#chosen-select").change(function(){
-							alert("dd")
-						});
-					</#dict>
+					<#dict width="60%" showType="${true}" isDefault="yes" />
 				</div>
 				<div class="pull-left width-30">
 					<label>描述：</label>
@@ -47,17 +43,30 @@
 				</div>
 				<div class="center padding-10">
 					<label>数据范围：</label>
-					<#dict type="sys_data_scope" width="50%" id="chosenSelectData" name="dataScope"/>
+					<div class="width-50" style="display: inline-block;text-align: left;">
+					<#dict type="sys_data_scope" width="50%" id="chosenSelectData" name="dataScope" isScript="true">
+						$("#chosenSelectData").change(function(){
+							if($(this).val() == 9){
+								$("#treeSelectOffice").show();
+							}else{
+								$("#treeSelectOffice").hide();
+							}
+						})
+						$("#chosenSelectData option[value='9']").attr("selected",true);
+						$("#chosenSelectData").trigger("chosen:updated");
+					</#dict>
+					<span class="red width-40">*按明细设置，可跨机构</span>
+					</div>
 				</div>
 				<div class="center padding-10">
 					<label>角色授权：</label>
 					<div class="clearfix" style="width: 50%;display: inline-block;vertical-align: top;">
 						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
-							modelId="officeId" class="width-50" treeSelectId="treeSelectRes">
+							class="width-50" treeSelectId="treeSelectRes">
 							<div id="treeSelectRes" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
 						</#treeselect>
 						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
-							modelId="officeId" class="width-50" treeSelectId="treeSelectOffice">
+							class="width-50" treeSelectId="treeSelectOffice">
 							<div id="treeSelectOffice" style="width: 50%;display: inline-block;vertical-align: top;float: right"></div>
 						</#treeselect>
 					</div>
