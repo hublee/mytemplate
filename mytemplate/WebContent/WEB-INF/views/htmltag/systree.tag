@@ -8,6 +8,7 @@
 @var searchAllBtn=searchAllBtn!'search-all-btn';
 @var height = height!'520';
 @var width = width!'600';
+@var reloadUrl = reloadUrl!false;
 
 <script type="text/javascript">
 	var setting = {
@@ -47,7 +48,7 @@
 		}
 	};
 	
-	//编辑菜单
+	//编辑
 	function beforeEditName(treeId, treeNode) {
 		$.cuslayer({
 			mode:'page',
@@ -60,7 +61,7 @@
 		return false;
 	}
 	
-	//删除菜单
+	//删除
 	function beforeRemove(treeId, treeNode){
 		var id = treeNode.id;
 		$.cuslayer({
@@ -69,12 +70,12 @@
 			title:'删除操作',
 			url:"${rootPath!}/"+'${delUrl}',
 			data:{"id":id},
-			reloadurl:true
+			reloadurl:${reloadUrl}
 		});
 		return false;
 	}
 	
-	//划过显示添加按钮,添加菜单
+	//划过显示添加按钮,添加
 	function addHoverDom(treeId, treeNode) {
 		var sObj = $("#" + treeNode.tId + "_span");
 		if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;

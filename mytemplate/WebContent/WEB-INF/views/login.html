@@ -160,14 +160,13 @@
 
 		<script type="text/javascript" src="${ctxPath!}/static/layer/layer.min.js"></script>
 		<script type="text/javascript" src="${ctxPath}/static/validate/Validform_v5.3.2_min.js"></script>
-	
+
 		<script type="text/javascript">
 			function refresh(obj) {
 		        obj.src = "${ctxPath!}/code.image?width=120&height=32&"+Math.random();
 		    };
 
 			jQuery(function($) {
-				
 				$("#login-form").Validform({
 					btnSubmit:"#login-btn",
 					ajaxPost:true,

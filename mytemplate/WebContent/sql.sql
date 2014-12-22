@@ -37,7 +37,7 @@ CREATE TABLE `sys_area` (
   KEY `sys_area_parent_id` (`parent_id`),
   KEY `sys_area_parent_ids` (`parent_ids`(255)),
   KEY `sys_area_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COMMENT='区域表';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='区域表';
 
 /*Data for the table `sys_area` */
 
@@ -64,7 +64,7 @@ CREATE TABLE `sys_dict` (
   KEY `sys_dict_value` (`value`),
   KEY `sys_dict_label` (`label`),
   KEY `sys_dict_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='字典表';
 
 /*Data for the table `sys_dict` */
 
@@ -99,7 +99,7 @@ CREATE TABLE `sys_office` (
   KEY `sys_office_parent_id` (`parent_id`),
   KEY `sys_office_parent_ids` (`parent_ids`(255)),
   KEY `sys_office_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='机构表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='机构表';
 
 /*Data for the table `sys_office` */
 
@@ -128,11 +128,11 @@ CREATE TABLE `sys_resource` (
   `create_by` varchar(64) DEFAULT NULL,
   `update_by` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_resource` */
 
-insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL),(193,'用户管理',0,'0',262144,'',1,189,'0','','','0','0,189,',NULL,NULL,NULL,NULL),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',1,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL),(195,'日志查询',0,'0',1048576,'',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(201,'测试',0,'0',16777216,'',1,0,'0','test','','0','0,',NULL,NULL,NULL,NULL);
+insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL),(193,'用户管理',0,'0',262144,'',1,189,'0','','','0','0,189,',NULL,NULL,NULL,NULL),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',1,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL),(195,'日志查询',0,'0',1048576,'',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `sys_role` */
 
@@ -188,26 +188,36 @@ CREATE TABLE `sys_role_resource` (
 DROP TABLE IF EXISTS `sys_user`;
 
 CREATE TABLE `sys_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户Id',
-  `code` varchar(64) DEFAULT NULL COMMENT '唯一键',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `phone` varchar(11) DEFAULT NULL COMMENT '电话',
-  `city_id` varchar(32) DEFAULT NULL COMMENT '城市id',
-  `province_id` varchar(32) DEFAULT NULL COMMENT '省id',
-  `gender` char(2) DEFAULT NULL COMMENT '性别',
-  `username` varchar(16) DEFAULT NULL COMMENT '账号',
-  `password` varchar(64) DEFAULT NULL COMMENT '密码',
-  `regtime` datetime DEFAULT NULL COMMENT '注册时间',
-  `salt` varchar(64) DEFAULT NULL COMMENT '加密盐',
-  `area` varchar(64) DEFAULT NULL COMMENT '地区字符串',
-  `status` int(11) DEFAULT '0' COMMENT '账号状态(0.正常 1.禁用)',
-  `name` varchar(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `company_id` bigint(20) NOT NULL COMMENT '归属公司',
+  `office_id` bigint(20) NOT NULL COMMENT '归属部门',
+  `username` varchar(100) NOT NULL COMMENT '登录名',
+  `password` varchar(100) NOT NULL COMMENT '密码',
+  `no` varchar(100) DEFAULT NULL COMMENT '工号',
+  `name` varchar(100) NOT NULL COMMENT '姓名',
+  `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
+  `phone` varchar(200) DEFAULT NULL COMMENT '电话',
+  `mobile` varchar(200) DEFAULT NULL COMMENT '手机',
+  `user_type` char(1) DEFAULT NULL COMMENT '用户类型',
+  `login_ip` varchar(100) DEFAULT NULL COMMENT '最后登陆IP',
+  `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`),
+  KEY `sys_user_office_id` (`office_id`),
+  KEY `sys_user_login_name` (`username`),
+  KEY `sys_user_company_id` (`company_id`),
+  KEY `sys_user_update_date` (`update_date`),
+  KEY `sys_user_del_flag` (`del_flag`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`id`,`code`,`age`,`phone`,`city_id`,`province_id`,`gender`,`username`,`password`,`regtime`,`salt`,`area`,`status`,`name`) values (1,NULL,NULL,NULL,NULL,NULL,NULL,'admin','86f3059b228c8acf99e69734b6bb32cc',NULL,NULL,NULL,0,'韩馨');
+insert  into `sys_user`(`id`,`company_id`,`office_id`,`username`,`password`,`no`,`name`,`email`,`phone`,`mobile`,`user_type`,`login_ip`,`login_date`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,1,1,'thinkgem','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0001','Thinkgem','thinkgem@163.com','8675','8675',NULL,'127.0.0.1','2014-10-05 18:53:52','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','最高管理员','0'),(2,1,1,'admin','86f3059b228c8acf99e69734b6bb32cc','0002','管理员','thinkgem@163.com','8675','8675',NULL,'0:0:0:0:0:0:0:1','2014-12-21 19:16:11','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','管理员','0'),(3,1,3,'bj_zhb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0003','综合部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','综合部','0'),(4,1,4,'bj_scb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0004','市场部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','市场部','0'),(5,1,5,'bj_jsb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0005','技术部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','技术部','0'),(6,1,6,'bj_yfb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0006','研发部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','研发部','0'),(7,7,8,'sd_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0007','山分领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司领导','0'),(8,7,9,'sd_zhb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0008','山分综合部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司综合部','0'),(9,7,10,'sd_scb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0009','山分市场部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司市场部','0'),(10,7,11,'sd_jsb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0010','山东省分公司技术部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司技术部','0'),(11,12,13,'sdjn_admin','c810e6915e66726c720c20b125568f3abdae500aefc9240e4e0bc2b4','0011','济分公司领导','thinkgem@163.com','8675','8675','','0:0:0:0:0:0:0:1','2014-11-23 21:55:41','1','2013-05-27 08:00:00','2','2014-11-23 21:55:27','济南分公司领导','0'),(12,12,18,'sdjnlc_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0012','济分历城领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','济南市历城区分公司领导','0'),(13,22,23,'sdjnlx_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0013','济分历下领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','济南市历下区分公司领导','0'),(14,22,24,'test','25a251792f44cf460aac78cb922f15814bd69eb8ac263681afaa319b','0014','济分历下综合部','thinkgem@163.com','8675','8675','','0:0:0:0:0:0:0:1','2014-10-12 21:21:23','1','2013-05-27 08:00:00','2','2014-10-12 21:21:15','济南市历下区分公司综合部','0');
 
 /*Table structure for table `sys_user_role` */
 

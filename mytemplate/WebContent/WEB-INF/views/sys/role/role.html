@@ -13,7 +13,11 @@
 			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
-					<#dict width="60%" showType="${true}" isDefault="yes"/>
+					<#dict width="60%" showType="${true}" isDefault="yes" change="true">
+						$("#chosen-select").change(function(){
+							alert("dd")
+						});
+					</#dict>
 				</div>
 				<div class="pull-left width-30">
 					<label>描述：</label>

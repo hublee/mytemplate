@@ -1,5 +1,5 @@
 @var formId = formId!'save-form'; //form表单id
-@var reloadUrl = reloadUrl!'true'; //是否url刷新
+@var reloadUrl = reloadUrl!'false'; //是否url刷新
 @var isHide = isHide!'no'; //是否隐藏按钮 默认no
 @var subBtnId = subBtnId!formId+'-save';
 
@@ -28,6 +28,7 @@ $(function(){
 					if("${reloadUrl}" == "true"){
 						location.reload();
 					}else{
+						$curmenu.trigger('click');
 					}
 					layer.closeAll();
 				});

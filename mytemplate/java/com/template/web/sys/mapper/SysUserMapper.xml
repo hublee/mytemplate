@@ -3,7 +3,8 @@
 <mapper namespace="com.template.web.sys.mapper.SysUserMapper">
 
 	<sql id="sysUserColumns">
-		id,age,area,city_id,code,gender,name,password,phone,province_id,regtime,salt,status,username
+		id,company_id,create_by,create_date,del_flag,email,login_date,login_ip,mobile,
+		name,no,office_id,password,phone,remarks,update_by,update_date,username,user_type
 	</sql>
 
 	<!-- 验证账号密码 -->

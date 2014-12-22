@@ -111,6 +111,9 @@ var Webit = Webit || {};
         },
         get: function() {
             return getHash();
+        },
+        getActions:function(){
+        	return actions;
         }
     };
 })(Webit, jQuery, window);

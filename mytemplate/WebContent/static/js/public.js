@@ -1,12 +1,17 @@
 var $curmenu,lastIndex;//最后弹窗索引
 $(function(){
 	var aMenu = $("#sidebar-menu a[id]");
+	var history = Webit.history;
 	aMenu.on("click",function(){
+		var hash = history.get(),href = $(this).attr("href");
+		if( ("#"+hash) == href ){
+			history.justShow("#");
+			history.go(hash);
+		}
 		changeMenu($(this));
 	});
 	
 	var $main_content = $("#fill-main-content");
-	var history = Webit.history;
 	history.add("ajax", function(str, action, token) {
 	   $main_content.html(loadHtmlPage(str));
 	   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
@@ -70,7 +75,7 @@ function changeMenu(obj){
 			btns:2,
 			btn:['确 定','取 消'],
 			msg:'',
-			reloadurl:true //是否url刷新,默认false当前右侧刷新
+			reloadurl:false //是否url刷新,默认false当前右侧刷新
 		};
 		
 		params = $.extend(defaults, params);
@@ -104,6 +109,7 @@ function changeMenu(obj){
         					if(params.reloadurl){
         						location.reload();
         					}else{
+        						$curmenu.trigger('click');
         					}
         				});
         			}

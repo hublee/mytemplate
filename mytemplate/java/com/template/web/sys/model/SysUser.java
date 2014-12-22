@@ -4,12 +4,11 @@ package com.template.web.sys.model;
 
 import java.util.Date;
 
+import com.template.common.base.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.template.common.base.Entity;
-
 
 /**
  * 
@@ -21,35 +20,64 @@ public class SysUser extends Entity {
 
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //id <用户Id>
+    private Long id; //id <编号>
 
-    private Integer age; //age <年龄>
+	
+    private Long companyId; //company_id <归属公司>
 
-    private String area; //area <地区字符串>
+	
+    private String createBy; //create_by <创建者>
 
-    private String cityId; //city_id <城市id>
+	
+    private Date createDate; //create_date <创建时间>
 
-    private String code; //code <唯一键>
+	
+    private String delFlag; //del_flag <删除标记>
 
-    private String gender; //gender <性别>
+	
+    private String email; //email <邮箱>
 
-    private String name; //name <>
+	
+    private Date loginDate; //login_date <最后登陆时间>
 
+	
+    private String loginIp; //login_ip <最后登陆IP>
+
+	
+    private String mobile; //mobile <手机>
+
+	
+    private String name; //name <姓名>
+
+	
+    private String no; //no <工号>
+
+	
+    private Long officeId; //office_id <归属部门>
+
+	
     private String password; //password <密码>
 
+	
     private String phone; //phone <电话>
 
-    private String provinceId; //province_id <省id>
+	
+    private String remarks; //remarks <备注信息>
 
-    private Date regtime; //regtime <注册时间>
+	
+    private String updateBy; //update_by <更新者>
 
-    private String salt; //salt <加密盐>
+	
+    private Date updateDate; //update_date <更新时间>
 
-    private Integer status; //status <账号状态(0.正常 1.禁用)>
+	
+    private String username; //username <登录名>
 
-    private String username; //username <账号>
+	
+    private String userType; //user_type <用户类型>
 
 
 
@@ -61,44 +89,68 @@ public class SysUser extends Entity {
 		this.set("id", id);
     }
 
-	public Integer getAge() {
-		return this.getInteger("age");
+	public Long getCompanyId() {
+		return this.getLong("companyId");
     }
    
-    public void setAge(Integer age) {
-		this.set("age", age);
+    public void setCompanyId(Long companyId) {
+		this.set("companyId", companyId);
     }
 
-	public String getArea() {
-		return this.getString("area");
+	public String getCreateBy() {
+		return this.getString("createBy");
     }
    
-    public void setArea(String area) {
-		this.set("area", area);
+    public void setCreateBy(String createBy) {
+		this.set("createBy", createBy);
     }
 
-	public String getCityId() {
-		return this.getString("cityId");
+	public Date getCreateDate() {
+		return this.getDate("createDate");
     }
    
-    public void setCityId(String cityId) {
-		this.set("cityId", cityId);
+    public void setCreateDate(Date createDate) {
+		this.set("createDate", createDate);
     }
 
-	public String getCode() {
-		return this.getString("code");
+	public String getDelFlag() {
+		return this.getString("delFlag");
     }
    
-    public void setCode(String code) {
-		this.set("code", code);
+    public void setDelFlag(String delFlag) {
+		this.set("delFlag", delFlag);
     }
 
-	public String getGender() {
-		return this.getString("gender");
+	public String getEmail() {
+		return this.getString("email");
     }
    
-    public void setGender(String gender) {
-		this.set("gender", gender);
+    public void setEmail(String email) {
+		this.set("email", email);
+    }
+
+	public Date getLoginDate() {
+		return this.getDate("loginDate");
+    }
+   
+    public void setLoginDate(Date loginDate) {
+		this.set("loginDate", loginDate);
+    }
+
+	public String getLoginIp() {
+		return this.getString("loginIp");
+    }
+   
+    public void setLoginIp(String loginIp) {
+		this.set("loginIp", loginIp);
+    }
+
+	public String getMobile() {
+		return this.getString("mobile");
+    }
+   
+    public void setMobile(String mobile) {
+		this.set("mobile", mobile);
     }
 
 	public String getName() {
@@ -107,6 +159,22 @@ public class SysUser extends Entity {
    
     public void setName(String name) {
 		this.set("name", name);
+    }
+
+	public String getNo() {
+		return this.getString("no");
+    }
+   
+    public void setNo(String no) {
+		this.set("no", no);
+    }
+
+	public Long getOfficeId() {
+		return this.getLong("officeId");
+    }
+   
+    public void setOfficeId(Long officeId) {
+		this.set("officeId", officeId);
     }
 
 	public String getPassword() {
@@ -125,36 +193,28 @@ public class SysUser extends Entity {
 		this.set("phone", phone);
     }
 
-	public String getProvinceId() {
-		return this.getString("provinceId");
+	public String getRemarks() {
+		return this.getString("remarks");
     }
    
-    public void setProvinceId(String provinceId) {
-		this.set("provinceId", provinceId);
+    public void setRemarks(String remarks) {
+		this.set("remarks", remarks);
     }
 
-	public Date getRegtime() {
-		return this.getDate("regtime");
+	public String getUpdateBy() {
+		return this.getString("updateBy");
     }
    
-    public void setRegtime(Date regtime) {
-		this.set("regtime", regtime);
+    public void setUpdateBy(String updateBy) {
+		this.set("updateBy", updateBy);
     }
 
-	public String getSalt() {
-		return this.getString("salt");
+	public Date getUpdateDate() {
+		return this.getDate("updateDate");
     }
    
-    public void setSalt(String salt) {
-		this.set("salt", salt);
-    }
-
-	public Integer getStatus() {
-		return this.getInteger("status");
-    }
-   
-    public void setStatus(Integer status) {
-		this.set("status", status);
+    public void setUpdateDate(Date updateDate) {
+		this.set("updateDate", updateDate);
     }
 
 	public String getUsername() {
@@ -163,6 +223,14 @@ public class SysUser extends Entity {
    
     public void setUsername(String username) {
 		this.set("username", username);
+    }
+
+	public String getUserType() {
+		return this.getString("userType");
+    }
+   
+    public void setUserType(String userType) {
+		this.set("userType", userType);
     }
 
 

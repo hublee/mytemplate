@@ -7,6 +7,7 @@
 @var class = class!'';
 @var id = id!'chosen-select';
 @var name = name!'type';
+@var isScript = isScript!'false'; //是否有改变事件
 
 @if(dictMode == "showSelect"){ //显示下拉模式
 <select class="chosen-select ${class}" name="${name}" id="${id}">
@@ -38,4 +39,7 @@
 @}
 <script type="text/javascript">
 $("#${id}").chosen({width: "${width}"}); 
+@if("${isScript}" == "true"){
+	${tagBody!}
+@}
 </script>
