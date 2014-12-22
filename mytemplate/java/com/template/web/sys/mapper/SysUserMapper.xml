@@ -10,6 +10,6 @@
 	<select id="checkUser" resultType="com.template.web.sys.model.SysUser">
 		select <include refid="sysUserColumns" /> from sys_user 
 		where username = #{username} and password = #{password}
-	</select>
+	</select> 
 
 </mapper>
