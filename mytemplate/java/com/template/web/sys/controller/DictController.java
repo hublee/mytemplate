@@ -31,7 +31,7 @@ public class DictController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysDict sysDict) {
 		return sysDictService.saveSysdict(sysDict);
 	}
@@ -41,7 +41,7 @@ public class DictController {
 	* @param id
 	* @return
 	 */
-	@RequestMapping(value="/del",method=RequestMethod.POST)
+	@RequestMapping(value="del",method=RequestMethod.POST)
 	public @ResponseBody Integer del(@ModelAttribute SysDict sysDict){
 		return sysDictService.deleteSysDict(sysDict);
 	}
@@ -51,14 +51,14 @@ public class DictController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	public String list(int pageNum,int pageSize,@ModelAttribute SysDict sysDict, Model model) {
 		PageInfo<SysDict> page = sysDictService.selectPage(pageNum, pageSize, sysDict);
 		model.addAttribute("page", page);
 		return "sys/dict/dict-list";
 	}
 	
-	@RequestMapping(value="/{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer")
 	public String showLayer(Long id, Model model){
 		SysDict dict = sysDictService.selectByPrimaryKey(id);
 		model.addAttribute("dict", dict);

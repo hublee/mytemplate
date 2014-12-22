@@ -22,14 +22,35 @@ import com.template.web.sys.service.SysUserService;
 
 
 @Controller
+@RequestMapping("${adminPath}")
 public class LoginController {
 
 	@Resource
 	private SysResourceService sysResourceService;
 	@Resource
 	private SysUserService sysUserService;
-
-	@RequestMapping("${adminPath}/login")
+	
+	/**
+	 * 管理主页
+	* @param model
+	* @param request
+	* @return
+	 */
+	@RequestMapping
+	public String toIndex(Model model,HttpServletRequest request) {
+		request.getSession().removeAttribute("code"); //清除code
+		SysUser user = (SysUser)request.getSession().getAttribute(Global.getSessionUserKey());
+		if(null == user) return "redirect:"+Global.getAdminPath()+"/login";
+		model.addAttribute("menuList", sysResourceService.getMenuTree());
+		return "index";
+	}
+	
+	
+	/**
+	 * 跳转到登录页面
+	* @return
+	 */
+	@RequestMapping(value="login",method = RequestMethod.GET)
 	public String toLogin() {
 		return "login";
 	}
@@ -41,7 +62,7 @@ public class LoginController {
 	* @param code
 	* @return
 	 */
-	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
+	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> login(String username,
 			String password, String code, HttpServletRequest request) {
 
@@ -69,26 +90,11 @@ public class LoginController {
 	 * 用户退出
 	* @return 跳转到登录页面
 	 */
-	@RequestMapping("${adminPath}/logout")
+	@RequestMapping("logout")
 	public String logout(HttpServletRequest request){
 		request.getSession().removeAttribute(Global.getSessionUserKey());
 		request.getSession().invalidate();
 		return "redirect:/"+Global.getAdminPath()+"/login";
-	}
-
-	/**
-	 * 管理主页
-	* @param model
-	* @param request
-	* @return
-	 */
-	@RequestMapping("${adminPath}")
-	public String toIndex(Model model,HttpServletRequest request) {
-		request.getSession().removeAttribute("code"); //清除code
-		SysUser user = (SysUser)request.getSession().getAttribute(Global.getSessionUserKey());
-		if(null == user) return "redirect:"+Global.getAdminPath()+"/login";
-		model.addAttribute("menuList", sysResourceService.getMenuTree());
-		return "index";
 	}
 
 }

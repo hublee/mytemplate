@@ -52,7 +52,7 @@ public class AreaController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@RequestMapping(value = "list", method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
 		PageInfo<SysArea> page = sysAreaService.findPageInfo(params);
 		model.addAttribute("page", page);
@@ -65,7 +65,7 @@ public class AreaController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysArea sysArea) {
 		return sysAreaService.saveSysArea(sysArea);
 	}
@@ -75,7 +75,7 @@ public class AreaController {
 	* @param resourceId 区域id
 	* @return
 	 */
-	@RequestMapping(value="/del",method=RequestMethod.POST)
+	@RequestMapping(value="del",method=RequestMethod.POST)
 	public @ResponseBody Integer dels(Long id){
 		Integer count = 0;
 		if(null != id){
@@ -92,7 +92,7 @@ public class AreaController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value="/{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer")
 	public String showLayer(Long id,Long parentId,@PathVariable("mode") String mode, Model model){
 		SysArea area = null, pArea = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
