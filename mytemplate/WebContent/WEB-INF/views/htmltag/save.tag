@@ -1,21 +1,25 @@
 @var formId = formId!'save-form'; //form表单id
 @var reloadUrl = reloadUrl!'false'; //是否url刷新
 @var isHide = isHide!'no'; //是否隐藏按钮 默认no
-@var subBtnId = subBtnId!formId+'-save';
+@var subBtnId = subBtnId!(formId+'-save');
+@var validId = strutil.replace(formId,"-","");
+@var config = config!'false';
+@var data = data!'';
 
 @if(isHide == "no"){
 <div class="width-100 clearfix" style="bottom: 0px;left: 0px;position:absolute;">
-	<button class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
+	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 确 定
-	</button>
-	<button class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
+	</span>
+	<span class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
 		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
-	</button>
+	</span>
 </div>
 @}
 <script type="text/javascript">
 $(function(){
-	$("#${formId}").Validform({
+	
+var ${validId} = $("#${formId}").Validform({
 		ajaxPost : true,
 		beforeSubmit:function(curform){
 			var loadi = layer.load(5,2);
@@ -47,13 +51,22 @@ $(function(){
 				}
 			}
 		},
-		tipSweep : true
+		tipSweep : true 
 	});
 
+	if("${config}" == "true"){
+		var data = $("#${formId}").serialize();
+		${validId}.config({
+			 ajaxpost:{
+				 data:{remarks:'aadddddfff'}
+			 }
+		});
+	}
+	
 	$("#${subBtnId}").click(function() {
-		$("#${formId}").submit();
+		${validId}.submitForm(false);
 		return false;
-	});
+	}); 
 	
 	$("#${formId}-cancel").click(function(){
 		layer.closeAll();

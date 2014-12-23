@@ -10,7 +10,7 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
-			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
+			<!-- <form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
 					<#dict width="60%" showType="${true}" isDefault="yes" />
@@ -26,20 +26,21 @@
 			<div id="list-page"></div>
 			<script type="text/javascript">
 				$("#search-form").getPageList({'submitBtnId':'search-btn'})
-			</script>
+			</script> -->
 		</div>
 
 		<div id="profile" class="tab-pane">
-			<form action="${rootPath!}/role/save" method="post" id="dict-save-form">
+			<form action="${rootPath!}/role/save" method="post" id="role-save-form">
 				<div class="center padding-10">
 					<label>归属机构：</label>
 					<#treeselect url="office/tree" 
 							curId="${office.id!}" modelId="officeId" class="width-50"
+							isCheck="请选择归属机构"
 							style="style='display: inline-block;vertical-align: middle;'"/>
 				</div>
 				<div class="center padding-10">
 					<label>角色名称：</label>
-					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入标签！"/>
+					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入角色名称！"/>
 				</div>
 				<div class="center padding-10">
 					<label>数据范围：</label>
@@ -62,7 +63,7 @@
 					<label>角色授权：</label>
 					<div class="clearfix" style="width: 50%;display: inline-block;vertical-align: top;">
 						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
-							class="width-50" treeSelectId="treeSelectRes">
+							class="width-50" treeSelectId="treeSelectRes" checkboxName="permissions">
 							<div id="treeSelectRes" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
 						</#treeselect>
 						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
@@ -72,10 +73,13 @@
 					</div>
 				</div>
 				<div class="margin-t15">
-					<button class="btn btn-info btn-block bigger-120" id="dict-save-btn">保 存</button>
+					<span class="btn btn-info btn-block bigger-120" id="role-save-btn">保 存</span>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<#save isHide="yes" subBtnId="dict-save-btn" formId="dict-save-form" />
+
+<#save isHide="yes" subBtnId="role-save-btn" formId="role-save-form">
+	
+</#save>

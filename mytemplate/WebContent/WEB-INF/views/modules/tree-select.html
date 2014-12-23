@@ -1,5 +1,5 @@
 <script>
-@var tree = treeSelectId!id+'tree';
+@var tree = treeSelectId!(id+'tree');
 @var setting = (treeSelectId!id)+"setting";
 var key, lastValue = "", nodeList = [];
 var ${tree}, ${setting} = {
@@ -21,7 +21,6 @@ var ${tree}, ${setting} = {
 		callback:{
 			beforeClick:function(id, node){
 				if("${checked!}" == "true"){
-					console.log(node.checked);
 					${tree}.checkNode(node, !node.checked, true, true);
 					return false;
 				}
@@ -52,6 +51,7 @@ $(document).ready(function(){
 				${tree}.selectNode(node, true);
 			}
 		}
+		
 	});
 	key = $("#key");
 	key.bind("focus", focusKey).bind("blur", blurKey)
@@ -142,9 +142,9 @@ function updateNodes(highlight) {
 	<ul id="select-tree${treeSelectId!}" class="ztree" style="padding:15px 20px;"></ul>
 @if(isLayer == "true"){
 	<div class="width-100" style="padding-top: 15px; bottom: 0px; position:absolute;">
-		<button class="btn btn-primary btn-sm bigger-110 btn-block" id="${id}-save">
+		<span class="btn btn-primary btn-sm bigger-110 btn-block" id="${id}-save">
 			确 定
-		</button>
+		</span>
 	</div>
 @}
 </div>

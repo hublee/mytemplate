@@ -5,7 +5,7 @@
 @var modelName = modelName!''; //要提交的name (实体属性)
 @var modelIdValue = modelIdValue!'0'; //id初始值value 
 @var modelNameValue = modelNameValue!''; //name初始值value
-@var id = id!'treeselectpid'; //隐藏id名,页面多个时候需要指定
+@var id = id!'treeselectpid'; //隐藏要添加的input的id名称,页面多个时候需要指定
 @var nameId = nameId!'treeselectname';  //名称
 @var url = url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
 @var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
@@ -27,12 +27,12 @@
 	@}
 	>
 	<span class="input-group-btn pull-left width-20">
-		<button class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
+		<span class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
 		data-mode="page" data-url="${rootPath}/tag/treeselect"
 		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}',isLayer:'${isLayer}'}" 
 		data-title="请选择" data-width="${width!}" data-height="${height}">
 			<i class="ace-icon fa fa-search bigger-110"></i>查找
-		</button>
+		</span>
 	</span>
 	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
 </div>
