@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.sys.mapper.SysDictMapper">
+
+	<sql id="sysDictColumns">
+		id,create_by,create_date,del_flag,description,label,remarks,sort,type,update_by,update_date,value
+	</sql>
+	
+	<select id="findPageInfo" resultType="com.template.web.sys.model.SysDict">
+		select <include refid="sysDictColumns"/> from sys_dict 
+		<where>
+			<if test=" type!=null and type!='' ">
+				type
+			</if>
+		</where>
+	</select>
+
+</mapper>

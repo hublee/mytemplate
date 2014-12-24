@@ -1,0 +1,48 @@
+.h-30{height: 30px;}
+.margin-t15{margin-top: 15px}
+.padding-10{padding: 10px;}
+.profile-user-info{margin: 0px;width: 100%;}
+.chosen-container > .chosen-single, [class*="chosen-container"] > .chosen-single{height: 34px;line-height: 32px;}
+ul.ztree li span.button.cusicon{
+	height: auto;
+	font-family:FontAwesome;
+}
+.form-group > label[class*="col-"]{padding-top: 5px;margin-bottom: 5px;}
+.navbar-default .navbar-header .navbar-nav>.active>a{background-color: rgba(0,0,0,.1)!important;color: white;}
+.radio label{max-width: none;}
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float: none;text-align: center;}
+.ui-dialog .ui-dialog-buttonpane{padding: 0px;margin: 0px;}
+.ui-dialog .ui-dialog-buttonpane button{margin: 5px 15px;}
+.layer{padding: 10px 20px;}
+.layer .FormData {
+border-bottom: 1px dotted #E8E8E8;
+}
+.layer .FormData > td {
+padding-top: 6px;
+padding-bottom: 6px;
+padding-right: 8px;
+}
+.layer .CaptionTD {
+font-size: 14px;
+text-align: right;
+color: #666;
+}
+.layer .CaptionTD {
+vertical-align: middle;
+border: 0 none;
+padding: 2px;
+white-space: nowrap;
+}
+.layer .FormData > td {
+padding-top: 6px;
+padding-bottom: 6px;
+}
+.layer .DataTD {
+padding: 2px;
+border: 0 none;
+vertical-align: top;
+}
+.layer .DataTD input{width:100%;}

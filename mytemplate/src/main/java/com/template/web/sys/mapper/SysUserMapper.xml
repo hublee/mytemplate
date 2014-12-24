@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.template.web.sys.mapper.SysUserMapper">
+
+	<sql id="sysUserColumns">
+		id,company_id,create_by,create_date,del_flag,email,login_date,login_ip,mobile,
+		name,no,office_id,password,phone,remarks,update_by,update_date,username,user_type
+	</sql>
+
+	<!-- 验证账号密码 -->
+	<select id="checkUser" resultType="com.template.web.sys.model.SysUser">
+		select <include refid="sysUserColumns" /> from sys_user 
+		where username = #{username} and password = #{password}
+	</select> 
+
+</mapper>
