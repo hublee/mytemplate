@@ -46,6 +46,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	* @param <T extend T>
 	 */
     public int insert(T record){
+    	record.set("createDate", new Date());
     	return mapper.insert(record);
     }
 
@@ -56,6 +57,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	* @param <T extend T>
 	 */
     public int insertSelective(T record){
+    	record.set("createDate", new Date());
     	return mapper.insertSelective(record);
     }
 
@@ -83,6 +85,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	* @param <T extend T>
 	 */
     public int updateByPrimaryKey(T record){
+    	record.set("updateDate", new Date());
     	return mapper.updateByPrimaryKey(record);
     }
 
@@ -92,6 +95,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	* @param <T extend T>
 	 */
     public int updateByPrimaryKeySelective(T record){
+    	record.set("updateDate", new Date());
     	return mapper.updateByPrimaryKeySelective(record);
     }
     

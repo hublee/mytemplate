@@ -1,26 +1,32 @@
 package com.template.common.utils;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser.Feature;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonParser.Feature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
- *
+ * 
  * 封装不同的输出风格, 使用不同的builder函数创建实例.
- *
+ * 
  */
 public class JsonUtils extends ObjectMapper {
 
@@ -43,15 +49,15 @@ public class JsonUtils extends ObjectMapper {
 		this.enableSimple();
 		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		// 空值处理为空串
+        // 空值处理为空串
 		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
 			@Override
 			public void serialize(Object value, JsonGenerator jgen,
-								  SerializerProvider provider) throws IOException,
+					SerializerProvider provider) throws IOException,
 					JsonProcessingException {
 				jgen.writeString("");
 			}
-		});
+        });
 	}
 
 	/**
@@ -73,7 +79,7 @@ public class JsonUtils extends ObjectMapper {
 		}
 		return mapper;
 	}
-
+	
 	/**
 	 * Object可以是POJO，也可以是Collection或数组。
 	 * 如果对象为Null, 返回"null".
@@ -91,10 +97,10 @@ public class JsonUtils extends ObjectMapper {
 
 	/**
 	 * 反序列化POJO或简单Collection如List<String>.
-	 *
+	 * 
 	 * 如果JSON字符串为Null或"null"字符串, 返回Null.
 	 * 如果JSON字符串为"[]", 返回空集合.
-	 *
+	 * 
 	 * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String,JavaType)
 	 * @see #fromJson(String, JavaType)
 	 */
@@ -188,14 +194,14 @@ public class JsonUtils extends ObjectMapper {
 		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		return this;
 	}
-
+	
 	/**
 	 * 取出Mapper做进一步的设置或使用其他序列化API.
 	 */
 	public ObjectMapper getMapper() {
 		return this;
 	}
-
+	
 	/**
 	 * 转换为JSON字符串
 	 * @param object
@@ -204,7 +210,7 @@ public class JsonUtils extends ObjectMapper {
 	public static String toJsonString(Object object){
 		return JsonUtils.getInstance().toJson(object);
 	}
-
+	
 	/**
 	 * 测试
 	 */
@@ -224,5 +230,5 @@ public class JsonUtils extends ObjectMapper {
 		String json = JsonUtils.getInstance().toJson(list);
 		System.out.println(json);
 	}
-
+	
 }

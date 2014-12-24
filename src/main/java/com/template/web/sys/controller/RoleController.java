@@ -61,7 +61,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysRole sysRole){
-		return null;//sysRoleService.saveSysRole(sysRole);
+		return sysRoleService.saveSysRole(sysRole);
 	}
 	
 	

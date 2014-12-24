@@ -282,13 +282,13 @@ public abstract class MapperTemplate {
     protected SqlNode getIfNotNull(EntityHelper.EntityColumn column, SqlNode columnNode) {
         return new IfSqlNode(columnNode, column.getProperty() + " != null ");
     }
-
+    
     protected SqlNode getIfNotNullAndEmpty(EntityHelper.EntityColumn column, SqlNode columnNode){
-        StringBuilder builder = new StringBuilder();
-        builder.append(column.getProperty() + " != null ");
-        if(column.getJavaType() == String.class){
-            builder.append(" and "+column.getProperty()+" !='' ");
-        }
+    	StringBuilder builder = new StringBuilder();
+    	builder.append(column.getProperty() + " != null ");
+    	if(column.getJavaType() == String.class){
+    		builder.append(" and "+column.getProperty()+" !='' ");
+    	}
         return new IfSqlNode(columnNode, builder.toString());
     }
 
