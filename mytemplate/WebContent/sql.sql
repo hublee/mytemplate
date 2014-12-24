@@ -37,7 +37,7 @@ CREATE TABLE `sys_area` (
   KEY `sys_area_parent_id` (`parent_id`),
   KEY `sys_area_parent_ids` (`parent_ids`(255)),
   KEY `sys_area_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='区域表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='区域表';
 
 /*Data for the table `sys_area` */
 
@@ -99,7 +99,7 @@ CREATE TABLE `sys_office` (
   KEY `sys_office_parent_id` (`parent_id`),
   KEY `sys_office_parent_ids` (`parent_ids`(255)),
   KEY `sys_office_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='机构表';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='机构表';
 
 /*Data for the table `sys_office` */
 
@@ -128,11 +128,11 @@ CREATE TABLE `sys_resource` (
   `create_by` varchar(64) DEFAULT NULL,
   `update_by` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_resource` */
 
-insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL),(193,'用户管理',0,'0',262144,'',1,189,'0','','','0','0,189,',NULL,NULL,NULL,NULL),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',1,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL),(195,'日志查询',0,'0',1048576,'',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL);
+insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL),(193,'用户管理',0,'0',262144,'',1,189,'0','','','0','0,189,',NULL,NULL,NULL,NULL),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',2,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL),(195,'日志查询',0,'0',1048576,'fa fa-copy',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(200,'测试',0,'0',16777216,'',1,0,'0','test','','0','0,',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `sys_role` */
 
@@ -151,11 +151,11 @@ CREATE TABLE `sys_role` (
   `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`),
   KEY `sys_role_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 /*Data for the table `sys_role` */
 
-insert  into `sys_role`(`id`,`office_id`,`name`,`data_scope`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,1,'系统管理员','1','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(2,1,'公司管理员','2','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(3,1,'本公司管理员','3','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,1,'部门管理员','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,1,'本部门管理员','5','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,1,'普通用户','8','1','2013-05-27 08:00:00','2','2014-10-12 21:20:45',NULL,'0'),(7,7,'山东省管理员','9','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0');
+insert  into `sys_role`(`id`,`office_id`,`name`,`data_scope`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,1,'系统管理员','1','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(2,1,'公司管理员','2','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(3,1,'本公司管理员','3','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,1,'部门管理员','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,1,'本部门管理员','5','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,1,'普通用户','8','1','2013-05-27 08:00:00','2','2014-10-12 21:20:45',NULL,'0'),(7,7,'山东省管理员','9','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(8,1,'测试角色1','9',NULL,NULL,NULL,NULL,NULL,'0');
 
 /*Table structure for table `sys_role_office` */
 
