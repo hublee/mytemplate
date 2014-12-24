@@ -54,11 +54,10 @@ public class SysRole extends Entity {
     private Date updateDate; //update_date <更新时间>
     
     @Transient
-    private String resourceIds;
+    private String[] resourceIds;
 
 
     public String[] getResourceIds(){
-    	String[] resIds = this.getString("resourceIds").split(",");
     	return (String[])this.get("resourceIds");
     }
     
