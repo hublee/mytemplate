@@ -9,6 +9,7 @@ import com.template.common.base.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -51,8 +52,19 @@ public class SysRole extends Entity {
 
 	
     private Date updateDate; //update_date <更新时间>
+    
+    @Transient
+    private String resourceIds;
 
 
+    public String[] getResourceIds(){
+    	String[] resIds = this.getString("resourceIds").split(",");
+    	return (String[])this.get("resourceIds");
+    }
+    
+    public void setResourceIds(String[] resourceIds){
+    	this.set("resourceIds", resourceIds);
+    }
 
 	public Long getId() {
 		return this.getLong("id");

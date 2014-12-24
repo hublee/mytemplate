@@ -15,7 +15,7 @@
 @var style = style!'';
 @var checked = checked!'false'; //是都显示复选框
 @var isLayer = isLayer!'true'; //是否为弹窗
-@var treeSelectId = treeSelectId!'tree'; //树id
+@var treeSelectId = treeSelectId!'tree'; //树id,即是树对象名称
 @var rootNodeName = rootNodeName!""; //虚拟顶级节点名称
 
 @if(isLayer == "true"){

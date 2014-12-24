@@ -2,7 +2,7 @@
 @var reloadUrl = reloadUrl!'false'; //是否url刷新
 @var isHide = isHide!'no'; //是否隐藏按钮 默认no
 @var subBtnId = subBtnId!(formId+'-save');
-@var validId = strutil.replace(formId,"-","");
+@var validId = validId!(strutil.replace(formId,"-",""));
 @var config = config!'false';
 @var data = data!'';
 
@@ -54,7 +54,7 @@ var ${validId} = $("#${formId}").Validform({
 		tipSweep : true 
 	});
 
-	if("${config}" == "true"){
+	/* if("${config}" == "true"){
 		var data = $("#${formId}").serialize();
 		${validId}.config({
 			 ajaxpost:{
@@ -62,8 +62,11 @@ var ${validId} = $("#${formId}").Validform({
 			 }
 		});
 	}
-	
+	 */
 	$("#${subBtnId}").click(function() {
+		if("${config}" == "true"){
+			${tagBody!};
+		}
 		${validId}.submitForm(false);
 		return false;
 	}); 

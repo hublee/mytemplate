@@ -45,7 +45,7 @@
 				<div class="center padding-10">
 					<label>数据范围：</label>
 					<div class="width-50" style="display: inline-block;text-align: left;">
-					<#dict type="sys_data_scope" width="50%" id="chosenSelectData" name="dataScope" isScript="true">
+					<#dict type="sys_data_scope" width="40%" id="chosenSelectData" name="dataScope" isScript="true">
 						$("#chosenSelectData").change(function(){
 							if($(this).val() == 9){
 								$("#treeSelectOffice").show();
@@ -56,7 +56,7 @@
 						$("#chosenSelectData option[value='9']").attr("selected",true);
 						$("#chosenSelectData").trigger("chosen:updated");
 					</#dict>
-					<span class="red width-40">*按明细设置，可跨机构</span>
+					<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
 					</div>
 				</div>
 				<div class="center padding-10">
@@ -80,6 +80,13 @@
 	</div>
 </div>
 
-<#save isHide="yes" subBtnId="role-save-btn" formId="role-save-form">
-	
+<#save isHide="yes" subBtnId="role-save-btn" formId="role-save-form" config="true" validId="roleForm">
+	var permission = getCheckbox(treeSelectRes);
+	var data = $("#role-save-form").serialize()+"&resourceIds="+permission.toString();
+	roleForm.config({
+		 ajaxpost:{
+			 data:data
+		 }
+	});
+	console.log(data)
 </#save>
