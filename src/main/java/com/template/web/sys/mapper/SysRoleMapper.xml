@@ -7,10 +7,10 @@
 	</sql>
 	
 	<!-- 添加角色的权限 -->
-	<insert id="insertRoleResource" keyProperty="id" useGeneratedKeys="true">
-		insert into sys_role_resource (id,role_id,resource_id) values
-		<foreach collection="resourceIds" index="index" item="resourceId" open="(" separator="," close=")">
-			( #{id,jdbcType=NUMERIC},#{roleId,jdbcType=NUMERIC},#{resourceId,jdbcType=NUMERIC} )
+	<insert id="insertRoleResource">
+		insert into sys_role_resource (role_id,resource_id) values
+		<foreach collection="resourceIds" index="index" item="resourceId" separator=",">
+			(#{id},#{resourceId,jdbcType=NUMERIC})
 		</foreach>
 	</insert>
 	
