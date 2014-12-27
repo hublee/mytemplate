@@ -2,18 +2,16 @@
 
 package com.template.web.sys.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
-import com.template.common.mybatis.page.PageHelper;
-import com.template.common.mybatis.page.PageInfo;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.model.SysRole;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -46,8 +44,8 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	public PageInfo<SysRole> findPageInfo(Map<String,Object> params) {
 		boolean isCount = params.containsKey("isCount")?
 				Boolean.parseBoolean(params.get("isCount").toString()):true;
-        PageHelper.startPage(Integer.parseInt(params.get("pageNum").toString()), 
-        		Integer.parseInt(params.get("pageSize").toString()),isCount);
+        PageHelper.startPage(Integer.parseInt(params.get("pageNum").toString()),
+				Integer.parseInt(params.get("pageSize").toString()), isCount);
         List<SysRole> list=null; //自己实现
         return new PageInfo<SysRole>(list);
 	}

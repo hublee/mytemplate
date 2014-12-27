@@ -2,21 +2,19 @@
 
 package com.template.web.sys.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
-import com.template.common.mybatis.page.PageHelper;
-import com.template.common.mybatis.page.PageInfo;
 import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.model.SysOffice;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 

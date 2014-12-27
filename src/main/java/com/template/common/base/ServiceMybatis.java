@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.template.common.mybatis.mapper.Mapper;
-import com.template.common.mybatis.page.PageHelper;
-import com.template.common.mybatis.page.PageInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 public abstract class ServiceMybatis<T extends Entity> implements BaseService<T> {
 	

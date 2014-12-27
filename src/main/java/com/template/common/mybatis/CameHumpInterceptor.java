@@ -1,4 +1,4 @@
-package com.template.common.mybatis.mapper;
+package com.template.common.mybatis;
 
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;

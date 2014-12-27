@@ -5,7 +5,7 @@ package com.template.web.sys.controller;
 import java.util.Map;
 
 import com.template.common.base.BaseController;
-import com.template.common.mybatis.page.PageInfo;
+import com.github.pagehelper.PageInfo;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.service.SysRoleService;
 

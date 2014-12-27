@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.template.common.base.BaseController;
-import com.template.common.mybatis.page.PageInfo;
+import com.github.pagehelper.PageInfo;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.model.SysOffice;

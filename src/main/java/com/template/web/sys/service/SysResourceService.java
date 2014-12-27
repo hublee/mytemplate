@@ -2,22 +2,20 @@
 
 package com.template.web.sys.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.base.TreeNode;
-import com.template.common.mybatis.page.PageHelper;
-import com.template.common.mybatis.page.PageInfo;
 import com.template.common.utils.CodeUtils;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 

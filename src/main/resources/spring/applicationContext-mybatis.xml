@@ -22,9 +22,9 @@
 		<property name="plugins">
 			<array>
 				<!-- 转驼峰拦截器 -->
-				<bean class="com.template.common.mybatis.mapper.CameHumpInterceptor"/>
+				<bean class="com.template.common.mybatis.CameHumpInterceptor"/>
 				<!-- 分页拦截器 -->
-				<bean class="com.template.common.mybatis.page.PageHelper">
+				<bean class="com.github.pagehelper.PageHelper">
 					<property name="properties">
 						<value>
 							dialect=mysql

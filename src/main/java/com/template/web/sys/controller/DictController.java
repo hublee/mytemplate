@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.template.common.mybatis.page.PageInfo;
+import com.github.pagehelper.PageInfo;
 import com.template.web.sys.model.SysDict;
 import com.template.web.sys.service.SysDictService;
 
