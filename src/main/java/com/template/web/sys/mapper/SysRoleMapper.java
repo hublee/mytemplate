@@ -2,7 +2,7 @@
 
 package com.template.web.sys.mapper;
 
-import com.template.common.mybatis.mapper.Mapper;
+import com.github.abel533.mapper.Mapper;
 import com.template.web.sys.model.SysRole;
 
 /**

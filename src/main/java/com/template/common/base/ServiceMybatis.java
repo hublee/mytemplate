@@ -1,12 +1,12 @@
 package com.template.common.base;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import com.template.common.mybatis.mapper.Mapper;
+import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
+import java.util.List;
 
 public abstract class ServiceMybatis<T extends Entity> implements BaseService<T> {
 	

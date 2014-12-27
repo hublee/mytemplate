@@ -5,7 +5,7 @@ package com.template.web.sys.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.template.common.mybatis.mapper.Mapper;
+import com.github.abel533.mapper.Mapper;
 import com.template.web.sys.model.SysUser;
 
 /**

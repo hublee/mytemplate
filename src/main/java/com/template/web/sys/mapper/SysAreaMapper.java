@@ -2,11 +2,11 @@
 
 package com.template.web.sys.mapper;
 
+import com.github.abel533.mapper.Mapper;
+import com.template.web.sys.model.SysArea;
+
 import java.util.List;
 import java.util.Map;
-
-import com.template.common.mybatis.mapper.Mapper;
-import com.template.web.sys.model.SysArea;
 
 /**
  * 

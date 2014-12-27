@@ -47,15 +47,16 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
+
 	<!-- 通用crud -->
-	<bean class="com.template.common.mybatis.mapper.MapperHelper" depends-on="sqlSession"
-		init-method="initMapper" scope="singleton" lazy-init="false">
+	<bean class="com.github.abel533.mapperhelper.MapperHelper"
+				depends-on="sqlSession" init-method="initMapper" scope="singleton" lazy-init="false">
 		<property name="mappers">
 			<array>
-				<value>com.template.common.mybatis.mapper.Mapper</value>
+				<value>com.github.abel533.mapper.Mapper</value>
 			</array>
 		</property>
-		<property name="sqlSessions" ref="sqlSession" />
+		<property name="sqlSessions" ref="sqlSession"/>
 	</bean>
 
 
