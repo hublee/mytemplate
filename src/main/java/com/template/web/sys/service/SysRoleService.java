@@ -33,6 +33,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		int count = 0;
 		if(null == sysRole.getId()){
 			count = this.insertSelective(sysRole);
+			sysRoleMapper.insertRoleResource(sysRole);
 		}else{
 			count = this.updateByPrimaryKeySelective(sysRole);
 		}

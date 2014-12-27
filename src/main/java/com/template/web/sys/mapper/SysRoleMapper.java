@@ -12,6 +12,6 @@ import com.template.web.sys.model.SysRole;
 
 public interface SysRoleMapper extends Mapper<SysRole> {
 
-   
+   public int insertRoleResource(SysRole sysRole);
 
 }

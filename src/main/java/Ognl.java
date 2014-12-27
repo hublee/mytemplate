@@ -8,7 +8,8 @@ public class Ognl {
     public Ognl() {
     }
 
-    public static boolean isEmpty(Object o) throws IllegalArgumentException {
+    @SuppressWarnings("rawtypes")
+	public static boolean isEmpty(Object o) throws IllegalArgumentException {
         if(o == null) {
             return true;
         } else {
