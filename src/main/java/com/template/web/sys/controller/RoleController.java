@@ -51,7 +51,7 @@ public class RoleController extends BaseController {
 	public String list(@RequestParam Map<String, Object> params,Model model){
 		PageInfo<SysRole> page = sysRoleService.findPageInfo(params);
 		model.addAttribute("page", page);
-		return "table页面html";
+		return "sys/role/role-list";
 	}
 	
 	/**
