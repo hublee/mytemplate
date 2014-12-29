@@ -9,6 +9,7 @@
 @var height = height!'520';
 @var width = width!'600';
 @var reloadUrl = reloadUrl!false;
+@var rootNodeName = rootNodeName!"全部";
 
 <script type="text/javascript">
 	var setting = {
@@ -145,7 +146,7 @@
 		//树结构初始化
 		nodeList=[]; //清除缓存
 		var treeData = ${treeData};
-		var root = {id:0,name:'全部',open:true};
+		var root = {id:0,name:"${rootNodeName}",open:true};
 		treeData[treeData.length] = root;
 		$.fn.zTree.init($("#treeMenu"), setting,treeData);
 		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
