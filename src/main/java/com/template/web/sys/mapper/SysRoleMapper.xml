@@ -6,11 +6,19 @@
 		id,create_by,create_date,data_scope,del_flag,name,office_id,remarks,update_by,update_date
 	</sql>
 	
-	<!-- 添加角色的权限 -->
+	<!-- 添加角色拥有的权限 -->
 	<insert id="insertRoleResource">
 		insert into sys_role_resource (role_id,resource_id) values
 		<foreach collection="resourceIds" index="index" item="resourceId" separator=",">
 			(#{id},#{resourceId,jdbcType=NUMERIC})
+		</foreach>
+	</insert>
+	
+	<!-- 添加角色所在机构 -->
+	<insert id="insertRoleOffice">
+		insert into sys_role_office (role_Id,office_id) values 
+		<foreach collection="officeIds" index="index" item="officeId" separator=",">
+			(#{id},#{officeId,jdbcType=NUMERIC})
 		</foreach>
 	</insert>
 	

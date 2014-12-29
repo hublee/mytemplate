@@ -63,7 +63,7 @@
 					<label>角色授权：</label>
 					<div class="clearfix" style="width: 50%;display: inline-block;vertical-align: top;">
 						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
-							class="width-50" treeSelectId="treeSelectRes" checkboxName="permissions">
+							class="width-50" treeSelectId="treeSelectRes">
 							<div id="treeSelectRes" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
 						</#treeselect>
 						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
@@ -82,11 +82,12 @@
 
 <#save isHide="yes" subBtnId="role-save-btn" formId="role-save-form" config="true" validId="roleForm">
 	var permission = getCheckbox(treeSelectRes);
-	var data = $("#role-save-form").serialize()+"&resourceIds="+permission.toString();
+	var office = getCheckbox(treeSelectOffice);
+	var data = $("#role-save-form").serialize()+"&resourceIds="+permission.toString()+
+				"&officeIds="+office.toString();
 	roleForm.config({
 		 ajaxpost:{
 			 data:data
 		 }
 	});
-	console.log(data)
 </#save>

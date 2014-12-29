@@ -32,6 +32,9 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		if(null == sysRole.getId()){
 			count = this.insertSelective(sysRole);
 			sysRoleMapper.insertRoleResource(sysRole);
+			if(("9").equals(sysRole.getDataScope())){
+				sysRoleMapper.insertRoleOffice(sysRole);
+			}
 		}else{
 			count = this.updateByPrimaryKeySelective(sysRole);
 		}

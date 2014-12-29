@@ -55,7 +55,16 @@ public class SysRole extends Entity {
     
     @Transient
     private Long[] resourceIds;
+    @Transient
+    private Long[] officeIds;
 
+    public Long[] getOfficeIds(){
+    	return (Long[])this.get("officeIds");
+    }
+    
+    public void setOfficeIds(Long[] officeIds){
+    	this.set("officeIds", officeIds);
+    }
 
     public Long[] getResourceIds(){
     	return (Long[])this.get("resourceIds");
