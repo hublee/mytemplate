@@ -57,6 +57,7 @@
 			</array>
 		</property>
 		<property name="sqlSessions" ref="sqlSession"/>
+		<property name="notEmpty" value="true"/>
 	</bean>
 
 
