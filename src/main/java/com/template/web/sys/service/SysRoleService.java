@@ -50,7 +50,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 				Boolean.parseBoolean(params.get("isCount").toString()):true;
         PageHelper.startPage(Integer.parseInt(params.get("pageNum").toString()),
 				Integer.parseInt(params.get("pageSize").toString()), isCount);
-        List<SysRole> list=null; //自己实现
+        List<SysRole> list = sysRoleMapper.findPageInfo(params); 
         return new PageInfo<SysRole>(list);
 	}
 	

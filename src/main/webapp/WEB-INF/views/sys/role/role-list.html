@@ -11,9 +11,11 @@
 	<tbody>
 		@for(item in page.list){
 			<tr>
-				<td class="center">${item.label!}</td>
+				<td class="center">${item.name!}</td>
 				<td class="center">${item.value!}</td>
-				<td class="center">${item.type!}</td>
+				<td class="center">
+				<#dict dictMode="showName" value="${item.dataScope!}" type="sys_data_scope"/>
+				</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 

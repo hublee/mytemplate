@@ -22,4 +22,16 @@
 		</foreach>
 	</insert>
 	
+	<select id="findPageInfo" resultType="com.template.web.sys.model.SysRole">
+		select <include refid="sysRoleColumns"/> from sys_role
+		<where>
+			<if test="dataScope!=null and dataScope!=''">
+				data_scope = #{dataScope}
+			</if>
+			<if test="name!=null and name!=''">
+				and name like concat('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
 </mapper>

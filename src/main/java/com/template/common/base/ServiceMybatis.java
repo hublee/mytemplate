@@ -107,10 +107,8 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
     public int save(T record){
 		int count = 0;
 		if(record.get("id") == null){
-			record.set("createDate", new Date());
 			count = this.insertSelective(record);
 		}else{
-			record.set("updateDate", new Date());
 			count = this.updateByPrimaryKeySelective(record);
 		}
 		return count;

@@ -13,11 +13,11 @@
 			<form action="${rootPath}/role/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-30">
 					<label>数据范围：</label>
-					<#dict width="60%" type="sys_data_scope" isDefault="yes" />
+					<#dict width="60%" type="sys_data_scope" isDefault="yes" name="dataScope"/>
 				</div>
 				<div class="pull-left width-30">
 					<label>角色名称：</label>
-					<input type="text" class="width-70" name="description"/>
+					<input type="text" class="width-70" name="name"/>
 				</div>
 				<input type="hidden" value="0" name="delFlag" />
 				<div class="pull-left"><button class="btn btn-info btn-sm " id="search-btn">查 询</button></div>

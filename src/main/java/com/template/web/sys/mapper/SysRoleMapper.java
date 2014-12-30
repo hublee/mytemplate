@@ -2,6 +2,9 @@
 
 package com.template.web.sys.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import com.github.abel533.mapper.Mapper;
 import com.template.web.sys.model.SysRole;
 
@@ -15,5 +18,7 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    public int insertRoleResource(SysRole sysRole);
    
    public int insertRoleOffice(SysRole sysRole);
+   
+   public List<SysRole> findPageInfo(Map<String, Object> params);
 
 }

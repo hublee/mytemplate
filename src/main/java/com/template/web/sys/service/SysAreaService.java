@@ -7,12 +7,15 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysAreaMapper;
 import com.template.web.sys.model.SysArea;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import java.util.Map;
  */
 
 @Service("sysAreaService")
+@CacheConfig(cacheNames="sysCache")
 public class SysAreaService extends ServiceMybatis<SysArea>{
 
 	@Resource
@@ -30,7 +34,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	/**
 	 *新增or更新SysArea
 	 */
-	@CacheEvict(value="sysCache",key="'area_all'")
+	@CacheEvict(key="'area_all'")
 	public int saveSysArea(SysArea sysArea){
 		int count = 0;
 		//新的parentIds
@@ -54,7 +58,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	* @param id
 	* @return
 	 */
-	@CacheEvict(value="sysCache",key="'area_all'")	
+	@CacheEvict(key="'area_all'")	
 	public int deleteAreaByRootId(Long id){
 		return sysAreaMapper.deleteIdsByRootId(id);
 	}
@@ -78,7 +82,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 * 查询全部的区域
 	* @return
 	 */
-	@Cacheable(value="sysCache",key="'area_all'")
+	@Cacheable(key="'area_all'")
 	public List<SysArea> findAllArea(){
 		return this.select(null);
 	}

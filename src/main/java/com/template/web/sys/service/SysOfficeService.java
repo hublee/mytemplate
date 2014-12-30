@@ -7,12 +7,15 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.model.SysOffice;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import java.util.Map;
  */
 
 @Service("sysOfficeService")
+@CacheConfig(cacheNames="sysCache")
 public class SysOfficeService extends ServiceMybatis<SysOffice> {
 
 	@Resource
@@ -30,7 +34,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	/**
 	 *新增或更新SysOffice
 	 */
-	@CacheEvict(value="sysCache",key="'office_all'")
+	@CacheEvict(key="'office_all'")
 	public int saveSysOffice(SysOffice sysOffice){
 		int count = 0;
 		//新的parentIds
@@ -49,7 +53,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		return count;
 	}
 	
-	@CacheEvict(value="sysCache",key="'office_all'")
+	@CacheEvict(key="'office_all'")
 	public int deleteOfficeByRootId(Long id){
 		return sysOfficeMapper.deleteIdsByRootId(id);
 	}
@@ -68,7 +72,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
         return new PageInfo<SysOffice>(list);
 	}
 	
-	@Cacheable(value="sysCache",key="'office_all'")
+	@Cacheable(key="'office_all'")
 	public List<SysOffice> findAllOffice(){
 		return this.select(null);
 	}
