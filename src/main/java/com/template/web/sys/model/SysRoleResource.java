@@ -19,7 +19,7 @@ public class SysRoleResource extends Entity {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="JDBC")
     private Long id; //id <>
 
 	

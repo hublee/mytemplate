@@ -22,7 +22,7 @@ public class SysDict extends Entity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="JDBC")
     private Long id; //id <编号>
 
     private String createBy; //create_by <创建者>

@@ -25,7 +25,7 @@ public class SysResource extends Entity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="JDBC")
     private Long id; //id <>
 
     private Long code; //code <权限码 1<<n>

@@ -23,7 +23,7 @@ public class SysArea extends Entity {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="JDBC")
     protected Long id; //id <主键id>
 
     private String code; //code <区域编码>
