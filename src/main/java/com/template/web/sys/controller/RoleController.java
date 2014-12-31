@@ -66,13 +66,13 @@ public class RoleController extends BaseController {
 	
 	
 	/**
-	 * 单个删除
+	 * 删除
 	* @param 
 	* @return
 	 */
 	@RequestMapping(value="del",method=RequestMethod.POST)
 	public @ResponseBody Integer del(Long id){
-		return sysRoleService.deleteByPrimaryKey(id);
+		return sysRoleService.deleteSysRole(id);
 	}
 	
 	

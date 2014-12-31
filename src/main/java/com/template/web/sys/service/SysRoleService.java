@@ -44,6 +44,19 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	}
 	
 	/**
+	 * 删除角色
+	* @param id
+	 */
+	public int deleteSysRole(Long id){
+		SysRole sysRole = new SysRole();
+		sysRole.put("roleId", id);
+		sysRoleMapper.deleteRoleOffice(sysRole);
+		sysRoleMapper.deleteRoleResource(sysRole);
+		int count = this.deleteByPrimaryKey(id);
+		return count;
+	}
+	
+	/**
 	 * 根据条件分页查询SysRole列表
 	 * @param {"pageNum":"页码","pageSize":"条数","isCount":"是否生成count sql",......}
 	 */

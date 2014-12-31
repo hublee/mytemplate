@@ -19,6 +19,10 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    
    public int insertRoleOffice(SysRole sysRole);
    
+   public int deleteRoleResource(SysRole sysRole);
+   
+   public int deleteRoleOffice(SysRole sysRole);
+   
    public List<SysRole> findPageInfo(Map<String, Object> params);
 
 }

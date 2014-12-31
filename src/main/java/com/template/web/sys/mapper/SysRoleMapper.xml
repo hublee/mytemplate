@@ -22,6 +22,26 @@
 		</foreach>
 	</insert>
 	
+	<!-- 删除角色拥有的权限 -->
+	<delete id="deleteRoleResource">
+		delete from sys_role_resource 
+		<where>
+			<if test="roleId!=null and roleId!=''">
+				role_id = #{roleId}
+			</if>
+		</where>
+	</delete>
+	
+	<!-- 删除角色所在的机构 -->
+	<delete id="deleteRoleOffice">
+		delete from sys_role_office 
+		<where>
+			<if test="roleId!=null and roleId!=''">
+				role_id = #{roleId}
+			</if>
+		</where>
+	</delete>
+	
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysRole">
 		select <include refid="sysRoleColumns"/> from sys_role
 		<where>
