@@ -21,6 +21,7 @@
              <map>
                <entry key="getDictListByType" value-ref="dictFunction"/>
                <entry key="getAllArea" value-ref="areaFunction"/>
+               <entry key="getAllOffice" value-ref="officeFunction"/>
             </map>
         </property>
 	</bean>
