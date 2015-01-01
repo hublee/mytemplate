@@ -54,15 +54,6 @@ var ${validId} = $("#${formId}").Validform({
 		tipSweep : true 
 	});
 
-	/* if("${config}" == "true"){
-		var data = $("#${formId}").serialize();
-		${validId}.config({
-			 ajaxpost:{
-				 data:{remarks:'aadddddfff'}
-			 }
-		});
-	}
-	 */
 	$("#${subBtnId}").click(function() {
 		if("${config}" == "true"){
 			${tagBody!};

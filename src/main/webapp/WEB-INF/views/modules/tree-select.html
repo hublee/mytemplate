@@ -40,6 +40,7 @@ $(document).ready(function(){
 		for(var i=0; i<nodes.length; i++) {
 			${tree}.expandNode(nodes[i], true, false, false);
 		}
+		
 		// 默认选择节点
 		var ids = "${selectIds!}".split(",");
 		for(var i=0; i<ids.length; i++) {

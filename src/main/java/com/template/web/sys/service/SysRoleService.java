@@ -69,5 +69,12 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
         return new PageInfo<SysRole>(list);
 	}
 	
+	public Long[] findResourceIdsByRoleId(Long roleId){
+		return sysRoleMapper.findResourceIdsByRoleId(roleId);
+	}
+	
+	public Long[] findOfficeIdsByRoleId(Long roleId){
+		return sysRoleMapper.findOfficeIdsByRoleId(roleId);
+	}
 
 }

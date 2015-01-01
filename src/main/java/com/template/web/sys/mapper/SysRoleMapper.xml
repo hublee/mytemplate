@@ -42,6 +42,17 @@
 		</where>
 	</delete>
 	
+	<!-- 根据角色id查询拥有的资源id集合 -->
+	<select id="findResourceIdsByRoleId" resultType="java.lang.Long">
+		select resource_id from sys_role_resource where role_id = #{roleId}
+	</select>
+	
+	<!-- 根据角色id查询拥有的机构id集合 -->
+	<select id="findOfficeIdsByRoleId" resultType="java.lang.Long">
+		select office_id from sys_role_office where role_id = #{roleId}
+	</select>
+	
+	<!-- 分页查询角色 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysRole">
 		select <include refid="sysRoleColumns"/> from sys_role
 		<where>

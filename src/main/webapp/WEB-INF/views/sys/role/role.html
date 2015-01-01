@@ -20,7 +20,7 @@
 					<input type="text" class="width-70" name="name"/>
 				</div>
 				<input type="hidden" value="0" name="delFlag" />
-				<div class="pull-left"><button class="btn btn-info btn-sm " id="search-btn">查 询</button></div>
+				<div class="pull-left"><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
 			</form>
 			<hr/>
 			<div id="list-page"></div>
@@ -34,7 +34,7 @@
 				<div class="center padding-10">
 					<label>归属机构：</label>
 					<#treeselect url="office/tree" 
-							curId="${office.id!}" modelId="officeId" class="width-50"
+							modelId="officeId" class="width-50"
 							isCheck="请选择归属机构"
 							style="style='display: inline-block;vertical-align: middle;'"/>
 				</div>
