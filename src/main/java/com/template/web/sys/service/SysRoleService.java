@@ -31,14 +31,16 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		int count = 0;
 		if(null == sysRole.getId()){
 			count = this.insertSelective(sysRole);
-			if(sysRole.getResourceIds().length>0){
-				sysRoleMapper.insertRoleResource(sysRole);
-			}
-			if(("9").equals(sysRole.getDataScope()) && sysRole.getOfficeIds().length>0){
-				sysRoleMapper.insertRoleOffice(sysRole);
-			}
 		}else{
 			count = this.updateByPrimaryKeySelective(sysRole);
+			sysRoleMapper.deleteRoleResourceByRoleId(sysRole.getId());
+			sysRoleMapper.deleteRoleOfficeByRoleId(sysRole.getId());
+		}
+		if(sysRole.getResourceIds().length>0){
+			sysRoleMapper.insertRoleResource(sysRole);
+		}
+		if(("9").equals(sysRole.getDataScope()) && sysRole.getOfficeIds().length>0){
+			sysRoleMapper.insertRoleOffice(sysRole);
 		}
 	    return count;
 	}
@@ -48,10 +50,8 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	* @param id
 	 */
 	public int deleteSysRole(Long id){
-		SysRole sysRole = new SysRole();
-		sysRole.put("roleId", id);
-		sysRoleMapper.deleteRoleOffice(sysRole);
-		sysRoleMapper.deleteRoleResource(sysRole);
+		sysRoleMapper.deleteRoleOfficeByRoleId(id);
+		sysRoleMapper.deleteRoleResourceByRoleId(id);
 		int count = this.deleteByPrimaryKey(id);
 		return count;
 	}
@@ -69,11 +69,11 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
         return new PageInfo<SysRole>(list);
 	}
 	
-	public Long[] findResourceIdsByRoleId(Long roleId){
+	public List<Long> findResourceIdsByRoleId(Long roleId){
 		return sysRoleMapper.findResourceIdsByRoleId(roleId);
 	}
 	
-	public Long[] findOfficeIdsByRoleId(Long roleId){
+	public List<Long> findOfficeIdsByRoleId(Long roleId){
 		return sysRoleMapper.findOfficeIdsByRoleId(roleId);
 	}
 

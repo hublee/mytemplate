@@ -40,13 +40,12 @@ $(document).ready(function(){
 		for(var i=0; i<nodes.length; i++) {
 			${tree}.expandNode(nodes[i], true, false, false);
 		}
-		
 		// 默认选择节点
-		var ids = "${selectIds!}".split(",");
+		var ids = "${selectIds!}".replace('[','').replace(']','').split(",");
 		for(var i=0; i<ids.length; i++) {
 			var node = ${tree}.getNodeByParam("id", ids[i]);
 			if("${checked!}" == "true"){
-				try{${tree}.checkNode(node, true, true);}catch(e){}
+				try{${tree}.checkNode(node, true, false);}catch(e){}
 				${tree}.selectNode(node, false);
 			}else{
 				${tree}.selectNode(node, true);

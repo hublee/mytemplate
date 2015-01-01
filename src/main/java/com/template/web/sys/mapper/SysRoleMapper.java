@@ -19,13 +19,13 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    
    public int insertRoleOffice(SysRole sysRole);
    
-   public int deleteRoleResource(SysRole sysRole);
+   public int deleteRoleResourceByRoleId(Long roleId);
    
-   public int deleteRoleOffice(SysRole sysRole);
+   public int deleteRoleOfficeByRoleId(Long roleId);
    
-   public Long[] findResourceIdsByRoleId(Long roleId);
+   public List<Long> findResourceIdsByRoleId(Long roleId);
    
-   public Long[] findOfficeIdsByRoleId(Long roleId);
+   public List<Long> findOfficeIdsByRoleId(Long roleId);
    
    public List<SysRole> findPageInfo(Map<String, Object> params);
 

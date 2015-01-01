@@ -2,6 +2,7 @@
 
 package com.template.web.sys.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import com.template.common.base.BaseController;
@@ -85,17 +86,16 @@ public class RoleController extends BaseController {
 	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
 	public String layer(Long id,@PathVariable String mode, Model model){
 		SysRole sysRole = null;
-		Long[] resIds = null;
 		if(StringUtils.equals("edit", mode)){
 			sysRole = sysRoleService.selectByPrimaryKey(id);
-			resIds = sysRoleService.findResourceIdsByRoleId(id);
+			List<Long> resIds = sysRoleService.findResourceIdsByRoleId(id);
 			if(sysRole.getDataScope().equals("9")){
-				Long[] officeIds = sysRoleService.findOfficeIdsByRoleId(id);
+				List<Long> officeIds = sysRoleService.findOfficeIdsByRoleId(id);
 				model.addAttribute("officeIds", JsonUtils.getInstance().toJson(officeIds));
 			}
+			model.addAttribute("resIds", JsonUtils.getInstance().toJson(resIds));
 		}
-		model.addAttribute("sysrole", sysRole)
-			.addAttribute("resIds", JsonUtils.getInstance().toJson(resIds));
+		model.addAttribute("sysrole", sysRole);
 		return mode.equals("detail")?"sys/role/role-detail":"sys/role/role-save";
 	}
 	

@@ -1,5 +1,5 @@
 <div class="layer">
-	<form name="FormPost" id="dict-save" class="FormGrid"  method="post"
+	<form name="FormPost" id="role-save" class="FormGrid"  method="post"
 		action="${rootPath}/role/save">
 		
 		<input type="hidden" value="${sysrole.id!}" name="id"/>
@@ -22,7 +22,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">角色名称</td>
 					<td class="DataTD width-100"><input type="text"
-						name="value" datatype="*"  nullmsg="请输入角色名称！"
+						name="name" datatype="*"  nullmsg="请输入角色名称！"
 						value="${sysrole.name!}"></td>
 				</tr>
 				<tr class="FormData">
@@ -62,4 +62,12 @@
 		</table>
 	</form>
 </div>
-<#save formId="dict-save" />
+<#save formId="role-save" config="true" validId="roleEditForm">
+	var permission = getCheckbox(treeSelectResEdit);
+	var office = getCheckbox(treeSelectOfficeEdit);
+	var data = $("#role-save").serialize()+"&resourceIds="+permission.toString()+
+				"&officeIds="+office.toString();
+	roleEditForm.config({
+		 ajaxpost:{data:data}
+	});
+</#save>

@@ -23,23 +23,13 @@
 	</insert>
 	
 	<!-- 删除角色拥有的权限 -->
-	<delete id="deleteRoleResource">
-		delete from sys_role_resource 
-		<where>
-			<if test="roleId!=null and roleId!=''">
-				role_id = #{roleId}
-			</if>
-		</where>
+	<delete id="deleteRoleResourceByRoleId">
+		delete from sys_role_resource where role_id = #{roleId}
 	</delete>
 	
 	<!-- 删除角色所在的机构 -->
-	<delete id="deleteRoleOffice">
-		delete from sys_role_office 
-		<where>
-			<if test="roleId!=null and roleId!=''">
-				role_id = #{roleId}
-			</if>
-		</where>
+	<delete id="deleteRoleOfficeByRoleId">
+		delete from sys_role_office where role_id = #{roleId}
 	</delete>
 	
 	<!-- 根据角色id查询拥有的资源id集合 -->
