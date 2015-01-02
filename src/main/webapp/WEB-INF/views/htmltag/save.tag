@@ -51,7 +51,7 @@ var ${validId} = $("#${formId}").Validform({
 				}
 			}
 		},
-		tipSweep : true 
+		tipSweep : true
 	});
 
 	$("#${subBtnId}").click(function() {

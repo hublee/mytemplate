@@ -84,6 +84,26 @@
 					<label style="vertical-align: top;">描述：</label>
 					<textarea type="text" class="width-50" name="remarks"></textarea>
 				</div>
+				<div class="center padding-10">
+					<label>角色：</label>
+					<div class="width-50 inline text-left">
+						@for(role in roles){
+							<div class="checkbox inline">
+								<label>
+									<input class="ace ace-checkbox-2" type="checkbox">
+									<span class="lbl"> ${role.name!}</span>
+								</label>
+							</div>
+						@}
+					</div>
+					<select class="chosen-select width-25" id="officeGroup">
+						@print(test.resolveNode(test.getOfficeTree()));
+					</select>
+					
+					<script>
+					$("#officeGroup").chosen({'width':'50%'});
+					</script>
+				</div>
 				<div class="margin-t15">
 					<span class="btn btn-info btn-block bigger-120" id="sysuser-save-btn">保 存</span>
 				</div>
@@ -92,8 +112,6 @@
 	</div>
 </div>
 <style>
-#profile label{width: 100px;text-align: right;}
+#profile .center>label{width: 100px;text-align: right;}
 </style>
-<#save isHide="yes" subBtnId="sysuser-save-btn" formId="sysuser-save-form" config="true">
-	$("#username")[0].validform_valid = "false";
-</#save>
+<#save isHide="yes" subBtnId="sysuser-save-btn" formId="sysuser-save-form" />

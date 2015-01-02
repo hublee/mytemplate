@@ -24,6 +24,11 @@
                <entry key="getAllOffice" value-ref="officeFunction"/>
             </map>
         </property>
+        <property name="functionPackages">
+             <map>
+               <entry key="test" value-ref="testFunction"/>
+            </map>
+        </property>
 	</bean>
 	
 	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
