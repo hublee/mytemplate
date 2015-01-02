@@ -16,20 +16,20 @@
 				
 			</ul><!-- /.breadcrumb -->
 
-			<div class="nav-search" id="nav-search">
-				<form class="form-search">
-					<span class="input-icon">
-						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-						<i class="ace-icon fa fa-search nav-search-icon"></i>
-					</span>
-				</form>
-			</div><!-- /.nav-search -->
 		</div>
-
+		
 		<div class="page-content">
 			@layout("aceSetting.html"){}
-			${layoutContent!}
+			<div class="page-header">
+				<h1>Typography</h1>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					${layoutContent!}
+				</div>
+			</div>
 		</div><!-- /.page-content -->
+		
 	</div><!-- /.main-content -->
 
 	<a href="javascript:void(0);" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">

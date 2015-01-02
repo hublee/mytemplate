@@ -23,7 +23,7 @@ public class OfficeFunction implements Function{
 	
 	@Override
 	public Object call(Object[] params, Context ctx) {
-		List<SysOffice> list = sysOfficeService.findAllOffice();
+		List<SysOffice> list = sysOfficeService.select(null);
 		for(SysOffice o : list){
 			map.put(o.getId(), o);
 		}

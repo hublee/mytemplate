@@ -28,7 +28,7 @@ var ${tree}, ${setting} = {
 		}
 };
 $(document).ready(function(){
-	$.get("${ctxPath}/${adminPath}/${url}?t="+new Date().getTime(), function(zNodes){
+	$.get("${ctxPath}/${adminPath}/${url}", function(zNodes){
 		var rootName = '${decode(rootNodeName,"","全部",rootNodeName)}';
 		var root = {id:0,name:rootName,open:true};
 		zNodes[zNodes.length] = root;
@@ -46,7 +46,7 @@ $(document).ready(function(){
 			var node = ${tree}.getNodeByParam("id", ids[i]);
 			if("${checked!}" == "true"){
 				try{${tree}.checkNode(node, true, false);}catch(e){}
-				${tree}.selectNode(node, false);
+				${tree}.expandNode(node, true, false, false);
 			}else{
 				${tree}.selectNode(node, true);
 			}

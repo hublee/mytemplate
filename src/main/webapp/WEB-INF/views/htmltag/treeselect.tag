@@ -1,3 +1,4 @@
+@var order = order!'';
 @var class = class!'width-100 '; //样式
 @var width = width!'350'; //弹窗宽度
 @var height = height!'350'; //弹窗的高度
@@ -5,8 +6,8 @@
 @var modelName = modelName!''; //要提交的name (实体属性)
 @var modelIdValue = modelIdValue!'0'; //id初始值value 
 @var modelNameValue = modelNameValue!''; //name初始值value
-@var id = id!'treeselectpid'; //隐藏要添加的input的id名称,页面多个时候需要指定
-@var nameId = nameId!'treeselectname';  //名称
+@var id = id!('treeselectid'+order); //隐藏要添加的input的id名称,页面多个时候需要指定
+@var nameId = nameId!('treeselectname'+order);  //名称
 @var url = url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
 @var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
 @var selectIds = selectIds!''; //默认选择节点

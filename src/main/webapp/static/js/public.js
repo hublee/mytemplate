@@ -52,7 +52,10 @@ function changeMenu(obj){
 		$("#breadcrumb").empty();
 		mtext.each(function(i){
 			var last = '';
-			if(i==mtext.length-1) last = 'blue';
+			if(i==mtext.length-1) {
+				last = 'blue';
+				$(".page-header h1").text($(this).text());
+			}
 			$("#breadcrumb").append("<li class='active "+last+"'>"+$(this).text()+"</li>");
 		})
 	}
@@ -291,3 +294,37 @@ function paging(formId,pageNo){
 		trigger:true 
 	}
 })(jQuery);
+
+
+// Find the right method, call on correct element
+function launchFullscreen(element) {
+
+    if (!$("body").hasClass("full-screen")) {
+
+        $("body").addClass("full-screen");
+
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+
+    } else {
+
+        $("body").removeClass("full-screen");
+
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+
+    }
+
+}
