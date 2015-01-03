@@ -1,0 +1,118 @@
+<div class="layer">
+<h3 class="header smaller red">通过选择部门，然后为列出的人员分配角色。</h3>
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 pricing-box">
+			<div class="widget-box widget-color-orange">
+				<div class="widget-header">
+					<h5 class="widget-title bigger lighter">所在部门</h5>
+				</div>
+
+				<div class="widget-body">
+					<div class="widget-main">
+						<ul class="ztree" id="treeOffice"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-6 col-sm-4 pricing-box">
+			<div class="widget-box widget-color-blue">
+				<div class="widget-header">
+					<h5 class="widget-title bigger lighter">待选人员</h5>
+				</div>
+
+				<div class="widget-body">
+					<div class="widget-main" id="dxuser">
+						
+					</div>
+					<div class="hide" id="addUserBtn">
+						<a href="javascript:void(0);" class="btn btn-block btn-primary">
+							<i class="ace-icon fa fa-shopping-cart bigger-110"></i>
+							<span>添加人员</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-6 col-sm-4 pricing-box">
+			<div class="widget-box widget-color-green">
+				<div class="widget-header">
+					<h5 class="widget-title bigger lighter">已选人员</h5>
+				</div>
+
+				<div class="widget-body">
+					<div class="widget-main" id="yxuser">
+						@for(user in users){
+							<div class="checkbox">
+								<label>
+									<input class="ace ace-checkbox-2" type="checkbox">
+									<span class="lbl"> ${user.name!}</span>
+								</label>
+							</div>
+						@}
+					</div>
+					<div class="hide" id="removeUserBtn">
+						<a href="#" class="btn btn-block btn-success">
+							<i class="ace-icon fa fa-shopping-cart bigger-110"></i>
+							<span>移出人员</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	var setting = {
+		view:{
+			selectedMulti : false
+		},
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "parentId"
+			}
+		},
+		callback: {
+			onClick: onClickNode
+		}
+	};
+	var officeTree = $.fn.zTree.init($("#treeOffice"), setting,${offices!});
+	function onClickNode(event, treeId, treeNode) {
+		$.post("${rootPath!}/role/officeuser",{'officeId':treeNode.id},function(data){
+			$("#dxuser").empty();
+			for(var i=0;i<data.length;i++){
+				var str = '<div class="checkbox"><label><input class="ace ace-checkbox-2" type="checkbox" data-mode="add">'+
+							'<span class="lbl"> '+data[i].name+'</span></label></div>';
+				$("#dxuser").append(str);
+			}
+		},"json");
+	}
+	
+	var nodes = officeTree.getNodesByParam("level", 0);
+	for(var i=0; i<nodes.length; i++) {
+		officeTree.expandNode(nodes[i], true, false, false);
+	}
+	
+	$(document).on('click','.layer input[type=checkbox]',function(){
+		var mode = $(this).data("mode");
+		if(mode == "add"){
+			var ck = $("#dxuser").find("input[type='checkbox']").is(":checked");
+			if(ck){
+				$("#addUserBtn").removeClass('hide');
+			}else{
+				$("#addUserBtn").addClass('hide');
+			}
+		}
+	});
+	
+	$("#addUserBtn").click(function(){
+		var ck = $("#dxuser").find("input[type='checkbox']:checked");
+		$("#yxuser").append(ck.clone());
+	});
+	
+})
+</script>

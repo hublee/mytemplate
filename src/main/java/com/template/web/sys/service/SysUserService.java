@@ -2,6 +2,8 @@
 
 package com.template.web.sys.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -30,6 +32,15 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			
 		}
 		return count;
+	}
+	
+	/**
+	 * 根据角色id查询拥有此角色的用户
+	* @param roleId
+	* @return
+	 */
+	public List<SysUser> findUserByRoleId(Long roleId){
+		return sysUserMapper.findUserByRoleId(roleId);
 	}
 	
 	/**

@@ -8,8 +8,12 @@ import java.util.Map;
 import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
+import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysRole;
+import com.template.web.sys.model.SysUser;
+import com.template.web.sys.service.SysOfficeService;
 import com.template.web.sys.service.SysRoleService;
+import com.template.web.sys.service.SysUserService;
 
 import javax.annotation.Resource;
 
@@ -35,6 +39,10 @@ public class RoleController extends BaseController {
 	
 	@Resource
 	private SysRoleService sysRoleService;
+	@Resource
+	private SysUserService sysUserService;
+	@Resource
+	private SysOfficeService sysOfficeService;
 	
 	/**
 	 * 跳转到模块页面
@@ -44,6 +52,26 @@ public class RoleController extends BaseController {
 	@RequestMapping
 	public String toSysRole(Model model){
 		return "sys/role/role";
+	}
+	
+	/**
+	 * 绑定用户界面
+	* @return
+	 */
+	@RequestMapping("binduser")
+	public String toBindUser(Long id,Model model){
+		List<SysUser> users = sysUserService.findUserByRoleId(id);
+		List<SysOffice> offices = sysOfficeService.select(null);
+		model.addAttribute("users", users)
+			.addAttribute("offices", JsonUtils.getInstance().toJson(offices));
+		return "sys/role/role-user";
+	}
+	
+	@RequestMapping(value="officeuser",method=RequestMethod.POST)
+	public @ResponseBody List<SysUser> officeUser(Long officeId){
+		SysUser sysUser = new SysUser();
+		sysUser.setOfficeId(officeId);
+		return sysUserService.select(sysUser);
 	}
 	
 	/**

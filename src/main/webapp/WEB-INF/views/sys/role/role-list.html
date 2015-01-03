@@ -28,7 +28,12 @@
 				</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
-						<a class="pink" href="">
+						<a class="pink" href="javascript:void(0);"
+							data-mode="page" data-title="<${item.name!}>角色分配"
+							data-url="${rootPath}/role/binduser"
+							data-data="{id:'${item.id}'}"
+							data-height="600" data-width="90%"
+						>
 							<i class="ace-icon fa fa-users bigger-130"></i> 绑定用户
 						</a>
 						<a class="green" href="javascript:void(0);" 

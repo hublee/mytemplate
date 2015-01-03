@@ -14,6 +14,12 @@
 			(#{id},#{roleId,jdbcType=NUMERIC})
 		</foreach>
 	</insert>
+	
+	<!-- 根据角色id查找用户 -->
+	<select id="findUserByRoleId" resultType="com.template.web.sys.model.SysUser">
+		select su.id,su.name from sys_user su left join sys_user_role sur on su.id = sur.user_id 
+		where sur.role_id = #{roleId} 
+	</select>
 
 	<!-- 验证账号密码 -->
 	<select id="checkUser" resultType="com.template.web.sys.model.SysUser">
