@@ -21,6 +21,17 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	@Resource
 	private SysUserMapper sysUserMapper;
 	
+	public int saveSysUser(SysUser sysUser){
+		int count = 0;
+		if(null == sysUser.getId()){
+			count = this.insertSelective(sysUser);
+			sysUserMapper.insertUserRole(sysUser);
+		}else{
+			
+		}
+		return count;
+	}
+	
 	/**
 	 * 验证用户
 	* @param username 用户名

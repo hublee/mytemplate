@@ -35,11 +35,11 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 		// 子容器初始化时(spring-mvc)
 		if (null != parentContext) {
 			//读取全部资源
-			List<SysResource> resList = sysResourceService.select(new SysResource());
+			//List<SysResource> resList = sysResourceService.select(new SysResource());
 			Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
-			for (SysResource res : resList) {
+			/*for (SysResource res : resList) {
 				AllResourceMap.put(res.getUrl(), res);
-			}
+			}*/
 			
 			// 设置共享变量
 			BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());

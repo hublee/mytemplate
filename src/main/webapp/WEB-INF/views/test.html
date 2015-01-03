@@ -11,3 +11,19 @@ $(function(){
 	})
 })
 </script>
+
+
+<div class="center padding-10">
+					<label>归属公司：</label>
+					<#treeselect url="office/tree?type=1" 
+							modelId="companyId" class="width-50"
+							order="1" isCheck="请选择归属公司"
+							style="style='display: inline-block;vertical-align: middle;'"/>
+				</div>
+				<div class="center padding-10">
+					<label>归属部门：</label>
+					<#treeselect url="office/tree" 
+							modelId="officeId" class="width-50"
+							order="2" isCheck="请选择归属部门"
+							style="style='display: inline-block;vertical-align: middle;'"/>
+				</div>

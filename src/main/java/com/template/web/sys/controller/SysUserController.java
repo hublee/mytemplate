@@ -1,17 +1,16 @@
 package com.template.web.sys.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
@@ -31,9 +30,16 @@ public class SysUserController {
 	 */
 	@RequestMapping
 	public String toSysUser(Model model){
-		List<SysRole> roles = sysRoleService.select(null);
-		model.addAttribute("roles", roles);
 		return "sys/user/user";
+	}
+	
+	/**
+	 * 保存用户
+	* @return
+	 */
+	@RequestMapping("save")
+	public @ResponseBody Integer save(@ModelAttribute SysUser sysUser){
+		return sysUserService.saveSysUser(sysUser);
 	}
 	
 	/**

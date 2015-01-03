@@ -32,37 +32,92 @@
 		<div id="profile" class="tab-pane">
 			<form action="${rootPath!}/sysuser/save" method="post" id="sysuser-save-form">
 				<div class="center padding-10">
-					<label>归属公司：</label>
-					<#treeselect url="office/tree?type=1" 
-							modelId="companyId" class="width-50"
-							order="1" isCheck="请选择归属公司"
-							style="style='display: inline-block;vertical-align: middle;'"/>
-				</div>
-				<div class="center padding-10">
-					<label>归属部门：</label>
-					<#treeselect url="office/tree" 
-							modelId="officeId" class="width-50"
-							order="2" isCheck="请选择归属部门"
-							style="style='display: inline-block;vertical-align: middle;'"/>
-				</div>
-				<div class="center padding-10">
 					<label>登录名：</label>
 					<input type="text" class="width-50" name="username" id="username"
 					ajaxurl="${rootPath!}/sysuser/checkname" datatype="*"  nullmsg="请输入登录名！"/>
 				</div>
 				<div class="center padding-10">
 					<label>密码：</label>
-					<input type="text" class="width-50" name="password" 
+					<input type="password" class="width-50" name="password" 
 					datatype="*6-16" errormsg="密码范围在6~16位之间！" nullmsg="请输入密码！" />
 				</div>
 				<div class="center padding-10">
 					<label>确认密码：</label>
-					<input type="text" class="width-50" name="repassword" 
+					<input type="password" class="width-50" name="repassword" 
 					 datatype="*" recheck="password" errormsg="您两次输入的密码不一致！" nullmsg="请输入确认密码！"/>
 				</div>
 				<div class="center padding-10">
 					<label>姓名：</label>
 					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入姓名！"/>
+				</div>
+				<div class="center padding-10">
+					<label>归属机构：</label>
+					<div class="width-50 inline text-left">
+						<select class="chosen-select" id="officeGroup" name="officeId">
+							@print(office.resolveNode(office.getOfficeTree()));
+						</select>
+					</div>
+					<input type="hidden" name="companyId" id="companyId" />
+					<script>
+					@var roles = office.getAllRole();
+					$("#officeGroup").chosen({'width':'100%',search_contains: true}).change(function(){
+						var cur = $(this).find("option:selected");
+						var pid = cur.data("pid");
+						var pname = $(this).find("[value="+pid+"]").text();
+						var office = $.trim(pname)+" （"+$.trim(cur.text())+"）";
+						$("#officeGroup_chosen .chosen-single span").text(office);
+						$("#companyId").val(pid==undefined?cur.val():pid);
+						var roles = ${roles};
+						
+						$("#roleGroup").empty();
+						
+						for(i in roles){
+							if(roles[i].officeId==cur.val()){
+								var str = "<option value='"+roles[i].id+"'>"+office+"— "+roles[i].name+"</options>";
+								$("#roleGroup").append(str);
+							}
+						}
+						$("#roleGroup").trigger("chosen:updated");
+					}).trigger('change');
+					$("#moveRole").click(function(){
+						var cur = $("#roleGroup option:selected");
+						cur.each(function(i){
+							var flag = $("#curRoles").find("option[value="+cur.eq(i).val()+"]");
+							if(flag.size() == 0){
+								$("#curRoles").append(cur.eq(i).clone());
+							}
+						}) 
+					})
+					$("#removeRole").click(function(){
+						var cur = $("#curRoles option:selected");
+						cur.remove();
+					})
+					</script>
+				</div>
+				<div class="center padding-10" >
+					<label style="vertical-align: top;">待选角色：</label>
+					<div class="width-50 inline text-left">
+						<select class=" width-90 pull-left"
+						multiple="multiple" id="roleGroup">
+						</select>
+						<div class="pull-left width-10 clearfix" >
+							<span class="btn btn-purple block" id="moveRole">
+							<i class="fa fa-hand-o-down bigger-160"></i>
+							</span>
+						</div>
+					</div> 
+				</div>
+				<div class="center padding-10" >
+				<label style="vertical-align: top;">已选角色：</label>
+					<div class="width-50 inline text-left">
+						<select class=" width-90 pull-left" name="roleIds"
+						multiple="multiple" id="curRoles" ></select>
+						<div class="pull-left width-10 clearfix" >
+							<span class="btn btn-danger" id="removeRole">
+							<i class="fa fa-trash bigger-160"></i>
+							</span>
+						</div>
+					</div> 
 				</div>
 				<div class="center padding-10">
 					<label>工号：</label>
@@ -84,26 +139,6 @@
 					<label style="vertical-align: top;">描述：</label>
 					<textarea type="text" class="width-50" name="remarks"></textarea>
 				</div>
-				<div class="center padding-10">
-					<label>角色：</label>
-					<div class="width-50 inline text-left">
-						@for(role in roles){
-							<div class="checkbox inline">
-								<label>
-									<input class="ace ace-checkbox-2" type="checkbox">
-									<span class="lbl"> ${role.name!}</span>
-								</label>
-							</div>
-						@}
-					</div>
-					<select class="chosen-select width-25" id="officeGroup">
-						@print(test.resolveNode(test.getOfficeTree()));
-					</select>
-					
-					<script>
-					$("#officeGroup").chosen({'width':'50%'});
-					</script>
-				</div>
 				<div class="margin-t15">
 					<span class="btn btn-info btn-block bigger-120" id="sysuser-save-btn">保 存</span>
 				</div>
@@ -114,4 +149,7 @@
 <style>
 #profile .center>label{width: 100px;text-align: right;}
 </style>
-<#save isHide="yes" subBtnId="sysuser-save-btn" formId="sysuser-save-form" />
+<#save isHide="yes" subBtnId="sysuser-save-btn" formId="sysuser-save-form" validId="sysuserForm" config="true">
+	var role = $("#curRoles").find("option");
+	role.attr("selected","true");
+</#save>

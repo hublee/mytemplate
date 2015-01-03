@@ -9,6 +9,7 @@ import com.template.common.base.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -78,8 +79,18 @@ public class SysUser extends Entity {
 
 	
     private String userType; //user_type <用户类型>
+    
+    @Transient
+    private Long[] roleIds; //角色
 
 
+    public void setRoleIds(Long[] roleIds){
+    	this.set("roleIds", roleIds);
+    }
+    
+    public Long[] getRoleIds(){
+    	return (Long[])this.get("roleIds");
+    }
 
 	public Long getId() {
 		return this.getLong("id");

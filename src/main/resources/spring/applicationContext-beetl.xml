@@ -21,12 +21,11 @@
              <map>
                <entry key="getDictListByType" value-ref="dictFunction"/>
                <entry key="getAllArea" value-ref="areaFunction"/>
-               <entry key="getAllOffice" value-ref="officeFunction"/>
             </map>
         </property>
         <property name="functionPackages">
              <map>
-               <entry key="test" value-ref="testFunction"/>
+               <entry key="office" value-ref="officeFunctions"/>
             </map>
         </property>
 	</bean>

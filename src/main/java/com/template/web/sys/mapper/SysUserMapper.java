@@ -14,7 +14,8 @@ import com.template.web.sys.model.SysUser;
  */
 
 public interface SysUserMapper extends Mapper<SysUser>{
-
+	
+	public int insertUserRole(SysUser sysUser);
    
 	/**
 	 * 验证账号

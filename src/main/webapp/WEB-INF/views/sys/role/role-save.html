@@ -11,7 +11,7 @@
 				<tr class="FormData">
 					<td class="CaptionTD">归属机构</td>
 					<td class="DataTD width-100">
-						@var officeMap = getAllOffice();
+						@var officeMap = office.getAllOffice();
 						<#treeselect url="office/tree"  
 							modelId="officeId" id="officeEdit" nameId="officeNameEdit"
 							modelNameValue="${officeMap[sysrole.officeId!].name!}" 

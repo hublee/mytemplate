@@ -54,9 +54,9 @@ public class SysRole extends Entity {
     private Date updateDate; //update_date <更新时间>
     
     @Transient
-    private Long[] resourceIds;
-    @Transient
-    private Long[] officeIds;
+    private Long[] resourceIds; //持有的资源
+    @Transient 
+    private Long[] officeIds; //机构
 
     public Long[] getOfficeIds(){
     	return (Long[])this.get("officeIds");
