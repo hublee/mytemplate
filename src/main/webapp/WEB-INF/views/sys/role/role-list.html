@@ -15,7 +15,14 @@
 				<td class="center">
 					<a href="#">${item.name!}</a>
 				</td>
-				<td class="center">${map[item.officeId].name!}</td>
+				<td class="center">
+					@var pOfficeName = map[map[item.officeId].parentId].name!;
+					${pOfficeName!}
+					@if(!isEmpty(pOfficeName)){
+						@print(" — "); 
+					@}
+					${map[item.officeId].name!}
+				</td>
 				<td class="center">
 				<#dict dictMode="showName" value="${item.dataScope!}" type="sys_data_scope"/>
 				</td>
