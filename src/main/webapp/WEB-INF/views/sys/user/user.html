@@ -56,11 +56,12 @@
 						<select class="chosen-select" id="officeGroup" name="officeId">
 							@print(office.resolveNode(office.getOfficeTree()));
 						</select>
+						<span class="red width-50">*用户只能归属一个机构，提交前请正确选择!</span>
 					</div>
 					<input type="hidden" name="companyId" id="companyId" />
 					<script>
 					@var roles = office.getAllRole();
-					$("#officeGroup").chosen({'width':'100%',search_contains: true}).change(function(){
+					$("#officeGroup").chosen({'width':'50%',search_contains: true}).change(function(){
 						var cur = $(this).find("option:selected");
 						var pid = cur.data("pid");
 						var pname = $(this).find("[value="+pid+"]").text();
