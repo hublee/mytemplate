@@ -57,6 +57,16 @@ public class SysRole extends Entity {
     private Long[] resourceIds; //持有的资源
     @Transient 
     private Long[] officeIds; //机构
+    @Transient
+    private Long[] userIds; //绑定的用户
+    
+    public Long[] getUserIds(){
+    	return (Long[])this.get("userIds");
+    }
+    
+    public void setUserIds(Long[] userIds){
+    	this.set("userIds", userIds);
+    }
 
     public Long[] getOfficeIds(){
     	return (Long[])this.get("officeIds");

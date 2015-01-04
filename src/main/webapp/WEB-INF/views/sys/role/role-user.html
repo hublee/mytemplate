@@ -57,7 +57,7 @@
 					<div class="hide" id="removeUserBtn">
 						<a href="javascript:void(0);" class="btn btn-block btn-success">
 							<i class="ace-icon fa fa-trash bigger-110"></i>
-							<span>移出人员</span>
+							<span>移除人员</span>
 						</a>
 					</div>
 				</div>
@@ -72,7 +72,7 @@
 		userIds.push(val.value);
 	})
 	roleUserForm.config({
-		 ajaxpost:{data:{roleId:${roleId},userIds:userIds}}
+		 ajaxpost:{data:{id:${roleId},userIds:userIds.toString()}}
 	});
 </#save>
 

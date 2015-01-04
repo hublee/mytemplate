@@ -7,9 +7,11 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.model.SysRole;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +77,16 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	
 	public List<Long> findOfficeIdsByRoleId(Long roleId){
 		return sysRoleMapper.findOfficeIdsByRoleId(roleId);
+	}
+	
+	/**
+	 * 添加角色下的人员
+	* @param sysRole
+	* @return
+	 */
+	public int saveUserRole(SysRole sysRole){
+		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
+		return sysRoleMapper.insertUserRole(sysRole);
 	}
 
 }

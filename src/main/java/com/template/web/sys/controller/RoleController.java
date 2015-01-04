@@ -84,8 +84,8 @@ public class RoleController extends BaseController {
 	* @return
 	 */
 	@RequestMapping(value="saveuser",method=RequestMethod.POST)
-	public @ResponseBody Integer saveUser(Long roleId,@RequestParam(value="userIds[]") Long[] userIds){
-		return null;
+	public @ResponseBody Integer saveUserRole(@ModelAttribute SysRole sysRole){
+		return sysRoleService.saveUserRole(sysRole);
 	}
 	
 	/**
