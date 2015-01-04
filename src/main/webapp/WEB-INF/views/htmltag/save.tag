@@ -5,11 +5,12 @@
 @var validId = validId!(strutil.replace(formId,"-",""));
 @var config = config!'false';
 @var data = data!'';
+@var okText = okText!'确 定';
 
 @if(isHide == "no"){
 <div class="width-100 clearfix" style="bottom: 0px;left: 0px;position:absolute;">
 	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
-		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 确 定
+		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> ${okText}
 	</span>
 	<span class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
 		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消

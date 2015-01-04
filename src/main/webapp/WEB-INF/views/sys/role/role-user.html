@@ -1,5 +1,5 @@
 <div class="layer">
-<h3 class="header smaller red">通过选择部门，然后为列出的人员分配角色。</h3>
+<h3 class="header smaller red">通过选择部门，然后为列出的人员分配角色</h3>
 	<div class="row">
 		<div class="col-xs-6 col-sm-4 pricing-box">
 			<div class="widget-box widget-color-orange">
@@ -27,7 +27,7 @@
 					</div>
 					<div class="hide" id="addUserBtn">
 						<a href="javascript:void(0);" class="btn btn-block btn-primary">
-							<i class="ace-icon fa fa-shopping-cart bigger-110"></i>
+							<i class="ace-icon fa fa-plus bigger-110"></i>
 							<span>添加人员</span>
 						</a>
 					</div>
@@ -42,19 +42,21 @@
 				</div>
 
 				<div class="widget-body">
+				<form action="${rootPath!}/role/saveuser" method="post" id="role-user-form">
 					<div class="widget-main" id="yxuser">
 						@for(user in users){
 							<div class="checkbox">
 								<label>
-									<input class="ace ace-checkbox-2" type="checkbox">
+									<input class="ace ace-checkbox-2" type="checkbox" name="userIds" value="${user.id!}">
 									<span class="lbl"> ${user.name!}</span>
 								</label>
 							</div>
 						@}
 					</div>
+				</form>
 					<div class="hide" id="removeUserBtn">
-						<a href="#" class="btn btn-block btn-success">
-							<i class="ace-icon fa fa-shopping-cart bigger-110"></i>
+						<a href="javascript:void(0);" class="btn btn-block btn-success">
+							<i class="ace-icon fa fa-trash bigger-110"></i>
 							<span>移出人员</span>
 						</a>
 					</div>
@@ -63,7 +65,18 @@
 		</div>
 	</div>
 </div>
-<script>
+<#save formId="role-user-form" okText="确认分配" config="true" validId="roleUserForm">
+	var userIds = [];
+	var yx = $("#yxuser").find("input[type=checkbox]");
+	yx.each(function(i,val){
+		userIds.push(val.value);
+	})
+	roleUserForm.config({
+		 ajaxpost:{data:{roleId:${roleId},userIds:userIds}}
+	});
+</#save>
+
+<script type="text/javascript">
 $(function(){
 	var setting = {
 		view:{
@@ -81,14 +94,28 @@ $(function(){
 		}
 	};
 	var officeTree = $.fn.zTree.init($("#treeOffice"), setting,${offices!});
+	var yxuser = ${users}; //初始化已选列表
+	var yxList = {},dxList = {};
+	for(var i in yxuser){
+		yxList[yxuser[i].id] = yxuser[i].name;
+	}
 	function onClickNode(event, treeId, treeNode) {
 		$.post("${rootPath!}/role/officeuser",{'officeId':treeNode.id},function(data){
 			$("#dxuser").empty();
+			dxList = {};
 			for(var i=0;i<data.length;i++){
-				var str = '<div class="checkbox"><label><input class="ace ace-checkbox-2" type="checkbox" data-mode="add">'+
-							'<span class="lbl"> '+data[i].name+'</span></label></div>';
+				dxList[data[i].id] = data[i].name;
+				var isyx = "",isyxText = "";
+				if(yxList[data[i].id] != undefined){
+					isyx = "disabled checked";
+					isyxText = "<span class='badge badge-pink'> 已 选 </span>";
+				}
+				var str = '<div class="checkbox"><label><input '+isyx+' class="ace ace-checkbox-2" value="'+data[i].id
+				+'" type="checkbox" data-mode="add" name="'+data[i].name+'">'+
+							'<span class="lbl"> '+data[i].name+'</span>'+isyxText+'</label></div>';
 				$("#dxuser").append(str);
 			}
+			$("#addUserBtn").addClass('hide');
 		},"json");
 	}
 	
@@ -106,12 +133,40 @@ $(function(){
 			}else{
 				$("#addUserBtn").addClass('hide');
 			}
+		}else if(mode == undefined){
+			var ck = $("#yxuser").find("input[type='checkbox']").is(":checked");
+			if(ck){
+				$("#removeUserBtn").removeClass('hide');
+			}else{
+				$("#removeUserBtn").addClass('hide');
+			}
 		}
 	});
 	
+	//添加人员
 	$("#addUserBtn").click(function(){
-		var ck = $("#dxuser").find("input[type='checkbox']:checked");
-		$("#yxuser").append(ck.clone());
+		var ck = $("#dxuser").find("input[type='checkbox']:checked").not("[disabled]");
+		ck.each(function(i,val){
+			ck.eq(i).attr("disabled","disabled");
+			ck.eq(i).parent().append("<span class='badge badge-pink'> 已 选 </span>");
+			yxList[val.value] = val.name;
+			var str = '<div class="checkbox"><label><input name="userIds" class="ace ace-checkbox-2" value="'+val.value
+			+'" type="checkbox"><span class="lbl"> '+val.name+'</span></label></div>';
+			$("#yxuser").append(str);
+		})
+	});
+	
+	//移除人员
+	$("#removeUserBtn").click(function(){
+		var ck = $("#yxuser").find("input[type='checkbox']:checked");
+		ck.closest('.checkbox').remove();
+		ck.each(function(i,val){
+			delete yxList[val.value];
+			var dx = $("#dxuser").find("input[value='"+val.value+"']");
+			dx.removeAttr("disabled").prop("checked",false).siblings(".badge").remove();
+		})
+		var len = $("#yxuser").children().length;
+		if(len == 0) $("#removeUserBtn").addClass('hide');
 	});
 	
 })

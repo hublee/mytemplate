@@ -62,16 +62,30 @@ public class RoleController extends BaseController {
 	public String toBindUser(Long id,Model model){
 		List<SysUser> users = sysUserService.findUserByRoleId(id);
 		List<SysOffice> offices = sysOfficeService.select(null);
-		model.addAttribute("users", users)
+		model.addAttribute("users", users).addAttribute("roleId", id)
 			.addAttribute("offices", JsonUtils.getInstance().toJson(offices));
 		return "sys/role/role-user";
 	}
 	
+	/**
+	 * 部门的人员
+	* @param officeId
+	* @return
+	 */
 	@RequestMapping(value="officeuser",method=RequestMethod.POST)
 	public @ResponseBody List<SysUser> officeUser(Long officeId){
 		SysUser sysUser = new SysUser();
 		sysUser.setOfficeId(officeId);
 		return sysUserService.select(sysUser);
+	}
+	
+	/**
+	 * 保存角色绑定的用户
+	* @return
+	 */
+	@RequestMapping(value="saveuser",method=RequestMethod.POST)
+	public @ResponseBody Integer saveUser(Long roleId,@RequestParam(value="userIds[]") Long[] userIds){
+		return null;
 	}
 	
 	/**
