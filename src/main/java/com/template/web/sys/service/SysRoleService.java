@@ -86,7 +86,10 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	 */
 	public int saveUserRole(SysRole sysRole){
 		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
-		return sysRoleMapper.insertUserRole(sysRole);
+		if(sysRole.getUserIds().length>0) {
+			sysRoleMapper.insertUserRole(sysRole);
+		}
+		return 1;
 	}
 
 }
