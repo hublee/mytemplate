@@ -1,0 +1,72 @@
+@var map = office.getAllOffice();
+<div class="profile-user-info profile-user-info-striped" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">角色名称</div>
+		<div class="profile-info-value width-85">
+			<span class="editable editable-click">${sysrole.name!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">归属机构</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+				@var pOfficeName = map[map[sysrole.officeId].parentId].name!;
+				${pOfficeName!}
+				@if(!isEmpty(pOfficeName)){
+					@print(" — "); 
+				@}
+				${map[sysrole.officeId].name!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">数据范围</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			<#dict dictMode="showName" value="${sysrole.dataScope!}" type="sys_data_scope"/>
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">分配的人员</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.code!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">拥有的权限</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.pos!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.createBy!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.createDate!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.updateBy!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.updateDate!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">描述</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${sysResource.description!}</span>
+		</div>
+	</div>
+</div>

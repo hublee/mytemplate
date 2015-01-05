@@ -13,7 +13,12 @@
 		@for(item in page.list){
 			<tr>
 				<td class="center">
-					<a href="#">${item.name!}</a>
+					<a href="javascript:void(0);"
+						data-mode="detail" data-title="<${item.name!}>角色"
+						data-url="${rootPath}/role/detail/showlayer"
+						data-data="{id:'${item.id}'}"
+						data-height="341" data-width="800"
+					>${item.name!}</a>
 				</td>
 				<td class="center">
 					@var pOfficeName = map[map[item.officeId].parentId].name!;

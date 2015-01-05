@@ -137,6 +137,9 @@ public class RoleController extends BaseController {
 			}
 			model.addAttribute("resIds", JsonUtils.getInstance().toJson(resIds));
 		}
+		if(StringUtils.equals("detail", mode)){
+			sysRole = sysRoleService.selectByPrimaryKey(id);
+		}
 		model.addAttribute("sysrole", sysRole);
 		return mode.equals("detail")?"sys/role/role-detail":"sys/role/role-save";
 	}
