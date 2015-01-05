@@ -38,7 +38,7 @@
 	@}elsefor{}
 @}
 <script type="text/javascript">
-$("#${id}").chosen({width: "${width}"}); 
+$("#${id}").chosen({width: "${width}",search_contains: true}); 
 @if(isScript == "true"){
 	${tagBody!}
 @}
