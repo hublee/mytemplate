@@ -30,43 +30,52 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">分配的人员</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.code!}</span>
+			@for(user in users){
+				<a href="javascript:void(0);">${user.name!}
+					${decode(userLP.last,false,'，','')}
+				</a>
+			@}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">拥有的权限</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.pos!}</span>
+			<span class="editable editable-click">
+				@for(resource in resources){
+					${resource.name!}
+					${decode(resourceLP.last,false,'，','')}
+				@}
+			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.createBy!}</span>
+			<span class="editable editable-click">${sysrole.createBy!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.createDate!}</span>
+			<span class="editable editable-click">${sysrole.createDate!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.updateBy!}</span>
+			<span class="editable editable-click">${sysrole.updateBy!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.updateDate!}</span>
+			<span class="editable editable-click">${sysrole.updateDate!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">描述</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysResource.description!}</span>
+			<span class="editable editable-click">${sysrole.description!}</span>
 		</div>
 	</div>
 </div>

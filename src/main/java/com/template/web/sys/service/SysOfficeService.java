@@ -9,6 +9,8 @@ import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.model.SysOffice;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +24,7 @@ import java.util.Map;
  */
 
 @Service("sysOfficeService")
+@CacheConfig(cacheNames="sysCache")
 public class SysOfficeService extends ServiceMybatis<SysOffice> {
 
 	@Resource
@@ -30,6 +33,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	/**
 	 *新增或更新SysOffice
 	 */
+	@CacheEvict(key="'allOffice'")
 	public int saveSysOffice(SysOffice sysOffice){
 		int count = 0;
 		//新的parentIds
@@ -48,6 +52,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		return count;
 	}
 	
+	@CacheEvict(key="'allOffice'")
 	public int deleteOfficeByRootId(Long id){
 		return sysOfficeMapper.deleteIdsByRootId(id);
 	}

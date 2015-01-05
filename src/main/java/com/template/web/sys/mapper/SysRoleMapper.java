@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.abel533.mapper.Mapper;
+import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
+import com.template.web.sys.model.SysUser;
 
 /**
  * 
@@ -30,6 +32,10 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    public List<Long> findResourceIdsByRoleId(Long roleId);
    
    public List<Long> findOfficeIdsByRoleId(Long roleId);
+   
+   public List<SysUser> findUserByRoleId(Long roleId);
+   
+   public List<SysResource> findResourceByRoleId(Long roleId);
    
    public List<SysRole> findPageInfo(Map<String, Object> params);
 

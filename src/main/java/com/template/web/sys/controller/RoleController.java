@@ -9,6 +9,7 @@ import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
 import com.template.web.sys.model.SysOffice;
+import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysOfficeService;
@@ -60,7 +61,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("binduser")
 	public String toBindUser(Long id,Model model){
-		List<SysUser> users = sysUserService.findUserByRoleId(id);
+		List<SysUser> users = sysRoleService.findUserByRoleId(id);
 		List<SysOffice> offices = sysOfficeService.select(null);
 		model.addAttribute("users", users).addAttribute("roleId", id)
 			.addAttribute("offices", JsonUtils.getInstance().toJson(offices));
@@ -139,6 +140,10 @@ public class RoleController extends BaseController {
 		}
 		if(StringUtils.equals("detail", mode)){
 			sysRole = sysRoleService.selectByPrimaryKey(id);
+			List<SysUser> users = sysRoleService.findUserByRoleId(id);
+			List<SysResource> resources = sysRoleService.findResourceByRoleId(id);
+			model.addAttribute("users", users)
+				.addAttribute("resources", resources);
 		}
 		model.addAttribute("sysrole", sysRole);
 		return mode.equals("detail")?"sys/role/role-detail":"sys/role/role-save";

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.template.common.base.TreeNode;
+import com.template.common.utils.CacheUtils;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.service.SysOfficeService;
@@ -29,7 +30,11 @@ public class OfficeFunctions {
 	 */
 	public Map<Long, Object> getAllOffice(){
 		Map<Long, Object> map = new HashMap<Long, Object>();
-		List<SysOffice> list = sysOfficeService.select(null);
+		List<SysOffice> list = CacheUtils.get("sysCache", "allOffice");
+		if(null == list){
+			list = sysOfficeService.select(null);
+			CacheUtils.put("sysCache", "allOffice", list);
+		}
 		for(SysOffice o : list){
 			map.put(o.getId(), o);
 		}

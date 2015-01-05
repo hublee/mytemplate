@@ -2,13 +2,12 @@
 
 package com.template.web.sys.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.template.common.base.ServiceMybatis;
+import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.mapper.SysUserMapper;
 import com.template.web.sys.model.SysUser;
 
@@ -23,6 +22,9 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	@Resource
 	private SysUserMapper sysUserMapper;
 	
+	@Resource
+	private SysRoleMapper sysRoleMapper;
+	
 	public int saveSysUser(SysUser sysUser){
 		int count = 0;
 		if(null == sysUser.getId()){
@@ -32,15 +34,6 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			
 		}
 		return count;
-	}
-	
-	/**
-	 * 根据角色id查询拥有此角色的用户
-	* @param roleId
-	* @return
-	 */
-	public List<SysUser> findUserByRoleId(Long roleId){
-		return sysUserMapper.findUserByRoleId(roleId);
 	}
 	
 	/**

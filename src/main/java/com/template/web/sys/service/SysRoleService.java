@@ -6,7 +6,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysRoleMapper;
+import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
+import com.template.web.sys.model.SysUser;
 
 import org.springframework.stereotype.Service;
 
@@ -77,6 +79,24 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	
 	public List<Long> findOfficeIdsByRoleId(Long roleId){
 		return sysRoleMapper.findOfficeIdsByRoleId(roleId);
+	}
+	
+	/**
+	 * 根据角色id查询拥有的资源 
+	* @param roleId
+	* @return
+	 */
+	public List<SysResource> findResourceByRoleId(Long roleId){
+		return sysRoleMapper.findResourceByRoleId(roleId);
+	}
+	
+	/**
+	 * 根据角色id查询拥有此角色的用户
+	* @param roleId
+	* @return
+	 */
+	public List<SysUser> findUserByRoleId(Long roleId){
+		return sysRoleMapper.findUserByRoleId(roleId);
 	}
 	
 	/**

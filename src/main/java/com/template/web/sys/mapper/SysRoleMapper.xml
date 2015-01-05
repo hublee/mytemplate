@@ -55,6 +55,20 @@
 		select office_id from sys_role_office where role_id = #{roleId}
 	</select>
 	
+	<!-- 根据角色id查找用户 -->
+	<select id="findUserByRoleId" resultType="com.template.web.sys.model.SysUser">
+		select su.id,su.name from sys_user su left join sys_user_role sur 
+		on su.id = sur.user_id 
+		where sur.role_id = #{roleId} 
+	</select>
+	
+	<!-- 根据角色id查询拥有的资源 -->
+	<select id="findResourceByRoleId" resultType="com.template.web.sys.model.SysResource">
+		select sr.id,sr.name from sys_resource sr left join sys_role_resource rr 
+		on sr.id = rr.resource_id
+		where role_id = #{roleId}
+	</select>
+	
 	<!-- 分页查询角色 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysRole">
 		select <include refid="sysRoleColumns"/> from sys_role

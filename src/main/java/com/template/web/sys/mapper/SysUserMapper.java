@@ -3,8 +3,6 @@
 package com.template.web.sys.mapper;
 
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.github.abel533.mapper.Mapper;
@@ -19,8 +17,6 @@ public interface SysUserMapper extends Mapper<SysUser>{
 	
 	public int insertUserRole(SysUser sysUser);
 	
-	public List<SysUser> findUserByRoleId(Long roleId);
-   
 	/**
 	 * 验证账号
 	 */
