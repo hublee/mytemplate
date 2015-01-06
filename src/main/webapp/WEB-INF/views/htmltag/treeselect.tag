@@ -18,10 +18,11 @@
 @var isLayer = isLayer!'true'; //是否为弹窗
 @var treeSelectId = treeSelectId!'tree'; //树id,即是树对象名称
 @var rootNodeName = rootNodeName!""; //虚拟顶级节点名称
+@var inputWidth = inputWidth!'80';
 
 @if(isLayer == "true"){
-<div class="clearfix ${class}" ${style}>
-	<input class="form-control pull-left width-80" type="text" readonly
+<div class="clearfix ${class}" style="${style}">
+	<input class="form-control pull-left" style="width:${inputWidth}%;" type="text" readonly
 	id="${nameId}" name="${modelName}" value="${modelNameValue}"
 	@if(!isEmpty(isCheck)){
 		datatype="*"  nullmsg=${isCheck}

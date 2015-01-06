@@ -30,7 +30,6 @@ public class SysUserController {
 	 */
 	@RequestMapping
 	public String toSysUser(Model model){
-		System.out.println("asdsd1212");
 		return "sys/user/user";
 	}
 	
