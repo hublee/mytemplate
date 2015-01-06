@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,7 +31,19 @@ public class SysUserController {
 	 */
 	@RequestMapping
 	public String toSysUser(Model model){
+		aa();
+		System.out.println("asdsd1212");
 		return "sys/user/user";
+	}
+	
+	@Async
+	public void aa(){
+		try {
+			Thread.sleep(10000);
+			System.out.println("dddd");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
