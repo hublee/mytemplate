@@ -280,7 +280,7 @@ function paging(formId,pageNo){
 	$.fn.getPageList = function(settings){
 		return this.each(function(){
 			var $this = $(this);
-			this.opt = $.extend({},$.fn.defaults,settings);
+			this.opt = $.extend({},$.fn.getPageList.defaults,settings);
 			$("#"+this.opt.submitBtnId).on('click',function(){
 				paging($this.attr("id"),1);
 				return false;
@@ -289,7 +289,7 @@ function paging(formId,pageNo){
 		});
 	}
 	
-	$.fn.defaults = {
+	$.fn.getPageList.defaults = {
 		submitBtnId:"", //提交按钮
 		trigger:true 
 	}
