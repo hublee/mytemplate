@@ -22,7 +22,26 @@
 	</select> 
 	
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysUser">
-		select * from sys_user
+		SELECT su.id,su.name,su.mobile,su.email,su.no,su.login_ip,su.login_date,
+			su.company_id,su.office_id,GROUP_CONCAT(sr.name) roles 
+		FROM sys_user su 
+		LEFT JOIN sys_user_role sur ON su.id = sur.user_id 
+		LEFT JOIN sys_role sr ON sur.role_id = sr.id
+		<where>
+			<if test="companyId!=0">
+				su.company_id = #{companyId}
+			</if>
+			<if test="officeId!=0">
+				and su.office_id = #{officeId}
+			</if>
+			<if test="@Ognl@isNotBlank(name)">
+				and su.name like concat('%', #{name} ,'%')
+			</if>
+			<if test="@Ognl@isNotBlank(no)">
+				and su.no like concat('%', #{no} ,'%')
+			</if>
+		</where>
+		GROUP BY su.id
 	</select>
 
 </mapper>

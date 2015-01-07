@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
@@ -53,6 +54,8 @@ public class SysUserController {
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model){
+		PageInfo<SysUser> page = sysUserService.findPageInfo(params);
+		model.addAttribute("page", page);
 		return "sys/user/user-list";
 	}
 	
