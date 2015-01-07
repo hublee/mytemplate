@@ -100,6 +100,15 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	}
 	
 	/**
+	 * 根据用户id查询角色
+	* @param userId
+	* @return
+	 */
+	public List<SysRole> findRoleByUserId(Long userId){
+		return sysRoleMapper.findRoleByUserId(userId);
+	}
+	
+	/**
 	 * 添加角色下的人员
 	* @param sysRole
 	* @return

@@ -1,19 +1,23 @@
 package com.template.web.sys.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
@@ -57,6 +61,25 @@ public class SysUserController {
 		PageInfo<SysUser> page = sysUserService.findPageInfo(params);
 		model.addAttribute("page", page);
 		return "sys/user/user-list";
+	}
+	
+	/**
+	 * 弹窗
+	* @param id 用户id
+	* @param mode 模式
+	* @return
+	 */
+	@RequestMapping(value="{mode}/showlayer")
+	public String showLayer(Long id,@PathVariable("mode") String mode, Model model){
+		SysUser user = null;
+		List<SysRole> roles = null;
+		if(StringUtils.equals("detail", mode)){
+			user = sysUserService.selectByPrimaryKey(id);
+			roles = sysRoleService.findRoleByUserId(id);
+		}
+		model.addAttribute("user", user)
+			.addAttribute("roles", roles);
+		return mode.equals("detail")?"sys/user/user-detail":"sys/user/user-save";
 	}
 	
 	/**

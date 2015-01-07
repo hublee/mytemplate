@@ -7,7 +7,7 @@
 			<th class="center">电话</th>
 			<th class="center">邮箱</th>
 			<th class="center">工号</th>
-			<th class="center">最后登录ip</th>
+			<th class="center">最后登录IP</th>
 			<th class="center">最后登录时间</th>
 			<th class="center">操作</th>
 		</tr>
@@ -17,7 +17,14 @@
 		@var office = office.getAllOffice();
 		@for(item in page.list){
 			<tr>
-				<td class="center"><a href="javascript:void(0);">${item.name!}</a></td>
+				<td class="center">
+				<a href="javascript:;" 
+						data-title="<${item.name!}>详情" data-mode="detail"
+						data-url="${rootPath}/sysuser/detail/showlayer"
+						data-data="{id:'${item.id}'}"
+						data-width="400" data-height="477"
+					>${item.name!}</a>
+				</td>
 				<td class="center">${office[item.companyId].name!} — ${office[item.officeId].name!}</td>
 				<td class="center">${item.roles!}</td>
 				<td class="center">${item.mobile!}</td>
@@ -27,20 +34,27 @@
 				<td class="center">${item.loginDate!,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">
-						<a class="green" href="javascript:void(0);" 
+					
+						<a class="green" href="javascript:void(0);" title="分配角色"
 							data-mode="page" data-title="编辑"
 							data-url="${rootPath}/dict/edit/showlayer"
 							data-data="{id:'${item.id}'}"
-							data-height="320"
-						>
+							data-height="320">
+							<i class="ace-icon fa fa-graduation-cap bigger-130"></i>
+						</a>
+						
+						<a class="green" href="javascript:void(0);" title="编辑"
+							data-mode="page" data-title="编辑"
+							data-url="${rootPath}/dict/edit/showlayer"
+							data-data="{id:'${item.id}'}"
+							data-height="320">
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>
 
-						<a class="red" href="javascript:void(0);" 
+						<a class="red" href="javascript:void(0);" title="删除"
 							data-mode="del" data-title="删除操作"
 							data-msg="你确定删除此数据吗?"
-							data-url="${rootPath}/dict/del" data-data="{id:'${item.id}',type:'${item.type}'}"
-						>
+							data-url="${rootPath}/dict/del" data-data="{id:'${item.id}',type:'${item.type}'}">
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
 						</a>
 					</div>
