@@ -10,7 +10,8 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
-			<form action="${rootPath}/role/list" method="post" id="search-form" target="list-page" class="clearfix">
+			<form action="${rootPath}/role/list" method="post" id="search-form" 
+			target="list-page" class="clearfix">
 				<div class="pull-left width-30">
 					<label>数据范围：</label>
 					<#dict width="60%" type="sys_data_scope" isDefault="yes" name="dataScope"/>
@@ -36,7 +37,7 @@
 					<#treeselect url="office/tree" 
 							modelId="officeId" class="width-50"
 							isCheck="请选择归属机构"
-							style="display: inline-block;vertical-align: middle;"/>
+							/>
 				</div>
 				<div class="center padding-10">
 					<label>角色名称：</label>
