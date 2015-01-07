@@ -30,3 +30,47 @@ $(function(){
 	</span>
 	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
 </div>
+
+
+
+<div class="center padding-10">
+					<label class="">归属机构：</label>
+					<#treeselect url="office/tree" 
+							modelId="officeId" class="width-50"
+							isCheck="请选择归属机构"
+							/>
+				</div>
+				<div class="center padding-10">
+					<label>角色名称：</label>
+					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入角色名称！"/>
+				</div>
+				<div class="center padding-10">
+					<label>数据范围：</label>
+					<div class="width-50" style="display: inline-block;text-align: left;">
+					<#dict type="sys_data_scope" width="40%" id="chosenSelectData" name="dataScope" isScript="true">
+						$("#chosenSelectData").change(function(){
+							if($(this).val() == 9){
+								$("#treeSelectOffice").show();
+							}else{
+								$("#treeSelectOffice").hide();
+							}
+						})
+						$("#chosenSelectData option[value='9']").attr("selected",true);
+						$("#chosenSelectData").trigger("chosen:updated");
+					</#dict>
+					<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
+					</div>
+				</div>
+				<div class="center padding-10">
+					<label>角色授权：</label>
+					<div class="clearfix" style="width: 50%;display: inline-block;vertical-align: top;">
+						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
+							class="width-50" treeSelectId="treeSelectRes">
+							<div id="treeSelectRes" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
+						</#treeselect>
+						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
+							class="width-50" treeSelectId="treeSelectOffice">
+							<div id="treeSelectOffice" style="width: 50%;display: inline-block;vertical-align: top;float: right"></div>
+						</#treeselect>
+					</div>
+				</div>

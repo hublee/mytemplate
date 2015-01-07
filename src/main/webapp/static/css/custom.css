@@ -18,33 +18,34 @@ ul.ztree li span.button.cusicon{
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float: none;text-align: center;}
 .ui-dialog .ui-dialog-buttonpane{padding: 0px;margin: 0px;}
 .ui-dialog .ui-dialog-buttonpane button{margin: 5px 15px;}
+
 .layer{padding: 10px 20px;}
-.layer .FormData {
+
+.EditTable {
+background-color: rgb(255, 255, 255);
+padding: 0px;
+border-top: none;
+}
+.EditTable .FormData {
 border-bottom: 1px dotted #E8E8E8;
 }
-.layer .FormData > td {
+.EditTable .FormData > td {
 padding-top: 6px;
 padding-bottom: 6px;
 padding-right: 8px;
 }
-.layer .CaptionTD {
+.EditTable .CaptionTD {
 font-size: 14px;
 text-align: right;
 color: #666;
-}
-.layer .CaptionTD {
 vertical-align: middle;
 border: 0 none;
 padding: 2px;
 white-space: nowrap;
 }
-.layer .FormData > td {
-padding-top: 6px;
-padding-bottom: 6px;
-}
-.layer .DataTD {
+.EditTable .DataTD {
 padding: 2px;
 border: 0 none;
 vertical-align: top;
 }
-.layer .DataTD input{width:100%;}
+.EditTable .DataTD input{width:100%;}
