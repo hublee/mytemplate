@@ -3,6 +3,9 @@
 package com.template.web.sys.mapper;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.github.abel533.mapper.Mapper;
@@ -16,6 +19,8 @@ import com.template.web.sys.model.SysUser;
 public interface SysUserMapper extends Mapper<SysUser>{
 	
 	public int insertUserRole(SysUser sysUser);
+	
+	public List<SysUser> findPageInfo(Map<String, Object> params);
 	
 	/**
 	 * 验证账号

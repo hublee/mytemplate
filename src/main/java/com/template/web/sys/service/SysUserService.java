@@ -2,10 +2,15 @@
 
 package com.template.web.sys.service;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.mapper.SysUserMapper;
@@ -34,6 +39,19 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			
 		}
 		return count;
+	}
+	
+	/**
+	 * 用户列表
+	* @param params
+	* @return
+	 */
+	public PageInfo<SysUser> findPageInfo(Map<String, Object> params) {
+		PageHelper.startPage(
+				Integer.parseInt(params.get("pageNum").toString()),
+				Integer.parseInt(params.get("pageSize").toString()));
+		List<SysUser> list = sysUserMapper.findPageInfo(params);
+		return new PageInfo<SysUser>(list);
 	}
 	
 	/**

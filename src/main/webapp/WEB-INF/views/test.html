@@ -13,17 +13,20 @@ $(function(){
 </script>
 
 
-<div class="center padding-10">
-					<label>归属公司：</label>
-					<#treeselect url="office/tree?type=1" 
-							modelId="companyId" class="width-50"
-							order="1" isCheck="请选择归属公司"
-							style="style='display: inline-block;vertical-align: middle;'"/>
-				</div>
-				<div class="center padding-10">
-					<label>归属部门：</label>
-					<#treeselect url="office/tree" 
-							modelId="officeId" class="width-50"
-							order="2" isCheck="请选择归属部门"
-							style="style='display: inline-block;vertical-align: middle;'"/>
-				</div>
+<div class="clearfix ${class}" style="${style}">
+	<input class="form-control pull-left" style="width:${inputWidth}%!important;;" type="text" readonly
+	id="${nameId}" name="${modelName}" value="${modelNameValue}"
+	@if(!isEmpty(isCheck)){
+		datatype="*"  nullmsg=${isCheck}
+	@}
+	>
+	<span class="input-group-btn pull-left width-20">
+		<span class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
+		data-mode="page" data-url="${rootPath}/tag/treeselect"
+		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}',isLayer:'${isLayer}'}" 
+		data-title="请选择" data-width="${width!}" data-height="${height}">
+			<i class="ace-icon fa fa-search bigger-110"></i>查找
+		</span>
+	</span>
+	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
+</div>

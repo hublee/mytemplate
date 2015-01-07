@@ -12,21 +12,36 @@
 		<div id="home" class="tab-pane active clearfix">
 			<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
 			target="list-page" class="clearfix">
-			
-				<div class="inline width-30">
-					<label class="inline-block">归属公司：</label>
-					<#treeselect url="office/tree?type=1" 
-						modelId="companyId" inputWidth="55"
-						order="1" class="inline-block"/>
+			<div class="center">
+				<div class="padding-5">
+					<div class="inline width-40">
+						<label class="pull-left lh-32">归属公司：</label>
+						<#treeselect url="office/tree?type=1" 
+							modelId="companyId" 
+							order="1" class="pull-left width-80"/>
+					</div>
+					<div class="inline width-40">
+						<label class="pull-left lh-32">归属部门：</label>
+						<#treeselect url="office/tree" 
+							modelId="officeId" 
+							order="2" class="pull-left width-80"/>
+					</div>
 				</div>
-				<div class="inline width-30">
-					<label>归属部门：</label>
-					<#treeselect url="office/tree" 
-						modelId="officeId" inputWidth="55"
-						order="2" />
+				<div class="padding-5">
+					<div class="inline width-40">
+						<label class="pull-left lh-32">真实姓名：</label>
+						<input type="text" class="pull-left width-80" name="name"/>
+					</div>
+					<div class="inline width-40">
+						<label class="pull-left lh-32">工作工号：</label>
+						<input type="text" class="pull-left width-80" name="no"/>
+					</div>
 				</div>
+			</div>
+			<div class="width-100">
+				<span class="btn btn-info btn-sm width-100" id="search-btn">查 询</span>
+			</div>
 				<input type="hidden" value="0" name="delFlag" />
-				<div class=""><span class="btn btn-info btn-sm " id="search-btn">查 询</span></div>
 			</form>
 			<hr/>
 			<div id="list-page"></div>

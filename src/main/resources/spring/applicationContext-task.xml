@@ -19,7 +19,7 @@
 	default-lazy-init="false">
 	
 	<!-- 任务调度器 -->  
-	<task:scheduler id="scheduler" pool-size="10"/>  
+	<task:scheduler id="scheduler" pool-size="10" />  
 	
 	<!-- 任务执行器 -->  
 	<task:executor id="executor" pool-size="10"/> 

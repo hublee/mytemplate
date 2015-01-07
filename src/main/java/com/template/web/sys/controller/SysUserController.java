@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.web.sys.model.SysUser;
@@ -38,9 +40,20 @@ public class SysUserController {
 	 * 保存用户
 	* @return
 	 */
-	@RequestMapping("save")
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysUser sysUser){
 		return sysUserService.saveSysUser(sysUser);
+	}
+	
+	/**
+	 * 用户列表
+	* @param params
+	* @param model
+	* @return
+	 */
+	@RequestMapping(value = "list", method = RequestMethod.POST)
+	public String list(@RequestParam Map<String, Object> params, Model model){
+		return "sys/user/user-list";
 	}
 	
 	/**

@@ -18,18 +18,17 @@
 @var isLayer = isLayer!'true'; //是否为弹窗
 @var treeSelectId = treeSelectId!'tree'; //树id,即是树对象名称
 @var rootNodeName = rootNodeName!""; //虚拟顶级节点名称
-@var inputWidth = inputWidth!'80';
 
 @if(isLayer == "true"){
-<div class="clearfix ${class}" style="${style}">
-	<input class="form-control pull-left" style="width:${inputWidth}%;" type="text" readonly
+<div class="clearfix ${class} input-group" style="${style}">
+	<input class="form-control search-query" type="text" readonly
 	id="${nameId}" name="${modelName}" value="${modelNameValue}"
 	@if(!isEmpty(isCheck)){
 		datatype="*"  nullmsg=${isCheck}
 	@}
 	>
-	<span class="input-group-btn pull-left width-20">
-		<span class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
+	<span class="input-group-btn">
+		<span class="btn btn-purple btn-sm" type="button" style="height: 34px;"
 		data-mode="page" data-url="${rootPath}/tag/treeselect"
 		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}',isLayer:'${isLayer}'}" 
 		data-title="请选择" data-width="${width!}" data-height="${height}">
