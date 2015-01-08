@@ -295,6 +295,18 @@ function paging(formId,pageNo){
 	}
 })(jQuery);
 
+//提示tip
+var tip={
+	errorTip:function(msg,obj,style){
+		style = style == undefined?['background-color:#F26C4F; color:#fff','#F26C4F' ]:style;
+		layer.tips(msg, obj, {
+			guide:0,
+			time: 4,
+			style : style
+		});
+	}
+};
+
 
 // Find the right method, call on correct element
 function launchFullscreen(element) {

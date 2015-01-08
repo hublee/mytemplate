@@ -22,6 +22,14 @@ $(function(){
 	
 var ${validId} = $("#${formId}").Validform({
 		ajaxPost : true,
+		beforeCheck:function(curform){
+			var flag = $("#username")[0].validform_valid;
+			if(flag != "true"){
+				 $("#username")[0].focus();
+				 tip.errorTip(flag,$("#username"));
+				 return false;
+			}
+		},
 		beforeSubmit:function(curform){
 			var loadi = layer.load(5,2);
 			$("#${formId}").data('loadi',loadi);
@@ -44,11 +52,7 @@ var ${validId} = $("#${formId}").Validform({
 		tiptype : function(msg, o, cssctl) {
 			if (!o.obj.is("form")) {
 				if (o.type != 2) {
-					layer.tips(msg, o.obj, {
-						guide:0,
-						time: 4,
-						style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
-					});
+					tip.errorTip(msg,o.obj);
 				}
 			}
 		},
@@ -57,7 +61,7 @@ var ${validId} = $("#${formId}").Validform({
 
 	$("#${subBtnId}").click(function() {
 		if("${config}" == "true"){
-			${tagBody!};
+			${tagBody!}
 		}
 		${validId}.submitForm(false);
 		return false;
