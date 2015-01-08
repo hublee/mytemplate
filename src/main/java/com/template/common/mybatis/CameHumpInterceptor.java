@@ -42,6 +42,7 @@ public class CameHumpInterceptor implements Interceptor {
             //1.resultType时
             if (resultMap.getId().endsWith(RESULT_TYPE)) {
                 for (Object re : resultList) {
+                	if(re == null) continue;
                     processMap((Map) re);
                 }
             } else {//2.resultMap时

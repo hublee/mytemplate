@@ -64,7 +64,7 @@
 	
 	<!-- 根据用户id查找角色 -->
 	<select id="findRoleByUserId" resultType="com.template.web.sys.model.SysRole">
-		SELECT sr.id,sr.name FROM sys_user su LEFT JOIN sys_user_role sur 
+		SELECT sr.id,sr.name,sr.office_id FROM sys_user su LEFT JOIN sys_user_role sur 
 		ON su.id = sur.user_id 
 		LEFT JOIN sys_role sr ON sur.role_id = sr.id
 		WHERE su.id = #{userId}

@@ -20,7 +20,9 @@
 		<div class="profile-info-value">
 			<span class="editable editable-click">
 			@for(role in roles){
-				${role.name!}${decode(roleLP.last,true,'','，')}
+				@if(isEmpty(role)) continue;
+				${role.name!}(${office[office[role.officeId].parentId].name!} - ${office[role.officeId].name!})
+				${decode(roleLP.last,true,'','，')}
 			@}
 			</span>
 		</div>
