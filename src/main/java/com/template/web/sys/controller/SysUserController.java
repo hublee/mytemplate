@@ -71,11 +71,13 @@ public class SysUserController {
 	 */
 	@RequestMapping(value="{mode}/showlayer")
 	public String showLayer(Long id,@PathVariable("mode") String mode, Model model){
-		SysUser user = null;
+		SysUser user = sysUserService.selectByPrimaryKey(id);;
 		List<SysRole> roles = null;
 		if(StringUtils.equals("detail", mode)){
-			user = sysUserService.selectByPrimaryKey(id);
 			roles = sysRoleService.findRoleByUserId(id);
+		}
+		if(StringUtils.equals("edit", mode)){
+			
 		}
 		model.addAttribute("user", user)
 			.addAttribute("roles", roles);

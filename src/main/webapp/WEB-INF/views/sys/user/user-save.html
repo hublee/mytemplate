@@ -1,0 +1,82 @@
+<div class="layer">
+	<form name="FormPost" id="sysuser-save" class="FormGrid"  method="post"
+		action="${rootPath}/sysuser/save">
+		
+		<input type="hidden" value="${user.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr class="FormData">
+					<td class="CaptionTD">姓名</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入角色名！"
+						value="${user.name!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">归属机构</td>
+					<td class="DataTD width-100">
+					<select class="chosen-select" id="editOfficeGroup" name="officeId">
+						@print(office.resolveNode(office.getOfficeTree()));
+					</select>
+					<input type="hidden" name="companyId" id="editCompanyId" />
+					<script>
+					$("#editOfficeGroup").chosen({'width':'100%',search_contains: true}).change(function(){
+						var cur = $(this).find("option:selected");
+						var pid = cur.data("pid");
+						var pname = $(this).find("[value="+pid+"]").text();
+						var office = $.trim(pname)+" （"+$.trim(cur.text())+"）";
+						$("#editOfficeGroup_chosen .chosen-single span").text(office);
+						$("#editCompanyId").val(pid==undefined?cur.val():pid);
+					});
+					$("#editOfficeGroup").find("option[value='${user.officeId!}']").prop("selected",true).trigger('change');
+					</script>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">登录名</td>
+					<td class="DataTD width-100">
+					<input type="text" value="${user.username!}" name="username"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">电话</td>
+					<td class="DataTD">
+					<input type="text" value="${user.mobile!}" name="moblie"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">手机</td>
+					<td class="DataTD">
+					<input type="text" value="${user.phone!}" name="phone"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">邮箱</td>
+					<td class="DataTD">
+					<input type="text" value="${user.email!}" name="email"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">工号</td>
+					<td class="DataTD">
+					<input type="text" value="${user.no!}" name="no"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="remarks" class="autosize-transition form-control "
+						style="resize: none;">${user.remarks!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="sysuser-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

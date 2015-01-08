@@ -36,7 +36,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			count = this.insertSelective(sysUser);
 			sysUserMapper.insertUserRole(sysUser);
 		}else{
-			
+			count = this.updateByPrimaryKeySelective(sysUser);
 		}
 		return count;
 	}
