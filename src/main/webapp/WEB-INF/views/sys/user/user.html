@@ -179,4 +179,14 @@
 validId="sysuserForm" config="true">
 	var role = $("#curRoles").find("option");
 	role.attr("selected","true");
+	sysuserForm.config({
+		beforeCheck:function(curform){
+			var flag = $("#username")[0].validform_valid;
+			if(flag != "true" && $.trim($("#username").val())!=""){
+				 $("#username")[0].focus();
+				 tip.errorTip(flag,$("#username"));
+				 return false;
+			}
+		}
+	});
 </#save>
