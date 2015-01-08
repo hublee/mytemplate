@@ -47,6 +47,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	 */
     public int insert(T record){
     	record.set("createDate", new Date());
+    	record.set("updateDate", new Date());
     	return mapper.insert(record);
     }
 
@@ -58,6 +59,7 @@ public abstract class ServiceMybatis<T extends Entity> implements BaseService<T>
 	 */
     public int insertSelective(T record){
     	record.set("createDate", new Date());
+    	record.set("updateDate", new Date());
     	return mapper.insertSelective(record);
     }
 

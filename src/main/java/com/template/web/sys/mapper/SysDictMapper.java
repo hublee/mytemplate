@@ -5,9 +5,6 @@ package com.template.web.sys.mapper;
 import com.github.abel533.mapper.Mapper;
 import com.template.web.sys.model.SysDict;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * 
  * @author 
@@ -15,6 +12,4 @@ import java.util.Map;
 
 public interface SysDictMapper extends Mapper<SysDict>{
 
-	public List<SysDict> findPageInfo(Map<String, Object> params);
-	
 }

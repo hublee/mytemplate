@@ -36,6 +36,7 @@
 				FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id}
 			</if>
 		</where>
+		ORDER BY a.update_date desc
 	</select>
 
 </mapper>

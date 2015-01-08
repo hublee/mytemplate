@@ -42,7 +42,7 @@
 				and su.no like concat('%', #{no} ,'%')
 			</if>
 		</where>
-		GROUP BY su.id
+		GROUP BY su.id ORDER BY su.update_date desc
 	</select>
 
 </mapper>
