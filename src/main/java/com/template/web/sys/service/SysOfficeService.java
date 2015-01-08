@@ -11,6 +11,7 @@ import com.template.web.sys.model.SysOffice;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,6 +56,15 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	@CacheEvict(key="'allOffice'")
 	public int deleteOfficeByRootId(Long id){
 		return sysOfficeMapper.deleteIdsByRootId(id);
+	}
+	
+	/**
+	 * 全部机构
+	* @return
+	 */
+	@Cacheable(key="'allOffice'")
+	public List<SysOffice> getAllOffice(){
+		return sysOfficeMapper.select(null);
 	}
 	
 	

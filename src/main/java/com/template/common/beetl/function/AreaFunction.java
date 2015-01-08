@@ -19,10 +19,9 @@ public class AreaFunction implements Function{
 	@Resource
 	private SysAreaService sysAreaService;
 	
-	private static final Map<Long, Object> map = new HashMap<Long, Object>();
-	
 	@Override
 	public Object call(Object[] params, Context ctx) {
+		Map<Long, Object> map = new HashMap<Long, Object>();
 		List<SysArea> list = null;
 		try {
 			list = sysAreaService.findAllArea();

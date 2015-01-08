@@ -27,8 +27,6 @@ public class DictFunction implements Function{
 	@Resource
 	private SysDictService sysDictService;
 	
-	private static final Map<String, Object> map = new HashMap<String, Object>();
-
 	/**
 	 * 字典方法
 	* @param [0]类型 [1]allType
@@ -44,6 +42,7 @@ public class DictFunction implements Function{
 			try {
 				dicts = sysDictService.findSysDictListByParams(sysDict);
 				if(paras.length>=2){
+					Map<String, Object> map = new HashMap<String, Object>();
 					if("allType".equals(paras[1])){
 						for(SysDict dict : dicts){
 							map.put(dict.getType(), dict);
