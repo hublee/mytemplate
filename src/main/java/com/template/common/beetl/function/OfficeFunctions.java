@@ -66,7 +66,7 @@ public class OfficeFunctions {
 	 * 得到全部的部门
 	* @return
 	 */
-	public List<SysOffice> getDep(){
+	public List<SysOffice> getOfficeDep(){
 		List<SysOffice> newList = getOfficeByType("2");
 		newList = TreeUtils.toTreeNodeList(newList);
 		return newList;
@@ -77,6 +77,8 @@ public class OfficeFunctions {
 		return roles;
 	}
 	
+	
+	//一下都是暂时用
 	/**
 	 * 构造机构树
 	* @return
@@ -98,6 +100,7 @@ public class OfficeFunctions {
 		return builder.toString();
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected void formatTree(StringBuilder builder, List<SysOffice> items){
 		for(SysOffice tn : items){
 			if(tn.getBooleanValue("hasChild")){

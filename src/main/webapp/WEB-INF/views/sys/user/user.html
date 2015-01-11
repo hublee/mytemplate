@@ -41,8 +41,8 @@
 					</div>
 				</div>
 				<div class="padding-5">
-					@var company = office.getOfficeByType("1"); //公司
-					@var office = office.getDep();
+					@var company = office.getOfficeByType("1"); //全部公司
+					@var office = office.getOfficeDep(); //全部部门
 					
 					<#pullDownTree order="one" treeData="${company}" name="companyId" 
 						reloadFn="true"  reloadOrder="two" reloadData="${office}" />
