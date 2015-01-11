@@ -35,16 +35,16 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 	* @return
 	 */
 	@Caching(evict = {
-		@CacheEvict(key="'dict_'+#sysDict['type']"),
-		@CacheEvict(key="'dict_'")	
+		@CacheEvict(key="'dict'+#sysDict['type']"),
+		@CacheEvict(key="'dict'")	
 	})
 	public int saveSysdict(SysDict sysDict){
 		return this.save(sysDict);
 	}
 	
 	@Caching(evict = {
-			@CacheEvict(key="'dict_'+#sysDict['type']"),
-			@CacheEvict(key="'dict_'")	
+			@CacheEvict(key="'dict'+#sysDict['type']"),
+			@CacheEvict(key="'dict'")	
 	})
 	public int deleteSysDict(SysDict sysDict){
 		return this.delete(sysDict);
@@ -53,7 +53,7 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 	/**
 	 * 根据字典类型查询,做一下缓存
 	 */
-	@Cacheable(key="'dict_'+#sysDict['type']")
+	@Cacheable(key="'dict'+#sysDict['type']")
 	public List<SysDict> findSysDictListByParams(SysDict sysDict) {
 		List<SysDict> dicts = this.select(sysDict);
 	    return dicts;

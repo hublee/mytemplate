@@ -34,7 +34,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	/**
 	 *新增或更新SysOffice
 	 */
-	@CacheEvict(key="'allOffice'")
+	@CacheEvict(key="'office'")
 	public int saveSysOffice(SysOffice sysOffice){
 		int count = 0;
 		//新的parentIds
@@ -53,7 +53,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		return count;
 	}
 	
-	@CacheEvict(key="'allOffice'")
+	@CacheEvict(key="'office'")
 	public int deleteOfficeByRootId(Long id){
 		return sysOfficeMapper.deleteIdsByRootId(id);
 	}
@@ -62,7 +62,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	 * 全部机构
 	* @return
 	 */
-	@Cacheable(key="'allOffice'")
+	@Cacheable(key="'office'")
 	public List<SysOffice> getAllOffice(){
 		return sysOfficeMapper.select(null);
 	}

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.template.common.base.TreeNode;
@@ -30,10 +31,25 @@ public class OfficeFunctions {
 	public Map<Long, Object> getAllOffice(){
 		Map<Long, Object> map = new HashMap<Long, Object>();
 		List<SysOffice> list = sysOfficeService.getAllOffice();
-		for(SysOffice o : list){
-			map.put(o.getId(), o);
+		for(SysOffice so : list){
+			map.put(so.getId(), so);
 		}
 		return map;
+	}
+	
+	/**
+	 * 根据类型得到机构
+	* @param type 类型
+	 */
+	public List<SysOffice> getOfficeByType(String type){
+		List<SysOffice> list = sysOfficeService.getAllOffice();
+		List<SysOffice> typeList = new ArrayList<SysOffice>();
+		for(SysOffice so : list){
+			if(StringUtils.equals(so.getType(), type)){
+				typeList.add(so);
+			}
+		}
+		return typeList;
 	}
 	
 	public List<SysRole> getAllRole(){
@@ -55,18 +71,23 @@ public class OfficeFunctions {
 		return TreeNode.baseTreeNode(list);
 	}
 	
-	public String resolveNode(List<TreeNode> items){
+	/**
+	 * 格式化树结构
+	* @param items
+	* @return
+	 */
+	public String formatTree(List<TreeNode> items){
 		StringBuilder builder = new StringBuilder();
-		resolveNode(builder, items);
+		formatTree(builder, items);
 		return builder.toString();
 	}
 	
-	protected void resolveNode(StringBuilder builder, List<TreeNode> items){
+	protected void formatTree(StringBuilder builder, List<TreeNode> items){
 		for(TreeNode tn : items){
 			if(tn.getHasChild()){
 				builder.append("<option value='"+tn.getId()+"' style='font-weight:bold;' data-level="+tn.getLevel()+">"
 			+getTabStr(tn.getLevel()-1)+tn.getName()+"</option>");
-				resolveNode(builder, tn.getItems());
+				formatTree(builder, tn.getItems());
 			}else{
 				builder.append("<option value='"+tn.getId()+"' data-pid='"+tn.getParentId()+"'>"+getTabStr(tn.getLevel())+tn.getName()+"</option>");
 			}

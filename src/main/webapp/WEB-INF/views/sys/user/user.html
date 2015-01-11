@@ -20,8 +20,8 @@
 					<div class="inline width-40">
 						<label class="pull-left lh-32">归属公司：</label>
 						<#treeselect url="office/tree?type=1" 
-							modelId="companyId" 
-							order="1" class="pull-left width-80"/>
+							modelId="companyId" nameId="treeselectcompanyname"
+							order="1" class="pull-left width-80" />
 					</div>
 					<div class="inline width-40">
 						<label class="pull-left lh-32">归属部门：</label>
@@ -36,9 +36,13 @@
 						<input type="text" class="pull-left width-80" name="name"/>
 					</div>
 					<div class="inline width-40">
-						<label class="pull-left lh-32">工作工号：</label>
+						<label class="pull-left lh-32">所属角色：</label>
 						<input type="text" class="pull-left width-80" name="no"/>
 					</div>
+				</div>
+				<div class="padding-5">
+					@var typeOffices = office.getOfficeByType("1"); //公司
+					<#pullDownTree order="one" treeData="${typeOffices}" name="companyId"/>
 				</div>
 			</div>
 			<div class="width-100">
@@ -79,7 +83,7 @@
 					<label>归属机构：</label>
 					<div class="width-50 inline text-left">
 						<select class="chosen-select" id="officeGroup" name="officeId">
-							@print(office.resolveNode(office.getOfficeTree()));
+							@print(office.formatTree(office.getOfficeTree()));
 						</select>
 						<span class="red width-50">*用户只能归属一个机构，提交前请正确选择!</span>
 					</div>

@@ -37,6 +37,7 @@
 	</span>
 	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
 </div>
+${tagBody!}
 @}else{
 	${tagBody!}
 	<script>
