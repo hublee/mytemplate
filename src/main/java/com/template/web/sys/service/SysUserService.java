@@ -47,9 +47,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	* @return
 	 */
 	public PageInfo<SysUser> findPageInfo(Map<String, Object> params) {
-		PageHelper.startPage(
-				Integer.parseInt(params.get("pageNum").toString()),
-				Integer.parseInt(params.get("pageSize").toString()));
+		PageHelper.startPage(params);
 		List<SysUser> list = sysUserMapper.findPageInfo(params);
 		return new PageInfo<SysUser>(list);
 	}

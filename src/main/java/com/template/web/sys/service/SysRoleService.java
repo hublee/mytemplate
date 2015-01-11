@@ -65,10 +65,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	 * @param {"pageNum":"页码","pageSize":"条数","isCount":"是否生成count sql",......}
 	 */
 	public PageInfo<SysRole> findPageInfo(Map<String,Object> params) {
-		boolean isCount = params.containsKey("isCount")?
-				Boolean.parseBoolean(params.get("isCount").toString()):true;
-        PageHelper.startPage(Integer.parseInt(params.get("pageNum").toString()),
-				Integer.parseInt(params.get("pageSize").toString()), isCount);
+        PageHelper.startPage(params);
         List<SysRole> list = sysRoleMapper.findPageInfo(params); 
         return new PageInfo<SysRole>(list);
 	}

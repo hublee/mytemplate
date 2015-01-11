@@ -15,7 +15,7 @@
 					<td class="CaptionTD">归属机构</td>
 					<td class="DataTD width-100">
 					<select class="chosen-select" id="editOfficeGroup" name="officeId">
-						@print(office.resolveNode(office.getOfficeTree()));
+						@print(office.formatTree(office.getOfficeTree()));
 					</select>
 					<input type="hidden" name="companyId" id="editCompanyId" />
 					<script>

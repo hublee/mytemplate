@@ -70,9 +70,7 @@ public class SysResourceService extends ServiceMybatis<SysResource>{
 	 * @return
 	 */
 	public PageInfo<SysResource> findPageInfo(Map<String, Object> params) {
-		PageHelper.startPage(
-				Integer.parseInt(params.get("pageNum").toString()),
-				Integer.parseInt(params.get("pageSize").toString()));
+		PageHelper.startPage(params);
 		List<SysResource> list = sysResourceMapper.findPageInfo(params);
 		return new PageInfo<SysResource>(list);
 	}

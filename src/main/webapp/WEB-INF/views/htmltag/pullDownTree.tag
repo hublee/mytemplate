@@ -1,14 +1,20 @@
+@ //提交的input id:  pullDownTreeCurId${order} id , pullDownTreeCurName${order} name 
+@ //树对象 pullDownTreeCurTree${order} 
 @var treeData = treeData!"[]";
-@var order = order!"";
+@var order = order!""; //序号
 @var name = name!"";
-@var value = value!"";
+@var value = value!"0";
+@var reloadFn = reloadFn!"false";
+@var reloadOrder = reloadOrder!"";
+@var reloadData = reloadData!"[]";
+
 
 <div class="btn-group">
 	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle">
 		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
-	<div class="dropdown-menu dropdown-caret">
+	<div class="dropdown-menu dropdown-caret" >
 		<div class="padding-10">
 			<div style="width:300px;padding-bottom: 10px;">
 				<span class="">搜索：</span>
@@ -21,10 +27,31 @@
 <input type="hidden" name="${name}" value="${value}" id="pullDownTreeCurId${order}"/>
 
 <script>
+var pullDownTreeCurTree${order},pullDownTreeSetting${order};
+
+@if(reloadFn == "true"){
+	function pullDownTreeReload${reloadOrder}(){
+		$("#pullDownTreeCurId${reloadOrder}").val("0");
+		$("#pullDownTreeCurName${reloadOrder}").text("全部");
+		var id = $("#pullDownTreeCurId${order}").val();
+		var tree = ${reloadData!"[]"},newData = [];
+		for(var i=0;i<tree.length;i++){
+			var pid = tree[i].parentId;
+			if(pid == id){
+				tree[i]["parentId"] = 0;
+				newData.push(tree[i]);
+			}
+		}
+		var root = {"id":0,"name":"全部","open":true};
+		newData[newData.length] = root;
+		$.fn.zTree.init($("#pullDownTree${reloadOrder}"),pullDownTreeSetting${reloadOrder},newData);
+	}
+@}
+
 $(function() { 
 	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
 	
-	var pullDownTree${order} = {
+	pullDownTreeSetting${order} = {
 		view:{
 			expandSpeed:100,
 			selectedMulti : false,
@@ -41,25 +68,28 @@ $(function() {
 			key:{name:"name"}
 		},
 		callback:{
-			onClick: selectClick,
-			beforeClick:beforeClick
+			onClick: selectClick
 		}
 	};
 	
+	var treeData${order} = ${treeData!"[]"};
+	var root = {"id":0,"name":"全部","open":true};
+	treeData${order}[treeData${order}.length] = root;
+	pullDownTreeCurTree${order} = $.fn.zTree.init($("#pullDownTree${order}"), pullDownTreeSetting${order}, treeData${order});
 	
-	var root = {id:0,name:"全部",open:true};
-	${treeData}[${treeData}.length] = root;
-	var tree${order} = $.fn.zTree.init($("#pullDownTree${order}"), pullDownTree${order}, ${treeData});
-	var nodes = tree${order}.getNodesByParam("level", 0);
+	var nodes = pullDownTreeCurTree${order}.getNodesByParam("level", 0);
 	for(var i=0; i<nodes.length; i++) {
-		tree${order}.expandNode(nodes[i], true, false, false);
+		pullDownTreeCurTree${order}.expandNode(nodes[i], true, false, false);
 	}
 	
-	function beforeClick(treeId, treeNode){
-	}
 	function selectClick(e, treeId, treeNode){
 		$("#pullDownTreeCurId${order}").val(treeNode.id);
 		$("#pullDownTreeCurName${order}").text(treeNode.name);
+		@if(reloadFn == "true" && !isEmpty(reloadOrder)){
+			pullDownTreeReload${reloadOrder}();
+		@}else if(reloadFn == "true" && isEmpty(reloadOrder)){
+			${tagBody!}
+		@}
 	}
 	
 	var pullDownTreeList${order} = [];
@@ -74,18 +104,17 @@ $(function() {
 		
 		// 如果要查空字串，就退出不查了。
 		if (value === "") {
-			updateNodes(false);
 			return;
 		}
 		updateNodes(false);
-		pullDownTreeList${order} = tree${order}.getNodesByParamFuzzy(keyType, value);
+		pullDownTreeList${order} = pullDownTreeCurTree${order}.getNodesByParamFuzzy(keyType, value);
 		updateNodes(true);
 	};
 	function updateNodes(highlight) {
 		for(var i=0, l=pullDownTreeList${order}.length; i<l; i++) {
 			pullDownTreeList${order}[i].highlight = highlight;				
-			tree${order}.updateNode(pullDownTreeList${order}[i]);
-			tree${order}.expandNode(pullDownTreeList${order}[i].getParentNode(), true, false, false);
+			pullDownTreeCurTree${order}.updateNode(pullDownTreeList${order}[i]);
+			pullDownTreeCurTree${order}.expandNode(pullDownTreeList${order}[i].getParentNode(), true, false, false);
 		}
 	};
 	

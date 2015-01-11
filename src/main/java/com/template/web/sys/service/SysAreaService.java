@@ -71,9 +71,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 * @return
 	 */
 	public PageInfo<SysArea> findPageInfo(Map<String, Object> params) {
-		PageHelper.startPage(
-				Integer.parseInt(params.get("pageNum").toString()),
-				Integer.parseInt(params.get("pageSize").toString()));
+		PageHelper.startPage(params);
 		List<SysArea> list = sysAreaMapper.findPageInfo(params);
 		return new PageInfo<SysArea>(list);
 	}

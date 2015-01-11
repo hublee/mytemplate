@@ -29,6 +29,7 @@
 						<value>
 							dialect=mysql
 							reasonable=true
+							params=count=countSql
 						</value>
 					</property>
 				</bean>
