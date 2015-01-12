@@ -8,9 +8,9 @@
 @var reloadOrder = reloadOrder!"";
 @var reloadData = reloadData!"[]";
 @width = width!"";
+@class = class!;
 
-
-<div class="btn-group" style="width:${width};">
+<div class="btn-group ${class!}" style="width:${width};">
 	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
 		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
@@ -37,7 +37,6 @@ var pullDownTreeCurTree${order},pullDownTreeSetting${order};
 		var tree = ${reloadData!"[]"},newData = [];
 		for(var i=0;i<tree.length;i++){
 			var pid = tree[i].parentId;
-			console.log(tree[i])
 			if(pid == id){
 				tree[i]["parentId"] = 0;
 				newData.push(tree[i]);
