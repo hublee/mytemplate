@@ -84,6 +84,11 @@ $(function() {
 		
 		// 如果要查空字串，就退出不查了。
 		if (value === "") {
+			for(var i=0, l=pullDownTreeList${order}.length; i<l; i++) {
+				pullDownTreeList${order}[i].highlight = false;				
+				pullDownTreeCurTree${order}.updateNode(pullDownTreeList${order}[i]);
+				pullDownTreeCurTree${order}.expandAll(false);
+			}
 			return;
 		}
 		updateNodes(false);
