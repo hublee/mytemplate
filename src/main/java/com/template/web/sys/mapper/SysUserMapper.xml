@@ -41,6 +41,9 @@
 			<if test="@Ognl@isNotBlank(no)">
 				and su.no like concat('%', #{no} ,'%')
 			</if>
+			<if test="roles!=null and roles!=''">
+				and FIND_IN_SET(sr.id,#{roles})
+			</if>
 		</where>
 		GROUP BY su.id ORDER BY su.update_date desc
 	</select>

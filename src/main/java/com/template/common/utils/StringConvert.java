@@ -1,10 +1,10 @@
 package com.template.common.utils;
 
 public class StringConvert {
-	
+
 	/**
-     * 将驼峰风格替换为下划线风格
-     */
+	 * 将驼峰风格替换为下划线风格
+	 */
 	public static String camelhumpToUnderline(String str) {
 		final int size;
 		final char[] chars;
@@ -19,7 +19,7 @@ public class StringConvert {
 				sb.append('_').append(c);
 			}
 		}
-		return sb.charAt(0) == '_'? sb.substring(1): sb.toString();
+		return sb.charAt(0) == '_' ? sb.substring(1) : sb.toString();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class StringConvert {
 		}
 		return c;
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(camelhumpToUnderline("SysArea"));
 	}

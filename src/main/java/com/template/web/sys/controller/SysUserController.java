@@ -57,7 +57,8 @@ public class SysUserController {
 	* @return
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.POST)
-	public String list(@RequestParam Map<String, Object> params, Model model){
+	public String list(@RequestParam Map<String, Object> params,Long[] roles,Model model){
+		params.put("roles", StringUtils.join(roles,','));
 		PageInfo<SysUser> page = sysUserService.findPageInfo(params);
 		model.addAttribute("page", page);
 		return "sys/user/user-list";
