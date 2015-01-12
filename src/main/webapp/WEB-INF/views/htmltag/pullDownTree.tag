@@ -51,7 +51,10 @@ var pullDownTreeCurTree${order},pullDownTreeSetting${order};
 $(function() { 
 	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
 	
-	pullDownTreeSetting${order} = {
+	var settings = pullDownTreeSetting${order},treeObj = pullDownTreeCurTree${order},
+		treeData = treeData${order};
+	
+		settings = {
 		view:{
 			expandSpeed:100,
 			selectedMulti : false,

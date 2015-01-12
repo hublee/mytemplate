@@ -12,11 +12,12 @@ public class TreeUtils {
 	
 	
 	/**
-	 * 转换成List形式树结构
+	 * 转换成List形式树结构 (如果是缓存的list，请务必深度copy一个)
 	* @param list
 	* @return
 	 */
 	public static <T extends Entity> List<T> toTreeNodeList(List<T> list){
+		
 		final Map<Long, T> nodes = new HashMap<Long, T>();
 		
 		//所有节点记录下来

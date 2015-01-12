@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.template.common.utils.Collections3;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysRole;
@@ -29,7 +30,9 @@ public class OfficeFunctions {
 	* @return
 	 */
 	public List<SysOffice> getAllOfficeList(){
-		return sysOfficeService.getAllOffice();
+		//深度copy一个缓存集合，防止因操作缓存list造成ehcache报共享的线程不安全
+		List<SysOffice> cacheOfficeList = Collections3.copyTo(sysOfficeService.getAllOffice(), SysOffice.class);
+		return cacheOfficeList;
 	}
 	
 	/**

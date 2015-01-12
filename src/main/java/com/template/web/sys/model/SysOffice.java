@@ -256,5 +256,4 @@ public class SysOffice extends Entity {
 		this.set("oldParentIds", oldParentIds);
     }
 
-
 }
