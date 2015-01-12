@@ -26,6 +26,7 @@
         <property name="functionPackages">
              <map>
                <entry key="office" value-ref="officeFunctions"/>
+               <entry key="role" value-ref="roleFunctions"/>
             </map>
         </property>
 	</bean>

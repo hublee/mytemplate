@@ -1,5 +1,6 @@
-@var company = office.getOfficeByType("1"); //全部公司
-@var office = office.getOfficeDep(); //全部部门
+@var officeList = office.getAllOfficeList(false); //全部公司
+@var officeMap = office.getAllOfficeMap();
+@var roles = role.getAllRoleList(); //全部角色
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active">
@@ -19,24 +20,30 @@
 			target="list-page" class="center clearfix">
 			<div class="row padding-tb-10">
 				<div class="col-sm-6">
-					<label class="inline">归属公司：</label>
-					<#pullDownTree order="one" treeData="${company}" name="companyId" 
-						reloadFn="true"  reloadOrder="two" reloadData="${office}" 
-						class="width-80"/>
+					<label class="inline">归属机构：</label>
+					<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
+						class="width-80" cName="officeType" >
+						$("#pullDownTreeCurCidone").val(treeNode.type);
+					</#pullDownTree>
 				</div>
 				<div class="col-sm-6">
-					<label class="inline">归属部门：</label>
-					<#pullDownTree order="two" name="officeId" class="width-80"/>
+					<label class="inline">真实姓名：</label>
+					<input type="text" class="width-80"  name="name"/>
 				</div>
 			</div>
 			<div class="row padding-tb-10">
 				<div class="col-sm-6">
 					<label class="inline">所属角色：</label>
-					<input type="text" class="width-80" name="no"/>
-				</div>
-				<div class="col-sm-6">
-					<label class="inline">真实姓名：</label>
-					<input type="text" class="width-80"  name="name"/>
+					<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
+						@for(role in roles){
+							<option value="${role.id!}">
+							${role.name!}(${officeMap[officeMap[role.officeId].parentId].name!} - ${officeMap[role.officeId].name!})
+							</option>
+						@}
+					</select>
+					<script>
+					$("#role-select").chosen({width: "80%",search_contains: true}); 
+					</script>
 				</div>
 			</div>
 			<div class="padding-trb-10 col-sm-12">
@@ -83,7 +90,6 @@
 					</div>
 					<input type="hidden" name="companyId" id="companyId" />
 					<script type="text/javascript">
-					@var roles = office.getAllRole();
 					$("#officeGroup").chosen({'width':'50%',search_contains: true}).change(function(){
 						var cur = $(this).find("option:selected");
 						var pid = cur.data("pid");

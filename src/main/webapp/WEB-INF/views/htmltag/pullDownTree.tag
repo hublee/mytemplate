@@ -1,14 +1,16 @@
 @ //提交的input id:  pullDownTreeCurId${order} id , pullDownTreeCurName${order} name 
-@ //树对象 pullDownTreeCurTree${order} 
+@ //树对象 pullDownTreeCurTree${order}  pullDownTreeCurPid${order}
 @var treeData = treeData!"[]";
 @var order = order!""; //序号
 @var name = name!"";
 @var value = value!"0";
-@var reloadFn = reloadFn!"false";
-@var reloadOrder = reloadOrder!"";
-@var reloadData = reloadData!"[]";
-@width = width!"";
-@class = class!;
+@var pName = pName!"";
+@var cName = cName!"";
+@var cId = cId!"";
+@var pId = pId!"";
+@var width = width!"";
+@var class = class!;
+@var rootNodeName = rootNodeName!"全部";
 
 <div class="btn-group ${class!}" style="width:${width};">
 	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
@@ -25,28 +27,10 @@
 	</div>
 </div>
 <input type="hidden" name="${name}" value="${value}" id="pullDownTreeCurId${order}"/>
+<input type="hidden" name="${pName}" value="${pId}" id="pullDownTreeCurPid${order}"/>
+<input type="hidden" name="${cName}" value="${cId}" id="pullDownTreeCurCid${order}"/>
 
 <script>
-var pullDownTreeCurTree${order},pullDownTreeSetting${order};
-
-@if(reloadFn == "true"){
-	function pullDownTreeReload${reloadOrder}(){
-		$("#pullDownTreeCurId${reloadOrder}").val("0");
-		var id = $("#pullDownTreeCurId${order}").val();
-		$("#pullDownTreeCurName${reloadOrder}").text("全部");
-		var tree = ${reloadData!"[]"},newData = [];
-		for(var i=0;i<tree.length;i++){
-			var pid = tree[i].parentId;
-			if(pid == id){
-				tree[i]["parentId"] = 0;
-				newData.push(tree[i]);
-			}
-		}
-		var root = {"id":0,"name":"全部","open":true};
-		newData[newData.length] = root;
-		$.fn.zTree.init($("#pullDownTree${reloadOrder}"),pullDownTreeSetting${reloadOrder},newData);
-	}
-@}
 
 $(function() { 
 	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
@@ -73,7 +57,7 @@ $(function() {
 	};
 	
 	var treeData${order} = ${treeData!"[]"};
-	var root = {"id":0,"name":"全部","open":true};
+	var root = {"id":0,"name":"${rootNodeName}","open":true};
 	treeData${order}[treeData${order}.length] = root;
 	pullDownTreeCurTree${order} = $.fn.zTree.init($("#pullDownTree${order}"), pullDownTreeSetting${order}, treeData${order});
 	
@@ -85,11 +69,7 @@ $(function() {
 	function selectClick(e, treeId, treeNode){
 		$("#pullDownTreeCurId${order}").val(treeNode.id);
 		$("#pullDownTreeCurName${order}").text(treeNode.name);
-		@if(reloadFn == "true" && !isEmpty(reloadOrder)){
-			pullDownTreeReload${reloadOrder}();
-		@}else if(reloadFn == "true" && isEmpty(reloadOrder)){
-			${tagBody!}
-		@}
+		${tagBody!}
 	}
 	
 	var pullDownTreeList${order} = [];

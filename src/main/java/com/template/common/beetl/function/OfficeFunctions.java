@@ -13,21 +13,17 @@ import org.springframework.stereotype.Component;
 import com.template.common.utils.Collections3;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.model.SysOffice;
-import com.template.web.sys.model.SysRole;
 import com.template.web.sys.service.SysOfficeService;
-import com.template.web.sys.service.SysRoleService;
 
 @Component
 public class OfficeFunctions {
 	
 	@Resource
 	private SysOfficeService sysOfficeService;
-	@Resource
-	private SysRoleService sysRoleService;
 	
 	/**
 	 * 全部机构列表(缓存)
-	* @param flag 是否深度copy一个缓存的对象
+	* @param flag 是否深度copy一个缓存的对象,当操作缓存对象时候要copy
 	* @return
 	 */
 	public List<SysOffice> getAllOfficeList(boolean flag){
@@ -80,11 +76,6 @@ public class OfficeFunctions {
 		List<SysOffice> newList = getOfficeByType("2");
 		newList = TreeUtils.toTreeNodeList(newList);
 		return newList;
-	}
-	
-	public List<SysRole> getAllRole(){
-		List<SysRole> roles = sysRoleService.select(null);
-		return roles;
 	}
 	
 	
