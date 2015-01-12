@@ -41,7 +41,7 @@
 			<if test="@Ognl@isNotBlank(no)">
 				and su.no like concat('%', #{no} ,'%')
 			</if>
-			<if test="roles!=null and roles!=''">
+			<if test="@Ognl@isNotBlank(roles)">
 				and FIND_IN_SET(sr.id,#{roles})
 			</if>
 		</where>
