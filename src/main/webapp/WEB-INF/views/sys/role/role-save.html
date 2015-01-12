@@ -1,3 +1,4 @@
+@var officeMap = office.getAllOfficeMap();
 <div class="layer">
 	<form name="FormPost" id="role-save" class="FormGrid"  method="post"
 		action="${rootPath}/role/save">
@@ -8,7 +9,6 @@
 				<tr class="FormData">
 					<td class="CaptionTD">归属机构</td>
 					<td class="DataTD width-100">
-						@var officeMap = office.getAllOfficeMap();
 						<#treeselect url="office/tree"  
 							modelId="officeId" id="officeEdit" nameId="officeNameEdit"
 							modelNameValue="${officeMap[sysrole.officeId!].name!}" 

@@ -1,3 +1,4 @@
+@var area = getAllArea(); //全部区域
 <div>
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
@@ -25,8 +26,7 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">归属区域</div>
 		<div class="profile-info-value">
-			@var map = getAllArea();
-			<span class="editable editable-click">${map[office.code].name!}</span>
+			<span class="editable editable-click">${area[office.code].name!}</span>
 		</div>
 	</div>
 	<div class="profile-info-row">

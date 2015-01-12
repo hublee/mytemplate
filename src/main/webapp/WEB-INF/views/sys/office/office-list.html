@@ -12,7 +12,7 @@
 	</thead>
 	
 	<tbody>
-		@var map = getAllArea();
+		@var area = getAllArea();
 		@for(item in page.list){
 			<tr>
 				<td class="center">
@@ -30,7 +30,7 @@
 					${item.pname!}
 				</td>
 				<td class="center">
-					${map[item.areaId].name!}
+					${area[item.areaId].name!}
 				</td>
 				<td class="center">
 					${item.master! }

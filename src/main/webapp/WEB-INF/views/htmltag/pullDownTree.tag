@@ -7,18 +7,18 @@
 @var reloadFn = reloadFn!"false";
 @var reloadOrder = reloadOrder!"";
 @var reloadData = reloadData!"[]";
+@width = width!"";
 
 
-<div class="btn-group">
-	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle">
+<div class="btn-group" style="width:${width};">
+	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
 		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
 	<div class="dropdown-menu dropdown-caret" >
-		<div class="padding-10">
-			<div style="width:300px;padding-bottom: 10px;">
-				<span class="">搜索：</span>
-				<input type="text" id="pullDownTreeSearch${order}" style="width:250px;" />
+		<div class="padding-15">
+			<div style="padding-bottom: 10px;">
+				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
 			</div>
 			<ul class="ztree" id="pullDownTree${order}"></ul>
 		</div>

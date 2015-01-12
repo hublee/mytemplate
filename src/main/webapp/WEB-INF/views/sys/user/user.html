@@ -1,3 +1,5 @@
+@var company = office.getOfficeByType("1"); //全部公司
+@var office = office.getOfficeDep(); //全部部门
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active">
@@ -15,19 +17,21 @@
 		<div id="home" class="tab-pane active clearfix">
 			<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
 			target="list-page" class="clearfix">
-			<div class="center">
+			<div class="_center">
 				<div class="padding-5">
 					<div class="inline width-40">
-						<label class="pull-left lh-32">归属公司：</label>
-						<#treeselect url="office/tree?type=1" 
-							modelId="companyId" nameId="treeselectcompanyname"
-							order="1" class="pull-left width-80" />
+						<label class="pull-left lh-32 width-20">归属公司：</label>
+						<#pullDownTree order="one" treeData="${company}" name="companyId" 
+							reloadFn="true"  reloadOrder="two" reloadData="${office}" 
+							width="80%"/>
 					</div>
-					<div class="inline width-40">
-						<label class="pull-left lh-32">归属部门：</label>
-						<#treeselect url="office/tree" 
-							modelId="officeId" 
-							order="2" class="pull-left width-80"/>
+					<div class="inline width-30">
+						<label class="">归属部门：</label>
+						<#pullDownTree order="two" name="officeId" width="80%"/>
+					</div>
+					<div class="inline width-30">
+						<label class="pull-left lh-32">所属角色：</label>
+						<input type="text" class="pull-left width-80" name="no"/>
 					</div>
 				</div>
 				<div class="padding-5">
@@ -35,19 +39,10 @@
 						<label class="pull-left lh-32">真实姓名：</label>
 						<input type="text" class="pull-left width-80" name="name"/>
 					</div>
-					<div class="inline width-40">
-						<label class="pull-left lh-32">所属角色：</label>
-						<input type="text" class="pull-left width-80" name="no"/>
-					</div>
+					
 				</div>
 				<div class="padding-5">
-					@var company = office.getOfficeByType("1"); //全部公司
-					@var office = office.getOfficeDep(); //全部部门
 					
-					<#pullDownTree order="one" treeData="${company}" name="companyId" 
-						reloadFn="true"  reloadOrder="two" reloadData="${office}" />
-					
-					<#pullDownTree order="two" />
 				</div>
 			</div>
 			<div class="width-100">
