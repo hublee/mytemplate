@@ -36,7 +36,7 @@ public class OfficeFunctions {
 	 * 全部机构 key:机构id  value:机构对象
 	* @return
 	 */
-	public Map<Long, Object> getAllOffice(){
+	public Map<Long, Object> getAllOfficeMap(){
 		Map<Long, Object> map = new HashMap<Long, Object>();
 		List<SysOffice> list = getAllOfficeList();
 		for(SysOffice so : list){
