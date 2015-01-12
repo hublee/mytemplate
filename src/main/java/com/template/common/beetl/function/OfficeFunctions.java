@@ -27,11 +27,18 @@ public class OfficeFunctions {
 	
 	/**
 	 * 全部机构列表(缓存)
+	* @param flag 是否深度copy一个缓存的对象
 	* @return
 	 */
-	public List<SysOffice> getAllOfficeList(){
-		//深度copy一个缓存集合，防止因操作缓存list造成ehcache报共享的线程不安全
-		List<SysOffice> cacheOfficeList = Collections3.copyTo(sysOfficeService.getAllOffice(), SysOffice.class);
+	public List<SysOffice> getAllOfficeList(boolean flag){
+		List<SysOffice> cacheOfficeList = null;
+		if(flag){
+			//深度copy一个缓存集合，防止因操作缓存list造成ehcache共享的线程不安全
+			cacheOfficeList = Collections3.copyTo(sysOfficeService.getAllOffice(),
+					SysOffice.class);
+		}else{
+			cacheOfficeList = sysOfficeService.getAllOffice();
+		}
 		return cacheOfficeList;
 	}
 	
@@ -41,7 +48,7 @@ public class OfficeFunctions {
 	 */
 	public Map<Long, Object> getAllOfficeMap(){
 		Map<Long, Object> map = new HashMap<Long, Object>();
-		List<SysOffice> list = getAllOfficeList();
+		List<SysOffice> list = getAllOfficeList(false);
 		for(SysOffice so : list){
 			map.put(so.getId(), so);
 		}
@@ -53,7 +60,7 @@ public class OfficeFunctions {
 	* @param type 类型
 	 */
 	public List<SysOffice> getOfficeByType(String type){
-		List<SysOffice> list = getAllOfficeList();
+		List<SysOffice> list = getAllOfficeList(true);
 		List<SysOffice> typeList = new ArrayList<SysOffice>();
 		for(int i=0;i<list.size();i++){
 			SysOffice sysOffice = list.get(i);
@@ -87,7 +94,7 @@ public class OfficeFunctions {
 	* @return
 	 */
 	public List<SysOffice> getOfficeTree(){
-		List<SysOffice> list = TreeUtils.toTreeNodeList(getAllOfficeList());
+		List<SysOffice> list = TreeUtils.toTreeNodeList(getAllOfficeList(true));
 		return list;
 	}
 	

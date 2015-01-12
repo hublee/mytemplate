@@ -32,11 +32,12 @@ var pullDownTreeCurTree${order},pullDownTreeSetting${order};
 @if(reloadFn == "true"){
 	function pullDownTreeReload${reloadOrder}(){
 		$("#pullDownTreeCurId${reloadOrder}").val("0");
-		$("#pullDownTreeCurName${reloadOrder}").text("全部");
 		var id = $("#pullDownTreeCurId${order}").val();
+		$("#pullDownTreeCurName${reloadOrder}").text("全部");
 		var tree = ${reloadData!"[]"},newData = [];
 		for(var i=0;i<tree.length;i++){
 			var pid = tree[i].parentId;
+			console.log(tree[i])
 			if(pid == id){
 				tree[i]["parentId"] = 0;
 				newData.push(tree[i]);
@@ -51,10 +52,7 @@ var pullDownTreeCurTree${order},pullDownTreeSetting${order};
 $(function() { 
 	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
 	
-	var settings = pullDownTreeSetting${order},treeObj = pullDownTreeCurTree${order},
-		treeData = treeData${order};
-	
-		settings = {
+	pullDownTreeSetting${order} = {
 		view:{
 			expandSpeed:100,
 			selectedMulti : false,
