@@ -12,12 +12,12 @@
 @var class = class!;
 @var rootNodeName = rootNodeName!"全部";
 
-<div class="btn-group ${class!}" style="width:${width};">
+<div class="btn-group ${class!}"   style="width:${width};">
 	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
 		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
-	<div class="dropdown-menu dropdown-caret" >
+	<div class="dropdown-menu dropdown-caret  scrollable" data-height="250">
 		<div class="padding-15">
 			<div style="padding-bottom: 10px;">
 				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
@@ -33,7 +33,14 @@
 <script>
 
 $(function() { 
-	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
+	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order},.scroll-track", function(e) {e.stopPropagation(); }); 
+
+	$('.scrollable').each(function () {
+		var $this = $(this);
+		$(this).ace_scroll({
+			size: $this.data('height') || 100
+		});
+	});
 	
 	pullDownTreeSetting${order} = {
 		view:{

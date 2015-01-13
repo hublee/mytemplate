@@ -79,8 +79,7 @@ public class ValidateCode {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, width, height);
 		// 创建字体
-		ImgFontByte imgFont=new ImgFontByte();
-		Font font =imgFont.getFont(fontHeight);
+		Font font = new Font("Arial",Font.PLAIN, fontHeight);
 		g.setFont(font);
 		
 		for (int i = 0; i < lineCount; i++) {

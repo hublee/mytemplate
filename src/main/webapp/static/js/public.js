@@ -1,5 +1,7 @@
 var $curmenu,lastIndex;//最后弹窗索引
+
 $(function(){
+	
 	var aMenu = $("#sidebar-menu a[id]");
 	var history = Webit.history;
 	aMenu.on("click",function(){
