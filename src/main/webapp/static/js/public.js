@@ -21,6 +21,8 @@ $(function(){
 	});
 	history.init();
 	
+	
+	
 });
 
 function loadHtmlPage(path) {

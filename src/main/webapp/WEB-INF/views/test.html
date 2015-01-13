@@ -1,83 +1,6 @@
-
-<form action="aa" id="test" method="post">
-<input type="button" value="aaaa">
-</form>
-
-<script>
-$(function(){
-	$("#test").Validform({
-		btnSubmit:"#tessst",
-		ajaxPost : true
-	})
-})
-</script>
-
-
-<div class="clearfix ${class}" style="${style}">
-	<input class="form-control pull-left" style="width:${inputWidth}%!important;;" type="text" readonly
-	id="${nameId}" name="${modelName}" value="${modelNameValue}"
-	@if(!isEmpty(isCheck)){
-		datatype="*"  nullmsg=${isCheck}
-	@}
-	>
-	<span class="input-group-btn pull-left width-20">
-		<span class="btn btn-sm btn-purple width-100" type="button" style="height: 34px;"
-		data-mode="page" data-url="${rootPath}/tag/treeselect"
-		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}',isLayer:'${isLayer}'}" 
-		data-title="请选择" data-width="${width!}" data-height="${height}">
-			<i class="ace-icon fa fa-search bigger-110"></i>查找
-		</span>
-	</span>
-	<input type="hidden" name="${modelId}" id="${id}" value="${modelIdValue}"/>
-</div>
-
-
-
-<div class="center padding-10">
-					<label class="">归属机构：</label>
-					<#treeselect url="office/tree" 
-							modelId="officeId" class="width-50"
-							isCheck="请选择归属机构"
-							/>
-				</div>
-				<div class="center padding-10">
-					<label>角色名称：</label>
-					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入角色名称！"/>
-				</div>
-				<div class="center padding-10">
-					<label>数据范围：</label>
-					<div class="width-50" style="display: inline-block;text-align: left;">
-					<#dict type="sys_data_scope" width="40%" id="chosenSelectData" name="dataScope" isScript="true">
-						$("#chosenSelectData").change(function(){
-							if($(this).val() == 9){
-								$("#treeSelectOffice").show();
-							}else{
-								$("#treeSelectOffice").hide();
-							}
-						})
-						$("#chosenSelectData option[value='9']").attr("selected",true);
-						$("#chosenSelectData").trigger("chosen:updated");
-					</#dict>
-					<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
-					</div>
-				</div>
-				<div class="center padding-10">
-					<label>角色授权：</label>
-					<div class="clearfix" style="width: 50%;display: inline-block;vertical-align: top;">
-						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
-							class="width-50" treeSelectId="treeSelectRes">
-							<div id="treeSelectRes" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
-						</#treeselect>
-						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
-							class="width-50" treeSelectId="treeSelectOffice">
-							<div id="treeSelectOffice" style="width: 50%;display: inline-block;vertical-align: top;float: right"></div>
-						</#treeselect>
-					</div>
-				</div>
-				
-				
-				
-				
+@var officeList = office.getAllOfficeList(false); //全部公司
+@var officeMap = office.getAllOfficeMap();
+@var roles = role.getAllRoleList(); //全部角色
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active">
@@ -94,45 +17,42 @@ $(function(){
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
 			<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
-			target="list-page" class="clearfix">
-			<div class="center">
-				<div class="padding-5">
-					<div class="inline width-40">
-						<label class="pull-left lh-32">归属公司：</label>
-						<#treeselect url="office/tree?type=1" 
-							modelId="companyId" nameId="treeselectcompanyname"
-							order="1" class="pull-left width-80" />
-					</div>
-					<div class="inline width-40">
-						<label class="pull-left lh-32">归属部门：</label>
-						<#treeselect url="office/tree" 
-							modelId="officeId" 
-							order="2" class="pull-left width-80"/>
-					</div>
+			target="list-page" class="center clearfix">
+			<div class="row padding-tb-10">
+				<div class="col-sm-6">
+					<label class="inline">归属机构：</label>
+					<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
+						class="width-80" cName="officeType" >
+						$("#pullDownTreeCurCidone").val(treeNode.type);
+					</#pullDownTree>
 				</div>
-				<div class="padding-5">
-					<div class="inline width-40">
-						<label class="pull-left lh-32">真实姓名：</label>
-						<input type="text" class="pull-left width-80" name="name"/>
-					</div>
-					<div class="inline width-40">
-						<label class="pull-left lh-32">所属角色：</label>
-						<input type="text" class="pull-left width-80" name="no"/>
-					</div>
-				</div>
-				<div class="padding-5">
-					@var company = office.getOfficeByType("1"); //全部公司
-					@var office = office.getOfficeDep(); //全部部门
-					
-					<#pullDownTree order="one" treeData="${company}" name="companyId" 
-						reloadFn="true"  reloadOrder="two" reloadData="${office}" />
-					
-					<#pullDownTree order="two" />
+				<div class="col-sm-6">
+					<label class="inline">真实姓名：</label>
+					<input type="text" class="width-80"  name="name"/>
 				</div>
 			</div>
-			<div class="width-100">
-				<span class="btn  btn-primary btn-sm width-50 pull-left" onclick="$curmenu.trigger('click');">全 部 用 户</span>
-				<span class="btn btn-info btn-sm width-50 pull-left" id="search-btn">条 件 查 询</span>
+			<div class="row padding-tb-10">
+				<div class="col-sm-6">
+					<label class="inline">所属角色：</label>
+					<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
+						@for(role in roles){
+							<option value="${role.id!}">
+							${role.name!}(${officeMap[officeMap[role.officeId].parentId].name!} - ${officeMap[role.officeId].name!})
+							</option>
+						@}
+					</select>
+					<script>
+					$("#role-select").chosen({width: "80%",search_contains: true}); 
+					</script>
+				</div>
+				<div class="col-sm-6">
+					<label class="inline">人员工号：</label>
+					<input type="text" class="width-80"  name="no"/>
+				</div>
+			</div>
+			<div class="padding-trb-10 col-sm-12">
+				<span class="btn  btn-primary btn-sm col-sm-6" onclick="$curmenu.trigger('click');">全 部 用 户</span>
+				<span class="btn btn-info btn-sm col-sm-6" id="search-btn">条 件 查 询</span>
 			</div>
 				<input type="hidden" value="0" name="delFlag" />
 			</form>
@@ -174,7 +94,6 @@ $(function(){
 					</div>
 					<input type="hidden" name="companyId" id="companyId" />
 					<script type="text/javascript">
-					@var roles = office.getAllRole();
 					$("#officeGroup").chosen({'width':'50%',search_contains: true}).change(function(){
 						var cur = $(this).find("option:selected");
 						var pid = cur.data("pid");
@@ -279,131 +198,3 @@ validId="sysuserForm" config="true">
 		}
 	});
 </#save>
-
-
-
-
-
-@ //提交的input id:  pullDownTreeCurId${order} id , pullDownTreeCurName${order} name 
-@ //树对象 pullDownTreeCurTree${order} 
-@var treeData = treeData!"[]";
-@var order = order!""; //序号
-@var name = name!"";
-@var value = value!"0";
-@var reloadFn = reloadFn!"false";
-@var reloadOrder = reloadOrder!"";
-@var reloadData = reloadData!"[]";
-@width = width!"";
-@class = class!;
-
-<div class="btn-group ${class!}" style="width:${width};">
-	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
-		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
-	</span>
-
-	<div class="dropdown-menu dropdown-caret" >
-		<div class="padding-15">
-			<div style="padding-bottom: 10px;">
-				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
-			</div>
-			<ul class="ztree" id="pullDownTree${order}"></ul>
-		</div>
-	</div>
-</div>
-<input type="hidden" name="${name}" value="${value}" id="pullDownTreeCurId${order}"/>
-
-<script>
-var pullDownTreeCurTree${order},pullDownTreeSetting${order};
-
-@if(reloadFn == "true"){
-	function pullDownTreeReload${reloadOrder}(){
-		$("#pullDownTreeCurId${reloadOrder}").val("0");
-		var id = $("#pullDownTreeCurId${order}").val();
-		$("#pullDownTreeCurName${reloadOrder}").text("全部");
-		var tree = ${reloadData!"[]"},newData = [];
-		for(var i=0;i<tree.length;i++){
-			var pid = tree[i].parentId;
-			if(pid == id){
-				tree[i]["parentId"] = 0;
-				newData.push(tree[i]);
-			}
-		}
-		var root = {"id":0,"name":"全部","open":true};
-		newData[newData.length] = root;
-		$.fn.zTree.init($("#pullDownTree${reloadOrder}"),pullDownTreeSetting${reloadOrder},newData);
-	}
-@}
-
-$(function() { 
-	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order}", function(e) {e.stopPropagation(); }); 
-	
-	pullDownTreeSetting${order} = {
-		view:{
-			expandSpeed:100,
-			selectedMulti : false,
-			fontCss:function(treeId, treeNode) {
-				return (!!treeNode.highlight) ? {"font-weight":"bold","color":"red"} : {"font-weight":"normal","color":"#333"};
-			}
-		},
-		data : {
-			simpleData : {
-				enable : true,
-				idKey : "id",
-				pIdKey : "parentId"
-			},
-			key:{name:"name"}
-		},
-		callback:{
-			onClick: selectClick
-		}
-	};
-	
-	var treeData${order} = ${treeData!"[]"};
-	var root = {"id":0,"name":"全部","open":true};
-	treeData${order}[treeData${order}.length] = root;
-	pullDownTreeCurTree${order} = $.fn.zTree.init($("#pullDownTree${order}"), pullDownTreeSetting${order}, treeData${order});
-	
-	var nodes = pullDownTreeCurTree${order}.getNodesByParam("level", 0);
-	for(var i=0; i<nodes.length; i++) {
-		pullDownTreeCurTree${order}.expandNode(nodes[i], true, false, false);
-	}
-	
-	function selectClick(e, treeId, treeNode){
-		$("#pullDownTreeCurId${order}").val(treeNode.id);
-		$("#pullDownTreeCurName${order}").text(treeNode.name);
-		@if(reloadFn == "true" && !isEmpty(reloadOrder)){
-			pullDownTreeReload${reloadOrder}();
-		@}else if(reloadFn == "true" && isEmpty(reloadOrder)){
-			${tagBody!}
-		@}
-	}
-	
-	var pullDownTreeList${order} = [];
-	$("#pullDownTreeSearch${order}").bind("change keydown cut input propertychange", searchNode);
-	
-	function searchNode() {
-		// 取得输入的关键字的值
-		var value = $.trim($("#pullDownTreeSearch${order}").get(0).value);
-		
-		// 按名字查询
-		var keyType = "name";
-		
-		// 如果要查空字串，就退出不查了。
-		if (value === "") {
-			return;
-		}
-		updateNodes(false);
-		pullDownTreeList${order} = pullDownTreeCurTree${order}.getNodesByParamFuzzy(keyType, value);
-		updateNodes(true);
-	};
-	function updateNodes(highlight) {
-		for(var i=0, l=pullDownTreeList${order}.length; i<l; i++) {
-			pullDownTreeList${order}[i].highlight = highlight;				
-			pullDownTreeCurTree${order}.updateNode(pullDownTreeList${order}[i]);
-			pullDownTreeCurTree${order}.expandNode(pullDownTreeList${order}[i].getParentNode(), true, false, false);
-		}
-	};
-	
-}); 
-</script>
-				

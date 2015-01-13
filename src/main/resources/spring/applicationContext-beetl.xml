@@ -27,6 +27,7 @@
              <map>
                <entry key="office" value-ref="officeFunctions"/>
                <entry key="role" value-ref="roleFunctions"/>
+               <entry key="strutil" value-ref="stringUtilFunctions"/>
             </map>
         </property>
 	</bean>

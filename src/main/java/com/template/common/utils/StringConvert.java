@@ -1,6 +1,43 @@
 package com.template.common.utils;
 
-public class StringConvert {
+import org.apache.commons.lang3.StringUtils;
+
+public class StringConvert extends StringUtils{
+	
+	/**
+	 * 转换为Double类型
+	 */
+	public static Double toDouble(Object val){
+		if (val == null){
+			return 0D;
+		}
+		try {
+			return Double.valueOf(trim(val.toString()));
+		} catch (Exception e) {
+			return 0D;
+		}
+	}
+	
+	/**
+	 * 转换为Float类型
+	 */
+	public static Float toFloat(Object val){
+		return toDouble(val).floatValue();
+	}
+
+	/**
+	 * 转换为Long类型
+	 */
+	public static Long toLong(Object val){
+		return toDouble(val).longValue();
+	}
+
+	/**
+	 * 转换为Integer类型
+	 */
+	public static Integer toInteger(Object val){
+		return toLong(val).intValue();
+	}
 
 	/**
 	 * 将驼峰风格替换为下划线风格

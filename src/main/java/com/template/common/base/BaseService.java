@@ -3,7 +3,7 @@ package com.template.common.base;
 import java.util.List;
 
 
-public interface BaseService<T extends Entity> {
+public interface BaseService<T extends BaseEntity> {
 	
 	/**
 	 * 根据实体类不为null的字段进行查询,条件全部使用=号and条件

@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.template.common.utils.Collections3;
+import com.template.common.utils.StringConvert;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.service.SysOfficeService;
@@ -66,6 +67,16 @@ public class OfficeFunctions {
 			}
 		}
 		return typeList;
+	}
+	
+	public String getOfficeStrByOfficeId(Long officeId,Map<Long, SysOffice> offices){
+		String[] pids = ((SysOffice)offices.get(officeId)).getParentIds().split(",");
+		String str = "";
+		for(String id : pids){
+			SysOffice so = ((SysOffice)offices.get(StringConvert.toLong(id)));
+			if(so!=null)str+=so.getName()+" - ";
+		}
+		return str;
 	}
 	
 	/**

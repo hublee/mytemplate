@@ -30,7 +30,7 @@
 <input type="hidden" name="${pName}" value="${pId}" id="pullDownTreeCurPid${order}"/>
 <input type="hidden" name="${cName}" value="${cId}" id="pullDownTreeCurCid${order}"/>
 
-<script>
+<script type="text/javascript">
 
 $(function() { 
 	$("div.dropdown-menu").on("click", ".ztree .switch,#pullDownTreeSearch${order},.scroll-track", function(e) {e.stopPropagation(); }); 
@@ -99,7 +99,6 @@ $(function() {
 			for(var i=0, l=pullDownTreeList${order}.length; i<l; i++) {
 				pullDownTreeList${order}[i].highlight = false;				
 				pullDownTreeCurTree${order}.updateNode(pullDownTreeList${order}[i]);
-				pullDownTreeCurTree${order}.expandAll(false);
 			}
 			return;
 		}

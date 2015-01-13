@@ -35,9 +35,11 @@
 				<div class="col-sm-6">
 					<label class="inline">所属角色：</label>
 					<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
+						
 						@for(role in roles){
-							<option value="${role.id!}">
-							${role.name!}(${officeMap[officeMap[role.officeId].parentId].name!} - ${officeMap[role.officeId].name!})
+							<option value="${role.id!}" title="dsadsad">
+							${role.name!}
+							${office.getOfficeStrByOfficeId(role.officeId,officeMap)}
 							</option>
 						@}
 					</select>
@@ -52,7 +54,7 @@
 			</div>
 			<div class="padding-trb-10 col-sm-12">
 				<span class="btn  btn-primary btn-sm col-sm-6" onclick="$curmenu.trigger('click');">全 部 用 户</span>
-				<span class="btn btn-info btn-sm col-sm-6" id="search-btn">条 件 查 询</span>
+				<span class="btn btn-info btn-sm col-sm-6" id="search-btn" page-list>条 件 查 询</span>
 			</div>
 				<input type="hidden" value="0" name="delFlag" />
 			</form>

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.template.common.base.Entity;
+import com.template.common.base.BaseEntity;
 
 @SuppressWarnings({"unchecked"})
 public class TreeUtils {
@@ -16,7 +16,7 @@ public class TreeUtils {
 	* @param list
 	* @return
 	 */
-	public static <T extends Entity> List<T> toTreeNodeList(List<T> list){
+	public static <T extends BaseEntity> List<T> toTreeNodeList(List<T> list){
 		
 		final Map<Long, T> nodes = new HashMap<Long, T>();
 		
@@ -28,7 +28,7 @@ public class TreeUtils {
 		    nodes.put(node.getLong("id"), node);
 		}
 
-		final Entity root = new Entity();
+		final BaseEntity root = new BaseEntity();
 		root.put("level", 0);
 		root.put("children", new ArrayList<T>());
 		root.put("hasChild", false);
@@ -55,7 +55,7 @@ public class TreeUtils {
 	}
 	
 	//递归找level
-	private static <T extends Entity> int resolveLevel(final T node, final Map<Long, T> nodes){
+	private static <T extends BaseEntity> int resolveLevel(final T node, final Map<Long, T> nodes){
 		//System.out.println(node.getIntValue("level"));
 		int level = 1;
 		if(node != null){

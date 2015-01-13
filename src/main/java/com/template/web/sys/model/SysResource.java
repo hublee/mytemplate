@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 import net.sf.ehcache.pool.sizeof.annotations.IgnoreSizeOf;
 
-import com.template.common.base.Entity;
+import com.template.common.base.BaseEntity;
 
 
 /**
@@ -20,7 +20,7 @@ import com.template.common.base.Entity;
  */
 
 @SuppressWarnings({ "unused"})
-public class SysResource extends Entity {
+public class SysResource extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.List;
 
-public abstract class ServiceMybatis<T extends Entity> implements BaseService<T> {
+public abstract class ServiceMybatis<T extends BaseEntity> implements BaseService<T> {
 	
 	@Autowired
 	protected Mapper<T> mapper;

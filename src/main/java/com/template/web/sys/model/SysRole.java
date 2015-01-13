@@ -4,7 +4,7 @@ package com.template.web.sys.model;
 
 import java.util.Date;
 
-import com.template.common.base.Entity;
+import com.template.common.base.BaseEntity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +17,7 @@ import javax.persistence.Transient;
  */
 
 @SuppressWarnings({ "unused"})
-public class SysRole extends Entity {
+public class SysRole extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

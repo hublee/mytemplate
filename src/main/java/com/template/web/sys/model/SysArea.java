@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.template.common.base.Entity;
+import com.template.common.base.BaseEntity;
 
 
 /**
@@ -18,7 +18,7 @@ import com.template.common.base.Entity;
  */
 
 @SuppressWarnings({ "unused"})
-public class SysArea extends Entity {
+public class SysArea extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
