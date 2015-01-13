@@ -17,7 +17,7 @@
 		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
-	<div class="dropdown-menu dropdown-caret  scrollable" data-height="250">
+	<div class="dropdown-menu dropdown-caret  scrollable" data-height="300">
 		<div class="padding-15">
 			<div style="padding-bottom: 10px;">
 				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
@@ -38,7 +38,7 @@ $(function() {
 	$('.scrollable').each(function () {
 		var $this = $(this);
 		$(this).ace_scroll({
-			size: $this.data('height') || 100
+			size: $this.data('height') || 300
 		});
 	});
 	
@@ -59,9 +59,14 @@ $(function() {
 			key:{name:"name"}
 		},
 		callback:{
-			onClick: selectClick
+			onClick: selectClick,
+			onExpand:onExpand
 		}
 	};
+	
+	function onExpand(){
+		$('.scrollable').ace_scroll('reset');
+	}
 	
 	var treeData${order} = ${treeData!"[]"};
 	var root = {"id":0,"name":"${rootNodeName}","open":true};
