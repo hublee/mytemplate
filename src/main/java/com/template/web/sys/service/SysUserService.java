@@ -33,6 +33,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	public int saveSysUser(SysUser sysUser){
 		int count = 0;
 		if(null == sysUser.getId()){
+			
 			count = this.insertSelective(sysUser);
 			sysUserMapper.insertUserRole(sysUser);
 		}else{

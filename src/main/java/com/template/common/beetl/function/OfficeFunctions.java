@@ -53,6 +53,24 @@ public class OfficeFunctions {
 	}
 	
 	/**
+	 * 根据部门id拼接所属机构层级字符
+	* @param officeId 部门id
+	* @param offices 全部机构map
+	* @return
+	 */
+	public String getOfficeStrByOfficeId(Long officeId,Map<Long, SysOffice> offices){
+		String[] pids = ((SysOffice)offices.get(officeId)).getParentIds().split(",");
+		String str = "";
+		for(String id : pids){
+			SysOffice so = (SysOffice)offices.get(StringConvert.toLong(id));
+			if(so!=null)str+=so.getName()+" - ";
+		}
+		SysOffice so = (SysOffice)offices.get(officeId);
+		str+=so.getName();
+		return str;
+	}
+	
+	/**
 	 * 根据类型得到机构
 	* @param type 类型
 	 */
@@ -69,15 +87,6 @@ public class OfficeFunctions {
 		return typeList;
 	}
 	
-	public String getOfficeStrByOfficeId(Long officeId,Map<Long, SysOffice> offices){
-		String[] pids = ((SysOffice)offices.get(officeId)).getParentIds().split(",");
-		String str = "";
-		for(String id : pids){
-			SysOffice so = ((SysOffice)offices.get(StringConvert.toLong(id)));
-			if(so!=null)str+=so.getName()+" - ";
-		}
-		return str;
-	}
 	
 	/**
 	 * 得到全部的部门

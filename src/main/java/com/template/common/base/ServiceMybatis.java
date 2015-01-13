@@ -49,6 +49,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
     public int insert(T record){
     	record.set("createDate", new Date());
     	record.set("updateDate", new Date());
+    	record.set("delFlag", "0");
     	return mapper.insert(record);
     }
 
@@ -61,6 +62,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
     public int insertSelective(T record){
     	record.set("createDate", new Date());
     	record.set("updateDate", new Date());
+    	record.set("delFlag", "0");
     	return mapper.insertSelective(record);
     }
 

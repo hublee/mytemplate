@@ -35,17 +35,16 @@
 				<div class="col-sm-6">
 					<label class="inline">所属角色：</label>
 					<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
-						
 						@for(role in roles){
-							<option value="${role.id!}" title="dsadsad">
+							<option value="${role.id!}">
 							${role.name!}
-							${office.getOfficeStrByOfficeId(role.officeId,officeMap)}
+							@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+							@if(!isEmpty(sostr)){
+							&nbsp;(${sostr})
+							@}
 							</option>
 						@}
 					</select>
-					<script>
-					$("#role-select").chosen({width: "80%",search_contains: true}); 
-					</script>
 				</div>
 				<div class="col-sm-6">
 					<label class="inline">人员工号：</label>
@@ -54,15 +53,11 @@
 			</div>
 			<div class="padding-trb-10 col-sm-12">
 				<span class="btn  btn-primary btn-sm col-sm-6" onclick="$curmenu.trigger('click');">全 部 用 户</span>
-				<span class="btn btn-info btn-sm col-sm-6" id="search-btn" page-list>条 件 查 询</span>
+				<span class="btn btn-info btn-sm col-sm-6" id="search-btn">条 件 查 询</span>
 			</div>
-				<input type="hidden" value="0" name="delFlag" />
 			</form>
 			<hr/>
 			<div id="list-page"></div>
-			<script type="text/javascript">
-				$("#search-form").getPageList({'submitBtnId':'search-btn'})
-			</script>
 		</div>
 
 		<div id="profile" class="tab-pane">
@@ -88,71 +83,26 @@
 				</div>
 				<div class="center padding-10">
 					<label>归属机构：</label>
-					<div class="width-50 inline text-left">
-						<select class="chosen-select" id="officeGroup" name="officeId">
-							@print(office.formatTree(office.getOfficeTree()));
-						</select>
-						<span class="red width-50">*用户只能归属一个机构，提交前请正确选择!</span>
+					<div class="width-50 inline text-left" id="gsoffice">
+						<#pullDownTree order="two" treeData="${officeList}" name="officeId" 
+							class="width-100" isRoot="false" rootNodeName="请选择归属机构" />
 					</div>
 					<input type="hidden" name="companyId" id="companyId" />
-					<script type="text/javascript">
-					$("#officeGroup").chosen({'width':'50%',search_contains: true}).change(function(){
-						var cur = $(this).find("option:selected");
-						var pid = cur.data("pid");
-						var pname = $(this).find("[value="+pid+"]").text();
-						var office = $.trim(pname)+" （"+$.trim(cur.text())+"）";
-						$("#officeGroup_chosen .chosen-single span").text(office);
-						$("#companyId").val(pid==undefined?cur.val():pid);
-						var roles = ${roles};
-						
-						$("#roleGroup").empty();
-						
-						for(i in roles){
-							if(roles[i].officeId==cur.val()){
-								var str = "<option value='"+roles[i].id+"'>"+office+"— "+roles[i].name+"</options>";
-								$("#roleGroup").append(str);
-							}
-						}
-						$("#roleGroup").trigger("chosen:updated");
-					}).trigger('change');
-					$("#moveRole").click(function(){
-						var cur = $("#roleGroup option:selected");
-						cur.each(function(i){
-							var flag = $("#curRoles").find("option[value="+cur.eq(i).val()+"]");
-							if(flag.size() == 0){
-								$("#curRoles").append(cur.eq(i).clone());
-							}
-						}) 
-					})
-					$("#removeRole").click(function(){
-						var cur = $("#curRoles option:selected");
-						cur.remove();
-					})
-					</script>
 				</div>
 				<div class="center padding-10" >
-					<label style="vertical-align: top;">待选角色：</label>
+					<label>所属角色：</label>
 					<div class="width-50 inline text-left">
-						<select class=" width-90 pull-left"
-						multiple="multiple" id="roleGroup">
+						<select name="roleIds" multiple class="chosen-select tag-input-style" id="role-choose" data-placeholder="选择角色">
+						@for(role in roles){
+							<option value="${role.id!}">
+							${role.name!}
+							@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+							@if(!isEmpty(sostr)){
+								&nbsp;(${sostr})
+							@}
+							</option>
+						@}
 						</select>
-						<div class="pull-left width-10 clearfix" >
-							<span class="btn btn-purple block" id="moveRole">
-							<i class="fa fa-hand-o-down bigger-160"></i>
-							</span>
-						</div>
-					</div> 
-				</div>
-				<div class="center padding-10" >
-				<label style="vertical-align: top;">已选角色：</label>
-					<div class="width-50 inline text-left">
-						<select class=" width-90 pull-left" name="roleIds"
-						multiple="multiple" id="curRoles" ></select>
-						<div class="pull-left width-10 clearfix" >
-							<span class="btn btn-danger" id="removeRole">
-							<i class="fa fa-trash bigger-160"></i>
-							</span>
-						</div>
 					</div> 
 				</div>
 				<div class="center padding-10">
@@ -187,8 +137,6 @@
 </style>
 <#save isHide="yes" subBtnId="sysuser-save-btn" formId="sysuser-save-form" 
 validId="sysuserForm" config="true">
-	var role = $("#curRoles").find("option");
-	role.attr("selected","true");
 	sysuserForm.config({
 		beforeCheck:function(curform){
 			var flag = $("#username")[0].validform_valid;
@@ -197,6 +145,18 @@ validId="sysuserForm" config="true">
 				 tip.errorTip(flag,$("#username"));
 				 return false;
 			}
+		},
+		beforeSubmit:function(curform){
+			var office = $("#pullDownTreeCurIdtwo");
+			if($.trim(office.val())=="" || office.val() == 0){
+				tip.errorTip("请选择归属机构",$("#gsoffice"));
+				return false;
+			}
 		}
 	});
 </#save>
+<script>
+	$("#role-select").chosen({width: "80%",search_contains: true});
+	$("#role-choose").chosen({width: "100%",search_contains: true}); 
+	$("#search-form").getPageList({'submitBtnId':'search-btn'});
+</script>

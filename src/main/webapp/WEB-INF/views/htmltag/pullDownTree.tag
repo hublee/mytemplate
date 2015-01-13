@@ -10,14 +10,15 @@
 @var pId = pId!"";
 @var width = width!"";
 @var class = class!;
+@var isRoot = isRoot!"true";
 @var rootNodeName = rootNodeName!"全部";
 
 <div class="btn-group ${class!}"   style="width:${width};">
 	<span data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle width-100">
-		<span id="pullDownTreeCurName${order}">全部</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+		<span id="pullDownTreeCurName${order}">${rootNodeName}</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
-	<div class="dropdown-menu dropdown-caret  scrollable" data-height="300">
+	<div class="dropdown-menu dropdown-caret scrollable" data-height="300">
 		<div class="padding-15">
 			<div style="padding-bottom: 10px;">
 				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
@@ -69,14 +70,18 @@ $(function() {
 	}
 	
 	var treeData${order} = ${treeData!"[]"};
-	var root = {"id":0,"name":"${rootNodeName}","open":true};
-	treeData${order}[treeData${order}.length] = root;
+	@if(isRoot == "true"){
+		var root = {"id":0,"name":"${rootNodeName}","open":true};
+		treeData${order}[treeData${order}.length] = root;
+	@}
 	pullDownTreeCurTree${order} = $.fn.zTree.init($("#pullDownTree${order}"), pullDownTreeSetting${order}, treeData${order});
 	
-	var nodes = pullDownTreeCurTree${order}.getNodesByParam("level", 0);
-	for(var i=0; i<nodes.length; i++) {
-		pullDownTreeCurTree${order}.expandNode(nodes[i], true, false, false);
-	}
+	@if(isRoot == "true"){
+		var nodes = pullDownTreeCurTree${order}.getNodesByParam("level", 0);
+		for(var i=0; i<nodes.length; i++) {
+			pullDownTreeCurTree${order}.expandNode(nodes[i], true, false, false);
+		}
+	@}
 	
 	function selectClick(e, treeId, treeNode){
 		$("#pullDownTreeCurId${order}").val(treeNode.id);

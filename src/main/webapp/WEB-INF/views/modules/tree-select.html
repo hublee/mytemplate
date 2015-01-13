@@ -59,19 +59,11 @@ $(document).ready(function(){
 	$("#${id}-save").click(function(){
 		node = ${tree}.getSelectedNodes()[0];
 		if(undefined == node || null == node){
-			layer.tips("请选择一个节点", $("#select-tree"), {
-				guide:0,
-				time: 4,
-				style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
-			});
+			tip.errorTip("请选择一个节点",$("#select-tree"));
 			return false;
 		}
 		if("${curId}" == node.id){
-			layer.tips("不能选择自己", $("#select-tree"), {
-				guide:0,
-				time: 4,
-				style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
-			});
+			tip.errorTip("不能选择自己",$("#select-tree"));
 			return false;
 		}
 		if(node.id == 0){
