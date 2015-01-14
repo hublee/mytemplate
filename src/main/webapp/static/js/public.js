@@ -113,7 +113,7 @@ function changeMenu(obj){
         			if(data>0) {
         				layer.msg('删除成功', 1, 1,function(){
         					if(params.reloadurl){
-        						history.justshow();
+        						location.reload();
         					}else{
         						$curmenu.trigger('click');
         					}
