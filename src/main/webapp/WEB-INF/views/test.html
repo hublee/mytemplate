@@ -198,3 +198,26 @@ validId="sysuserForm" config="true">
 		}
 	});
 </#save>
+
+
+
+<tr class="FormData">
+					<td class="CaptionTD">归属机构</td>
+					<td class="DataTD width-100">
+					<select class="chosen-select" id="editOfficeGroup" name="officeId">
+						@print(office.formatTree(office.getOfficeTree()));
+					</select>
+					<input type="hidden" name="companyId" id="editCompanyId" />
+					<script>
+					$("#editOfficeGroup").chosen({'width':'100%',search_contains: true}).change(function(){
+						var cur = $(this).find("option:selected");
+						var pid = cur.data("pid");
+						var pname = $(this).find("[value="+pid+"]").text();
+						var office = $.trim(pname)+" （"+$.trim(cur.text())+"）";
+						$("#editOfficeGroup_chosen .chosen-single span").text(office);
+						$("#editCompanyId").val(pid==undefined?cur.val():pid);
+					});
+					$("#editOfficeGroup").find("option[value='${user.officeId!}']").prop("selected",true).trigger('change');
+					</script>
+					</td>
+				</tr>

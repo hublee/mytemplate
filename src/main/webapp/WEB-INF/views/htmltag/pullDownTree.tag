@@ -85,12 +85,33 @@ $(function() {
 	
 	function selectClick(e, treeId, treeNode){
 		$("#pullDownTreeCurId${order}").val(treeNode.id);
-		$("#pullDownTreeCurName${order}").text(treeNode.name);
+		var pids = treeNode.parentIds.split(",");
+		var pnames = "";
+		for(var i=0;i<pids.length-1;i++){
+			if(pids[i] == 0) continue;
+			var node = pullDownTreeCurTree${order}.getNodesByParam("id",pids[i])[0];
+			pnames += node.name+"-";
+		}
+		$("#pullDownTreeCurName${order}").text(pnames+treeNode.name);
 		${tagBody!}
 	}
 	
 	var pullDownTreeList${order} = [];
 	$("#pullDownTreeSearch${order}").bind("change keydown cut input propertychange", searchNode);
+	
+	function getParentNames(treeNode,pnames){
+		var	node = treeNode.getParentNode();
+		
+		if(node!=undefined && node!=null && treeNode.id != 0) {
+			//console.log( treeNode.id)
+			//console.log(node.name)
+			pnames = pnames + "-" + node.name ;
+			getParentNames(node,pnames);
+		}else{
+			console.log(pnames)
+			return pnames;
+		}
+	}
 	
 	function searchNode() {
 		// 取得输入的关键字的值
