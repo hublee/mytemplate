@@ -16,68 +16,48 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
-			<div class="widget-container-col ui-sortable">
-				<div class="widget-box ">
-					<div class="widget-header widget-header-small">
-						<h6 class="widget-title">
-							<i class="ace-icon fa fa-search"></i>搜索
-						</h6>
-
-						<div class="widget-toolbar">
-							<a href="javascript:void(0);" data-action="collapse">
-								<i class="ace-icon fa bigger-125 fa-chevron-up"></i>
-							</a>
-						</div>
+			<#search>
+				<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
+				target="list-page" class="center clearfix">
+				<div class="row padding-tb-10">
+					<div class="col-sm-6">
+						<label class="inline">归属机构：</label>
+						<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
+							class="width-80" cName="officeType" >
+							$("#pullDownTreeCurCidone").val(treeNode.type);
+						</#pullDownTree>
 					</div>
-
-					<div class="widget-body">
-						<div class="widget-body-inner" >
-						<div class="widget-main">
-							<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
-							target="list-page" class="center clearfix">
-							<div class="row padding-tb-10">
-								<div class="col-sm-6">
-									<label class="inline">归属机构：</label>
-									<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
-										class="width-80" cName="officeType" >
-										$("#pullDownTreeCurCidone").val(treeNode.type);
-									</#pullDownTree>
-								</div>
-								<div class="col-sm-6">
-									<label class="inline">真实姓名：</label>
-									<input type="text" class="width-80"  name="name"/>
-								</div>
-							</div>
-							<div class="row padding-tb-10">
-								<div class="col-sm-6">
-									<label class="inline">所属角色：</label>
-									<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
-										@for(role in roles){
-											<option value="${role.id!}">
-											${role.name!}
-											@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
-											@if(!isEmpty(sostr)){
-											&nbsp;(${sostr})
-											@}
-											</option>
-										@}
-									</select>
-								</div>
-								<div class="col-sm-6">
-									<label class="inline">人员工号：</label>
-									<input type="text" class="width-80"  name="no"/>
-								</div>
-							</div>
-							<div class="padding-trb-10 col-sm-12">
-								<span class="btn  btn-primary btn-sm col-sm-6" onclick="$curmenu.trigger('click');">全 部 用 户</span>
-								<span class="btn btn-info btn-sm col-sm-6" id="search-btn">条 件 查 询</span>
-							</div>
-							</form>
-						</div>
-						</div>
+					<div class="col-sm-6">
+						<label class="inline">真实姓名：</label>
+						<input type="text" class="width-80"  name="name"/>
 					</div>
 				</div>
-			</div>
+				<div class="row padding-tb-10">
+					<div class="col-sm-6">
+						<label class="inline">所属角色：</label>
+						<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
+							@for(role in roles){
+								<option value="${role.id!}">
+								${role.name!}
+								@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+								@if(!isEmpty(sostr)){
+								&nbsp;(${sostr})
+								@}
+								</option>
+							@}
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<label class="inline">人员工号：</label>
+						<input type="text" class="width-80"  name="no"/>
+					</div>
+				</div>
+				<div class="padding-trb-10 col-sm-12">
+					<span class="btn  btn-primary btn-sm col-sm-6" onclick="$curmenu.trigger('click');">全 部 用 户</span>
+					<span class="btn btn-info btn-sm col-sm-6" id="search-btn">条 件 查 询</span>
+				</div>
+				</form>
+			</#search>
 			<div class="space-6"></div>
 			<div id="list-page"></div>
 		</div>
