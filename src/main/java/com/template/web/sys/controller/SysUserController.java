@@ -74,14 +74,16 @@ public class SysUserController {
 	public String showLayer(Long id,@PathVariable("mode") String mode, Model model){
 		SysUser user = sysUserService.selectByPrimaryKey(id);;
 		List<SysRole> roles = null;
+		Map<Long, SysRole> rolesMap = null;
 		if(StringUtils.equals("detail", mode)){
-			roles = sysRoleService.findRoleByUserId(id);
+			roles = sysRoleService.findUserRoleByUserId(id,true);
+			model.addAttribute("roles", roles);
 		}
 		if(StringUtils.equals("edit", mode)){
-			
+			rolesMap = sysRoleService.findUserRoleByUserId(id,false);
+			model.addAttribute("rolesMap", rolesMap);
 		}
-		model.addAttribute("user", user)
-			.addAttribute("roles", roles);
+		model.addAttribute("user", user);
 		return mode.equals("detail")?"sys/user/user-detail":"sys/user/user-save";
 	}
 	

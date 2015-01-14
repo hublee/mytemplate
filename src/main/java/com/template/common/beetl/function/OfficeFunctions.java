@@ -43,8 +43,10 @@ public class OfficeFunctions {
 	public Map<Long, Object> getAllOfficeMap(){
 		Map<Long, Object> map = new HashMap<Long, Object>();
 		List<SysOffice> list = getAllOfficeList(false);
-		for(SysOffice so : list){
-			map.put(so.getId(), so);
+		if(list!=null && list.size()>0){
+			for(SysOffice so : list){
+				map.put(so.getId(), so);
+			}
 		}
 		return map;
 	}

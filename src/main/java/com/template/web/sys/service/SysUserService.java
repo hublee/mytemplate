@@ -43,7 +43,9 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			count = this.insertSelective(sysUser);
 			sysUserMapper.insertUserRole(sysUser);
 		}else{
+			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
 			count = this.updateByPrimaryKeySelective(sysUser);
+			sysRoleMapper.insertUserRoleByUserId(sysUser);
 		}
 		return count;
 	}

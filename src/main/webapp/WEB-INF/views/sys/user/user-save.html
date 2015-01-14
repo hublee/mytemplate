@@ -1,4 +1,6 @@
 @var officeList = office.getAllOfficeList(false); //全部公司
+@var officeMap = office.getAllOfficeMap();
+@var allRoles = role.getAllRoleList();
 <div class="layer">
 	<form name="FormPost" id="sysuser-save" class="FormGrid"  method="post"
 		action="${rootPath}/sysuser/save">
@@ -18,6 +20,22 @@
 					<#pullDownTree order="three" treeData="${officeList}" name="officeId" 
 						value="${user.officeId}" class="width-100" isRoot="false" 
 						rootNodeName="请选择归属机构" />
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">所属角色</td>
+					<td class="DataTD width-100">
+					<select name="roleIds" multiple class="chosen-select tag-input-style" id="user-role-update" data-placeholder="选择角色">
+						@for(role in allRoles){
+							<option value="${role.id!}" ${decode(rolesMap[role.id],null,"","selected")}>
+							${role.name!}
+							@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+							@if(!isEmpty(sostr)){
+								&nbsp;(${sostr})
+							@}
+							</option>
+						@}
+					</select>
 					</td>
 				</tr>
 				<tr class="FormData">
@@ -61,5 +79,5 @@
 
 //描述框自动扩张高度
 $('textarea[class*=autosize]').autosize({append: "\n"});
-
+$("#user-role-update").chosen({width: "100%",search_contains: true}); 
 </script>

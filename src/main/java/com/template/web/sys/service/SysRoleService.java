@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	* @param id
 	 */
 	public int deleteSysRole(Long id){
+		sysRoleMapper.deleteUserRoleByRoleId(id);
 		sysRoleMapper.deleteRoleOfficeByRoleId(id);
 		sysRoleMapper.deleteRoleResourceByRoleId(id);
 		int count = this.deleteByPrimaryKey(id);
@@ -70,10 +72,20 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
         return new PageInfo<SysRole>(list);
 	}
 	
+	/**
+	 * 根据角色id查询拥有的资源id集合
+	* @param roleId
+	* @return
+	 */
 	public List<Long> findResourceIdsByRoleId(Long roleId){
 		return sysRoleMapper.findResourceIdsByRoleId(roleId);
 	}
 	
+	/**
+	 * 根据角色id查询拥有的机构id集合
+	* @param roleId
+	* @return
+	 */
 	public List<Long> findOfficeIdsByRoleId(Long roleId){
 		return sysRoleMapper.findOfficeIdsByRoleId(roleId);
 	}
@@ -99,21 +111,34 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	/**
 	 * 根据用户id查询角色
 	* @param userId
+	* @param flag true返回list false返回map
 	* @return
 	 */
-	public List<SysRole> findRoleByUserId(Long userId){
-		return sysRoleMapper.findRoleByUserId(userId);
+	@SuppressWarnings("unchecked")
+	public <T> T findUserRoleByUserId(Long userId,boolean flag){
+		Object o = sysRoleMapper.findUserRoleByUserId(userId);
+		Map<Long, SysRole> roleMap = new HashMap<Long, SysRole>();
+		if(!flag){
+			List<SysRole> list = (List<SysRole>) o;
+			if(list!=null && list.size()>0 && list.get(0)!=null){
+				for(SysRole sysRole:list){
+					roleMap.put(sysRole.getId(), sysRole);
+				}
+			}
+			o = roleMap;
+		}
+		return (T) o;
 	}
 	
 	/**
-	 * 添加角色下的人员
+	 * 添加角色绑定的人员
 	* @param sysRole
 	* @return
 	 */
 	public int saveUserRole(SysRole sysRole){
 		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
 		if(sysRole.getUserIds().length>0) {
-			sysRoleMapper.insertUserRole(sysRole);
+			sysRoleMapper.insertUserRoleByRoleId(sysRole);
 		}
 		return 1;
 	}
