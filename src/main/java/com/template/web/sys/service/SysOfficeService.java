@@ -66,7 +66,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	 */
 	@Cacheable(key="'office'")
 	public List<SysOffice> findAllOffice(){
-		return sysOfficeMapper.select(new SysOffice());
+		return this.select(new SysOffice());
 	}
 	
 	

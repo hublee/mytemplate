@@ -21,14 +21,14 @@
 	
 	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
 	<delete id="deleteIdsByRootId">
-		delete from sys_office where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+		update sys_office set del_flag=1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
 	<!-- 根据部门id查找公司id -->
 	<select id="findOfficeCompanyIdByDepId" resultType="com.template.web.sys.model.SysOffice">
 		SELECT <include refid="sysOfficeColumns"/> FROM sys_office
 		WHERE FIND_IN_SET(id,(SELECT parent_ids FROM sys_office WHERE id = #{depId}))
-		AND type = 1
+		AND type = 1 and del_flag=0
 		ORDER BY grade
 		LIMIT 1
 	</select>
@@ -46,6 +46,7 @@
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
 				FIND_IN_SET(#{id},t1.parent_ids) or t1.id = #{id}
 			</if>
+			and t1.del_flag=0
 		</where>
 		ORDER BY t1.update_date desc
 	</select>

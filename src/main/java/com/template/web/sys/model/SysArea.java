@@ -22,10 +22,6 @@ public class SysArea extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(generator="JDBC")
-    protected Long id; //id <主键id>
-
     private String code; //code <区域编码>
 
     private String name; //name <区域名称>
@@ -40,15 +36,6 @@ public class SysArea extends BaseEntity {
 
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
-
-
-	public Long getId() {
-		return this.getLong("id");
-    }
-   
-    public void setId(Long id) {
-		this.set("id", id);
-    }
 
 	public String getCode() {
 		return this.getString("code");

@@ -4,12 +4,12 @@
 
 	<sql id="sysResourceColumns">
 		id,code,common,description,icon,name,parent_id,pos,sort,status,type,url,parent_ids,
-		update_by,update_date,create_by,create_date
+		update_by,update_date,create_by,create_date,del_flag
 	</sql>
 
 	<sql id="AliasColumns">
 		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,
-		sr.status,sr.type,sr.url,sr.common,sr.pos,sr.parent_ids
+		sr.status,sr.type,sr.url,sr.common,sr.pos,sr.parent_ids,sr.del_flag
 	</sql>
 	
 	<!-- 修改父节点字符串 -->

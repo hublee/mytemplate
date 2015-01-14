@@ -24,10 +24,6 @@ public class SysResource extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(generator="JDBC")
-    private Long id; //id <>
-
     private Long code; //code <权限码 1<<n>
 
     private String common; //common <是否是公共资源(0.不是 1.是)>
@@ -52,25 +48,9 @@ public class SysResource extends BaseEntity {
     
     private String parentIds;
     
-    private String createBy; //create_by <创建者>
-
-    private Date createDate; //create_date <创建时间>
-    
-    private String updateBy; //update_by <更新者>
-
-    private Date updateDate; //update_date <更新时间>
-    
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
-
-	public Long getId() {
-		return this.getLong("id");
-    }
-   
-    public void setId(Long id) {
-		this.set("id", id);
-    }
 
 	public Long getCode() {
 		return this.getLong("code");
@@ -174,38 +154,6 @@ public class SysResource extends BaseEntity {
    
     public void setOldParentIds(String oldParentIds) {
 		this.set("oldParentIds", oldParentIds);
-    }
-    
-    public String getUpdateBy() {
-		return this.getString("updateBy");
-    }
-   
-    public void setUpdateBy(String updateBy) {
-		this.set("updateBy", updateBy);
-    }
-
-	public Date getUpdateDate() {
-		return this.getDate("updateDate");
-    }
-   
-    public void setUpdateDate(Date updateDate) {
-		this.set("updateDate", updateDate);
-    }
-    
-    public String getCreateBy() {
-		return this.getString("createBy");
-    }
-   
-    public void setCreateBy(String createBy) {
-		this.set("createBy", createBy);
-    }
-
-	public Date getCreateDate() {
-		return this.getDate("createDate");
-    }
-   
-    public void setCreateDate(Date createDate) {
-		this.set("createDate", createDate);
     }
 
 }

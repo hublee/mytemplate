@@ -22,21 +22,7 @@ public class SysUser extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	
-	@Id
-	@GeneratedValue(generator="JDBC")
-    private Long id; //id <编号>
-
-	
     private Long companyId; //company_id <归属公司>
-
-	
-    private String createBy; //create_by <创建者>
-
-	
-    private Date createDate; //create_date <创建时间>
-
-	
-    private String delFlag; //del_flag <删除标记>
 
 	
     private String email; //email <邮箱>
@@ -69,12 +55,6 @@ public class SysUser extends BaseEntity {
     private String remarks; //remarks <备注信息>
 
 	
-    private String updateBy; //update_by <更新者>
-
-	
-    private Date updateDate; //update_date <更新时间>
-
-	
     private String username; //username <登录名>
 
 	
@@ -92,14 +72,6 @@ public class SysUser extends BaseEntity {
     	return (Long[])this.get("roleIds");
     }
 
-	public Long getId() {
-		return this.getLong("id");
-    }
-   
-    public void setId(Long id) {
-		this.set("id", id);
-    }
-
 	public Long getCompanyId() {
 		return this.getLong("companyId");
     }
@@ -108,29 +80,6 @@ public class SysUser extends BaseEntity {
 		this.set("companyId", companyId);
     }
 
-	public String getCreateBy() {
-		return this.getString("createBy");
-    }
-   
-    public void setCreateBy(String createBy) {
-		this.set("createBy", createBy);
-    }
-
-	public Date getCreateDate() {
-		return this.getDate("createDate");
-    }
-   
-    public void setCreateDate(Date createDate) {
-		this.set("createDate", createDate);
-    }
-
-	public String getDelFlag() {
-		return this.getString("delFlag");
-    }
-   
-    public void setDelFlag(String delFlag) {
-		this.set("delFlag", delFlag);
-    }
 
 	public String getEmail() {
 		return this.getString("email");
@@ -212,21 +161,6 @@ public class SysUser extends BaseEntity {
 		this.set("remarks", remarks);
     }
 
-	public String getUpdateBy() {
-		return this.getString("updateBy");
-    }
-   
-    public void setUpdateBy(String updateBy) {
-		this.set("updateBy", updateBy);
-    }
-
-	public Date getUpdateDate() {
-		return this.getDate("updateDate");
-    }
-   
-    public void setUpdateDate(Date updateDate) {
-		this.set("updateDate", updateDate);
-    }
 
 	public String getUsername() {
 		return this.getString("username");
