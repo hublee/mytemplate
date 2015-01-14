@@ -2,6 +2,8 @@ package com.template.common.base;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
+
 
 public interface BaseService<T extends BaseEntity> {
 	
@@ -77,4 +79,5 @@ public interface BaseService<T extends BaseEntity> {
      */
     public int save(T record);
     
+    public PageInfo<T> selectPage(int pageNum,int pageSize,T record);
 }
