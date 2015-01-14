@@ -24,6 +24,15 @@
 		delete from sys_office where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
+	<!-- 根据部门id查找公司id -->
+	<select id="findOfficeCompanyIdByDepId" resultType="com.template.web.sys.model.SysOffice">
+		SELECT <include refid="sysOfficeColumns"/> FROM sys_office
+		WHERE FIND_IN_SET(id,(SELECT parent_ids FROM sys_office WHERE id = #{depId}))
+		AND type = 1
+		ORDER BY grade
+		LIMIT 1
+	</select>
+	
 	<!-- 分页显示筛选查询 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysOffice">
 		select <include refid="sysOfficeAliasColumns"/>,t2.name pname,t2.id pid

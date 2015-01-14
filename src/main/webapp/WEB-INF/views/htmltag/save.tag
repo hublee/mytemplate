@@ -31,7 +31,7 @@ var ${validId} = $("#${formId}").Validform({
 			if(data>0) {
 				layer.msg('操作成功', 1, 1,function(){
 					if("${reloadUrl}" == "true"){
-						location.reload();
+						history.justshow();
 					}else{
 						$curmenu.trigger('click');
 					}

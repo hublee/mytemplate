@@ -39,6 +39,8 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		int count = 0;
 		//新的parentIds
 		sysOffice.setParentIds(sysOffice.getParentIds()+sysOffice.getParentId()+","); 
+		int grade = sysOffice.getParentIds().split(",").length;
+		sysOffice.setGrade(String.valueOf(grade));
 		if(null == sysOffice.getId()){
 			count = this.insertSelective(sysOffice);
 		}else{

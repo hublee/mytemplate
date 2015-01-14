@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
+import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.mapper.SysUserMapper;
+import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysUser;
 
 /**
@@ -30,10 +32,14 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	@Resource
 	private SysRoleMapper sysRoleMapper;
 	
+	@Resource
+	private SysOfficeMapper sysOfficeMapper;
+	
 	public int saveSysUser(SysUser sysUser){
 		int count = 0;
 		if(null == sysUser.getId()){
-			
+			SysOffice sysOffice = sysOfficeMapper.findOfficeCompanyIdByDepId(sysUser.getOfficeId());
+			sysUser.setCompanyId(sysOffice.getId());
 			count = this.insertSelective(sysUser);
 			sysUserMapper.insertUserRole(sysUser);
 		}else{

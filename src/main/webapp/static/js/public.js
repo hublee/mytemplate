@@ -1,9 +1,8 @@
 var $curmenu,lastIndex;//最后弹窗索引
-
+var history = Webit.history;
 $(function(){
 	
 	var aMenu = $("#sidebar-menu a[id]");
-	var history = Webit.history;
 	aMenu.on("click",function(){
 		var hash = history.get(),href = $(this).attr("href");
 		if( ("#"+hash) == href ){
@@ -114,7 +113,7 @@ function changeMenu(obj){
         			if(data>0) {
         				layer.msg('删除成功', 1, 1,function(){
         					if(params.reloadurl){
-        						location.reload();
+        						history.justshow();
         					}else{
         						$curmenu.trigger('click');
         					}
