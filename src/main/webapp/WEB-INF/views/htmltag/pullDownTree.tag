@@ -84,7 +84,6 @@ $(function() {
 	@}
 	@if(value != "0"){
 		var curNode = pullDownTreeCurTree${order}.getNodesByParam("id","${value}")[0];
-		console.log(curNode);
 		getParentNames(curNode);
 	@}
 	
