@@ -18,7 +18,7 @@
 		<span id="pullDownTreeCurName${order}">${rootNodeName}</span> <i class="ace-icon fa fa-angle-down icon-on-right"></i>
 	</span>
 
-	<div class="dropdown-menu dropdown-caret scrollable" data-height="300">
+	<div class="dropdown-menu dropdown-caret scrollable width-100" data-height="250">
 		<div class="padding-15">
 			<div style="padding-bottom: 10px;">
 				<input type="text" id="pullDownTreeSearch${order}" placeholder="搜索" class="width-100"/>
@@ -39,7 +39,7 @@ $(function() {
 	$('.scrollable').each(function () {
 		var $this = $(this);
 		$(this).ace_scroll({
-			size: $this.data('height') || 300
+			size: $this.data('height') || 250
 		});
 	});
 	
