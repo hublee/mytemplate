@@ -62,7 +62,7 @@ public class RoleController extends BaseController {
 	@RequestMapping("binduser")
 	public String toBindUser(Long id,Model model){
 		List<SysUser> users = sysRoleService.findUserByRoleId(id);
-		List<SysOffice> offices = sysOfficeService.select(null);
+		List<SysOffice> offices = sysOfficeService.select(new SysOffice());
 		model.addAttribute("users", users).addAttribute("roleId", id)
 			.addAttribute("offices", JsonUtils.getInstance().toJson(offices));
 		return "sys/role/role-user";

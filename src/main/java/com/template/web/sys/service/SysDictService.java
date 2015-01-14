@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.template.common.base.ServiceMybatis;
@@ -23,7 +22,7 @@ import com.template.web.sys.model.SysDict;
  */
 
 @Service("sysDictService")
-@CacheConfig(cacheNames="sysCache")
+@CacheConfig(cacheNames="sysDict")
 public class SysDictService extends ServiceMybatis<SysDict>{
 
 	@Resource
@@ -34,18 +33,12 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 	* @param sysDict
 	* @return
 	 */
-	@Caching(evict = {
-		@CacheEvict(key="'dict'+#sysDict['type']"),
-		@CacheEvict(key="'dict'")	
-	})
+	@CacheEvict(allEntries=true)	
 	public int saveSysdict(SysDict sysDict){
 		return this.save(sysDict);
 	}
 	
-	@Caching(evict = {
-			@CacheEvict(key="'dict'+#sysDict['type']"),
-			@CacheEvict(key="'dict'")	
-	})
+	@CacheEvict(allEntries=true)	
 	public int deleteSysDict(SysDict sysDict){
 		return this.delete(sysDict);
 	}

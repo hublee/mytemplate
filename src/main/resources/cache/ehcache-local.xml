@@ -11,6 +11,17 @@
 	<cache name="sysCache" maxElementsInMemory="5000" eternal="true"
 		overflowToDisk="true" />
 		
+	<cache name="sysArea" maxEntriesLocalHeap="100" eternal="true" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="sysOffice" maxEntriesLocalHeap="100" eternal="true" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="sysRole" maxEntriesLocalHeap="100" eternal="true" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="sysDict" maxEntriesLocalHeap="100" eternal="true" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="sysResource" maxEntriesLocalHeap="100" eternal="true" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+		
 	<!--  
     name：Cache的唯一标识  
     maxElementsInMemory：内存中最大缓存对象数  

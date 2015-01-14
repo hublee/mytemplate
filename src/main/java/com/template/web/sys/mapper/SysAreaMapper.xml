@@ -19,7 +19,7 @@
 	
 	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
 	<delete id="deleteIdsByRootId">
-		delete from sys_area where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+		update sys_area set del_flag = 1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
 	<!-- 分页显示筛选查询 -->
@@ -35,6 +35,7 @@
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
 				FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id}
 			</if>
+			and a.del_flag = 0
 		</where>
 		ORDER BY a.update_date desc
 	</select>

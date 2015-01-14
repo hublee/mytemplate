@@ -147,7 +147,7 @@ function changeMenu(obj){
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
 				    area : [width,height],
-				    border:[2, 0.5, '#888'],//params.border,
+				    border:[4, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
 				    	layero.find('.xuboxPageHtml').css({

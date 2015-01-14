@@ -48,13 +48,13 @@ public class OfficeController extends BaseController {
 	@RequestMapping
 	public String toSysOffice(Model model){
 		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(sysOfficeService.select(null)));
+				JsonUtils.getInstance().toJson(sysOfficeService.findAllOffice()));
 		return "sys/office/office";
 	}
 	
 	@RequestMapping("tree")
 	public @ResponseBody List<SysOffice> getOfficeTreeList(@ModelAttribute SysOffice sysOffice){
-		List<SysOffice> list = sysOfficeService.select(sysOffice);
+		List<SysOffice> list = sysOfficeService.findAllOffice();
 		return list;
 	}
 	

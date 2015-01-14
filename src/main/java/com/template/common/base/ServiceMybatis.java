@@ -19,6 +19,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public List<T> select(T record){
+    	record.setDelFlag("0");
     	return mapper.select(record);
     }
 
@@ -27,6 +28,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public int selectCount(T record){
+    	record.setDelFlag("0");
     	return mapper.selectCount(record);
     }
 
@@ -47,9 +49,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public int insert(T record){
-    	record.set("createDate", new Date());
-    	record.set("updateDate", new Date());
-    	record.set("delFlag", "0");
+    	record.setCreateDate(new Date());
+    	record.setUpdateDate(new Date());
+    	record.setDelFlag("0");
     	return mapper.insert(record);
     }
 
@@ -60,9 +62,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public int insertSelective(T record){
-    	record.set("createDate", new Date());
-    	record.set("updateDate", new Date());
-    	record.set("delFlag", "0");
+    	record.setCreateDate(new Date());
+    	record.setUpdateDate(new Date());
+    	record.setDelFlag("0");
     	return mapper.insertSelective(record);
     }
 
@@ -90,7 +92,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public int updateByPrimaryKey(T record){
-    	record.set("updateDate", new Date());
+    	record.setUpdateDate(new Date());
     	return mapper.updateByPrimaryKey(record);
     }
 
@@ -100,7 +102,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	* @param <T extend T>
 	 */
     public int updateByPrimaryKeySelective(T record){
-    	record.set("updateDate", new Date());
+    	record.setUpdateDate(new Date());
     	return mapper.updateByPrimaryKeySelective(record);
     }
     
@@ -127,6 +129,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
     * @return
      */
 	public PageInfo<T> selectPage(int pageNum,int pageSize,T record){
+		record.setDelFlag("0");
     	PageHelper.startPage(pageNum, pageSize);
     	return new PageInfo<T>(mapper.select(record));
     }

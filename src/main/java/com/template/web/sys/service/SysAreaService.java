@@ -25,7 +25,7 @@ import java.util.Map;
  */
 
 @Service("sysAreaService")
-@CacheConfig(cacheNames="sysCache")
+@CacheConfig(cacheNames="sysArea")
 public class SysAreaService extends ServiceMybatis<SysArea>{
 
 	@Resource
@@ -34,7 +34,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	/**
 	 *新增or更新SysArea
 	 */
-	@CacheEvict(key="'area_all'")
+	@CacheEvict(allEntries=true)
 	public int saveSysArea(SysArea sysArea){
 		int count = 0;
 		//新的parentIds
@@ -58,7 +58,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	* @param id
 	* @return
 	 */
-	@CacheEvict(key="'area_all'")	
+	@CacheEvict(allEntries=true)	
 	public int deleteAreaByRootId(Long id){
 		return sysAreaMapper.deleteIdsByRootId(id);
 	}
@@ -82,7 +82,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 */
 	@Cacheable(key="'area_all'")
 	public List<SysArea> findAllArea(){
-		return this.select(null);
+		return this.select(new SysArea());
 	}
 
 }

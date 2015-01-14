@@ -28,10 +28,10 @@ public class OfficeFunctions {
 		List<SysOffice> cacheOfficeList = null;
 		if(flag){
 			//深度copy一个缓存集合，防止因操作缓存list造成ehcache共享的线程不安全
-			cacheOfficeList = Collections3.copyTo(sysOfficeService.getAllOffice(),
+			cacheOfficeList = Collections3.copyTo(sysOfficeService.findAllOffice(),
 					SysOffice.class);
 		}else{
-			cacheOfficeList = sysOfficeService.getAllOffice();
+			cacheOfficeList = sysOfficeService.findAllOffice();
 		}
 		return cacheOfficeList;
 	}

@@ -25,7 +25,7 @@ import java.util.Map;
  */
 
 @Service("sysOfficeService")
-@CacheConfig(cacheNames="sysCache")
+@CacheConfig(cacheNames="sysOffice")
 public class SysOfficeService extends ServiceMybatis<SysOffice> {
 
 	@Resource
@@ -34,7 +34,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	/**
 	 *新增或更新SysOffice
 	 */
-	@CacheEvict(key="'office'")
+	@CacheEvict(allEntries=true)
 	public int saveSysOffice(SysOffice sysOffice){
 		int count = 0;
 		//新的parentIds
@@ -55,7 +55,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		return count;
 	}
 	
-	@CacheEvict(key="'office'")
+	@CacheEvict(allEntries=true)
 	public int deleteOfficeByRootId(Long id){
 		return sysOfficeMapper.deleteIdsByRootId(id);
 	}
@@ -65,8 +65,8 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	* @return
 	 */
 	@Cacheable(key="'office'")
-	public List<SysOffice> getAllOffice(){
-		return sysOfficeMapper.select(null);
+	public List<SysOffice> findAllOffice(){
+		return sysOfficeMapper.select(new SysOffice());
 	}
 	
 	

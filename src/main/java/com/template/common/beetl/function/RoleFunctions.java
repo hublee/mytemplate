@@ -20,7 +20,7 @@ public class RoleFunctions {
 	* @return
 	 */
 	public List<SysRole> getAllRoleList(){
-		List<SysRole> roles = sysRoleService.select(null);
+		List<SysRole> roles = sysRoleService.select(new SysRole());
 		return roles;
 	}
 	
