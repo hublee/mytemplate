@@ -1,4 +1,4 @@
-@var office = office.getAllOfficeMap();
+@var officeMap = office.getAllOfficeMap();
 <div>
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
@@ -11,7 +11,10 @@
 		<div class="profile-info-name">所属机构</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			${office[user.companyId].name!} — ${office[user.officeId].name!}
+			@var useroffice = office.getOfficeStrByOfficeId(user.officeId,officeMap);
+			@if(!isEmpty(useroffice)){
+			&nbsp;(${useroffice})
+			@}
 			</span>
 		</div>
 	</div>
@@ -21,8 +24,11 @@
 			<span class="editable editable-click">
 			@for(role in roles){
 				@if(isEmpty(role)) continue;
-				${role.name!}(${office[office[role.officeId].parentId].name!} - ${office[role.officeId].name!})
-				${decode(roleLP.last,true,'','，')}
+				${role.name!}
+				@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+				@if(!isEmpty(sostr)){
+				&nbsp;(${sostr})${decode(roleLP.last,true,"","，")}
+				@}
 			@}
 			</span>
 		</div>
