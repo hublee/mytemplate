@@ -82,35 +82,31 @@ $(function() {
 			pullDownTreeCurTree${order}.expandNode(nodes[i], true, false, false);
 		}
 	@}
+	@if(value != "0"){
+		var curNode = pullDownTreeCurTree${order}.getNodesByParam("id","${value}")[0];
+		console.log(curNode);
+		getParentNames(curNode);
+	@}
 	
 	function selectClick(e, treeId, treeNode){
 		$("#pullDownTreeCurId${order}").val(treeNode.id);
-		var pids = treeNode.parentIds.split(",");
-		var pnames = "";
-		for(var i=0;i<pids.length-1;i++){
-			if(pids[i] == 0) continue;
-			var node = pullDownTreeCurTree${order}.getNodesByParam("id",pids[i])[0];
-			pnames += node.name+"-";
-		}
-		$("#pullDownTreeCurName${order}").text(pnames+treeNode.name);
+		getParentNames(treeNode);
 		${tagBody!}
 	}
 	
 	var pullDownTreeList${order} = [];
 	$("#pullDownTreeSearch${order}").bind("change keydown cut input propertychange", searchNode);
 	
-	function getParentNames(treeNode,pnames){
-		var	node = treeNode.getParentNode();
-		
-		if(node!=undefined && node!=null && treeNode.id != 0) {
-			//console.log( treeNode.id)
-			//console.log(node.name)
-			pnames = pnames + "-" + node.name ;
-			getParentNames(node,pnames);
-		}else{
-			console.log(pnames)
-			return pnames;
+	function getParentNames(treeNode){
+		var pids = [];
+		if(treeNode.parentIds!=undefined) pids=treeNode.parentIds.split(",");
+		var pnames = "";
+		for(var i=0;i<pids.length-1;i++){
+			if(pids[i] == 0) continue;
+			var node = pullDownTreeCurTree${order}.getNodesByParam("id",pids[i])[0];
+			pnames += node.name+"-";
 		}
+		$("#pullDownTreeCurName${order}").text( pnames+treeNode.name);
 	}
 	
 	function searchNode() {
