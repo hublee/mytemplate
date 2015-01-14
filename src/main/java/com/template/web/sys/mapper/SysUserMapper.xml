@@ -7,20 +7,6 @@
 		name,no,office_id,password,phone,remarks,update_by,update_date,username,user_type
 	</sql>
 	
-	<!-- 添加用户的角色 -->
-	<insert id="insertUserRole">
-		insert into sys_user_role (user_id,role_id) values
-		<foreach collection="roleIds" index="index" item="roleId" separator=",">
-			(#{id},#{roleId,jdbcType=NUMERIC})
-		</foreach>
-	</insert>
-	
-	<!-- 验证账号密码 -->
-	<select id="checkUser" resultType="com.template.web.sys.model.SysUser">
-		select <include refid="sysUserColumns" /> from sys_user 
-		where username = #{username} and password = #{password}
-	</select> 
-	
 	<!-- 用户列表 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysUser">
 		SELECT su.id,su.name,su.mobile,su.email,su.no,su.login_ip,su.login_date,

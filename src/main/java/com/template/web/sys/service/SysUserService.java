@@ -41,12 +41,11 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		sysUser.setCompanyId(sysOffice.getId());
 		if(null == sysUser.getId()){
 			count = this.insertSelective(sysUser);
-			sysUserMapper.insertUserRole(sysUser);
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
 			count = this.updateByPrimaryKeySelective(sysUser);
-			sysRoleMapper.insertUserRoleByUserId(sysUser);
 		}
+		sysRoleMapper.insertUserRoleByUserId(sysUser);
 		return count;
 	}
 	
@@ -68,7 +67,10 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	* @return user
 	 */
 	public SysUser checkUser(String username,String password){
-		return sysUserMapper.checkUser(username, password);
+		SysUser sysUser = new SysUser();
+		sysUser.setUsername(username);
+		sysUser.setPassword(password);
+		return this.select(sysUser).get(0);
 	}
 	
 }
