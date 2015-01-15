@@ -3,6 +3,7 @@
 package com.template.web.sys.mapper;
 
 import com.github.abel533.mapper.Mapper;
+import com.template.common.base.BaseMapper;
 import com.template.web.sys.model.SysArea;
 
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.Map;
  * @author 
  */
 
-public interface SysAreaMapper extends Mapper<SysArea>{
+public interface SysAreaMapper extends Mapper<SysArea>,BaseMapper<SysArea>{
 	
 	public int updateParentIds(SysArea sysArea);
 	
-	public int deleteIdsByRootId(Long id);
+	public int deleteAreaByRootId(Long id);
 
 	public List<SysArea> findPageInfo(Map<String, Object> params);
 	

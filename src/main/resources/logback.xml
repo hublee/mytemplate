@@ -33,6 +33,7 @@
 	<logger name="com.template" level="DEBUG" additivity="true"/>
 	<logger name="net.sf.ehcache" level="WARN" />
 	<logger name="org.springframework.web" level="WARN" />
+	<logger name="org.mybatis" level="WARN" />
 	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

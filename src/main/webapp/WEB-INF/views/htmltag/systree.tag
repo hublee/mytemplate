@@ -67,7 +67,7 @@
 		var id = treeNode.id;
 		$.cuslayer({
 			mode:'del',
-			msg:'你确定删除'+treeNode.name+'节点及其所有的子节点吗?(慎重操作)?',
+			msg:'<span class="red bigger-120">你确定删除'+treeNode.name+'吗?</span>',
 			title:'删除操作',
 			url:"${rootPath!}/"+'${delUrl}',
 			data:{"id":id},

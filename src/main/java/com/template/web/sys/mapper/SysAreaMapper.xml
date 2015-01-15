@@ -18,7 +18,7 @@
 	</update>
 	
 	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
-	<delete id="deleteIdsByRootId">
+	<delete id="deleteAreaByRootId">
 		update sys_area set del_flag = 1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
