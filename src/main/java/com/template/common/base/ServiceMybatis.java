@@ -3,6 +3,9 @@ package com.template.common.base;
 import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.template.common.constant.Constant;
+import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.utils.Reflections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +22,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 	* @param <T extend T>
 	 */
     public List<T> select(T record){
-    	record.setDelFlag("0");
+    	record.setDelFlag(Constant.DEL_FLAG_NORMAL);
     	return mapper.select(record);
     }
 
@@ -28,7 +31,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 	* @param <T extend T>
 	 */
     public int selectCount(T record){
-    	record.setDelFlag("0");
+    	record.setDelFlag(Constant.DEL_FLAG_NORMAL);
     	return mapper.selectCount(record);
     }
 
@@ -51,7 +54,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
     public int insert(T record){
     	record.setCreateDate(new Date());
     	record.setUpdateDate(new Date());
-    	record.setDelFlag("0");
+    	record.setDelFlag(Constant.DEL_FLAG_NORMAL);
     	return mapper.insert(record);
     }
 
@@ -64,7 +67,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
     public int insertSelective(T record){
     	record.setCreateDate(new Date());
     	record.setUpdateDate(new Date());
-    	record.setDelFlag("0");
+    	record.setDelFlag(Constant.DEL_FLAG_NORMAL);
     	return mapper.insertSelective(record);
     }
 
@@ -129,9 +132,19 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
     * @return
      */
 	public PageInfo<T> selectPage(int pageNum,int pageSize,T record){
-		record.setDelFlag("0");
+		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
     	PageHelper.startPage(pageNum, pageSize);
     	return new PageInfo<T>(mapper.select(record));
     }
+	
+	@SuppressWarnings("unchecked")
+	public <E extends BaseEntity> int BeforeDelete(E record,Class mapperClass,String[] fields,String[] values){
+		Mapper<E> mapper = SpringContextHolder.getBean(mapperClass);
+		for(int i=0;i<fields.length-1;i++){
+			record.set(fields[i], values[i]);
+		}
+		int count = mapper.selectCount(record);
+		return count;
+	}
 
 }

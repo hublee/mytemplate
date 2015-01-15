@@ -6,7 +6,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysAreaMapper;
+import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.model.SysArea;
+import com.template.web.sys.model.SysOffice;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
@@ -30,6 +32,9 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 
 	@Resource
 	private SysAreaMapper sysAreaMapper;
+	
+	@Resource
+	private SysOfficeMapper sysOfficeMapper;
 	
 	/**
 	 *新增or更新SysArea
@@ -60,7 +65,13 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 */
 	@CacheEvict(allEntries=true)	
 	public int deleteAreaByRootId(Long id){
-		return sysAreaMapper.deleteIdsByRootId(id);
+		/*SysOffice sysOffice  = new SysOffice();
+		sysOffice.setAreaId(id);
+		int count = sysOfficeMapper.selectCount(sysOffice);
+		if(count > 0) return -1;*/
+		this.BeforeDelete(new SysOffice(),SysOfficeMapper.class,
+				new String[]{"areaId"},new String[]{id.toString()});
+		return 0;//sysAreaMapper.deleteIdsByRootId(id);
 	}
 	
 	/**

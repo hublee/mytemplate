@@ -13,7 +13,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.template.common.base.ServiceMybatis;
+import com.template.web.sys.mapper.SysAreaMapper;
 import com.template.web.sys.mapper.SysDictMapper;
+import com.template.web.sys.model.SysArea;
 import com.template.web.sys.model.SysDict;
 
 /**
@@ -28,6 +30,9 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 	@Resource
 	private SysDictMapper sysDictMapper;
 	
+	@Resource
+	private SysAreaMapper sysAreaMapper;
+	
 	/**
 	 * 保存或更新
 	* @param sysDict
@@ -40,6 +45,10 @@ public class SysDictService extends ServiceMybatis<SysDict>{
 	
 	@CacheEvict(allEntries=true)	
 	public int deleteSysDict(SysDict sysDict){
+		/*int count = 0;
+		SysArea sysArea = new SysArea();
+		sysArea.setType(sysDict.getValue());
+		sysAreaMapper.selectCount(arg0);*/
 		return this.delete(sysDict);
 	}
 	

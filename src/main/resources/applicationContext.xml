@@ -22,6 +22,9 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<!-- 启用aop注解 -->
+	<aop:aspectj-autoproxy />
 	 
     <import resource="classpath*:spring/**.xml" />
     

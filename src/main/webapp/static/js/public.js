@@ -118,6 +118,8 @@ function changeMenu(obj){
         						$curmenu.trigger('click');
         					}
         				});
+        			}else{
+        				layer.alert('删除失败，此数据正在被使用！', 8, !1);
         			}
         		}).fail(function(error){
         			layer.msg('删除失败', 2, 8);
