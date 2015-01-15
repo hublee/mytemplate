@@ -8,9 +8,6 @@
 		timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="true"
 		maxEntriesLocalDisk="100000" />
 
-	<cache name="sysCache" maxElementsInMemory="5000" eternal="true"
-		overflowToDisk="true" />
-		
 	<cache name="sysArea" maxEntriesLocalHeap="100" eternal="true" 
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	<cache name="sysOffice" maxEntriesLocalHeap="100" eternal="true" 

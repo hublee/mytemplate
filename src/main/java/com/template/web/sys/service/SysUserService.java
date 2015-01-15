@@ -35,10 +35,19 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	@Resource
 	private SysOfficeMapper sysOfficeMapper;
 	
+	/**
+	 * 添加或更新用户
+	* @param sysUser
+	* @return
+	 */
 	public int saveSysUser(SysUser sysUser){
 		int count = 0;
 		SysOffice sysOffice = sysOfficeMapper.findOfficeCompanyIdByDepId(sysUser.getOfficeId());
-		sysUser.setCompanyId(sysOffice.getId());
+		Long companyId = sysUser.getOfficeId();
+		if(sysOffice != null){
+			companyId = sysOffice.getId();
+		}
+		sysUser.setCompanyId(companyId);
 		if(null == sysUser.getId()){
 			count = this.insertSelective(sysUser);
 		}else{
