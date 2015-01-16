@@ -4,7 +4,9 @@ import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.constant.Constant;
+import com.template.common.mybatis.mapper.BaseMapper;
 import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.utils.StringConvert;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +162,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 	 */
 	public <M extends BaseEntity> int beforeDelete(Class<M> bean,
 			String[] fields, Object[] values){
-		/*String mapperName = StringUtils.uncapitalize(bean.getSimpleName())+"Mapper"; 
+		String mapperName = StringUtils.uncapitalize(bean.getSimpleName())+"Mapper"; 
 		Mapper<M> mapper = SpringContextHolder.getBean(mapperName);
 		M m = null;
 		try {
@@ -173,27 +175,29 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 		for (int i = 0; i < fields.length; i++) {
 			m.set(fields[i], values[i]);
 		}
-		int count = mapper.selectCount(m);*/
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", "1 or 1=1");
-		int count = baseMapper.beforeDelete(map);
-		System.out.println(count);
-		return -1;//count>0 ? -1:count;
+		int count = mapper.selectCount(m);
+		return count>0 ? -1:count;
 	}
 	
-	
-	public <M extends BaseEntity> int beforeDelete(Class<M> bean,Map<String, Object> params){
-		String mapperName = StringUtils.uncapitalize(bean.getSimpleName())+"Mapper"; 
-		Mapper<M> mapper = SpringContextHolder.getBean(mapperName);
-		M m = null;
-		try {
-			m = bean.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+	/**
+	 * 有树结构的删除前验证(适应于两表)
+	* @param id 删除的id
+	* @param Field 验证的字段名称
+	* @param beans class 第一个是要验证的class
+	* @return
+	 */
+	public int beforeDeleteTreeStructure(Object id,String Field,Class<?>... beans){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("checkField", Field);
+		for(int i=0;i<beans.length;i++ ){
+			Class<?> cl = beans[i];
+			String tableName = StringConvert.camelhumpToUnderline(cl.getSimpleName());
+			map.put("t"+i, tableName);
 		}
-		return  -1;
+		
+		int count = baseMapper.beforeDeleteTreeStructure(map);
+		return  count>0?-1:count;
 	}
 
 }

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysAreaMapper;
 import com.template.web.sys.mapper.SysDictMapper;
-import com.template.web.sys.model.SysArea;
 import com.template.web.sys.model.SysDict;
 
 /**

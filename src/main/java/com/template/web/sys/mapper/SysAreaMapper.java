@@ -3,7 +3,7 @@
 package com.template.web.sys.mapper;
 
 import com.github.abel533.mapper.Mapper;
-import com.template.common.base.BaseMapper;
+import com.template.common.mybatis.mapper.BaseMapper;
 import com.template.web.sys.model.SysArea;
 
 import java.util.List;

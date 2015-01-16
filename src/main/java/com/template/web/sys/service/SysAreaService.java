@@ -65,7 +65,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 */
 	@CacheEvict(allEntries=true)	
 	public int deleteAreaByRootId(Long id){
-		int count = this.beforeDelete(SysOffice.class,new String[]{"areaId"},new Object[]{id});
+		int count = this.beforeDeleteTreeStructure(id,"area_id",SysOffice.class,SysArea.class);
 		return count==-1?-1:sysAreaMapper.deleteAreaByRootId(id);
 	}
 	

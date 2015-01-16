@@ -111,7 +111,7 @@ function changeMenu(obj){
 				}).done(function(data){
 					layer.close(loadi);
         			if(data>0) {
-        				layer.msg('删除成功', 1, 1,function(){
+        				layer.msg('<span class="red bigger-120">删除成功</span>', 1, 1,function(){
         					if(params.reloadurl){
         						location.reload();
         					}else{
@@ -119,10 +119,10 @@ function changeMenu(obj){
         					}
         				});
         			}else if(data==-1){
-        				layer.alert('删除失败，此数据正在被使用！', 8, !1);
+        				layer.alert('<span class="red bigger-120">删除失败，此数据正在被使用！</span>', 8, !1);
         			}
         		}).fail(function(error){
-        			layer.msg('删除失败', 2, 8);
+        			layer.msg('<span class="red bigger-120">删除失败</span>', 2, 8);
         		});
 			},params.title);
 		}
@@ -311,6 +311,7 @@ var tip={
 		});
 	}
 };
+
 
 
 // Find the right method, call on correct element

@@ -38,7 +38,7 @@
 
 	<!-- 自动扫描映射器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.template.web.*.mapper" />
+		<property name="basePackage" value="com.template.**.mapper" />
 	</bean>
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
