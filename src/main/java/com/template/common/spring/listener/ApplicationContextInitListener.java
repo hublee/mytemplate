@@ -1,12 +1,9 @@
 package com.template.common.spring.listener;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -37,16 +34,7 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 		// 子容器初始化时(spring-mvc)
 		if (null != parentContext) {
 			//读取全部资源
-			List<SysResource> resList = sysResourceService.select(new SysResource());
-			Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
-			for (SysResource res : resList) {
-				if(StringUtils.isBlank(res.getUrl())){
-					AllResourceMap.put(res.getId().toString(), res);
-				}else{
-					AllResourceMap.put(res.getUrl(), res);
-				}
-			}
-			
+			LinkedHashMap<String, SysResource> AllResourceMap = sysResourceService.getAllResourcesMap();
 			// 设置共享变量
 			BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());
 			BeetlUtils.addBeetlSharedVars("rootPath", "/"+Global.getCtxPath()+"/"+Global.getAdminPath());

@@ -24,6 +24,11 @@
 		delete from sys_resource where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</delete>
 	
+	<!-- 删除资源前验证 -->
+	<select id="beforeDeleteResource" resultType="java.lang.Integer">
+		select count(1) from sys_role_resource where resource_id = #{resourceId}
+	</select>
+	
 	<!-- 查询最大权限位 -->
 	<select id="maxPos" resultType="java.lang.Integer">
 		SELECT MAX(pos) FROM sys_resource

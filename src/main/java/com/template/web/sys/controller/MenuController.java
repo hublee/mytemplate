@@ -39,7 +39,7 @@ public class MenuController extends BaseController {
 	@RequestMapping
 	public String toMenu(Model model) {
 		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(sysResourceService.select(new SysResource())));
+				JsonUtils.getInstance().toJson(sysResourceService.getAllResourcesList()));
 		return "sys/menu/menu";
 	}
 	
@@ -49,7 +49,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping("tree")
 	public @ResponseBody List<SysResource> tree(){
-		return sysResourceService.select(new SysResource());
+		return sysResourceService.getAllResourcesList();
 	}
 
 	/**

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	/**
 	 * 新增or更新SysResource
 	 */
-	// TODO 需要删除beetl缓存
 	public int saveSysResource(SysResource sysResource) {
 		int count = 0;
 		// 新的parentIds
@@ -58,18 +58,27 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				sysResourceMapper.updateParentIds(sysResource); // 批量更新子节点的parentIds
 			}
 		}
+		if (count > 0)
+			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
+					this.getAllResourcesMap());
 		return count;
 	}
 
 	/**
 	 * 根据父id删除自身已经所有子节点
-	 * 
 	 * @param id
 	 * @return
 	 */
-	// TODO 需要删beetl缓存
 	public int deleteResourceByRootId(Long id) {
-		return sysResourceMapper.deleteIdsByRootId(id);
+		int count = sysResourceMapper.beforeDeleteResource(id);
+		if (count > 0)
+			return -1;
+		int delCount = sysResourceMapper.deleteIdsByRootId(id);
+		// 重新查找全部资源放入缓存(为了开发时候用)
+		if (delCount > 0)
+			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
+					this.getAllResourcesMap());
+		return delCount;
 	}
 
 	/**
@@ -123,8 +132,9 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 			List<SysResource> userResources = this
 					.findUserResourceByUserId(sysUser);
 			userMenus = Collections3.copyTo(userResources, SysResource.class);
-			for (int i=0;i<userMenus.size();i++) {
-				if (!(userMenus.get(i).getType()).equals(Constant.RESOURCE_TYPE_MENU)) {
+			for (int i = 0; i < userMenus.size(); i++) {
+				if (!(userMenus.get(i).getType())
+						.equals(Constant.RESOURCE_TYPE_MENU)) {
 					userMenus.remove(i);
 				}
 			}
@@ -146,6 +156,40 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		PageHelper.startPage(params);
 		List<SysResource> list = sysResourceMapper.findPageInfo(params);
 		return new PageInfo<SysResource>(list);
+	}
+
+	/**
+	 * 获取全部资源map形式
+	 * @return
+	 */
+	public LinkedHashMap<String, SysResource> getAllResourcesMap() {
+		// 读取全部资源
+		List<SysResource> resList = this.select(new SysResource());
+		LinkedHashMap<String, SysResource> AllResourceMap = new LinkedHashMap<String, SysResource>();
+		for (SysResource res : resList) {
+			if (StringUtils.isBlank(res.getUrl())) {
+				AllResourceMap.put(res.getId().toString(), res);
+			} else {
+				AllResourceMap.put(res.getUrl(), res);
+			}
+		}
+		return AllResourceMap;
+	}
+	
+	/**
+	 * 获取全部资源list形式
+	* @return
+	 */
+	public List<SysResource> getAllResourcesList(){
+		LinkedHashMap<String, SysResource> allRes = BeetlUtils.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
+		List<SysResource> resList = null;
+		if(allRes!=null){
+			resList = new ArrayList<SysResource>();
+			for(SysResource res : allRes.values()){
+				resList.add(res);
+			}
+		}
+		return resList;
 	}
 
 }

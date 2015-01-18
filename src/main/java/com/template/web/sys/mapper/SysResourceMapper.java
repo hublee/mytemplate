@@ -24,6 +24,9 @@ public interface SysResourceMapper extends Mapper<SysResource>{
 	
 	public SysResource findMaxCodeAndMaxPos();
 	
+	//删除前验证
+	public int beforeDeleteResource(Long resourceId);
+	
 	//根据userId获得持有的权限
 	public List<SysResource> findUserResourceByUserId(Long userId);
 	
