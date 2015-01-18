@@ -9,6 +9,7 @@ import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
+import com.template.web.sys.utils.SysUserUtils;
 
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,24 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		sysRoleMapper.deleteRoleOfficeByRoleId(id);
 		sysRoleMapper.deleteRoleResourceByRoleId(id);
 		int count = this.deleteByPrimaryKey(id);
+		if(count > 0) SysUserUtils.clearAllCachedAuthorizationInfo();
 		return count;
 	}
+	
+	/**
+	 * 添加角色绑定的人员
+	* @param sysRole
+	* @return
+	 */
+	public int saveUserRole(SysRole sysRole){
+		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
+		if(sysRole.getUserIds().length>0) {
+			sysRoleMapper.insertUserRoleByRoleId(sysRole);
+			SysUserUtils.clearAllCachedAuthorizationInfo();
+		}
+		return 1;
+	}
+	
 	
 	/**
 	 * 根据条件分页查询SysRole列表
@@ -130,17 +147,4 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		return (T) o;
 	}
 	
-	/**
-	 * 添加角色绑定的人员
-	* @param sysRole
-	* @return
-	 */
-	public int saveUserRole(SysRole sysRole){
-		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
-		if(sysRole.getUserIds().length>0) {
-			sysRoleMapper.insertUserRoleByRoleId(sysRole);
-		}
-		return 1;
-	}
-
 }

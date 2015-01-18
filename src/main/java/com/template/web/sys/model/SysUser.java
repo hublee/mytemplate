@@ -209,10 +209,13 @@ public class SysUser extends BaseEntity {
     	
     }
     
-    public static void main(String[] args) {
-		long[] test = new long[2];
-		System.out.println(test[1] | 1);
-		System.out.println(test.toString());
+    /**
+	 * 判断用户是否具有指定权限
+	 */
+	public boolean hasPermission(SysResource sysResource) {
+		int pos=sysResource.getPos();
+		long code=sysResource.getCode();
+		return !((this.getPosSum()[pos] & code)  == 0); //或运算
 	}
-
+    
 }

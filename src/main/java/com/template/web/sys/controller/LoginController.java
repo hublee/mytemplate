@@ -1,7 +1,6 @@
 package com.template.web.sys.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.template.common.constant.Constant;
 import com.template.common.utils.Global;
 import com.template.common.utils.PasswordEncoder;
-import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysResourceService;
 import com.template.web.sys.service.SysUserService;
+import com.template.web.sys.utils.SysUserUtils;
 
 @Controller
 @RequestMapping("${adminPath}")
@@ -31,7 +30,7 @@ public class LoginController {
 	private SysResourceService sysResourceService;
 	@Resource
 	private SysUserService sysUserService;
-
+	
 	/**
 	 * 管理主页
 	 * 
@@ -44,8 +43,7 @@ public class LoginController {
 		request.getSession().removeAttribute("code"); // 清除code
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				Constant.SESSION_LOGIN_USER);
-		if (null == user)
-			return "redirect:" + Global.getAdminPath() + "/login";
+		if (null == user) return "redirect:" + Global.getAdminPath() + "/login";
 		model.addAttribute("menuList", sysResourceService.getUserMenus(user));
 		return "index";
 	}
@@ -88,13 +86,8 @@ public class LoginController {
 		}
 		SysUser user = sysUserService.checkUser(username, secPwd);
 		if (null != user) {
-			int maxPos = sysResourceService.maxPos(); // 最大权限位
-			user.setPosSum(new long[maxPos + 1]); // 总共的权限组
-			// 用户持有的资源
-			List<SysResource> userResources = sysResourceService
-					.findUserResourceByUserId(user);
-			user.calculatePermissionSum(userResources); // 计算权限和
-			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
+			SysUser sysUser = SysUserUtils.setUserPermission(user);
+			session.setAttribute(Constant.SESSION_LOGIN_USER, sysUser);
 		} else {
 			msg.put("error", "用户名或密码错误");
 		}

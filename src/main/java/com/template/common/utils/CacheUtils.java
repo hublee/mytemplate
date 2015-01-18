@@ -8,6 +8,8 @@ import org.springframework.cache.ehcache.EhCacheCacheManager;
 import com.template.common.spring.utils.SpringContextHolder;
 
 public class CacheUtils {
+	
+	private static EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
 
 	/**
 	 * 
@@ -28,7 +30,6 @@ public class CacheUtils {
 
 	/**
 	 * 
-	* @Title: evict  
 	* @Description: 删除缓存中的信息 
 	* @param @param cacheName
 	* @param @param key      
@@ -68,8 +69,7 @@ public class CacheUtils {
 		return val==null?false:true;
 	}
 
-	public static Cache getCache(String cacheName) {
-		EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
+	private static Cache getCache(String cacheName) {
 		return cacheManager.getCache(cacheName);
 	}
 

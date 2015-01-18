@@ -7,6 +7,7 @@ import com.template.common.constant.Constant;
 import com.template.common.mybatis.mapper.BaseMapper;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.StringConvert;
+import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
+		record.setCreateBy(SysUserUtils.getSessionUser().getId().toString());
 		return mapper.insert(record);
 	}
 
@@ -79,6 +81,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
+		record.setCreateBy(SysUserUtils.getSessionUser().getId().toString());
 		return mapper.insertSelective(record);
 	}
 
@@ -107,6 +110,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKey(T record) {
 		record.setUpdateDate(new Date());
+		record.setUpdateBy(SysUserUtils.getSessionUser().getId().toString());
 		return mapper.updateByPrimaryKey(record);
 	}
 
@@ -117,6 +121,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKeySelective(T record) {
 		record.setUpdateDate(new Date());
+		record.setUpdateBy(SysUserUtils.getSessionUser().getId().toString());
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 	

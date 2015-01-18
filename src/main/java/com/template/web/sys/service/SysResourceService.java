@@ -45,8 +45,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				+ sysResource.getParentId() + ",");
 		if (null == sysResource.getId()) {
 			SysResource codeAndPos = sysResourceMapper.findMaxCodeAndMaxPos();
-			sysResource
-					.setCodeAndPos(codeAndPos.getCode(), codeAndPos.getPos());
+			sysResource.setCodeAndPos(codeAndPos.getCode(), codeAndPos.getPos());
 			count = this.insertSelective(sysResource);
 		} else {
 			// getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
@@ -58,14 +57,16 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				sysResourceMapper.updateParentIds(sysResource); // 批量更新子节点的parentIds
 			}
 		}
-		if (count > 0)
+		if (count > 0){
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
+		}
 		return count;
 	}
 
 	/**
 	 * 根据父id删除自身已经所有子节点
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -74,10 +75,12 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		if (count > 0)
 			return -1;
 		int delCount = sysResourceMapper.deleteIdsByRootId(id);
-		// 重新查找全部资源放入缓存(为了开发时候用)
-		if (delCount > 0)
+		if (delCount > 0){
+			// 重新查找全部资源放入缓存(为了开发时候用)
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
+		}
+			
 		return delCount;
 	}
 
@@ -96,7 +99,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 * @param userId
 	 * @return
 	 */
-	// TODO 需要删缓存
 	public List<SysResource> findUserResourceByUserId(SysUser sysUser) {
 		List<SysResource> userResources = CacheUtils.get(
 				Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
@@ -109,9 +111,9 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				for (SysResource res : allRes.values()) {
 					userResources.add(res);
 				}
-			} else {
-				userResources = sysResourceMapper
-						.findUserResourceByUserId(sysUser.getId());
+			}else{
+				userResources = sysResourceMapper.findUserResourceByUserId(sysUser
+						.getId());
 			}
 			CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
 					Constant.CACHE_USER_RESOURCE + sysUser.getId(),
@@ -123,7 +125,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	/**
 	 * 获得用户持有的左侧菜单资源树结构
 	 */
-	// TODO 需要删缓存
 	public List<SysResource> getUserMenus(SysUser sysUser) {
 		List<SysResource> userMenus = CacheUtils.get(
 				Constant.CACHE_SYS_RESOURCE,
@@ -160,6 +161,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 获取全部资源map形式
+	 * 
 	 * @return
 	 */
 	public LinkedHashMap<String, SysResource> getAllResourcesMap() {
@@ -175,17 +177,19 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		}
 		return AllResourceMap;
 	}
-	
+
 	/**
 	 * 获取全部资源list形式
-	* @return
+	 * 
+	 * @return
 	 */
-	public List<SysResource> getAllResourcesList(){
-		LinkedHashMap<String, SysResource> allRes = BeetlUtils.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
+	public List<SysResource> getAllResourcesList() {
+		LinkedHashMap<String, SysResource> allRes = BeetlUtils
+				.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
 		List<SysResource> resList = null;
-		if(allRes!=null){
+		if (allRes != null) {
 			resList = new ArrayList<SysResource>();
-			for(SysResource res : allRes.values()){
+			for (SysResource res : allRes.values()) {
 				resList.add(res);
 			}
 		}

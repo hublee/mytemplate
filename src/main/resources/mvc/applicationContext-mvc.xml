@@ -44,10 +44,14 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
-	<!-- <mvc:view-controller path="/" view-name="redirect:${adminPath}"/> -->
+	<mvc:view-controller path="/" view-name="redirect:/${adminPath}"/>
 	
 	<!-- 过滤静态资源 -->
 	<mvc:default-servlet-handler />
+	
+	<mvc:interceptors>
+		<bean class="com.template.common.interceptor.AuthInterceptor"/>
+	</mvc:interceptors>
 
 	<!-- 文件上传配置 -->
 	<bean id="multipartResolver"

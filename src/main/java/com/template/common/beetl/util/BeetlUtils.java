@@ -11,6 +11,7 @@ import com.template.common.spring.utils.SpringContextHolder;
 
 public class BeetlUtils {
 	
+	private static final BeetlGroupUtilConfiguration beetlConfig = SpringContextHolder.getBean("beetlConfig");
 	private static final Map<String, Object> sharedVars = new HashMap<String, Object>();
 
 	/**
@@ -18,7 +19,6 @@ public class BeetlUtils {
 	* @return
 	 */
 	public static final GroupTemplate getBeetlGroupTemplate(){
-		BeetlGroupUtilConfiguration beetlConfig = SpringContextHolder.getBean("beetlConfig");
 		return beetlConfig.getGroupTemplate();
 	}
 	

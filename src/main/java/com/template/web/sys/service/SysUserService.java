@@ -18,6 +18,7 @@ import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.mapper.SysUserMapper;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysUser;
+import com.template.web.sys.utils.SysUserUtils;
 
 /**
  * 
@@ -57,6 +58,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
 			count = this.updateByPrimaryKeySelective(sysUser);
+			SysUserUtils.clearAllCachedAuthorizationInfo();
 		}
 		if(sysUser.getRoleIds()!=null) sysRoleMapper.insertUserRoleByUserId(sysUser);
 		return count;

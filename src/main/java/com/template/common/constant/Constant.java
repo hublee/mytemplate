@@ -13,7 +13,7 @@ public class Constant {
 	public static final String RESOURCE_STATUS_DISABLE = "1"; // 禁用
 	public static final String RESOURCE_TYPE_MENU = "0"; // 菜单类型
 	public static final String RESOURCE_TYPE_BUTTON = "1"; // 按钮类型
-	
+	public static final String RESOURCE_COMMON = "1"; //公共资源
 
 	// 用户
 	public static final String SESSION_LOGIN_USER = "loginUser"; // session中的用户key
