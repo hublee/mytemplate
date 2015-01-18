@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.spring.utils.SpringContextHolder;
 
 /**
  * 文件操作工具类

@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import net.sf.ehcache.pool.sizeof.annotations.IgnoreSizeOf;
@@ -20,13 +21,14 @@ import com.template.common.base.BaseEntity;
  */
 
 @SuppressWarnings({ "unused"})
+@Table(name="sys_resource")
 public class SysResource extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
     private Long code; //code <权限码 1<<n>
 
-    private String common; //common <是否是公共资源(0.不是 1.是)>
+    private String common; //common <是否是公共资源(0.权限资源 1.公共资源)>
 
     private String description; //description <描述>
 
@@ -36,7 +38,7 @@ public class SysResource extends BaseEntity {
 
     private Long parentId; //parent_id <父级id>
 
-    private Long pos; //pos <权限位,相当于对权限分组,从0开始>
+    private Integer pos; //pos <权限位,相当于对权限分组,从0开始>
 
     private Integer sort; //sort <排序号>
 
@@ -100,11 +102,11 @@ public class SysResource extends BaseEntity {
 		this.set("parentId", parentId);
     }
 
-	public Long getPos() {
-		return this.getLong("pos");
+	public Integer getPos() {
+		return this.getInteger("pos");
     }
    
-    public void setPos(Long pos) {
+    public void setPos(Integer pos) {
 		this.set("pos", pos);
     }
 
@@ -155,5 +157,25 @@ public class SysResource extends BaseEntity {
     public void setOldParentIds(String oldParentIds) {
 		this.set("oldParentIds", oldParentIds);
     }
+    
+    //设置权限码和权限位
+    public void setCodeAndPos(Long maxCode,Integer maxPos){
+    	Integer pos = 0;Long code = 1L;
+    	//没有资源
+		if(null == maxCode){
+			pos = 0;
+			code = 1L;
+		}else{ 
+			if(maxCode >= 1L << 32){ //权限码边界检测
+				pos = maxPos + 1;
+				code = 1L;
+			}else{
+				pos = maxPos;
+				code = maxCode << 1;
+			}
+		}
+		this.setCode(code);
+		this.setPos(maxPos);
+	}
 
 }

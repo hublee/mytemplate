@@ -1,6 +1,7 @@
 package com.template.common.base;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
@@ -78,6 +79,12 @@ public interface BaseService<T extends BaseEntity> {
     * @return 影响行数
      */
     public int save(T record);
+    
+    public <M extends BaseEntity> int updateDelFlagToDelStatusById(Class<M> bean,Long id);
+    
+    public <M extends BaseEntity> int beforeDelete(Class<M> bean,Map<String, Object> params);
+    
+    public int beforeDeleteTreeStructure(Object id,String Field,Class<?>... beans);
     
     public PageInfo<T> selectPage(int pageNum,int pageSize,T record);
 }

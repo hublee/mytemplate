@@ -17,7 +17,7 @@ public interface SysOfficeMapper extends Mapper<SysOffice> {
 
 	public List<SysOffice> findPageInfo(Map<String, Object> params);
 	
-	public int deleteIdsByRootId(Long id);
+	public int deleteOfficeByRootId(Long id);
 
 	public int updateParentIds(SysOffice sysOffice);
 	

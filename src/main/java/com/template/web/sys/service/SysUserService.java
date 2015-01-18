@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
+import com.template.common.utils.PasswordEncoder;
 import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.mapper.SysUserMapper;
@@ -35,6 +36,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	@Resource
 	private SysOfficeMapper sysOfficeMapper;
 	
+	
 	/**
 	 * 添加或更新用户
 	* @param sysUser
@@ -49,13 +51,25 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		}
 		sysUser.setCompanyId(companyId);
 		if(null == sysUser.getId()){
+			String encryptPwd = PasswordEncoder.encrypt(sysUser.getPassword(), sysUser.getUsername());
+			sysUser.setPassword(encryptPwd);
 			count = this.insertSelective(sysUser);
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
 			count = this.updateByPrimaryKeySelective(sysUser);
 		}
-		sysRoleMapper.insertUserRoleByUserId(sysUser);
+		if(sysUser.getRoleIds()!=null) sysRoleMapper.insertUserRoleByUserId(sysUser);
 		return count;
+	}
+	
+	/**
+	 * 删除用户
+	* @param userId
+	* @return
+	 */
+	public int deleteUser(Long userId){
+		sysRoleMapper.deleteUserRoleByUserId(userId);
+		return this.updateDelFlagToDelStatusById(SysUser.class, userId);
 	}
 	
 	/**
@@ -79,7 +93,11 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		SysUser sysUser = new SysUser();
 		sysUser.setUsername(username);
 		sysUser.setPassword(password);
-		return this.select(sysUser).get(0);
+		List<SysUser> users = this.select(sysUser);
+		if(users != null && users.size() == 1 && users.get(0) != null) {
+			return this.select(sysUser).get(0);
+		}
+		return null;
 	}
 	
 }

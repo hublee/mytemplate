@@ -5,12 +5,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
-import com.template.common.mybatis.provider.BaseSqlProvider;
+import com.template.common.mybatis.provider.CommonSqlProvider;
 
 @Repository("baseMapper")
-public interface BaseMapper<T>{
+public interface BaseMapper{
 
-	@SelectProvider(type=BaseSqlProvider.class,method="beforeDeleteTreeStructureSql")
-	public int beforeDeleteTreeStructure(Map<String, Object> params);
+	@SelectProvider(type=CommonSqlProvider.class,method="beforeDeleteTreeStructureSql")
+	int beforeDeleteTreeStructure(Map<String, Object> params);
 	
 }

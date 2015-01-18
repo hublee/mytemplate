@@ -5,7 +5,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 
-import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.spring.utils.SpringContextHolder;
 
 public class CacheUtils {
 

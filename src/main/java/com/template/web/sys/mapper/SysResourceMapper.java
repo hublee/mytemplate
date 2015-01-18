@@ -24,4 +24,10 @@ public interface SysResourceMapper extends Mapper<SysResource>{
 	
 	public SysResource findMaxCodeAndMaxPos();
 	
+	//根据userId获得持有的权限
+	public List<SysResource> findUserResourceByUserId(Long userId);
+	
+	//最大权限组
+	public int maxPos();
+	
 }

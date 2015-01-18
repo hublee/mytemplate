@@ -3,12 +3,14 @@
 package com.template.web.sys.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.template.common.base.BaseEntity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -17,6 +19,7 @@ import javax.persistence.Transient;
  */
 
 @SuppressWarnings({ "unused"})
+@Table(name="sys_user")
 public class SysUser extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -62,6 +65,8 @@ public class SysUser extends BaseEntity {
     
     @Transient
     private Long[] roleIds; //角色
+    @Transient
+    private long[] posSum; //权限组
 
 
     public void setRoleIds(Long[] roleIds){
@@ -177,6 +182,37 @@ public class SysUser extends BaseEntity {
     public void setUserType(String userType) {
 		this.set("userType", userType);
     }
+    
+    public long[] getPosSum() {
+		return (long[]) this.get("posSum");
+    }
+   
+    public void setPosSum(long[] posSum) {
+		this.set("posSum", posSum);
+    }
 
+    /**
+	 * 计算用户权限总和
+	 */
+    public void calculatePermissionSum(List<SysResource> userResources){
+    	int pos = 0;
+    	long code = 0;
+    	for(SysResource res : userResources){
+    		if(res!=null){
+    			pos = res.getPos();
+        		code = res.getCode();
+        		long[] posSum = this.getPosSum();
+        		posSum[pos] = posSum[pos] | code;
+        		this.setPosSum(posSum); //与运算
+    		}
+    	}
+    	
+    }
+    
+    public static void main(String[] args) {
+		long[] test = new long[2];
+		System.out.println(test[1] | 1);
+		System.out.println(test.toString());
+	}
 
 }

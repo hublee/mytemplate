@@ -18,9 +18,9 @@
 	</update>
 	
 	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
-	<delete id="deleteAreaByRootId">
+	<update id="deleteAreaByRootId">
 		update sys_area set del_flag = 1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
-	</delete>
+	</update>
 	
 	<!-- 分页显示筛选查询 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysArea">

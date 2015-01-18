@@ -115,32 +115,28 @@ public class CameHumpInterceptor implements Interceptor {
     }
     
     /**
-     * 将下划线风格替换为驼峰风格
-     *
-     * @param str
-     * @return
-     */
-    public static String underlineToCamelhump(String name) {
-        char[] buffer = name.toCharArray();
-        int count = 0;
-        boolean lastUnderscore = false;
-        for (int i = 0; i < buffer.length; i++) {
-            char c = buffer[i];
-            if (c == '_') {
-                lastUnderscore = true;
-            } else {
-                c = (lastUnderscore && count != 0)
-                        ? toUpperAscii(c)
-                        : toLowerAscii(c);
-                buffer[count++] = c;
-                lastUnderscore = false;
-            }
-        }
-        if (count != buffer.length) {
-            buffer = subarray(buffer, 0, count);
-        }
-        return new String(buffer);
-    }
+	 * 将下划线风格替换为驼峰风格
+	 */
+	public static String underlineToCamelhump(String name) {
+		char[] buffer = name.toCharArray();
+		int count = 0;
+		boolean lastUnderscore = false;
+		for (int i = 0; i < buffer.length; i++) {
+			char c = buffer[i];
+			if (c == '_') {
+				lastUnderscore = true;
+			} else {
+				c = (lastUnderscore && count != 0) ? toUpperAscii(c)
+						: toLowerAscii(c);
+				buffer[count++] = c;
+				lastUnderscore = false;
+			}
+		}
+		if (count != buffer.length) {
+			buffer = subarray(buffer, 0, count);
+		}
+		return new String(buffer);
+	}
     
     public static char[] subarray(char[] src, int offset, int len) {
         char[] dest = new char[len];

@@ -30,6 +30,7 @@
 			<if test="@Ognl@isNotBlank(roles)">
 				and FIND_IN_SET(sr.id,#{roles})
 			</if>
+			and su.del_flag = 0
 		</where>
 		GROUP BY su.id ORDER BY su.update_date desc
 	</select>

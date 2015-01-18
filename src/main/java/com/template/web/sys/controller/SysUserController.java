@@ -51,6 +51,16 @@ public class SysUserController {
 	}
 	
 	/**
+	 * 删除用户
+	* @param id 用户id
+	* @return
+	 */
+	@RequestMapping(value="del",method = RequestMethod.POST)
+	public @ResponseBody Integer del(Long id){
+		return sysUserService.deleteUser(id);
+	}
+	
+	/**
 	 * 用户列表
 	* @param params
 	* @param model

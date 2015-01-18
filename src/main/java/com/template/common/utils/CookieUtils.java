@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.spring.utils.SpringContextHolder;
 
 /**
  * Cookie工具类

@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.model.SysOffice;
+import com.template.web.sys.model.SysRole;
+import com.template.web.sys.model.SysUser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
@@ -57,7 +59,12 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	
 	@CacheEvict(allEntries=true)
 	public int deleteOfficeByRootId(Long id){
-		return sysOfficeMapper.deleteIdsByRootId(id);
+		int roleCount = this.beforeDeleteTreeStructure(id, "officeId", SysRole.class,SysOffice.class);
+		if(roleCount<0) return -1;
+		int userOfficeCount = this.beforeDeleteTreeStructure(id, "officeId", SysUser.class,SysOffice.class);
+		int userCompanyCount = this.beforeDeleteTreeStructure(id, "companyId",  SysUser.class,SysOffice.class);
+		if(userOfficeCount+userCompanyCount<0) return -1;
+		return sysOfficeMapper.deleteOfficeByRootId(id);
 	}
 	
 	/**

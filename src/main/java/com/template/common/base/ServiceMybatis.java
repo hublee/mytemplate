@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.constant.Constant;
 import com.template.common.mybatis.mapper.BaseMapper;
-import com.template.common.spring.util.SpringContextHolder;
+import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.StringConvert;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,13 +18,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-public abstract class ServiceMybatis<T extends BaseEntity> {
+public abstract class ServiceMybatis<T extends BaseEntity> implements BaseService<T>{
 
 	@Autowired
 	protected Mapper<T> mapper;
 	
 	@Resource
-	protected BaseMapper<T> baseMapper;
+	protected BaseMapper baseMapper;
 
 	/**
 	 * 根据实体类不为null的字段进行查询,条件全部使用=号and条件
@@ -119,6 +119,27 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 		record.setUpdateDate(new Date());
 		return mapper.updateByPrimaryKeySelective(record);
 	}
+	
+	/**
+	 * 单表逻辑删除(需要有delFlag)
+	* @param bean 删除的实体类型
+	* @return 影响行数
+	 */
+	public <M extends BaseEntity> int updateDelFlagToDelStatusById(Class<M> bean,Long id){
+		String mapperName = StringUtils.uncapitalize(bean.getSimpleName())+"Mapper"; 
+		Mapper<M> mapper = SpringContextHolder.getBean(mapperName);
+		M m = null;
+		try {
+			m = bean.newInstance();
+			m.setId(id);
+			m.setDelFlag(Constant.DEL_FLAG_DELETE);
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return mapper.updateByPrimaryKeySelective(m);
+	}
 
 	/**
 	 * 保存或者更新，根据传入id主键是不是null来确认
@@ -160,8 +181,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 	* @param values 属性值
 	* @return -1有关联
 	 */
-	public <M extends BaseEntity> int beforeDelete(Class<M> bean,
-			String[] fields, Object[] values){
+	public <M extends BaseEntity> int beforeDelete(Class<M> bean,Map<String, Object> params){
 		String mapperName = StringUtils.uncapitalize(bean.getSimpleName())+"Mapper"; 
 		Mapper<M> mapper = SpringContextHolder.getBean(mapperName);
 		M m = null;
@@ -172,9 +192,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		for (int i = 0; i < fields.length; i++) {
-			m.set(fields[i], values[i]);
-		}
+		m.setAll(params);
 		int count = mapper.selectCount(m);
 		return count>0 ? -1:count;
 	}
@@ -182,14 +200,14 @@ public abstract class ServiceMybatis<T extends BaseEntity> {
 	/**
 	 * 有树结构的删除前验证(适应于两表)
 	* @param id 删除的id
-	* @param Field 验证的字段名称
-	* @param beans class 第一个是要验证的class
-	* @return
+	* @param Field 验证的属性名称
+	* @param beans class 第一个是要验证的class 第二个为删除的class
+	* @return 未通过返回-1
 	 */
 	public int beforeDeleteTreeStructure(Object id,String Field,Class<?>... beans){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
-		map.put("checkField", Field);
+		map.put("checkField", StringConvert.camelhumpToUnderline(Field));
 		for(int i=0;i<beans.length;i++ ){
 			Class<?> cl = beans[i];
 			String tableName = StringConvert.camelhumpToUnderline(cl.getSimpleName());

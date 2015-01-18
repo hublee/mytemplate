@@ -29,7 +29,12 @@
 		<div class="profile-info-name">分配的人员</div>
 		<div class="profile-info-value">
 			@for(user in users){
-				<a href="javascript:void(0);">${user.name!}
+				<a href="javascript:void(0);" title="<${user.name!}>详情"
+					data-title="<${user.name!}>详情" data-mode="detail"
+					data-url="${rootPath}/sysuser/detail/showlayer"
+					data-data="{id:'${user.id}'}"
+					data-width="600" data-height="477"
+				>${user.name!}
 					${decode(userLP.last,false,'，','')}
 				</a>
 			@}

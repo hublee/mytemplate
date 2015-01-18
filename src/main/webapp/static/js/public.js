@@ -118,8 +118,8 @@ function changeMenu(obj){
         						$curmenu.trigger('click');
         					}
         				});
-        			}else if(data==-1){
-        				layer.alert('<span class="red bigger-120">删除失败，此数据正在被使用！</span>', 8, !1);
+        			}else if(data<0){
+        				layer.alert('<span class="red bigger-120">删除失败，数据正在被使用！</span>', 8, !1);
         			}
         		}).fail(function(error){
         			layer.msg('<span class="red bigger-120">删除失败</span>', 2, 8);

@@ -19,6 +19,9 @@
 	<!-- 加载配置 -->
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/constants.properties"/>
 
+	<!-- 开启controller层aspect注解支持 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -40,8 +43,6 @@
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
-	<bean class="com.template.common.spring.util.SpringContextHolder" lazy-init="false" />
 	
 	<!-- <mvc:view-controller path="/" view-name="redirect:${adminPath}"/> -->
 	

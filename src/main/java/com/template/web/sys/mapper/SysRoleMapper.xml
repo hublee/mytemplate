@@ -6,14 +6,6 @@
 		id,create_by,create_date,data_scope,del_flag,name,office_id,remarks,update_by,update_date
 	</sql>
 	
-	<!-- 添加角色拥有的权限 -->
-	<insert id="insertRoleResource">
-		insert into sys_role_resource (role_id,resource_id) values
-		<foreach collection="resourceIds" index="index" item="resourceId" separator=",">
-			(#{id},#{resourceId,jdbcType=NUMERIC})
-		</foreach>
-	</insert>
-	
 	<!-- 添加角色所在机构 -->
 	<insert id="insertRoleOffice">
 		insert into sys_role_office (role_Id,office_id) values 
@@ -38,10 +30,13 @@
 		</foreach>
 	</insert>
 	
-	<!-- 删除角色拥有的权限 -->
-	<delete id="deleteRoleResourceByRoleId">
-		delete from sys_role_resource where role_id = #{roleId}
-	</delete>
+	<!-- 添加角色拥有的权限 -->
+	<insert id="insertRoleResource">
+		insert into sys_role_resource (role_id,resource_id) values
+		<foreach collection="resourceIds" index="index" item="resourceId" separator=",">
+			(#{id},#{resourceId,jdbcType=NUMERIC})
+		</foreach>
+	</insert>
 	
 	<!-- 删除角色所在的机构 -->
 	<delete id="deleteRoleOfficeByRoleId">
@@ -58,10 +53,10 @@
 		delete from sys_user_role where user_id = #{userId}
 	</delete>
 	
-	<!-- 根据角色id查询拥有的资源id集合 -->
-	<select id="findResourceIdsByRoleId" resultType="java.lang.Long">
-		select resource_id from sys_role_resource where role_id = #{roleId}
-	</select>
+	<!-- 删除角色拥有的权限 -->
+	<delete id="deleteRoleResourceByRoleId">
+		delete from sys_role_resource where role_id = #{roleId}
+	</delete>
 	
 	<!-- 根据角色id查询拥有的机构id集合 -->
 	<select id="findOfficeIdsByRoleId" resultType="java.lang.Long">
@@ -81,6 +76,11 @@
 		ON su.id = sur.user_id 
 		LEFT JOIN sys_role sr ON sur.role_id = sr.id
 		WHERE su.id = #{userId}
+	</select>
+	
+	<!-- 根据角色id查询拥有的资源id集合 -->
+	<select id="findResourceIdsByRoleId" resultType="java.lang.Long">
+		select resource_id from sys_role_resource where role_id = #{roleId}
 	</select>
 	
 	<!-- 根据角色id查询绑定的资源 -->

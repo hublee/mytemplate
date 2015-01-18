@@ -1,4 +1,4 @@
-package com.template.common.spring.util;
+package com.template.common.spring.utils;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.stereotype.Component;
 
 
 
@@ -15,6 +16,7 @@ import org.springframework.core.io.DefaultResourceLoader;
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候中取出ApplicaitonContext.
  * 
  */
+@Component("springContextHolder")
 public class SpringContextHolder implements ApplicationContextAware,DisposableBean {
 	
 	private static Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);

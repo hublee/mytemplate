@@ -27,6 +27,7 @@
              <map>
                <entry key="office" value-ref="officeFunctions"/>
                <entry key="role" value-ref="roleFunctions"/>
+               <entry key="auth" value-ref="authUserFunctions"/>
             </map>
         </property>
 	</bean>

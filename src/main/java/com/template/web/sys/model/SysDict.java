@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.template.common.base.BaseEntity;
 
@@ -17,6 +18,7 @@ import com.template.common.base.BaseEntity;
  */
 
 @SuppressWarnings({ "unused"})
+@Table(name="sys_dict")
 public class SysDict extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

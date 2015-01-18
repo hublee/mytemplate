@@ -25,7 +25,7 @@
 		
 		@if(menu.hasChild){
 		<ul class="submenu nav-hide" style="display:none;">
-			@menuTree(menu.items!);
+			@menuTree(menu.children!);
 		</ul>
 		@}
 	</li>

@@ -108,7 +108,11 @@ public class StringConvert extends StringUtils{
 	}
 
 	public static void main(String[] args) {
-		System.out.println(camelhumpToUnderline("SysArea"));
+		System.out.println(camelhumpToUnderline("userName"));
+        System.out.println(camelhumpToUnderline("userPassWord"));
+        System.out.println(camelhumpToUnderline("ISO9001"));
+		System.out.println(underlineToCamelhump("userType"));
+		System.out.println(StringUtils.indexOf("user_type", "_"));
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.template.common.base;
+package com.template.common.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

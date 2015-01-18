@@ -4,8 +4,9 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 
-public class BaseSqlProvider {
 
+public class CommonSqlProvider extends BaseProvider{
+	
 	public String beforeDeleteTreeStructureSql(Map<String, Object> params){
 		final String tableNameOne = params.get("t0").toString();
 		final String tableNameTwo = params.get("t1").toString();

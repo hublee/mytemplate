@@ -9,6 +9,7 @@ import com.template.common.base.BaseEntity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -17,6 +18,7 @@ import javax.persistence.Transient;
  */
 
 @SuppressWarnings({ "unused"})
+@Table(name="sys_role")
 public class SysRole extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

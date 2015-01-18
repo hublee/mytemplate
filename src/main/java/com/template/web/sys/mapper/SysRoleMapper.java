@@ -12,37 +12,37 @@ import com.template.web.sys.model.SysUser;
 
 /**
  * 
- * @author 
+ * @author
  */
 
 public interface SysRoleMapper extends Mapper<SysRole> {
 
-   public int insertRoleResource(SysRole sysRole);
-   
-   public int insertRoleOffice(SysRole sysRole);
-   
-   public int insertUserRoleByRoleId(SysRole sysRole);
-   
-   public int insertUserRoleByUserId(SysUser sysUser);
-   
-   public int deleteRoleResourceByRoleId(Long roleId);
-   
-   public int deleteRoleOfficeByRoleId(Long roleId);
-   
-   public int deleteUserRoleByRoleId(Long roleId);
-   
-   public int deleteUserRoleByUserId(Long userId);
-   
-   public List<Long> findResourceIdsByRoleId(Long roleId);
-   
-   public List<Long> findOfficeIdsByRoleId(Long roleId);
-   
-   public List<SysUser> findUserByRoleId(Long roleId);
-   
-   public List<SysResource> findResourceByRoleId(Long roleId);
-   
-   public List<SysRole> findUserRoleByUserId(Long userId);
-   
-   public List<SysRole> findPageInfo(Map<String, Object> params);
+	public int insertRoleOffice(SysRole sysRole);
+
+	public int insertRoleResource(SysRole sysRole);
+
+	public int insertUserRoleByRoleId(SysRole sysRole);
+
+	public int insertUserRoleByUserId(SysUser sysUser);
+
+	public int deleteRoleOfficeByRoleId(Long roleId);
+
+	public int deleteRoleResourceByRoleId(Long roleId);
+
+	public int deleteUserRoleByRoleId(Long roleId);
+
+	public int deleteUserRoleByUserId(Long userId);
+
+	public List<Long> findOfficeIdsByRoleId(Long roleId);
+
+	public List<Long> findResourceIdsByRoleId(Long roleId);
+
+	public List<SysResource> findResourceByRoleId(Long roleId);
+
+	public List<SysUser> findUserByRoleId(Long roleId);
+
+	public List<SysRole> findUserRoleByUserId(Long userId);
+
+	public List<SysRole> findPageInfo(Map<String, Object> params);
 
 }
