@@ -95,7 +95,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		sysUser.setPassword(password);
 		List<SysUser> users = this.select(sysUser);
 		if(users != null && users.size() == 1 && users.get(0) != null) {
-			return this.select(sysUser).get(0);
+			return users.get(0);
 		}
 		return null;
 	}

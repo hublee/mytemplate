@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -39,7 +40,11 @@ public class ApplicationContextInitListener implements ApplicationListener<Conte
 			List<SysResource> resList = sysResourceService.select(new SysResource());
 			Map<String, SysResource> AllResourceMap = new HashMap<String, SysResource>();
 			for (SysResource res : resList) {
-				AllResourceMap.put(res.getUrl(), res);
+				if(StringUtils.isBlank(res.getUrl())){
+					AllResourceMap.put(res.getId().toString(), res);
+				}else{
+					AllResourceMap.put(res.getUrl(), res);
+				}
 			}
 			
 			// 设置共享变量

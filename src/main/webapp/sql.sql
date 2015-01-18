@@ -99,11 +99,11 @@ CREATE TABLE `sys_office` (
   KEY `sys_office_parent_id` (`parent_id`),
   KEY `sys_office_parent_ids` (`parent_ids`(255)),
   KEY `sys_office_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='机构表';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='机构表';
 
 /*Data for the table `sys_office` */
 
-insert  into `sys_office`(`id`,`parent_id`,`parent_ids`,`area_id`,`code`,`name`,`type`,`grade`,`address`,`zip_code`,`master`,`phone`,`fax`,`email`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,0,'0,',2,'100000','北京市总公司','1','1','',NULL,'','','','','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','','0'),(2,1,'0,1,',2,'100001','公司领导','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(3,1,'0,1,',2,'100002','人力部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,1,'0,1,',2,'100003','市场部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,1,'0,1,',2,'100004','技术部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,1,'0,1,',2,'100005','研发部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(7,1,'0,1,',8,'200000','山东省分公司','1','2','','','','','','','1','2013-05-27 08:00:00','2','2014-11-23 22:00:25','','0'),(8,7,'0,1,7,',8,'200001','公司领导','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(9,7,'0,1,7,',8,'200002','综合部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(10,7,'0,1,7,',8,'200003','市场部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(11,7,'0,1,7,',8,'200004','技术部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(12,7,'0,1,7,',9,'201000','济南市分公司','1','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(13,12,'0,1,7,12,',9,'201001','公司领导','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(14,12,'0,1,7,12,',9,'201002','综合部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(15,12,'0,1,7,12,',9,'201003','市场部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(16,12,'0,1,7,12,',9,'201004','技术部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(17,12,'0,1,7,12,',11,'201010','济南市历城区分公司','1','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(18,17,'0,1,7,12,17,',11,'201011','公司领导','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(19,17,'0,1,7,12,17,',11,'201012','综合部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(20,17,'0,1,7,12,17,',11,'201013','市场部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(21,17,'0,1,7,12,17,',11,'201014','技术部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(22,12,'0,1,7,12,',12,'201020','济南市历下区分公司','1','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(23,22,'0,1,7,12,22,',12,'201021','公司领导','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(24,22,'0,1,7,12,22,',12,'201022','综合部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(25,22,'0,1,7,12,22,',12,'201023','市场部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(26,22,'0,1,7,12,22,',12,'201024','技术部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0');
+insert  into `sys_office`(`id`,`parent_id`,`parent_ids`,`area_id`,`code`,`name`,`type`,`grade`,`address`,`zip_code`,`master`,`phone`,`fax`,`email`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,0,'0,',2,'100000','北京市总公司','1','1','',NULL,'','','','','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','','0'),(2,1,'0,1,',2,'100001','公司领导','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(3,1,'0,1,',2,'100002','人力部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,1,'0,1,',2,'100003','市场部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,1,'0,1,',2,'100004','技术部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,1,'0,1,',2,'100005','研发部','2','1',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(7,1,'0,1,',3,'200000','山东省分公司','1','2','','','','','','','1','2013-05-27 08:00:00','2','2014-11-23 22:00:25','','0'),(8,7,'0,1,7,',8,'200001','公司领导','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(9,7,'0,1,7,',8,'200002','综合部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(10,7,'0,1,7,',8,'200003','市场部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(11,7,'0,1,7,',8,'200004','技术部','2','2',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(12,7,'0,1,7,',9,'201000','济南市分公司','1','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(13,12,'0,1,7,12,',9,'201001','公司领导','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(14,12,'0,1,7,12,',9,'201002','综合部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(15,12,'0,1,7,12,',9,'201003','市场部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(16,12,'0,1,7,12,',9,'201004','技术部','2','3',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(17,12,'0,1,7,12,',11,'201010','济南市历城区分公司','1','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(18,17,'0,1,7,12,17,',11,'201011','公司领导','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(19,17,'0,1,7,12,17,',11,'201012','综合部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(20,17,'0,1,7,12,17,',11,'201013','市场部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(21,17,'0,1,7,12,17,',11,'201014','技术部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(22,12,'0,1,7,12,',12,'201020','济南市历下区分公司','1','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(23,22,'0,1,7,12,22,',12,'201021','公司领导','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(24,22,'0,1,7,12,22,',12,'201022','综合部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(25,22,'0,1,7,12,22,',12,'201023','市场部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(26,22,'0,1,7,12,22,',12,'201024','技术部','2','4',NULL,NULL,NULL,NULL,NULL,NULL,'1','2013-05-27 08:00:00','2','2014-11-23 22:00:25',NULL,'0'),(27,5,'0,1,5,',2,NULL,'技术1部门','2',NULL,'',NULL,'','','','',NULL,'2015-01-11 15:19:53',NULL,'2015-01-11 15:19:53','','0'),(28,0,'0,',1,NULL,'测试公司名字一定要长','1',NULL,'',NULL,'','','','',NULL,'2015-01-11 23:48:22',NULL,'2015-01-12 21:46:32','','1'),(29,28,'0,28,',1,NULL,'测试部门1','2',NULL,'',NULL,'','','','',NULL,'2015-01-11 23:48:35',NULL,'2015-01-11 23:48:35','','1'),(30,10,'0,1,7,10,',1,NULL,'市场子部门','2',NULL,'',NULL,'','','','',NULL,'2015-01-13 22:56:14',NULL,'2015-01-13 22:56:14','','0'),(33,0,'0,',1,NULL,'ss','2','1','',NULL,'','','','',NULL,'2015-01-14 22:22:30',NULL,'2015-01-14 22:22:30','','1'),(34,0,'0,',1,NULL,'asdasd','2','1','',NULL,'','','','',NULL,'2015-01-14 22:37:59',NULL,'2015-01-14 22:37:59','','1'),(35,0,'0,',1,NULL,'fsdfsdf','2','1','',NULL,'','','','',NULL,'2015-01-14 23:13:43',NULL,'2015-01-14 23:13:43','','0');
 
 /*Table structure for table `sys_resource` */
 
@@ -127,12 +127,13 @@ CREATE TABLE `sys_resource` (
   `update_date` datetime DEFAULT NULL,
   `create_by` varchar(64) DEFAULT NULL,
   `update_by` varchar(64) DEFAULT NULL,
+  `del_flag` char(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_resource` */
 
-insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL),(193,'用户管理',0,'0',262144,'',1,189,'0','sysuser','','0','0,189,',NULL,'2015-01-01 15:15:37',NULL,NULL),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',2,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL),(195,'日志查询',0,'0',1048576,'fa fa-copy',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL),(200,'测试',0,'0',16777216,'',1,0,'0','test','','0','0,',NULL,NULL,NULL,NULL);
+insert  into `sys_resource`(`id`,`name`,`pos`,`common`,`code`,`icon`,`sort`,`parent_id`,`type`,`url`,`description`,`status`,`parent_ids`,`create_date`,`update_date`,`create_by`,`update_by`,`del_flag`) values (1,'菜单配置',0,'0',1,'fa fa-calculator',1,188,'0','menu','','0','0,188,',NULL,NULL,NULL,NULL,'0'),(181,'区域管理',0,'0',128,'fa fa-globe',1,189,'0','area','','0','0,189,',NULL,NULL,NULL,NULL,'0'),(188,'系统设置',0,'0',16384,'fa fa-cog',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL,'0'),(189,'机构用户',0,'0',32768,'fa fa-group',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL,'0'),(190,'字典管理',0,'0',65536,'fa fa-area-chart',1,188,'0','dict','','0','0,188,',NULL,NULL,NULL,NULL,'0'),(192,'机构管理',0,'0',131072,'fa fa-codepen',1,189,'0','office','','0','0,189,',NULL,NULL,NULL,NULL,'0'),(193,'用户管理',0,'0',262144,'fa fa-users',1,189,'0','sysuser','','0','0,189,',NULL,'2015-01-13 21:15:06',NULL,NULL,'0'),(194,'角色管理',0,'0',524288,'fa fa-graduation-cap',2,189,'0','role','','0','0,189,',NULL,NULL,NULL,NULL,'0'),(195,'日志查询',0,'0',1048576,'fa fa-copy',1,188,'0','','','0','0,188,',NULL,NULL,NULL,NULL,'0'),(196,'关于帮助',0,'0',2097152,'',1,0,'0','','','0','0,',NULL,NULL,NULL,NULL,'0'),(197,'项目首页',0,'0',4194304,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL,'0'),(198,'项目支持',0,'0',8388608,'',1,196,'0','','','0','0,196,',NULL,NULL,NULL,NULL,'0'),(200,'测试',0,'0',16777216,'',1,0,'0','test','','0','0,',NULL,NULL,NULL,NULL,'0');
 
 /*Table structure for table `sys_role` */
 
@@ -151,11 +152,11 @@ CREATE TABLE `sys_role` (
   `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`),
   KEY `sys_role_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 /*Data for the table `sys_role` */
 
-insert  into `sys_role`(`id`,`office_id`,`name`,`data_scope`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,1,'系统管理员','1','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(2,9,'公司管理员','2','1','2013-05-27 08:00:00','1','2015-01-03 20:34:59',NULL,'0'),(3,1,'本公司管理员','3','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(4,1,'部门管理员','4','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(5,1,'本部门管理员','5','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(6,3,'普通用户','8','1','2013-05-27 08:00:00','2','2015-01-03 18:47:26',NULL,'0'),(7,7,'山东省管理员','9','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00',NULL,'0'),(8,1,'测试角色1','9',NULL,NULL,NULL,NULL,NULL,'0'),(9,1,'测试2','9',NULL,'2014-12-24 23:46:58',NULL,NULL,NULL,'0'),(10,1,'ceshi3','9',NULL,'2014-12-27 14:09:39',NULL,NULL,NULL,'0'),(11,1,'ceshi4','9',NULL,'2014-12-27 14:09:59',NULL,NULL,NULL,'0'),(12,2,'测试角色2','9',NULL,'2015-01-01 11:31:26',NULL,'2015-01-03 13:33:19',NULL,'0'),(13,8,'测试角色3','1',NULL,'2015-01-04 23:55:39',NULL,'2015-01-04 23:55:56',NULL,'0');
+insert  into `sys_role`(`id`,`office_id`,`name`,`data_scope`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (15,1,'平民','9',NULL,'2015-01-17 20:36:23',NULL,'2015-01-18 10:18:51',NULL,'0');
 
 /*Table structure for table `sys_role_office` */
 
@@ -165,12 +166,17 @@ CREATE TABLE `sys_role_office` (
   `role_id` bigint(20) NOT NULL COMMENT '角色编号',
   `office_id` bigint(20) NOT NULL COMMENT '机构编号',
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COMMENT='角色-机构';
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COMMENT='角色-机构';
 
 /*Data for the table `sys_role_office` */
 
-insert  into `sys_role_office`(`role_id`,`office_id`,`id`) values (12,1,82),(12,2,83),(12,3,84),(12,4,85),(12,5,86);
+insert  into `sys_role_office`(`role_id`,`office_id`,`id`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`) values (15,1,89,NULL,NULL,NULL,NULL,'0'),(15,6,90,NULL,NULL,NULL,NULL,'0');
 
 /*Table structure for table `sys_role_resource` */
 
@@ -180,12 +186,17 @@ CREATE TABLE `sys_role_resource` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) DEFAULT NULL,
   `resource_id` bigint(20) DEFAULT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_role_resource` */
 
-insert  into `sys_role_resource`(`id`,`role_id`,`resource_id`) values (94,12,188),(95,12,1),(96,12,190),(97,12,189),(98,12,181),(99,2,188),(100,2,1),(101,2,190),(102,2,195),(115,13,188),(116,13,1),(117,13,190),(118,13,195),(119,13,189),(120,13,181),(121,13,192),(122,13,193),(123,13,194),(124,13,196),(125,13,197),(126,13,198);
+insert  into `sys_role_resource`(`id`,`role_id`,`resource_id`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`) values (136,15,188,NULL,NULL,NULL,NULL,'0'),(137,15,1,NULL,NULL,NULL,NULL,'0'),(138,15,190,NULL,NULL,NULL,NULL,'0'),(139,15,195,NULL,NULL,NULL,NULL,'0'),(140,15,189,NULL,NULL,NULL,NULL,'0'),(141,15,181,NULL,NULL,NULL,NULL,'0'),(142,15,192,NULL,NULL,NULL,NULL,'0'),(143,15,193,NULL,NULL,NULL,NULL,'0'),(144,15,194,NULL,NULL,NULL,NULL,'0'),(145,15,200,NULL,NULL,NULL,NULL,'0');
 
 /*Table structure for table `sys_user` */
 
@@ -202,7 +213,7 @@ CREATE TABLE `sys_user` (
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(200) DEFAULT NULL COMMENT '电话',
   `mobile` varchar(200) DEFAULT NULL COMMENT '手机',
-  `user_type` char(1) DEFAULT NULL COMMENT '用户类型',
+  `user_type` char(1) DEFAULT '0' COMMENT '用户类型(0.普通 1.系统超级管理员)',
   `login_ip` varchar(100) DEFAULT NULL COMMENT '最后登陆IP',
   `login_date` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
@@ -217,11 +228,11 @@ CREATE TABLE `sys_user` (
   KEY `sys_user_company_id` (`company_id`),
   KEY `sys_user_update_date` (`update_date`),
   KEY `sys_user_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`id`,`company_id`,`office_id`,`username`,`password`,`no`,`name`,`email`,`phone`,`mobile`,`user_type`,`login_ip`,`login_date`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (1,1,1,'thinkgem','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0001','Thinkgem','thinkgem@163.com','8675','8675',NULL,'127.0.0.1','2014-10-05 18:53:52','1','2013-05-27 08:00:00','1','2015-01-09 00:35:29','最高管理员','0'),(2,1,1,'admin','86f3059b228c8acf99e69734b6bb32cc','0002','管理员','thinkgem@163.com','8675','8675',NULL,'0:0:0:0:0:0:0:1','2014-12-21 19:16:11','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','管理员','0'),(3,1,3,'bj_zhb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0003','综合部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2015-01-09 00:09:05','综合部','0'),(4,1,4,'bj_scb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0004','市场部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','市场部','0'),(5,1,5,'bj_jsb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0005','技术部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','技术部','0'),(6,1,6,'bj_yfb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0006','研发部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','研发部','0'),(7,7,8,'sd_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0007','山分领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司领导','0'),(8,7,9,'sd_zhb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0008','山分综合部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司综合部','0'),(9,7,10,'sd_scb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0009','山分市场部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司市场部','0'),(10,7,11,'sd_jsb','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0010','山东省分公司技术部','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','山东省分公司技术部','0'),(11,12,13,'sdjn_admin','c810e6915e66726c720c20b125568f3abdae500aefc9240e4e0bc2b4','0011','济分公司领导','thinkgem@163.com','8675','8675','','0:0:0:0:0:0:0:1','2014-11-23 21:55:41','1','2013-05-27 08:00:00','2','2014-11-23 21:55:27','济南分公司领导','0'),(12,12,18,'sdjnlc_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0012','济分历城领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','济南市历城区分公司领导','0'),(13,22,23,'sdjnlx_admin','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0013','济分历下领导','thinkgem@163.com','8675','8675',NULL,NULL,NULL,'1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','济南市历下区分公司领导','0'),(14,22,24,'test','25a251792f44cf460aac78cb922f15814bd69eb8ac263681afaa319b','0014','济分历下综合部','thinkgem@163.com','8675','8675','','0:0:0:0:0:0:0:1','2014-10-12 21:21:23','1','2013-05-27 08:00:00','2','2014-10-12 21:21:15','济南市历下区分公司综合部','0'),(18,1,1,'ceshi1','123456','','测试1','','','',NULL,NULL,NULL,NULL,'2015-01-03 19:51:31',NULL,'2015-01-09 00:16:10','','0'),(19,1,3,'test11','123456','','王五','','','',NULL,NULL,NULL,NULL,'2015-01-08 22:07:09',NULL,NULL,'','0'),(20,1,1,'sdadsa','123456','','李四','','','',NULL,NULL,NULL,NULL,'2015-01-09 00:14:15',NULL,NULL,'','0'),(21,1,1,'dasd','123456','','asda','','','',NULL,NULL,NULL,NULL,'2015-01-09 00:35:25',NULL,'2015-01-09 00:35:25','','0');
+insert  into `sys_user`(`id`,`company_id`,`office_id`,`username`,`password`,`no`,`name`,`email`,`phone`,`mobile`,`user_type`,`login_ip`,`login_date`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) values (2,1,1,'admin','86f3059b228c8acf99e69734b6bb32cc','0002','超级管理员','thinkgem@163.com','8675','8675','1','0:0:0:0:0:0:0:1','2014-12-21 19:16:11','1','2013-05-27 08:00:00','1','2013-05-27 08:00:00','管理员','0'),(22,1,1,'ceshi1','d851ea96c7f9d003938f562957be5f60','','测试1','','','','0',NULL,NULL,NULL,'2015-01-17 19:14:05',NULL,'2015-01-17 19:14:05','','0');
 
 /*Table structure for table `sys_user_role` */
 
@@ -231,12 +242,17 @@ CREATE TABLE `sys_user_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_user_role` */
 
-insert  into `sys_user_role`(`id`,`role_id`,`user_id`) values (1,1,18),(3,3,18),(15,13,7),(16,13,1),(17,13,3),(18,6,19),(19,2,1),(20,2,2),(21,4,20),(22,9,21);
+insert  into `sys_user_role`(`id`,`role_id`,`user_id`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`) values (27,15,22,NULL,NULL,NULL,NULL,'0');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
