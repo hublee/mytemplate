@@ -43,6 +43,17 @@ public class CacheUtils {
 	}
 	
 	/**
+	 * 清空某一个缓存，全部清除
+	* @param cacheName
+	* @param key
+	 */
+	public static void clear(String cacheName){
+		if (getCache(cacheName) != null) {
+			getCache(cacheName).clear();
+		}
+	}
+	
+	/**
 	 * 
 	* @Title: get  
 	* @Description: 得到缓存中的信息
@@ -69,7 +80,7 @@ public class CacheUtils {
 		return val==null?false:true;
 	}
 
-	private static Cache getCache(String cacheName) {
+	public static Cache getCache(String cacheName) {
 		return cacheManager.getCache(cacheName);
 	}
 

@@ -36,6 +36,8 @@ public interface SysRoleMapper extends Mapper<SysRole> {
 	public List<Long> findOfficeIdsByRoleId(Long roleId);
 
 	public List<Long> findResourceIdsByRoleId(Long roleId);
+	
+	public List<Long> findUserIdsByRoleId(Long userId);
 
 	public List<SysResource> findResourceByRoleId(Long roleId);
 

@@ -12,6 +12,7 @@ import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
+import com.template.web.sys.utils.SysUserUtils;
 
 public class AuthInterceptor implements HandlerInterceptor {
 
@@ -34,15 +35,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 				response.sendRedirect("/login");
 				return false;
 			} else {
-				if (sysUser.hasPermission(sysResource)) {
-					return true;
-				}
+				Map<String, SysResource> userRes = SysUserUtils.getUserPermission(sysUser);
+				if(userRes.containsKey(path)) return true;
 			}
 		}
-
 		return false;
 	}
-
+	
 	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,

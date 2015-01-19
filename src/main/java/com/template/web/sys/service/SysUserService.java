@@ -2,6 +2,7 @@
 
 package com.template.web.sys.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,8 +58,10 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			count = this.insertSelective(sysUser);
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
+			List<Long> userIds = new ArrayList<Long>();
+			userIds.add(sysUser.getId());
+			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 			count = this.updateByPrimaryKeySelective(sysUser);
-			SysUserUtils.clearAllCachedAuthorizationInfo();
 		}
 		if(sysUser.getRoleIds()!=null) sysRoleMapper.insertUserRoleByUserId(sysUser);
 		return count;

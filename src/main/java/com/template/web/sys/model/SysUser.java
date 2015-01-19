@@ -65,8 +65,6 @@ public class SysUser extends BaseEntity {
     
     @Transient
     private Long[] roleIds; //角色
-    @Transient
-    private long[] posSum; //权限组
 
 
     public void setRoleIds(Long[] roleIds){
@@ -182,40 +180,5 @@ public class SysUser extends BaseEntity {
     public void setUserType(String userType) {
 		this.set("userType", userType);
     }
-    
-    public long[] getPosSum() {
-		return (long[]) this.get("posSum");
-    }
-   
-    public void setPosSum(long[] posSum) {
-		this.set("posSum", posSum);
-    }
-
-    /**
-	 * 计算用户权限总和
-	 */
-    public void calculatePermissionSum(List<SysResource> userResources){
-    	int pos = 0;
-    	long code = 0;
-    	for(SysResource res : userResources){
-    		if(res!=null){
-    			pos = res.getPos();
-        		code = res.getCode();
-        		long[] posSum = this.getPosSum();
-        		posSum[pos] = posSum[pos] | code;
-        		this.setPosSum(posSum); //与运算
-    		}
-    	}
-    	
-    }
-    
-    /**
-	 * 判断用户是否具有指定权限
-	 */
-	public boolean hasPermission(SysResource sysResource) {
-		int pos=sysResource.getPos();
-		long code=sysResource.getCode();
-		return !((this.getPosSum()[pos] & code)  == 0); //或运算
-	}
     
 }

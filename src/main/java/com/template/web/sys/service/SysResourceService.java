@@ -8,7 +8,6 @@ import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.utils.CacheUtils;
-import com.template.common.utils.Collections3;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,8 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				+ sysResource.getParentId() + ",");
 		if (null == sysResource.getId()) {
 			SysResource codeAndPos = sysResourceMapper.findMaxCodeAndMaxPos();
-			sysResource.setCodeAndPos(codeAndPos.getCode(), codeAndPos.getPos());
+			sysResource
+					.setCodeAndPos(codeAndPos.getCode(), codeAndPos.getPos());
 			count = this.insertSelective(sysResource);
 		} else {
 			// getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
@@ -57,7 +58,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				sysResourceMapper.updateParentIds(sysResource); // 批量更新子节点的parentIds
 			}
 		}
-		if (count > 0){
+		if (count > 0) {
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
 		}
@@ -75,12 +76,12 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		if (count > 0)
 			return -1;
 		int delCount = sysResourceMapper.deleteIdsByRootId(id);
-		if (delCount > 0){
+		if (delCount > 0) {
 			// 重新查找全部资源放入缓存(为了开发时候用)
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
 		}
-			
+
 		return delCount;
 	}
 
@@ -99,21 +100,25 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 * @param userId
 	 * @return
 	 */
-	public List<SysResource> findUserResourceByUserId(SysUser sysUser) {
-		List<SysResource> userResources = CacheUtils.get(
+	public Map<String, SysResource> findUserResourceByUserId(SysUser sysUser) {
+		Map<String, SysResource> userResources = CacheUtils.get(
 				Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
 						+ sysUser.getId());
 		if (userResources == null) {
 			if ((Constant.SUPER_ADMIN).equals(sysUser.getUserType())) {
-				Map<String, SysResource> allRes = BeetlUtils
+				userResources = BeetlUtils
 						.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-				userResources = new ArrayList<SysResource>();
-				for (SysResource res : allRes.values()) {
-					userResources.add(res);
+			} else {
+				List<SysResource> userRes = sysResourceMapper
+						.findUserResourceByUserId(sysUser.getId());
+				userResources = new HashMap<String, SysResource>();
+				for(SysResource res : userRes){
+					if(StringUtils.isBlank(res.getUrl())){
+						userResources.put(res.getId().toString(), res);
+					}else{
+						userResources.put(res.getUrl(), res);
+					}
 				}
-			}else{
-				userResources = sysResourceMapper.findUserResourceByUserId(sysUser
-						.getId());
 			}
 			CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
 					Constant.CACHE_USER_RESOURCE + sysUser.getId(),
@@ -130,13 +135,12 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				Constant.CACHE_SYS_RESOURCE,
 				Constant.CACHE_USER_MENU + sysUser.getId());
 		if (userMenus == null) {
-			List<SysResource> userResources = this
+			Map<String, SysResource> userResources = this
 					.findUserResourceByUserId(sysUser);
-			userMenus = Collections3.copyTo(userResources, SysResource.class);
-			for (int i = 0; i < userMenus.size(); i++) {
-				if (!(userMenus.get(i).getType())
-						.equals(Constant.RESOURCE_TYPE_MENU)) {
-					userMenus.remove(i);
+			userMenus = new ArrayList<SysResource>();
+			for(SysResource res : userResources.values()){
+				if(Constant.RESOURCE_TYPE_MENU.equals(res.getType())){
+					userMenus.add(res);
 				}
 			}
 			userMenus = TreeUtils.toTreeNodeList(userMenus);

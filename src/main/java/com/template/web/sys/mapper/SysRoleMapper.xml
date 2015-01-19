@@ -82,6 +82,11 @@
 		select resource_id from sys_role_resource where role_id = #{roleId}
 	</select>
 	
+	<!-- 根据角色id查找绑定用户ids -->
+	<select id="findUserIdsByRoleId" resultType="java.lang.Long">
+		select user_id from sys_user_role where role_id = #{role_id}
+	</select>
+	
 	<!-- 根据角色id查询绑定的资源 -->
 	<select id="findResourceByRoleId" resultType="com.template.web.sys.model.SysResource">
 		select sr.id,sr.name from sys_resource sr left join sys_role_resource rr 

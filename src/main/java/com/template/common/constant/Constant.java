@@ -20,11 +20,14 @@ public class Constant {
 	public static final String SUPER_ADMIN = "1"; // 超级管理员
 	
 	//缓存key
-	public static final String CACHE_USER_RESOURCE = "userSysResource";
+	public static final String CACHE_SYS_RESOURCE = "sysResource"; //缓存名称
 	public static final String CACHE_ALL_RESOURCE = "allSysResource"; // 全部资源key
-	public static final String CACHE_USER_MENU = "userMenuTree";
-	public static final String CACHE_SYS_RESOURCE = "sysResource";
-
+	public static final String CACHE_USER_RESOURCE = "userSysResource"; //用户权限
+	public static final String CACHE_USER_MENU = "userMenuTree"; //用户菜单树
+	public static final String CACHE_USER_ROLE = "userRole"; //用户角色
+	
+	
+	
 	// 显示/隐藏
 	public static final String SHOW = "1";
 	public static final String HIDE = "0";

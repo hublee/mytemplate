@@ -2,6 +2,7 @@ package com.template.common.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class TreeUtils {
 	 */
 	public static <T extends BaseEntity> List<T> toTreeNodeList(List<T> list){
 		
-		final Map<Long, T> nodes = new HashMap<Long, T>();
+		final Map<Long, T> nodes = new LinkedHashMap<Long, T>();
 		
 		//所有节点记录下来
 		for(T node : list){

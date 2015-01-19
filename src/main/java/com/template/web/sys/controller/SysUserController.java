@@ -86,11 +86,11 @@ public class SysUserController {
 		List<SysRole> roles = null;
 		Map<Long, SysRole> rolesMap = null;
 		if(StringUtils.equals("detail", mode)){
-			roles = sysRoleService.findUserRoleByUserId(id,true);
+			roles = sysRoleService.findUserRoleListByUserId(id);
 			model.addAttribute("roles", roles);
 		}
 		if(StringUtils.equals("edit", mode)){
-			rolesMap = sysRoleService.findUserRoleByUserId(id,false);
+			rolesMap = sysRoleService.findUserRoleMapByUserId(id);
 			model.addAttribute("rolesMap", rolesMap);
 		}
 		model.addAttribute("user", user);

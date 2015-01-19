@@ -31,6 +31,7 @@ public class LoginController {
 	@Resource
 	private SysUserService sysUserService;
 	
+	
 	/**
 	 * 管理主页
 	 * 
@@ -86,8 +87,8 @@ public class LoginController {
 		}
 		SysUser user = sysUserService.checkUser(username, secPwd);
 		if (null != user) {
-			SysUser sysUser = SysUserUtils.setUserPermission(user);
-			session.setAttribute(Constant.SESSION_LOGIN_USER, sysUser);
+			SysUserUtils.getUserPermission(user);
+			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
 		} else {
 			msg.put("error", "用户名或密码错误");
 		}
