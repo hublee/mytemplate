@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +95,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 根据用户id得到用户持有的资源
-	 * 
 	 * @param userId
 	 * @return
 	 */
@@ -111,7 +109,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 			} else {
 				List<SysResource> userRes = sysResourceMapper
 						.findUserResourceByUserId(sysUser.getId());
-				userResources = new HashMap<String, SysResource>();
+				userResources = new LinkedHashMap<String, SysResource>();
 				for(SysResource res : userRes){
 					if(StringUtils.isBlank(res.getUrl())){
 						userResources.put(res.getId().toString(), res);
@@ -143,7 +141,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 					userMenus.add(res);
 				}
 			}
-			userMenus = TreeUtils.toTreeNodeList(userMenus);
+			userMenus = TreeUtils.toTreeNodeList(userMenus,SysResource.class);
 			CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
 					Constant.CACHE_USER_MENU + sysUser.getId(), userMenus);
 		}
@@ -184,19 +182,12 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 获取全部资源list形式
-	 * 
 	 * @return
 	 */
 	public List<SysResource> getAllResourcesList() {
 		LinkedHashMap<String, SysResource> allRes = BeetlUtils
 				.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-		List<SysResource> resList = null;
-		if (allRes != null) {
-			resList = new ArrayList<SysResource>();
-			for (SysResource res : allRes.values()) {
-				resList.add(res);
-			}
-		}
+		List<SysResource> resList = new ArrayList<SysResource>(allRes.values());
 		return resList;
 	}
 
