@@ -7,17 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysUser;
 
-@Aspect
-@Component
+@Deprecated
 public class AuthenticationAspect {
 
 	@Autowired
@@ -51,7 +48,8 @@ public class AuthenticationAspect {
      * @return 方法描述
      * @throws Exception
      */
-     public  String getControllerMethodDescription(JoinPoint joinPoint)  throws Exception {
+     @SuppressWarnings("rawtypes")
+	public  String getControllerMethodDescription(JoinPoint joinPoint)  throws Exception {
     	 request.getRequestURI();
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
