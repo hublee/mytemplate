@@ -58,7 +58,7 @@ public class DictController {
 		return "sys/dict/dict-list";
 	}
 	
-	@RequestMapping(value="{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
 	public String showLayer(Long id, Model model){
 		SysDict dict = sysDictService.selectByPrimaryKey(id);
 		model.addAttribute("dict", dict);

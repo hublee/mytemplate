@@ -59,7 +59,7 @@ public class RoleController extends BaseController {
 	 * 绑定用户界面
 	* @return
 	 */
-	@RequestMapping("binduser")
+	@RequestMapping(value="binduser",method=RequestMethod.POST)
 	public String toBindUser(Long id,Model model){
 		List<SysUser> users = sysRoleService.findUserByRoleId(id);
 		List<SysOffice> offices = sysOfficeService.select(new SysOffice());

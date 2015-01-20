@@ -80,7 +80,7 @@ public class SysUserController {
 	* @param mode 模式
 	* @return
 	 */
-	@RequestMapping(value="{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
 	public String showLayer(Long id,@PathVariable("mode") String mode, Model model){
 		SysUser user = sysUserService.selectByPrimaryKey(id);;
 		List<SysRole> roles = null;
@@ -102,7 +102,7 @@ public class SysUserController {
 	* @param param
 	* @return
 	 */
-	@RequestMapping("checkname")
+	@RequestMapping(value="checkname",method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> checkName(String param){
 		Map<String, Object> msg = new HashMap<String, Object>();
 		SysUser sysUser = new SysUser();

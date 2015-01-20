@@ -5,12 +5,14 @@ import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +101,7 @@ public class MenuController extends BaseController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value="{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
 	public String showLayer(Long id,Long parentId,@PathVariable("mode") String mode, Model model){
 		SysResource resource = null, pResource = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){

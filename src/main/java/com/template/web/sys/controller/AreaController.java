@@ -91,7 +91,7 @@ public class AreaController {
 	* @param model
 	* @return
 	 */
-	@RequestMapping(value="{mode}/showlayer")
+	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
 	public String showLayer(Long id,Long parentId,@PathVariable("mode") String mode, Model model){
 		SysArea area = null, pArea = null;
 		if(StringUtils.equalsIgnoreCase(mode, "add")){
