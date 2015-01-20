@@ -31,8 +31,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		SysUser sysUser = (SysUser) request.getSession().getAttribute(
 				Constant.SESSION_LOGIN_USER);
-		if (sysUser == null) { // 转到登陆页面
-			response.sendRedirect("/login");
+		if (sysUser == null && !path.equals("login") 
+				&& !path.equals("code.image")) { // 转到登陆页面
+			response.sendRedirect("/" + rootPath + "/notlogin");
 			return false;
 		} else {
 			//激发监听，把当前用户放入局部线程中
@@ -49,7 +50,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			if (userRes.containsKey(path)) {
 				return true;
 			} else {
-				response.sendRedirect("/" + rootPath + "/noauth");
+				response.sendRedirect("/" + rootPath + "/notauth");
 			}
 		}
 		return false;

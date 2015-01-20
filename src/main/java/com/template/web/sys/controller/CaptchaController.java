@@ -14,6 +14,7 @@ import com.template.common.captcha.ValidateCode;
 
 
 @Controller
+@RequestMapping("${adminPath}")
 public class CaptchaController {
 
 	@RequestMapping("code.image")

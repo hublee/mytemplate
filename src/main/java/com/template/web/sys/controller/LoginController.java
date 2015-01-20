@@ -107,9 +107,14 @@ public class LoginController {
 		return "redirect:/" + Global.getAdminPath() + "/login";
 	}
 	
-	@RequestMapping("noauth")
-	public String noauth(){
-		return "noauth";
+	@RequestMapping("notauth")
+	public String notAuth(){
+		return "notauth";
+	}
+	
+	@RequestMapping("notlogin")
+	public String notLogin(){
+		return "notlogin";
 	}
 	
 }
