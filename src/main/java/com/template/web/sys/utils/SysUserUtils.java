@@ -26,19 +26,19 @@ public class SysUserUtils {
 	 */
 	public static void clearAllCachedAuthorizationInfo(List<Long> userIds) {
 		for (Long userId : userIds) {
-			boolean isRole = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_MENU
-							+ userId);
-			if (isRole) {
-				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
-						Constant.CACHE_USER_MENU + userId);
-			}
 			boolean isRes = CacheUtils.isCacheByKey(
 					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
 							+ userId);
 			if (isRes) {
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_RESOURCE + userId);
+			}
+			boolean isMenu = CacheUtils.isCacheByKey(
+					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_MENU
+							+ userId);
+			if (isMenu) {
+				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
+						Constant.CACHE_USER_MENU + userId);
 			}
 		}
 	}

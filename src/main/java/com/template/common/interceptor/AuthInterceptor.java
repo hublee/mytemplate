@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
+import com.template.common.utils.Global;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
@@ -36,7 +37,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 				return false;
 			} else {
 				Map<String, SysResource> userRes = SysUserUtils.getUserPermission(sysUser);
-				if(userRes.containsKey(path)) return true;
+				if(userRes.containsKey(path)) {
+					return true;
+				}else{
+					response.sendRedirect("/"+Global.getCtxPath()+"/error/noauth.html");
+				}
 			}
 		}
 		return false;

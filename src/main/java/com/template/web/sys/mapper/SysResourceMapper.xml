@@ -42,7 +42,7 @@
 	
 	<!-- 根据用户id获得持有的资源 -->
 	<select id="findUserResourceByUserId" resultType="com.template.web.sys.model.SysResource">
-		SELECT res.id,res.code,res.pos,res.url,res.type,res.parent_id,
+		SELECT DISTINCT res.id,res.code,res.pos,res.url,res.type,res.parent_id,
 			   res.parent_ids,res.name,res.icon,res.sort
 		FROM sys_resource res 
 			LEFT JOIN sys_role_resource srr ON res.id=srr.resource_id

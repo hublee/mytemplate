@@ -42,9 +42,11 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		}else{
 			sysRoleMapper.deleteRoleResourceByRoleId(sysRole.getId());
 			sysRoleMapper.deleteRoleOfficeByRoleId(sysRole.getId());
-			List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
-			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 			count = this.updateByPrimaryKeySelective(sysRole);
+			if(count > 0) {
+				List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
+				SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
+			}
 		}
 		if(sysRole.getResourceIds().length>0){
 			sysRoleMapper.insertRoleResource(sysRole);

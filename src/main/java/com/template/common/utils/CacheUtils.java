@@ -75,6 +75,12 @@ public class CacheUtils {
 		return value;
 	}
 	
+	/**
+	 * 是否存在key中的缓存
+	* @param cacheName
+	* @param key
+	* @return false 不存在    true:存在
+	 */
 	public static boolean isCacheByKey(String cacheName,String key){
 		ValueWrapper val = getCache(cacheName).get(key);
 		return val==null?false:true;

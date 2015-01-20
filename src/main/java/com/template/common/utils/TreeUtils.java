@@ -20,6 +20,7 @@ public class TreeUtils {
 		
 		final Map<Long, T> nodes = new HashMap<Long, T>();
 		
+		//深度copy一个，防止源list内部结构改变
 		List<T> list = Collections3.copyTo(source, bean);
 		
 		//所有节点记录下来

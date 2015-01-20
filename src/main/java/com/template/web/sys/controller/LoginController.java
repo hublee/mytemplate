@@ -106,5 +106,5 @@ public class LoginController {
 		request.getSession().invalidate();
 		return "redirect:/" + Global.getAdminPath() + "/login";
 	}
-
+	
 }
