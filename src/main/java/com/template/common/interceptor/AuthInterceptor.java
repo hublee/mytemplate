@@ -16,8 +16,9 @@ import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
 
 public class AuthInterceptor implements HandlerInterceptor {
+	
+	private String ignorePath = ".+/(login|code.image|notlogin)";
 
-	// TODO 要修改截取url
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -31,29 +32,37 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		SysUser sysUser = (SysUser) request.getSession().getAttribute(
 				Constant.SESSION_LOGIN_USER);
-		if (sysUser == null && !path.equals("login") 
-				&& !path.equals("code.image")) { // 转到登陆页面
-			response.sendRedirect("/" + rootPath + "/notlogin");
-			return false;
-		} else {
-			//激发监听，把当前用户放入局部线程中
-			request.getSession().setAttribute(Constant.SESSION_LOGIN_USER, sysUser);
-			Map<String, SysResource> allRes = BeetlUtils
-					.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-			SysResource sysResource = allRes.get(path);
-			if (sysResource == null
-					|| Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
-				return true;
-			} 
-			Map<String, SysResource> userRes = SysUserUtils
-					.getUserPermission(sysUser);
-			if (userRes.containsKey(path)) {
-				return true;
+		if(!url.matches(ignorePath)){
+			if (sysUser == null) { // 转到登陆页面
+				response.sendRedirect("/" + rootPath + "/notlogin");
+				return false;
 			} else {
-				response.sendRedirect("/" + rootPath + "/notauth");
+				//激发监听，把当前用户放入局部线程中
+				request.getSession().setAttribute(Constant.SESSION_LOGIN_USER, sysUser);
+				Map<String, SysResource> allRes = BeetlUtils
+						.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
+				SysResource sysResource = allRes.get(path);
+				if (sysResource == null
+						|| Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
+					return true;
+				} 
+				Map<String, SysResource> userRes = SysUserUtils
+						.getUserPermission(sysUser);
+				if (userRes.containsKey(path)) {
+					return true;
+				} else {
+					response.sendRedirect("/" + rootPath + "/notauth");
+					return false;
+				}
 			}
 		}
-		return false;
+		return true;
+	}
+	
+	public static void main(String[] args) {
+		String ignorePath = ".+/(login|code.image|notlogin)";
+		String a = "/a/b/login";
+		System.out.println(!a.matches(ignorePath));
 	}
 
 	@Override

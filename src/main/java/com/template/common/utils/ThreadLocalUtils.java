@@ -1,4 +1,4 @@
-package com.template.web.sys.utils;
+package com.template.common.utils;
 
 import java.util.HashMap;
 import java.util.Map;

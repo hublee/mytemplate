@@ -6,6 +6,7 @@ import java.util.Map;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.CacheUtils;
+import com.template.common.utils.ThreadLocalUtils;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysResourceService;
