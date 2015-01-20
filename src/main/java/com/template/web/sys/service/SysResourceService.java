@@ -72,8 +72,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 */
 	public int deleteResourceByRootId(Long id) {
 		int count = sysResourceMapper.beforeDeleteResource(id);
-		if (count > 0)
-			return -1;
+		if (count > 0) return -1;
 		int delCount = sysResourceMapper.deleteIdsByRootId(id);
 		if (delCount > 0) {
 			// 重新查找全部资源放入缓存(为了开发时候用)

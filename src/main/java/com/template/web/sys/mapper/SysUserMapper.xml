@@ -10,7 +10,7 @@
 	<!-- 用户列表 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysUser">
 		SELECT su.id,su.name,su.mobile,su.email,su.no,su.login_ip,su.login_date,
-			su.company_id,su.office_id,GROUP_CONCAT(sr.name) roles 
+			su.company_id,su.office_id,GROUP_CONCAT(sr.name SEPARATOR ' | ') roles 
 		FROM sys_user su 
 		LEFT JOIN sys_user_role sur ON su.id = sur.user_id 
 		LEFT JOIN sys_role sr ON sur.role_id = sr.id

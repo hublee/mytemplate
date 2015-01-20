@@ -1,5 +1,6 @@
 package com.template.web.sys.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.common.constant.Constant;
 import com.template.common.utils.Global;
+import com.template.common.utils.IPUtils;
 import com.template.common.utils.PasswordEncoder;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysResourceService;
@@ -87,8 +89,16 @@ public class LoginController {
 		}
 		SysUser user = sysUserService.checkUser(username, secPwd);
 		if (null != user) {
+			//缓存用户权限
 			SysUserUtils.getUserPermission(user);
 			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
+			//TODO 暂时，后续移动到日志中
+			//更新用户最后登录ip和date
+			SysUser newUser = new SysUser();
+			newUser.setLoginDate(new Date());
+			newUser.setLoginIp(IPUtils.getClientAddress(request));
+			newUser.setId(user.getId());
+			sysUserService.updateByPrimaryKeySelective(newUser);
 		} else {
 			msg.put("error", "用户名或密码错误");
 		}

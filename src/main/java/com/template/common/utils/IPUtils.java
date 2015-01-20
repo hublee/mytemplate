@@ -2,7 +2,7 @@
 /**
  * 
  */
-package com.template.web.sys.utils;
+package com.template.common.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,15 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
 * IP校验
-*
- * @copyright {@link 9iu.org}
- * @author springrain<Auto generate>
- * @version  2013-03-19 11:08:15
- * @see org.springrain.frame.util.IPUtils
 */
-
-
-
 public class IPUtils {
 	  /**
      * ip校验
@@ -44,19 +36,5 @@ public class IPUtils {
             return address;
         }
         return request.getRemoteAddr();
-    }
-    
-    public static String getIpAddr(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
     }
 }

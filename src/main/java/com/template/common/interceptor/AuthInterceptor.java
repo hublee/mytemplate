@@ -46,6 +46,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 						|| Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
 					return true;
 				} 
+				//从缓存中那用户权限，没有则去数据库中查出并且缓存
 				Map<String, SysResource> userRes = SysUserUtils
 						.getUserPermission(sysUser);
 				if (userRes.containsKey(path)) {
@@ -59,12 +60,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		return true;
 	}
 	
-	public static void main(String[] args) {
-		String ignorePath = ".+/(login|code.image|notlogin)";
-		String a = "/a/b/login";
-		System.out.println(!a.matches(ignorePath));
-	}
-
 	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,

@@ -7,7 +7,7 @@ import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
 
-public class SessionAttrListener implements HttpSessionAttributeListener{
+public class SessionListener implements HttpSessionAttributeListener{
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent se) {

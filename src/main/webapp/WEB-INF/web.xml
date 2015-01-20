@@ -28,9 +28,9 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- session attr listener -->  
+	<!-- session listener -->  
 	<listener>  
-	    <listener-class>com.template.common.listener.SessionAttrListener</listener-class>  
+	    <listener-class>com.template.common.listener.SessionListener</listener-class>  
 	</listener>  
 	
 	<!-- 编码过滤器 -->
