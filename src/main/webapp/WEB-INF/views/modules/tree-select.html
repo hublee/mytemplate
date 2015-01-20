@@ -28,7 +28,7 @@ var ${tree}, ${setting} = {
 		}
 };
 $(document).ready(function(){
-	$.get("${ctxPath}/${adminPath}/${url}", function(zNodes){
+	$.post("${ctxPath}/${adminPath}/${url}", function(zNodes){
 		var rootName = '${decode(rootNodeName,"","全部",rootNodeName)}';
 		var root = {id:0,name:rootName,open:true};
 		zNodes[zNodes.length] = root;

@@ -22,6 +22,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getRequestURI();
+		System.out.println(request.getRequestURL().toString());
+		String rootPath = Global.getCtxPath()+"/"+Global.getAdminPath();
+		
 		String path = url.substring(url.lastIndexOf("/") + 1, url.length());
 		Map<String, SysResource> allRes = BeetlUtils
 				.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
@@ -45,6 +48,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 			}
 		}
 		return false;
+	}
+	
+	public static void main(String[] args) {
+		String a = "a/b/my/menu/list";
+		System.out.println(a.indexOf("/b/my"));
 	}
 	
 	@Override

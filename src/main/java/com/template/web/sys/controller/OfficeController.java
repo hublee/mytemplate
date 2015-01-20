@@ -52,7 +52,7 @@ public class OfficeController extends BaseController {
 		return "sys/office/office";
 	}
 	
-	@RequestMapping("tree")
+	@RequestMapping(value="tree",method = RequestMethod.POST)
 	public @ResponseBody List<SysOffice> getOfficeTreeList(@ModelAttribute SysOffice sysOffice){
 		List<SysOffice> list = sysOfficeService.findAllOffice();
 		return list;

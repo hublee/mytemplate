@@ -39,7 +39,7 @@ public class AreaController {
 	 * 区域树
 	* @return
 	 */
-	@RequestMapping("tree")
+	@RequestMapping(value="tree",method = RequestMethod.POST)
 	public @ResponseBody List<SysArea> getAreaTreeList(){
 		List<SysArea> list = sysAreaService.findAllArea();
 		return list;
@@ -51,7 +51,7 @@ public class AreaController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping(value = "list", method = RequestMethod.POST)
+	@RequestMapping(value = "list",method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
 		PageInfo<SysArea> page = sysAreaService.findPageInfo(params);
 		model.addAttribute("page", page);

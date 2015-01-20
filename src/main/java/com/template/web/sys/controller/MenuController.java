@@ -49,7 +49,7 @@ public class MenuController extends BaseController {
 	 * 菜单树
 	* @return
 	 */
-	@RequestMapping("tree")
+	@RequestMapping(value="tree",method = RequestMethod.POST)
 	public @ResponseBody List<SysResource> tree(){
 		return sysResourceService.getAllResourcesList();
 	}

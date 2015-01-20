@@ -1,6 +1,11 @@
 package com.template.common.beetl.function;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
+
+import com.template.web.sys.model.SysResource;
+import com.template.web.sys.utils.SysUserUtils;
 
 @Component
 public class AuthUserFunctions {
@@ -8,10 +13,12 @@ public class AuthUserFunctions {
 	/**
 	 * 判断用户是否具有指定权限
 	 */
-	/*public boolean hasPermission(Menu menu) {
-		int pos=menu.getMenuPos();
-		long code=menu.getMenuCode();
-		return !((rightSum[pos] & code)  == 0); //或运算
-	}*/
-	
+	public boolean hasPermission(String url) {
+		Map<String, SysResource> userRes = SysUserUtils
+				.getUserPermission(SysUserUtils.getSessionUser());
+		if (userRes.containsKey(url))
+			return true;
+		return false;
+	}
+
 }
