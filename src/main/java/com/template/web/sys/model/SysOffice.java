@@ -65,6 +65,8 @@ public class SysOffice extends BaseEntity {
 	
     private String zipCode; //zip_code <邮政编码>
     
+    private String icon; //icon <图标>
+    
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
@@ -186,6 +188,14 @@ public class SysOffice extends BaseEntity {
    
     public void setOldParentIds(String oldParentIds) {
 		this.set("oldParentIds", oldParentIds);
+    }
+    
+    public String getIcon() {
+		return this.getString("icon");
+    }
+   
+    public void setIcon(String icon) {
+		this.set("icon", icon);
     }
 
 }

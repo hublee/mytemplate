@@ -4,12 +4,13 @@
 
 	<sql id="sysOfficeColumns">
 		id,address,area_id,code,create_by,create_date,del_flag,email,fax,grade,master,
-		name,parent_id,parent_ids,phone,remarks,type,update_by,update_date,zip_code
+		name,parent_id,parent_ids,phone,remarks,type,update_by,update_date,zip_code,icon
 	</sql>
 	
 	<sql id="sysOfficeAliasColumns">
 		t1.id,t1.address,t1.area_id,t1.code,t1.create_by,t1.create_date,t1.del_flag,t1.email,t1.fax,t1.grade,t1.master,
-		t1.name,t1.parent_id,t1.parent_ids,t1.phone,t1.remarks,t1.type,t1.update_by,t1.update_date,t1.zip_code
+		t1.name,t1.parent_id,t1.parent_ids,t1.phone,t1.remarks,t1.type,t1.update_by,t1.update_date,t1.zip_code,
+		t1.icon
 	</sql>
 	
 	<!-- 修改父节点字符串 -->

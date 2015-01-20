@@ -3,11 +3,12 @@
 <mapper namespace="com.template.web.sys.mapper.SysAreaMapper">
 
 	<sql id="sysAreaColumns">
-		id,code,create_by,create_date,del_flag,name,parent_id,parent_ids,remarks,type,update_by,update_date
+		id,code,create_by,create_date,del_flag,name,parent_id,parent_ids,
+		remarks,type,update_by,update_date,icon
 	</sql>
 	<sql id="sysAreaAliasColumns">
 		a.id,a.code,a.create_by,a.create_date,a.del_flag,a.name,a.parent_id,a.parent_ids,
-		a.remarks,a.type,a.update_by,a.update_date
+		a.remarks,a.type,a.update_by,a.update_date,a.icon
 	</sql>
 	
 	<!-- 修改父节点字符串 -->
