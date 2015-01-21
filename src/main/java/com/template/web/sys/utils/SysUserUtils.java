@@ -129,6 +129,7 @@ public class SysUserUtils {
 			Set<Long> dataScope = new HashSet<Long>();
 			boolean flag = false;
 			 for(SysRole sr : userRoles){
+				 //TODO 这里未写
 				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
 					 break;
 				 }else if(Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
