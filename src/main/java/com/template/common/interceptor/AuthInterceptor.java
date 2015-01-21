@@ -56,9 +56,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 					return false;
 				}
 			}
-		}else{ //不符合任何条件
-			return false;
 		}
+		return true;
 	}
 	
 	@Override
