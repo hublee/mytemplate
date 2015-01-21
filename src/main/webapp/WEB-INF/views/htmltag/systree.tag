@@ -10,6 +10,7 @@
 @var width = width!'600';
 @var reloadUrl = reloadUrl!false;
 @var rootNodeName = rootNodeName!"全部";
+@var isSuper = session[auth.loginSessionKey()].userType;
 
 <script type="text/javascript">
 	var setting = {
@@ -78,6 +79,7 @@
 	
 	//划过显示添加按钮,添加
 	function addHoverDom(treeId, treeNode) {
+		if(treeNode.level == 0 && "${isSuper}" == "0") return false;
 		var sObj = $("#" + treeNode.tId + "_span");
 		if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
 		var addStr = "<span class='button add' id='addBtn_" + treeNode.tId

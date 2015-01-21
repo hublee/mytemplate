@@ -28,5 +28,9 @@ public class AuthUserFunctions {
 		if (userRes.containsKey(url)) return true;
 		return false;
 	}
+	
+	public String loginSessionKey(){
+		return Constant.SESSION_LOGIN_USER;
+	}
 
 }

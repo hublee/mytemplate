@@ -30,7 +30,7 @@
 		</layout> </appender> -->
 	<!-- <logger name="com.blueland" level="error" /> -->
 	<!-- 下面配置一些第三方包的日志过滤级别 -->
-	<logger name="com.template" level="DEBUG" additivity="false"/>
+	<logger name="com.template" level="DEBUG" additivity="true"/>
 	<logger name="net.sf.ehcache" level="WARN" />
 	<logger name="org.springframework.web" level="WARN" />
 	<logger name="org.mybatis" level="WARN" />

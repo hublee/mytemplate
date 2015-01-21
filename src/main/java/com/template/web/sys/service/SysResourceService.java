@@ -43,9 +43,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		sysResource.setParentIds(sysResource.getParentIds()
 				+ sysResource.getParentId() + ",");
 		if (null == sysResource.getId()) {
-			SysResource codeAndPos = sysResourceMapper.findMaxCodeAndMaxPos();
-			sysResource
-					.setCodeAndPos(codeAndPos.getCode(), codeAndPos.getPos());
 			count = this.insertSelective(sysResource);
 		} else {
 			// getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id

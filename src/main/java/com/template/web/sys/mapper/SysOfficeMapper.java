@@ -22,4 +22,5 @@ public interface SysOfficeMapper extends Mapper<SysOffice> {
 	public int updateParentIds(SysOffice sysOffice);
 	
 	public SysOffice findOfficeCompanyIdByDepId(Long depId);
+	
 }

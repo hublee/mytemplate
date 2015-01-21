@@ -29,20 +29,13 @@
 		select count(1) from sys_role_resource where resource_id = #{resourceId}
 	</select>
 	
-	<!-- 查找偏移量最大的权限码和权限位 -->
-	<select id="findMaxCodeAndMaxPos" resultType="com.template.web.sys.model.SysResource">
-		select max(t1.code) code,max(t1.pos) pos from sys_resource t1
-		where t1.pos = (select max(t2.pos) from sys_resource t2)
-	</select>
-	
 	<!-- 根据用户id获得持有的资源 -->
 	<select id="findUserResourceByUserId" resultType="com.template.web.sys.model.SysResource">
 		SELECT DISTINCT res.id,res.code,res.pos,res.url,res.type,res.parent_id,
 			   res.parent_ids,res.name,res.icon,res.sort
 		FROM sys_resource res 
 			LEFT JOIN sys_role_resource srr ON res.id=srr.resource_id
-			LEFT JOIN sys_role sr ON sr.id=srr.role_id
-			LEFT JOIN sys_user_role ur ON sr.id=ur.role_id
+			LEFT JOIN sys_user_role ur ON ur.role_id=srr.role_id
 		WHERE ur.user_id=#{userId} AND res.del_flag=0 AND res.status=0
 		order by res.sort
 	</select>

@@ -22,8 +22,6 @@ public interface SysResourceMapper extends Mapper<SysResource>{
    
 	public List<SysResource> findPageInfo(Map<String, Object> params);
 	
-	public SysResource findMaxCodeAndMaxPos();
-	
 	//删除前验证
 	public int beforeDeleteResource(Long resourceId);
 	
