@@ -23,4 +23,9 @@ public interface SysOfficeMapper extends Mapper<SysOffice> {
 	
 	public SysOffice findOfficeCompanyIdByDepId(Long depId);
 	
+	//得到用户数据范围
+	public List<Long> findUserDataScopeByUserId(Long userId);
+	
+	public List<Long> findOfficeIdsByRootId(Long rootId);
+	
 }

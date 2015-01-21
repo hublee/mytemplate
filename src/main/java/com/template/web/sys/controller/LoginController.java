@@ -47,7 +47,7 @@ public class LoginController {
 		SysUser user = (SysUser) request.getSession().getAttribute(
 				Constant.SESSION_LOGIN_USER);
 		if (null == user) return "redirect:" + Global.getAdminPath() + "/login";
-		model.addAttribute("menuList", sysResourceService.getUserMenus(user));
+		model.addAttribute("menuList", SysUserUtils.getUserMenus(user));
 		return "index";
 	}
 
@@ -89,8 +89,8 @@ public class LoginController {
 		}
 		SysUser user = sysUserService.checkUser(username, secPwd);
 		if (null != user) {
-			//缓存用户权限
-			SysUserUtils.getUserPermission(user);
+			//设置并缓存用户认证
+			SysUserUtils.setUserAuth(user);
 			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
 			//TODO 暂时，后续移动到日志中
 			//更新用户最后登录ip和date

@@ -7,8 +7,6 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
-import com.template.common.utils.CacheUtils;
-import com.template.common.utils.TreeUtils;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
@@ -86,55 +84,10 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 * @param userId
 	 * @return
 	 */
-	public Map<String, SysResource> findUserResourceByUserId(SysUser sysUser) {
-		Map<String, SysResource> userResources = CacheUtils.get(
-				Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
-						+ sysUser.getId());
-		if (userResources == null) {
-			if ((Constant.SUPER_ADMIN).equals(sysUser.getUserType())) {
-				userResources = BeetlUtils
-						.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-			} else {
-				List<SysResource> userRes = sysResourceMapper
-						.findUserResourceByUserId(sysUser.getId());
-				userResources = new LinkedHashMap<String, SysResource>();
-				for(SysResource res : userRes){
-					if(StringUtils.isBlank(res.getUrl())){
-						userResources.put(res.getId().toString(), res);
-					}else{
-						userResources.put(res.getUrl(), res);
-					}
-				}
-			}
-			CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
-					Constant.CACHE_USER_RESOURCE + sysUser.getId(),
-					userResources);
-		}
-		return userResources;
+	public List<SysResource> findUserResourceByUserId(SysUser sysUser) {
+		return sysResourceMapper.findUserResourceByUserId(sysUser.getId());
 	}
 
-	/**
-	 * 获得用户持有的左侧菜单资源树结构
-	 */
-	public List<SysResource> getUserMenus(SysUser sysUser) {
-		List<SysResource> userMenus = CacheUtils.get(
-				Constant.CACHE_SYS_RESOURCE,
-				Constant.CACHE_USER_MENU + sysUser.getId());
-		if (userMenus == null) {
-			Map<String, SysResource> userResources = this
-					.findUserResourceByUserId(sysUser);
-			userMenus = new ArrayList<SysResource>();
-			for(SysResource res : userResources.values()){
-				if(Constant.RESOURCE_TYPE_MENU.equals(res.getType())){
-					userMenus.add(res);
-				}
-			}
-			userMenus = TreeUtils.toTreeNodeList(userMenus,SysResource.class);
-			CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
-					Constant.CACHE_USER_MENU + sysUser.getId(), userMenus);
-		}
-		return userMenus;
-	}
 
 	/**
 	 * 菜单管理分页显示筛选查询
@@ -154,6 +107,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 * 
 	 * @return
 	 */
+	//TODO 需要排序
 	public LinkedHashMap<String, SysResource> getAllResourcesMap() {
 		// 读取全部资源
 		List<SysResource> resList = this.select(new SysResource());

@@ -22,14 +22,16 @@ public class AuthUserFunctions {
 		if (sysResource == null
 				|| Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
 			return true;
-		} 
+		}
+
 		Map<String, SysResource> userRes = SysUserUtils
-				.getUserPermission(SysUserUtils.getSessionUser());
-		if (userRes.containsKey(url)) return true;
+				.getUserResources(SysUserUtils.getSessionUser());
+		if (userRes.containsKey(url))
+			return true;
 		return false;
 	}
-	
-	public String loginSessionKey(){
+
+	public String loginSessionKey() {
 		return Constant.SESSION_LOGIN_USER;
 	}
 

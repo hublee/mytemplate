@@ -46,9 +46,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 						|| Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
 					return true;
 				} 
-				//从缓存中那用户权限，没有则去数据库中查出并且缓存
-				Map<String, SysResource> userRes = SysUserUtils
-						.getUserPermission(sysUser);
+				//检测用户认证是否改变，如果认证改变则重置，否则不进行任何操作
+				SysUserUtils.setUserAuth(sysUser);
+				//从缓存中的用户权限
+				Map<String, SysResource> userRes = SysUserUtils.getUserResources(sysUser);
 				if (userRes.containsKey(path)) {
 					return true;
 				} else {

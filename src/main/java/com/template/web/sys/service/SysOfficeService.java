@@ -68,6 +68,20 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 	}
 	
 	/**
+	 * 根据用户id查询用户的数据范围
+	 */
+	public List<Long> findUserDataScopeByUserId(Long userId){
+		return sysOfficeMapper.findUserDataScopeByUserId(userId);
+	}
+	
+	/**
+	 * 根据根节点查询自身及其子孙节点
+	 */
+	public List<Long> findOfficeIdsByRootId(Long rootId){
+		return sysOfficeMapper.findOfficeIdsByRootId(rootId);
+	}
+	
+	/**
 	 * 全部机构
 	* @return
 	 */

@@ -25,6 +25,19 @@
 		update sys_office set del_flag=1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
 	</update>
 	
+	<!-- 根据根节点查询自身及其子孙节点 -->
+	<select id="findOfficeIdsByRootId" resultType="java.lang.Long">
+		SELECT so.id FROM sys_office WHERE FIND_IN_SET(#{rootId},parent_ids) OR id = #{rootId}
+	</select>
+	
+	<!-- 根据用户的id的到跨机构数据范围 -->
+	<select id="findUserDataScopeByUserId" resultType="java.lang.Long">
+		SELECT DISTINCT so.id FROM sys_office so 
+		LEFT JOIN sys_role_office sro ON so.id = sro.office_id
+		LEFT JOIN sys_user_role sur ON sur.role_id = sro.role_id
+		WHERE sur.user_id = #{userId}
+	</select>
+	
 	<!-- 根据部门id查找公司id -->
 	<select id="findOfficeCompanyIdByDepId" resultType="com.template.web.sys.model.SysOffice">
 		SELECT <include refid="sysOfficeColumns"/> FROM sys_office
