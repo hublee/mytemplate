@@ -83,14 +83,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		return delCount;
 	}
 
-	/**
-	 * 最大权限位
-	 * 
-	 * @return
-	 */
-	public int maxPos() {
-		return sysResourceMapper.maxPos();
-	}
 
 	/**
 	 * 根据用户id得到用户持有的资源
