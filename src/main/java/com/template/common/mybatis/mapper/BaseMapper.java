@@ -13,4 +13,6 @@ public interface BaseMapper{
 	@SelectProvider(type=CommonSqlProvider.class,method="beforeDeleteTreeStructureSql")
 	int beforeDeleteTreeStructure(Map<String, Object> params);
 	
+	
+	
 }

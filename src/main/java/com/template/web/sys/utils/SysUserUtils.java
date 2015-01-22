@@ -123,41 +123,65 @@ public class SysUserUtils {
 				Constant.CACHE_SYS_RESOURCE,
 				Constant.CACHE_USER_DATASCOPE + sysUser.getId());
 		if(userRoles!=null && userDataScope == null){
-			//String officeAlias = "";
-			//StringBuilder sb = new StringBuilder();
-			//sb.append("and "+officeAlias+".officeId in ");
-			Set<Long> dataScope = new HashSet<Long>();
+			userDataScope = new HashSet<Long>();
 			boolean flag = false;
 			 for(SysRole sr : userRoles){
 				 //TODO 这里未写
-				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
+				 //暂定只能超级管理员拥有所有数据范围
+				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){ 
 					 break;
 				 }else if(Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
 					 List<Long> offices = sysOfficeService.findOfficeIdsByRootId(sysUser.getCompanyId());
 					 for(Long officeId : offices){
-						 dataScope.add(officeId);
+						 userDataScope.add(officeId);
 					 }
 				 }else if(Constant.DATA_SCOPE_COMPANY.equals(sr.getDataScope())){
-					 dataScope.add(sysUser.getCompanyId());
+					 userDataScope.add(sysUser.getCompanyId());
 				 }else if(Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(sr.getDataScope())){
 					 List<Long> offices = sysOfficeService.findOfficeIdsByRootId(sysUser.getOfficeId());
 					 for(Long officeId : offices){
-						 dataScope.add(officeId);
+						 userDataScope.add(officeId);
 					 }
 				 }else if(Constant.DATA_SCOPE_OFFICE.equals(sr.getDataScope())){
-					 dataScope.add(sysUser.getOfficeId());
+					 userDataScope.add(sysUser.getOfficeId());
 				 }else if(Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope()) && !flag){
 					 flag = true;
 					 List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
 					 for(Long officeId : offices){
-						 dataScope.add(officeId);
+						 userDataScope.add(officeId);
 					 }
 				 }
 			 }
 			 CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
-						Constant.CACHE_USER_DATASCOPE + sysUser.getId(), dataScope);
+						Constant.CACHE_USER_DATASCOPE + sysUser.getId(), userDataScope);
 		}
 		return userDataScope;
+	}
+	
+	
+	public static String dataScopeFilter(SysUser sysUser,String[] officeAlias,String[] field){
+		Set<Long> dataScope = getUserDataScope(sysUser);
+		StringBuilder sb = new StringBuilder();
+		sb.append("and (");
+		for(int i=0;i>officeAlias.length;i++){
+			if(i>1) sb.append("or ");
+			if(StringUtils.isBlank(officeAlias[i])){
+				sb.append(field[i]+" in ");
+			}else{
+				sb.append(officeAlias[i]+"."+field[i]+" in ");
+			}
+			if(dataScope !=null && dataScope.size() > 0){
+				String so = StringUtils.join(dataScope.toArray(), ",");
+				sb.append("("+so+")");
+			}
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+	
+	public static String singleTableDataScopeFilter(SysUser sysUser,String officeAlias,String field){
+		if(StringUtils.isBlank(field)) field = "office_id";
+		return dataScopeFilter(sysUser,new String[]{officeAlias},new String[]{field});
 	}
 	
 	/**
@@ -195,11 +219,7 @@ public class SysUserUtils {
 			}
 		}
 	}
-	
-//	public static String dataScopeFilter(SysUser sysUser){
-//		String dataScope = 
-//	}
-	
+
 	/**
 	 * 把session用户保存到局部线程中
 	 * 
