@@ -159,12 +159,19 @@ public class SysUserUtils {
 	}
 	
 	
-	public static String dataScopeFilter(SysUser sysUser,String[] officeAlias,String[] field){
+	/**
+	 * 得到用户数据范围拼接的字符串
+	* @param officeAlias 表的别名
+	* @param field 字段的名称
+	* @return 拼接完毕的字符串  如(office_id in (?,?,?) or ....)
+	 */
+	public static String dataScopeFilter(String[] officeAlias,String[] field){
+		SysUser sysUser = getSessionUser();
 		Set<Long> dataScope = getUserDataScope(sysUser);
 		StringBuilder sb = new StringBuilder();
-		sb.append("and (");
-		for(int i=0;i>officeAlias.length;i++){
-			if(i>1) sb.append("or ");
+		sb.append(" (");
+		for(int i=0;i<officeAlias.length;i++){
+			if(i>0) sb.append(" or ");
 			if(StringUtils.isBlank(officeAlias[i])){
 				sb.append(field[i]+" in ");
 			}else{
@@ -179,9 +186,16 @@ public class SysUserUtils {
 		return sb.toString();
 	}
 	
-	public static String singleTableDataScopeFilter(SysUser sysUser,String officeAlias,String field){
-		if(StringUtils.isBlank(field)) field = "office_id";
-		return dataScopeFilter(sysUser,new String[]{officeAlias},new String[]{field});
+	/**
+	 * 单表根据范围查询 
+	 * @param info {"officeAlias"表别名:,"field":字段名称}
+	 * 泛型为空则 where office_id = ?
+	 */
+	public static String singleTableDataScopeFilter(String... info){
+		if(info.length == 0){
+			info = new String[]{"","office_id"};
+		}
+		return dataScopeFilter(new String[]{info[0]},new String[]{info[1]});
 	}
 	
 	/**

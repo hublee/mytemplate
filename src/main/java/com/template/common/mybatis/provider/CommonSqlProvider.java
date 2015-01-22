@@ -3,6 +3,10 @@ package com.template.common.mybatis.provider;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
+import org.apache.ibatis.reflection.MetaObject;
+
+import com.template.common.mybatis.EntityHelper;
+import com.template.web.sys.utils.SysUserUtils;
 
 
 public class CommonSqlProvider extends BaseProvider{
@@ -19,6 +23,39 @@ public class CommonSqlProvider extends BaseProvider{
 			AND();
 			WHERE("t0."+checkField+"=t1.id");
 			
+		}}.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String findEntityListByDataScope(final Map<String, Object> params){
+		Map<String,Object> map = (Map<String, Object>)params.get("record");
+		String sql = "";
+		if(map.containsKey("userDataScope")){
+			sql = map.get("userDataScope").toString();
+		}else{
+			sql = SysUserUtils.singleTableDataScopeFilter();
+		}
+		final String dataScope = sql;
+		return new SQL(){{
+			Object entity = getEntity(params);
+            Class<?> entityClass = getEntityClass(params);
+            com.template.common.mybatis.EntityHelper.EntityTable entityTable = EntityHelper.getEntityTable(entityClass);
+            SELECT(com.template.common.mybatis.EntityHelper.getAllColumns(entityClass));
+            FROM(entityTable.getName());
+            if (entity != null) {
+                final MetaObject metaObject = forObject(entity);
+                for (EntityHelper.EntityColumn column : entityTable.getEntityClassColumns()) {
+                    Object value = metaObject.getValue(column.getProperty());
+                    if (column.getJavaType().equals(String.class)) {
+                        if (isNotEmpty((String) value)) {
+                            WHERE(column.getColumn() + "=#{record." + column.getProperty() + "}");
+                        }
+                    } else if (value != null) {
+                        WHERE(column.getColumn() + "=#{record." + column.getProperty() + "}");
+                    }
+                }
+            }
+            WHERE(dataScope);
 		}}.toString();
 	}
 	

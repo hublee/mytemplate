@@ -164,13 +164,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 
 	/**
 	 * 单表分页
-	 * 
-	 * @param pageNum
-	 *            页码
-	 * @param pageSize
-	 *            条数
-	 * @param record
-	 *            条件实体
+	 * @param pageNum 页码
+	 * @param pageSize 条数
+	 * @param record 条件实体
 	 * @return
 	 */
 	public PageInfo<T> selectPage(int pageNum, int pageSize, T record) {
@@ -221,6 +217,14 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		
 		int count = baseMapper.beforeDeleteTreeStructure(map);
 		return  count>0?-1:count;
+	}
+	
+	/**
+	 * 根据数据范围查找(单表操作)
+	* @param record
+	 */
+	public List<BaseEntity> findEntityListByDataScope(T record){
+		return baseMapper.findEntityListByDataScope(record);
 	}
 
 }
