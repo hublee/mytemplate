@@ -12,6 +12,7 @@ import com.template.web.sys.utils.SysUserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -220,11 +221,19 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	}
 	
 	/**
-	 * 根据数据范围查找(单表操作)
-	* @param record
+	 * 根据数据范围查找(单表操作)    
+	* @param record 如果自定义别名等请set key:"userDataScope"
 	 */
-	public List<BaseEntity> findEntityListByDataScope(T record){
-		return baseMapper.findEntityListByDataScope(record);
+	@SuppressWarnings("unchecked")
+	public <E> List<E> findEntityListByDataScope(E record){
+		List<BaseEntity> list = baseMapper.findEntityListByDataScope(record);
+		List<E> beanList = new ArrayList<E>();
+		if(list != null && list.size() > 0){
+			for(BaseEntity be : list){
+				beanList.add((E) be);
+			}
+		}
+		return beanList;
 	}
 
 }

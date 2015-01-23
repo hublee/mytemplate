@@ -2,9 +2,11 @@ package com.template.common.mybatis.provider;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.reflection.MetaObject;
 
+import com.template.common.constant.Constant;
 import com.template.common.mybatis.EntityHelper;
 import com.template.web.sys.utils.SysUserUtils;
 
@@ -29,6 +31,7 @@ public class CommonSqlProvider extends BaseProvider{
 	@SuppressWarnings("unchecked")
 	public String findEntityListByDataScope(final Map<String, Object> params){
 		Map<String,Object> map = (Map<String, Object>)params.get("record");
+		map.put(Constant.FIELD_DEL_FLAG, Constant.DEL_FLAG_NORMAL);
 		String sql = "";
 		if(map.containsKey("userDataScope")){
 			sql = map.get("userDataScope").toString();
@@ -55,7 +58,9 @@ public class CommonSqlProvider extends BaseProvider{
                     }
                 }
             }
-            WHERE(dataScope);
+            if(StringUtils.isNotBlank(dataScope)){
+            	WHERE(dataScope);
+            }
 		}}.toString();
 	}
 	

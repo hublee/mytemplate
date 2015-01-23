@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -24,6 +25,9 @@ public class BaseEntity extends JSONObject {
 	private String createBy; //create_by <创建者>
 	private Date createDate; //create_date <创建时间>
 	private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
+	
+	@Transient
+	private String userDataScope; //用户的数据范围
 	
 	public BaseEntity() {
 		super();
@@ -68,12 +72,20 @@ public class BaseEntity extends JSONObject {
 		this.set("updateDate", updateDate);
     }
 
-	public String getDelFlag() {
+    public String getDelFlag() {
 		return this.getString("delFlag");
     }
    
     public void setDelFlag(String delFlag) {
 		this.set("delFlag", delFlag);
+    }
+    
+    public String getUserDataScope() {
+		return this.getString("userDataScope");
+    }
+   
+    public void setUserDataScope(String userDataScope) {
+		this.set("userDataScope", userDataScope);
     }
 
 	public BaseEntity(Map<String, Object> map) {

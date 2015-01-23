@@ -7,12 +7,9 @@ import java.util.Map;
 
 import com.template.common.base.BaseController;
 import com.github.pagehelper.PageInfo;
-import com.template.common.mybatis.mapper.BaseMapper;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.model.SysOffice;
-import com.template.web.sys.model.SysRole;
-import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysAreaService;
 import com.template.web.sys.service.SysOfficeService;
 import com.template.web.sys.utils.SysUserUtils;
@@ -51,18 +48,14 @@ public class OfficeController extends BaseController {
 	 */
 	@RequestMapping
 	public String toSysOffice(Model model){
-		SysRole sysRole = new SysRole();
-		//sysRole.set("userDataScope", SysUserUtils.singleTableDataScopeFilter());
-		sysOfficeService.findEntityListByDataScope(sysRole);
 		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(sysOfficeService.findAllOffice()));
+				JsonUtils.getInstance().toJson(SysUserUtils.getUserOffice()));
 		return "sys/office/office";
 	}
 	
 	@RequestMapping(value="tree",method = RequestMethod.POST)
 	public @ResponseBody List<SysOffice> getOfficeTreeList(@ModelAttribute SysOffice sysOffice){
-		List<SysOffice> list = sysOfficeService.findAllOffice();
-		return list;
+		return SysUserUtils.getUserOffice();
 	}
 	
 	/**

@@ -20,12 +20,16 @@ public class Constant {
 	public static final String SUPER_ADMIN = "1"; // 超级管理员
 
 	// 缓存key
-	public static final String CACHE_SYS_RESOURCE = "sysResource"; // 缓存名称
+	public static final String CACHE_SYS_RESOURCE = "sysResource"; // 资源的缓存名称
+	public static final String CACHE_SYS_OFFICE = "sysOffice"; //机构的缓存名称
+	public static final String CACHE_SYS_ROLE = "sysRole"; //角色的缓存名称
+	
 	public static final String CACHE_ALL_RESOURCE = "allSysResource"; // 全部资源key
 	public static final String CACHE_USER_RESOURCE = "userSysResource"; // 用户权限
 	public static final String CACHE_USER_MENU = "userMenuTree"; // 用户菜单树
 	public static final String CACHE_USER_ROLE = "userRole"; // 用户角色
 	public static final String CACHE_USER_DATASCOPE = "userDataScope"; //用户数据范围
+	public static final String CACHE_USER_OFFICE = "userOffice"; //用户机构
 
 	// 数据范围（1：所有数据；2：所在公司及以下数据；3：所在公司数据；4：所在部门及以下数据；5：所在部门数据；8：仅本人数据；9：按明细设置）
 	public static final String DATA_SCOPE_ALL = "1";

@@ -7,14 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.template.common.base.BaseEntity;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.CacheUtils;
+import com.template.common.utils.Collections3;
 import com.template.common.utils.ThreadLocalUtils;
 import com.template.common.utils.TreeUtils;
+import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
@@ -101,34 +106,31 @@ public class SysUserUtils {
 	 */
 	public static List<SysRole> getUserRoles(SysUser sysUser){
 		List<SysRole> userRoles = CacheUtils.get(
-				Constant.CACHE_SYS_RESOURCE,
+				Constant.CACHE_SYS_ROLE,
 				Constant.CACHE_USER_ROLE + sysUser.getId());
 		if(userRoles == null){
 			 userRoles = sysRoleService.findUserRoleListByUserId(sysUser.getId());
-			 CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
+			 CacheUtils.put(Constant.CACHE_SYS_ROLE,
 						Constant.CACHE_USER_ROLE + sysUser.getId(), userRoles);
 		}
 		return userRoles;
 	}
 	
-	//TODO 待测试
 	/**
-	 * 得到用户的全部数据范围，适应于多角色
+	 * 得到用户的全部数据范围(持有的机构)，适应于多角色
 	 */
 	public static Set<Long> getUserDataScope(SysUser sysUser){
 		List<SysRole> userRoles = CacheUtils.get(
-				Constant.CACHE_SYS_RESOURCE,
+				Constant.CACHE_SYS_ROLE,
 				Constant.CACHE_USER_ROLE + sysUser.getId());
 		Set<Long> userDataScope = CacheUtils.get(
-				Constant.CACHE_SYS_RESOURCE,
+				Constant.CACHE_SYS_OFFICE,
 				Constant.CACHE_USER_DATASCOPE + sysUser.getId());
 		if(userRoles!=null && userDataScope == null){
 			userDataScope = new HashSet<Long>();
 			boolean flag = false;
 			 for(SysRole sr : userRoles){
-				 //TODO 这里未写
-				 //暂定只能超级管理员拥有所有数据范围
-				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){ 
+				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
 					 break;
 				 }else if(Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
 					 List<Long> offices = sysOfficeService.findOfficeIdsByRootId(sysUser.getCompanyId());
@@ -152,10 +154,29 @@ public class SysUserUtils {
 					 }
 				 }
 			 }
-			 CacheUtils.put(Constant.CACHE_SYS_RESOURCE,
+			 CacheUtils.put(Constant.CACHE_SYS_OFFICE,
 						Constant.CACHE_USER_DATASCOPE + sysUser.getId(), userDataScope);
 		}
 		return userDataScope;
+	}
+	
+	/**
+	 * 用户持有的机构
+	* @return
+	 */
+	public static List<SysOffice> getUserOffice(){
+		SysUser sysUser = getSessionUser();
+		List<SysOffice> userOffices = CacheUtils.get(
+				Constant.CACHE_SYS_OFFICE,
+				Constant.CACHE_USER_OFFICE + sysUser.getId());
+		if(userOffices == null){
+			SysOffice office = new SysOffice();
+			office.setUserDataScope(SysUserUtils.singleTableDataScopeFilter("","id"));
+			userOffices = sysOfficeService.findEntityListByDataScope(office);
+			CacheUtils.put(Constant.CACHE_SYS_OFFICE,
+					Constant.CACHE_USER_OFFICE + sysUser.getId(), userOffices);
+		}
+		return userOffices;
 	}
 	
 	
@@ -168,6 +189,7 @@ public class SysUserUtils {
 	public static String dataScopeFilter(String[] officeAlias,String[] field){
 		SysUser sysUser = getSessionUser();
 		Set<Long> dataScope = getUserDataScope(sysUser);
+		if(dataScope==null || dataScope.size()==0) return "";
 		StringBuilder sb = new StringBuilder();
 		sb.append(" (");
 		for(int i=0;i<officeAlias.length;i++){
@@ -203,6 +225,7 @@ public class SysUserUtils {
 	 */
 	public static void clearAllCachedAuthorizationInfo(List<Long> userIds) {
 		for (Long userId : userIds) {
+			//清除用户持有的资源
 			boolean hasRes = CacheUtils.isCacheByKey(
 					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
 							+ userId);
@@ -210,6 +233,7 @@ public class SysUserUtils {
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_RESOURCE + userId);
 			}
+			//清除用户菜单树
 			boolean hasMenu = CacheUtils.isCacheByKey(
 					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_MENU
 							+ userId);
@@ -217,19 +241,29 @@ public class SysUserUtils {
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_MENU + userId);
 			}
+			//清除用户角色
 			boolean hasRole = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_ROLE
+					Constant.CACHE_SYS_ROLE, Constant.CACHE_USER_ROLE
 							+ userId);
 			if (hasRole) {
-				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
+				CacheUtils.evict(Constant.CACHE_SYS_ROLE,
 						Constant.CACHE_USER_ROLE + userId);
 			}
+			//清除用户数据范围
 			boolean hasDataScope = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_DATASCOPE
+					Constant.CACHE_SYS_OFFICE, Constant.CACHE_USER_DATASCOPE
 							+ userId);
 			if (hasDataScope) {
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_DATASCOPE + userId);
+			}
+			//清除用户机构
+			boolean hasOffice = CacheUtils.isCacheByKey(
+					Constant.CACHE_SYS_OFFICE,
+					Constant.CACHE_USER_OFFICE + userId);
+			if(hasOffice){
+				CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
+						Constant.CACHE_USER_OFFICE + userId);
 			}
 		}
 	}
