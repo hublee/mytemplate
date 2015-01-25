@@ -55,8 +55,8 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 			if(!StringUtils.equals(sysOffice.getOldParentIds(), sysOffice.getParentIds())){
 				sysOfficeMapper.updateParentIds(sysOffice); //批量更新子节点的parentIds
 			}
-			SysUserUtils.clearOfficeAndDataScope(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
 		}
+		SysUserUtils.clearOfficeAndDataScope(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
 		return count;
 	}
 	

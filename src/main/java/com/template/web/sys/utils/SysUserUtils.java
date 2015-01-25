@@ -119,6 +119,22 @@ public class SysUserUtils {
 		return userRoles;
 	}
 	
+
+	/**
+	 * 登录用户的角色map形式
+	 */
+	public static Map<Long, SysRole> getUserRolesMap(){
+		List<SysRole> list = SysUserUtils.getUserRoles();
+		Map<Long, SysRole> userRolesMap = Maps.uniqueIndex(list, new Function<SysRole, Long>() {
+			@Override
+			public Long apply(SysRole sysRole) {
+				return sysRole.getId();
+			}
+		});
+		return userRolesMap;
+	}
+	
+	
 	/**
 	 * 登录用户的机构
 	* @return
@@ -244,31 +260,14 @@ public class SysUserUtils {
 		CacheUtils.evict(Constant.CACHE_SYS_USER,userId.toString());
 	}
 	
+	/**
+	 * 清除用户机构
+	 */
 	public static void clearOfficeAndDataScope(List<Long> userIds){
 		for (Long userId : userIds) {
-			//清除用户机构
-			boolean hasOffice = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_OFFICE,
+			CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
 					Constant.CACHE_USER_OFFICE + userId);
-			if(hasOffice){
-				CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
-						Constant.CACHE_USER_OFFICE + userId);
-			}
 		}
-	}
-	
-	/**
-	 * 登录用户的角色map形式
-	 */
-	public static Map<Long, SysRole> getUserRolesMap(){
-		List<SysRole> list = SysUserUtils.getUserRoles();
-		Map<Long, SysRole> userRolesMap = Maps.uniqueIndex(list, new Function<SysRole, Long>() {
-			@Override
-			public Long apply(SysRole sysRole) {
-				return sysRole.getId();
-			}
-		});
-		return userRolesMap;
 	}
 	
 	/**
@@ -313,6 +312,9 @@ public class SysUserUtils {
 		return session;
 	}
 	
+	/**
+	 * session中的用户
+	 */
 	public static SysUser getSessionLoginUser(){
 		return (SysUser) getSession().getAttribute(Constant.SESSION_LOGIN_USER);
 	}

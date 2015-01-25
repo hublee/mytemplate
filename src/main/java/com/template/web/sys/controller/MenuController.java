@@ -5,6 +5,7 @@ import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
+import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ public class MenuController extends BaseController {
 	@RequestMapping
 	public String toMenu(Model model) {
 		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(sysResourceService.getAllResourcesList()));
+				JsonUtils.getInstance().toJson(SysUserUtils.getUserMenus()));
 		return "sys/menu/menu";
 	}
 	
@@ -51,7 +52,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping(value="tree",method = RequestMethod.POST)
 	public @ResponseBody List<SysResource> tree(){
-		return sysResourceService.getAllResourcesList();
+		return SysUserUtils.getUserMenus();
 	}
 
 	/**
