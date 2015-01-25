@@ -158,6 +158,22 @@ public class SysUserUtils {
 		return userOffices;
 	}
 	
+	//TODO 规划一下
+	public static List<String> getUserDataScope(){
+		SysUser sysUser = getCacheLoginUser();
+		List<SysRole> userRoles = getUserRoles();
+		List<String> dataScope = Lists.newArrayList();
+		if(!sysUser.isAdmin()){
+			for(SysRole sr : userRoles){
+				if(!dataScope.contains(sr.getDataScope())){
+					dataScope.add(sr.getDataScope());
+				}
+			}
+		}else{
+			
+		}
+	}
+	
 	/**
 	 * 数据范围过滤
 	 * @param user 当前用户对象
@@ -272,8 +288,6 @@ public class SysUserUtils {
 	
 	/**
 	 * 缓存登录用户,默认设置过期时间为20分钟,与session存活时间的同步
-	* @param sysUser
-	* @param sessionId
 	 */
 	public static void cacheLoginUser(SysUser sysUser){
 		CacheUtils.put(Constant.CACHE_SYS_USER, sysUser.getId().toString(), 
@@ -282,8 +296,6 @@ public class SysUserUtils {
 	
 	/**
 	 * 从缓存中取登录的用户
-	* @param sessionId
-	* @return 登录用户
 	 */
 	public static SysUser getCacheLoginUser(){
 		if(getSessionLoginUser() != null){
@@ -296,8 +308,6 @@ public class SysUserUtils {
 
 	/**
 	 * 把session保存到局部线程中
-	 * 
-	 * @param sysUser
 	 */
 	public static void setThreadLocalSession(HttpSession session) {
 		ThreadLocalUtils.set("session", session);
