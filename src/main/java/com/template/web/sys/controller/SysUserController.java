@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Maps;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
+import com.template.web.sys.utils.SysUserUtils;
 
 @Controller
 @RequestMapping("${adminPath}/sysuser")
@@ -46,7 +49,7 @@ public class SysUserController {
 	* @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public @ResponseBody Integer save(@ModelAttribute SysUser sysUser){
+	public @ResponseBody Integer save(@ModelAttribute SysUser sysUser,HttpServletRequest request){
 		return sysUserService.saveSysUser(sysUser);
 	}
 	
@@ -84,14 +87,17 @@ public class SysUserController {
 	public String showLayer(Long id,@PathVariable("mode") String mode, Model model){
 		SysUser user = sysUserService.selectByPrimaryKey(id);;
 		List<SysRole> roles = null;
-		Map<Long, SysRole> rolesMap = null;
+		Map<Long, SysRole> rolesMap = Maps.newHashMap(),findUserRoleMap = null;
 		if(StringUtils.equals("detail", mode)){
 			roles = sysRoleService.findUserRoleListByUserId(id);
 			model.addAttribute("roles", roles);
 		}
 		if(StringUtils.equals("edit", mode)){
-			rolesMap = sysRoleService.findUserRoleMapByUserId(id);
-			model.addAttribute("rolesMap", rolesMap);
+			findUserRoleMap = sysRoleService.findUserRoleMapByUserId(id);
+			rolesMap.putAll(SysUserUtils.getUserRolesMap());
+			rolesMap.putAll(findUserRoleMap);
+			model.addAttribute("rolesMap", rolesMap)
+				.addAttribute("findUserRoleMap", findUserRoleMap);
 		}
 		model.addAttribute("user", user);
 		return mode.equals("detail")?"sys/user/user-detail":"sys/user/user-save";

@@ -10,14 +10,14 @@
 @var width = width!'600';
 @var reloadUrl = reloadUrl!false;
 @var rootNodeName = rootNodeName!"全部";
-@var isSuper = session[auth.loginSessionKey()].userType;
+@var isSuper = auth.isSuper();
 
 <script type="text/javascript">
 	var setting = {
 		view:{
 			expandSpeed:100,
 			selectedMulti : false,
-			addHoverDom: addHoverDom,
+			addHoverDom:addHoverDom,
 			removeHoverDom: removeHoverDom,
 			fontCss:function(treeId, treeNode) {
 				return (!!treeNode.highlight) ? {"font-weight":"bold","color":"red"} : {"font-weight":"normal","color":"#333"};
@@ -79,7 +79,6 @@
 	
 	//划过显示添加按钮,添加
 	function addHoverDom(treeId, treeNode) {
-		if(treeNode.level == 0 && "${isSuper}" == "0") return false;
 		var sObj = $("#" + treeNode.tId + "_span");
 		if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
 		var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
@@ -148,8 +147,10 @@
 		//树结构初始化
 		nodeList=[]; //清除缓存
 		var treeData = ${treeData};
-		var root = {id:0,name:"${rootNodeName}",open:true};
-		treeData[treeData.length] = root;
+		@if(isSuper){
+			var root = {id:0,name:"${rootNodeName}",open:true};
+			treeData[treeData.length] = root;
+		@}
 		$.fn.zTree.init($("#treeMenu"), setting,treeData);
 		treeObj = $.fn.zTree.getZTreeObj("treeMenu");
 		// 默认展开一级节点

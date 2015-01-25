@@ -23,6 +23,7 @@ public class Constant {
 	public static final String CACHE_SYS_RESOURCE = "sysResource"; // 资源的缓存名称
 	public static final String CACHE_SYS_OFFICE = "sysOffice"; //机构的缓存名称
 	public static final String CACHE_SYS_ROLE = "sysRole"; //角色的缓存名称
+	public static final String CACHE_SYS_USER = "sysUser"; //用户缓存名称
 	
 	public static final String CACHE_ALL_RESOURCE = "allSysResource"; // 全部资源key
 	public static final String CACHE_USER_RESOURCE = "userSysResource"; // 用户权限

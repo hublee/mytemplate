@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.template.common.constant.Constant;
 import com.template.common.utils.Global;
 import com.template.common.utils.IPUtils;
-import com.template.common.utils.PasswordEncoder;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysResourceService;
 import com.template.web.sys.service.SysUserService;
@@ -44,10 +43,7 @@ public class LoginController {
 	@RequestMapping
 	public String toIndex(Model model, HttpServletRequest request) {
 		request.getSession().removeAttribute("code"); // 清除code
-		SysUser user = (SysUser) request.getSession().getAttribute(
-				Constant.SESSION_LOGIN_USER);
-		if (null == user) return "redirect:" + Global.getAdminPath() + "/login";
-		model.addAttribute("menuList", SysUserUtils.getUserMenus(user));
+		model.addAttribute("menuList", SysUserUtils.getUserMenus());
 		return "index";
 	}
 
@@ -78,7 +74,6 @@ public class LoginController {
 		code = StringUtils.trim(code);
 		username = StringUtils.trim(username);
 		password = StringUtils.trim(password);
-		String secPwd = PasswordEncoder.encrypt(password, username);
 		Object scode = session.getAttribute("code");
 		String sessionCode = null;
 		if (scode != null)
@@ -87,11 +82,17 @@ public class LoginController {
 			msg.put("error", "验证码错误");
 			return msg;
 		}
-		SysUser user = sysUserService.checkUser(username, secPwd);
+		SysUser user = sysUserService.checkUser(username, password);
 		if (null != user) {
-			//设置并缓存用户认证
-			SysUserUtils.setUserAuth(user);
+			
 			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
+			
+			//缓存用户
+			SysUserUtils.cacheLoginUser(user);
+			
+			//设置并缓存用户认证
+			SysUserUtils.setUserAuth();
+			
 			//TODO 暂时，后续移动到日志中
 			//更新用户最后登录ip和date
 			SysUser newUser = new SysUser();
@@ -112,7 +113,7 @@ public class LoginController {
 	 */
 	@RequestMapping("logout")
 	public String logout(HttpServletRequest request) {
-		request.getSession().removeAttribute(Constant.SESSION_LOGIN_USER);
+		SysUserUtils.clearCacheUser(SysUserUtils.getSessionLoginUser().getId());
 		request.getSession().invalidate();
 		return "redirect:/" + Global.getAdminPath() + "/login";
 	}

@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
-import com.template.common.base.BaseEntity;
 import com.template.common.mybatis.provider.CommonSqlProvider;
 
 @Repository("baseMapper")
@@ -17,5 +16,5 @@ public interface BaseMapper{
 	int beforeDeleteTreeStructure(Map<String, Object> params);
 	
 	@SelectProvider(type=CommonSqlProvider.class,method="findEntityListByDataScope")
-	<T> List<BaseEntity> findEntityListByDataScope(@Param("record") T record);
+	<T> List<Map<String, Object>> findEntityListByDataScope(@Param("record") T record);
 }

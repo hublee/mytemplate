@@ -2,17 +2,20 @@
 
 package com.template.web.sys.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
+import com.template.common.constant.Constant;
+import com.template.common.utils.CacheUtils;
 import com.template.common.utils.PasswordEncoder;
 import com.template.web.sys.mapper.SysOfficeMapper;
 import com.template.web.sys.mapper.SysRoleMapper;
@@ -52,16 +55,23 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 			companyId = sysOffice.getId();
 		}
 		sysUser.setCompanyId(companyId);
-		if(null == sysUser.getId()){
+		if(StringUtils.isNotBlank(sysUser.getPassword())){
 			String encryptPwd = PasswordEncoder.encrypt(sysUser.getPassword(), sysUser.getUsername());
 			sysUser.setPassword(encryptPwd);
+		}else{
+			sysUser.remove("password");
+		}
+		if(null == sysUser.getId()){
 			count = this.insertSelective(sysUser);
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
-			List<Long> userIds = new ArrayList<Long>();
-			userIds.add(sysUser.getId());
-			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
+			SysUserUtils.clearAllCachedAuthorizationInfo(Arrays.asList(sysUser.getId()));
 			count = this.updateByPrimaryKeySelective(sysUser);
+			if(CacheUtils.isCacheByKey(Constant.CACHE_SYS_USER, sysUser.getId().toString())){
+				String userType = this.selectByPrimaryKey(sysUser.getId()).getUserType();
+				sysUser.setUserType(userType);
+				SysUserUtils.cacheLoginUser(sysUser);
+			}
 		}
 		if(sysUser.getRoleIds()!=null) sysRoleMapper.insertUserRoleByUserId(sysUser);
 		return count;
@@ -74,6 +84,8 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	 */
 	public int deleteUser(Long userId){
 		sysRoleMapper.deleteUserRoleByUserId(userId);
+		SysUserUtils.clearAllCachedAuthorizationInfo(Arrays.asList(userId));
+		SysUserUtils.clearCacheUser(userId);
 		return this.updateDelFlagToDelStatusById(SysUser.class, userId);
 	}
 	
@@ -83,6 +95,8 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	* @return
 	 */
 	public PageInfo<SysUser> findPageInfo(Map<String, Object> params) {
+		params.put(Constant.CACHE_USER_DATASCOPE, SysUserUtils.dataScopeFilterString("so", null));
+		params.put("userType", SysUserUtils.getCacheLoginUser().getUserType());
 		PageHelper.startPage(params);
 		List<SysUser> list = sysUserMapper.findPageInfo(params);
 		return new PageInfo<SysUser>(list);
@@ -96,8 +110,9 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 	 */
 	public SysUser checkUser(String username,String password){
 		SysUser sysUser = new SysUser();
+		String secPwd = PasswordEncoder.encrypt(password, username);
 		sysUser.setUsername(username);
-		sysUser.setPassword(password);
+		sysUser.setPassword(secPwd);
 		List<SysUser> users = this.select(sysUser);
 		if(users != null && users.size() == 1 && users.get(0) != null) {
 			return users.get(0);

@@ -1,22 +1,21 @@
 package com.template.web.sys.utils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.template.common.base.BaseEntity;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.CacheUtils;
-import com.template.common.utils.Collections3;
 import com.template.common.utils.ThreadLocalUtils;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.model.SysOffice;
@@ -37,30 +36,28 @@ public class SysUserUtils {
 
 	/**
 	 * 设置用户的认证
-	 * @param sysUser
 	 */
-	public static void setUserAuth(SysUser sysUser) {
+	public static void setUserAuth() {
 		//菜单树
-		getUserMenus(sysUser);
+		getUserMenus();
 		//角色列表
-		getUserRoles(sysUser);
-		//数据范围set<Long>
-		getUserDataScope(sysUser);
+		getUserRoles();
+		//用户机构列表
+		getUserOffice();
 	}
 	
 	/**
-	 * 用户持有的资源
-	* @param sysUser
+	 * 登录用户持有的资源
 	* @return
 	 */
-	public static Map<String, SysResource> getUserResources(SysUser sysUser){
+	public static Map<String, SysResource> getUserResources(){
+		SysUser sysUser = getCacheLoginUser();
 		Map<String, SysResource> userResources = CacheUtils.get(
 				Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
 						+ sysUser.getId());
 		if (userResources == null) {
-			if ((Constant.SUPER_ADMIN).equals(sysUser.getUserType())) {
-				userResources = BeetlUtils
-						.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
+			if (sysUser.isAdmin()) {
+				userResources = BeetlUtils.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
 			} else {
 				List<SysResource> userRes = sysResourceService.findUserResourceByUserId(sysUser);
 				userResources = new LinkedHashMap<String, SysResource>();
@@ -80,15 +77,16 @@ public class SysUserUtils {
 	}
 	
 	/**
-	 * 用户菜单树
+	 * 登录用户菜单树
 	 */
-	public static List<SysResource> getUserMenus(SysUser sysUser){
+	public static List<SysResource> getUserMenus(){
+		SysUser sysUser = getCacheLoginUser();
 		List<SysResource> userMenus = CacheUtils.get(
 				Constant.CACHE_SYS_RESOURCE,
 				Constant.CACHE_USER_MENU + sysUser.getId());
 		if (userMenus == null) {
-			Map<String, SysResource> userResources = getUserResources(sysUser);
-			userMenus = new ArrayList<SysResource>();
+			Map<String, SysResource> userResources = getUserResources();
+			userMenus = Lists.newArrayList();
 			for(SysResource res : userResources.values()){
 				if(Constant.RESOURCE_TYPE_MENU.equals(res.getType())){
 					userMenus.add(res);
@@ -102,161 +100,152 @@ public class SysUserUtils {
 	}
 	
 	/**
-	 * 用户的角色
+	 * 登录用户的角色
 	 */
-	public static List<SysRole> getUserRoles(SysUser sysUser){
+	public static List<SysRole> getUserRoles(){
+		SysUser sysUser = getCacheLoginUser();
 		List<SysRole> userRoles = CacheUtils.get(
 				Constant.CACHE_SYS_ROLE,
 				Constant.CACHE_USER_ROLE + sysUser.getId());
 		if(userRoles == null){
-			 userRoles = sysRoleService.findUserRoleListByUserId(sysUser.getId());
-			 CacheUtils.put(Constant.CACHE_SYS_ROLE,
+			if(sysUser.isAdmin()){
+				userRoles = sysRoleService.select(new SysRole());
+			}else{
+				userRoles = sysRoleService.findUserRoleListByUserId(sysUser.getId());
+			}
+			CacheUtils.put(Constant.CACHE_SYS_ROLE,
 						Constant.CACHE_USER_ROLE + sysUser.getId(), userRoles);
 		}
 		return userRoles;
 	}
 	
 	/**
-	 * 得到用户的全部数据范围(持有的机构)，适应于多角色
-	 */
-	public static Set<Long> getUserDataScope(SysUser sysUser){
-		List<SysRole> userRoles = CacheUtils.get(
-				Constant.CACHE_SYS_ROLE,
-				Constant.CACHE_USER_ROLE + sysUser.getId());
-		Set<Long> userDataScope = CacheUtils.get(
-				Constant.CACHE_SYS_OFFICE,
-				Constant.CACHE_USER_DATASCOPE + sysUser.getId());
-		if(userRoles!=null && userDataScope == null){
-			userDataScope = new HashSet<Long>();
-			boolean flag = false;
-			 for(SysRole sr : userRoles){
-				 if(Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
-					 break;
-				 }else if(Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
-					 List<Long> offices = sysOfficeService.findOfficeIdsByRootId(sysUser.getCompanyId());
-					 for(Long officeId : offices){
-						 userDataScope.add(officeId);
-					 }
-				 }else if(Constant.DATA_SCOPE_COMPANY.equals(sr.getDataScope())){
-					 userDataScope.add(sysUser.getCompanyId());
-				 }else if(Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(sr.getDataScope())){
-					 List<Long> offices = sysOfficeService.findOfficeIdsByRootId(sysUser.getOfficeId());
-					 for(Long officeId : offices){
-						 userDataScope.add(officeId);
-					 }
-				 }else if(Constant.DATA_SCOPE_OFFICE.equals(sr.getDataScope())){
-					 userDataScope.add(sysUser.getOfficeId());
-				 }else if(Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope()) && !flag){
-					 flag = true;
-					 List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
-					 for(Long officeId : offices){
-						 userDataScope.add(officeId);
-					 }
-				 }
-			 }
-			 CacheUtils.put(Constant.CACHE_SYS_OFFICE,
-						Constant.CACHE_USER_DATASCOPE + sysUser.getId(), userDataScope);
-		}
-		return userDataScope;
-	}
-	
-	/**
-	 * 用户持有的机构
+	 * 登录用户的机构
 	* @return
-	 */
+	 */ 
 	public static List<SysOffice> getUserOffice(){
-		SysUser sysUser = getSessionUser();
+		SysUser sysUser = getCacheLoginUser();
 		List<SysOffice> userOffices = CacheUtils.get(
 				Constant.CACHE_SYS_OFFICE,
 				Constant.CACHE_USER_OFFICE + sysUser.getId());
 		if(userOffices == null){
 			SysOffice office = new SysOffice();
-			office.setUserDataScope(SysUserUtils.singleTableDataScopeFilter("","id"));
-			userOffices = sysOfficeService.findEntityListByDataScope(office);
+			if(sysUser.isAdmin()){
+				userOffices = sysOfficeService.select(office);
+			}else{
+				office.setUserDataScope(SysUserUtils.dataScopeFilterString(null, null));
+				userOffices = sysOfficeService.findEntityListByDataScope(office);
+			}
 			CacheUtils.put(Constant.CACHE_SYS_OFFICE,
 					Constant.CACHE_USER_OFFICE + sysUser.getId(), userOffices);
 		}
 		return userOffices;
 	}
 	
-	
 	/**
-	 * 得到用户数据范围拼接的字符串
-	* @param officeAlias 表的别名
-	* @param field 字段的名称
-	* @return 拼接完毕的字符串  如(office_id in (?,?,?) or ....)
+	 * 数据范围过滤
+	 * @param user 当前用户对象
+	 * @param officeAlias 机构表别名
+	 * @param userAlias 用户表别名，传递空，忽略此参数
+	 * @param field field[0] 用户表id字段名称 为了减少中间表连接
+	 * @return (so.office id=... or .. or)
 	 */
-	public static String dataScopeFilter(String[] officeAlias,String[] field){
-		SysUser sysUser = getSessionUser();
-		Set<Long> dataScope = getUserDataScope(sysUser);
-		if(dataScope==null || dataScope.size()==0) return "";
-		StringBuilder sb = new StringBuilder();
-		sb.append(" (");
-		for(int i=0;i<officeAlias.length;i++){
-			if(i>0) sb.append(" or ");
-			if(StringUtils.isBlank(officeAlias[i])){
-				sb.append(field[i]+" in ");
-			}else{
-				sb.append(officeAlias[i]+"."+field[i]+" in ");
-			}
-			if(dataScope !=null && dataScope.size() > 0){
-				String so = StringUtils.join(dataScope.toArray(), ",");
-				sb.append("("+so+")");
+	public static String dataScopeFilterString(String officeAlias, String userAlias,String... field){
+		SysUser sysUser = getCacheLoginUser();
+		if(StringUtils.isBlank(officeAlias)) officeAlias = "sys_office";
+		List<String> dataScope = Lists.newArrayList();
+		List<SysRole> userRoles = getUserRoles();
+		StringBuilder tempSql = new StringBuilder();
+		String dataScopeSql = "";
+		if(!sysUser.isAdmin()){
+			for(SysRole sr : userRoles){
+				if(!dataScope.contains(sr.getDataScope()) && StringUtils.isNotBlank(officeAlias)){
+					boolean isDataScopeAll = false;
+					if (Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
+						isDataScopeAll = true;
+					}
+					else if (Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
+						//so.id=1 or so.parentIds like '0,1,%'
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
+						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getCompanyId());
+						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
+					}
+					else if (Constant.DATA_SCOPE_COMPANY.equals(sr.getDataScope())){
+						//or so.id=1 or (so.parent_id=1 and so.type=2)
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
+						tempSql.append(" or ("+officeAlias+".parent_id="+sysUser.getCompanyId());
+						tempSql.append(" and "+officeAlias+".type=2)");
+					}
+					else if (Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(sr.getDataScope())){
+						//or so.id=5 or so.parentIds like '0,1,5,%'
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
+						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getOfficeId());
+						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
+					}
+					else if (Constant.DATA_SCOPE_OFFICE.equals(sr.getDataScope())){
+						//or so.id=5
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
+					}
+					else if (Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope())){
+						//or so.id in (1,2,3,4,5)
+						List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
+						tempSql.append(" or "+officeAlias+".id in ("+StringUtils.join(offices, ",")+")");
+					}
+					if (!isDataScopeAll){
+						if (StringUtils.isNotBlank(userAlias)){
+							// or su.id=22
+							if(field==null || field.length==0) field[0] = "id";
+							tempSql.append(" or "+userAlias+"."+field[0]+"="+sysUser.getId());
+						}else {
+							//仅本人数据时候用到
+							tempSql.append(" or "+officeAlias+".id is null");
+						}
+					}else{
+						// 如果包含全部权限，则去掉之前添加的所有条件，并跳出循环。
+						tempSql.delete(0, tempSql.length());
+						break;
+					}
+					dataScope.add(sr.getDataScope());
+				}
+			}// for end
+			
+			if(StringUtils.isNotBlank(tempSql)){
+				dataScopeSql = "("+tempSql.substring(tempSql.indexOf("or")+2, tempSql.length())+")";
 			}
 		}
-		sb.append(")");
-		return sb.toString();
-	}
-	
-	/**
-	 * 单表根据范围查询 
-	 * @param info {"officeAlias"表别名:,"field":字段名称}
-	 * 泛型为空则 where office_id = ?
-	 */
-	public static String singleTableDataScopeFilter(String... info){
-		if(info.length == 0){
-			info = new String[]{"","office_id"};
-		}
-		return dataScopeFilter(new String[]{info[0]},new String[]{info[1]});
+		return dataScopeSql;
 	}
 	
 	/**
 	 * 清除缓存中用户认证
 	 */
 	public static void clearAllCachedAuthorizationInfo(List<Long> userIds) {
-		for (Long userId : userIds) {
-			//清除用户持有的资源
-			boolean hasRes = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_RESOURCE
-							+ userId);
-			if (hasRes) {
+		if(CollectionUtils.isNotEmpty(userIds)){
+			for (Long userId : userIds) {
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_RESOURCE + userId);
-			}
-			//清除用户菜单树
-			boolean hasMenu = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_RESOURCE, Constant.CACHE_USER_MENU
-							+ userId);
-			if (hasMenu) {
+				
 				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_MENU + userId);
-			}
-			//清除用户角色
-			boolean hasRole = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_ROLE, Constant.CACHE_USER_ROLE
-							+ userId);
-			if (hasRole) {
+				
 				CacheUtils.evict(Constant.CACHE_SYS_ROLE,
 						Constant.CACHE_USER_ROLE + userId);
+				
+				CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
+						Constant.CACHE_USER_OFFICE + userId);
 			}
-			//清除用户数据范围
-			boolean hasDataScope = CacheUtils.isCacheByKey(
-					Constant.CACHE_SYS_OFFICE, Constant.CACHE_USER_DATASCOPE
-							+ userId);
-			if (hasDataScope) {
-				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
-						Constant.CACHE_USER_DATASCOPE + userId);
-			}
+		}
+	}
+	
+	/**
+	 * 清除缓存中的用户
+	 */
+	public static void clearCacheUser(Long userId){
+		CacheUtils.evict(Constant.CACHE_SYS_USER,userId.toString());
+	}
+	
+	public static void clearOfficeAndDataScope(List<Long> userIds){
+		for (Long userId : userIds) {
 			//清除用户机构
 			boolean hasOffice = CacheUtils.isCacheByKey(
 					Constant.CACHE_SYS_OFFICE,
@@ -267,23 +256,65 @@ public class SysUserUtils {
 			}
 		}
 	}
+	
+	/**
+	 * 登录用户的角色map形式
+	 */
+	public static Map<Long, SysRole> getUserRolesMap(){
+		List<SysRole> list = SysUserUtils.getUserRoles();
+		Map<Long, SysRole> userRolesMap = Maps.uniqueIndex(list, new Function<SysRole, Long>() {
+			@Override
+			public Long apply(SysRole sysRole) {
+				return sysRole.getId();
+			}
+		});
+		return userRolesMap;
+	}
+	
+	/**
+	 * 缓存登录用户,默认设置过期时间为20分钟,与session存活时间的同步
+	* @param sysUser
+	* @param sessionId
+	 */
+	public static void cacheLoginUser(SysUser sysUser){
+		CacheUtils.put(Constant.CACHE_SYS_USER, sysUser.getId().toString(), 
+				sysUser,getSession().getMaxInactiveInterval());
+	}
+	
+	/**
+	 * 从缓存中取登录的用户
+	* @param sessionId
+	* @return 登录用户
+	 */
+	public static SysUser getCacheLoginUser(){
+		if(getSessionLoginUser() != null){
+			return CacheUtils.get(Constant.CACHE_SYS_USER, 
+					getSessionLoginUser().getId().toString());
+		}
+		return null;
+	}
+	
 
 	/**
-	 * 把session用户保存到局部线程中
+	 * 把session保存到局部线程中
 	 * 
 	 * @param sysUser
 	 */
-	public static void setThreadLocalSessionUser(SysUser sysUser) {
-		ThreadLocalUtils.set(Constant.SESSION_LOGIN_USER, sysUser);
+	public static void setThreadLocalSession(HttpSession session) {
+		ThreadLocalUtils.set("session", session);
 	}
 
 	/**
-	 * 得到session中的用户
+	 * 得到session
 	 */
-	public static SysUser getSessionUser() {
-		SysUser sysUser = ThreadLocalUtils.get(Constant.SESSION_LOGIN_USER,
-				SysUser.class);
-		return sysUser;
+	public static HttpSession getSession() {
+		HttpSession session = ThreadLocalUtils.get("session",
+				HttpSession.class);
+		return session;
+	}
+	
+	public static SysUser getSessionLoginUser(){
+		return (SysUser) getSession().getAttribute(Constant.SESSION_LOGIN_USER);
 	}
 
 }

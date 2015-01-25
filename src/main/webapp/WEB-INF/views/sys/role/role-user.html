@@ -1,3 +1,4 @@
+@var userOffice = office.getUserOfficeList(); //用户持有的机构
 <div class="layer">
 <h3 class="header smaller red">通过选择部门，然后为列出部门的人员分配角色</h3>
 	<div class="row">
@@ -93,7 +94,7 @@ $(function(){
 			onClick: onClickNode
 		}
 	};
-	var officeTree = $.fn.zTree.init($("#treeOffice"), setting,${offices!});
+	var officeTree = $.fn.zTree.init($("#treeOffice"), setting,${userOffice!});
 	var yxuser = ${users}; //初始化已选列表
 	var yxList = {},dxList = {};
 	for(var i in yxuser){

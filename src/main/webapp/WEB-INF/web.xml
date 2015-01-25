@@ -28,11 +28,6 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- session listener -->  
-	<listener>  
-	    <listener-class>com.template.common.listener.SessionListener</listener-class>  
-	</listener>  
-	
 	<!-- 编码过滤器 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

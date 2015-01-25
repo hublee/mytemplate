@@ -103,6 +103,7 @@ $(function() {
 		for(var i=0;i<pids.length-1;i++){
 			if(pids[i] == 0) continue;
 			var node = pullDownTreeCurTree${order}.getNodesByParam("id",pids[i])[0];
+			if(node == undefined) continue;
 			pnames += node.name+"-";
 		}
 		$("#pullDownTreeCurName${order}").text( pnames+treeNode.name);

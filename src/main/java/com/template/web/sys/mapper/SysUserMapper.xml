@@ -14,6 +14,7 @@
 		FROM sys_user su 
 		LEFT JOIN sys_user_role sur ON su.id = sur.user_id 
 		LEFT JOIN sys_role sr ON sur.role_id = sr.id
+		LEFT JOIN sys_office so ON so.id = su.office_id
 		<where>
 			<if test="officeId!=0 and officeType==1 ">
 				su.company_id = #{officeId}
@@ -30,7 +31,13 @@
 			<if test="@Ognl@isNotBlank(roles)">
 				and FIND_IN_SET(sr.id,#{roles})
 			</if>
-			and su.del_flag = 0
+			<if test="@Ognl@isNotBlank(userDataScope)">
+				and ${userDataScope}
+			</if>
+			<if test="@Ognl@isNotBlank(userType) and userType!=1">
+				and user_type != 1
+			</if>
+			and su.del_flag = 0 
 		</where>
 		GROUP BY su.id ORDER BY su.update_date desc
 	</select>

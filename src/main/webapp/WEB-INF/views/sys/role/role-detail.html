@@ -1,4 +1,3 @@
-@var officeMap = office.getAllOfficeMap(); //机构map数据
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
 		<div class="profile-info-name">角色名称</div>
@@ -10,7 +9,7 @@
 		<div class="profile-info-name">归属机构</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-				@var roleOffice = office.getOfficeStrByOfficeId(sysrole.officeId,officeMap);
+				@var roleOffice = office.getOfficeStrByOfficeId(sysrole.officeId);
 				@if(!isEmpty(roleOffice)){
 				&nbsp;(${roleOffice})
 				@}

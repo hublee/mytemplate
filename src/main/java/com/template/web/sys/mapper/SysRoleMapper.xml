@@ -5,6 +5,10 @@
 	<sql id="sysRoleColumns">
 		id,create_by,create_date,data_scope,del_flag,name,office_id,remarks,update_by,update_date
 	</sql>
+	<sql id="sysRoleAliasColumns">
+		sr.id,sr.create_by,sr.create_date,sr.data_scope,sr.del_flag,sr.name,sr.office_id,
+		sr.remarks,sr.update_by,sr.update_date
+	</sql>
 	
 	<!-- 添加角色所在机构 -->
 	<insert id="insertRoleOffice">
@@ -71,7 +75,7 @@
 	</select>
 	
 	<!-- 根据用户id查找角色 -->
-	<select id="findUserRoleByUserId" resultType="com.template.web.sys.model.SysRole">
+	<select id="findUserRoleListByUserId" resultType="com.template.web.sys.model.SysRole">
 		SELECT sr.id,sr.name,sr.office_id,sr.data_scope FROM sys_role sr 
 		LEFT JOIN sys_user_role sur ON sr.id=sur.role_id
 		WHERE sur.user_id=#{userId}
@@ -96,19 +100,24 @@
 	
 	<!-- 分页查询角色 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysRole">
-		select <include refid="sysRoleColumns"/> from sys_role
+		SELECT <include refid="sysRoleAliasColumns"/> FROM sys_role sr 
+		LEFT JOIN sys_user_role sur ON sr.id=sur.role_id
+		LEFT JOIN sys_office so ON so.id=sr.office_id
 		<where>
 			<if test="dataScope!=null and dataScope!=''">
-				data_scope = #{dataScope}
+				sr.data_scope = #{dataScope}
 			</if>
 			<if test="name!=null and name!=''">
-				and name like concat('%',#{name},'%')
+				and sr.name like concat('%',#{name},'%')
 			</if>
 			<if test="officeId!=null and officeId !=0">
-				and office_id = #{officeId}
+				and sr.office_id = #{officeId}
 			</if>
 			<if test="@Ognl@isNotBlank(remarks)">
-				and remarks = #{remarks}
+				and sr.remarks = #{remarks}
+			</if>
+			<if test="@Ognl@isNotBlank(userDataScope)">
+				and ${userDataScope}
 			</if>
 		</where>
 		ORDER BY update_date desc

@@ -1,5 +1,10 @@
 package com.template.common.utils;
 
+import java.util.List;
+
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
@@ -22,12 +27,25 @@ public class CacheUtils {
 	* @throws
 	 */
 	public static <T> void put(String cacheName,String key,T value) {
-		 
 		if (StringUtils.isNotBlank(key)) {
 			getCache(cacheName).put(key, value);
 		}
 	}
-
+	
+	public static <T> void put(String cacheName,String key,T value,int timeToIdleSeconds){
+		Ehcache cache = cacheManager.getCacheManager().getCache(cacheName);
+		Element element = new Element(key, value);
+		element.setTimeToIdle(timeToIdleSeconds);
+		cache.put(element);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<String> getnonExpiredKeys(String cacheName){
+		Ehcache cache = cacheManager.getCacheManager().getCache(cacheName);
+		return cache.getKeysWithExpiryCheck();
+	}
+	
+	
 	/**
 	 * 
 	* @Description: 删除缓存中的信息 
@@ -36,7 +54,7 @@ public class CacheUtils {
 	* @return void     
 	* @throws
 	 */
-	public static <T> void evict(String cacheName,String key) {
+	public static void evict(String cacheName,String key) {
 		if (StringUtils.isNotBlank(key)) {
 			getCache(cacheName).evict(key);
 		}
@@ -85,7 +103,7 @@ public class CacheUtils {
 		ValueWrapper val = getCache(cacheName).get(key);
 		return val==null?false:true;
 	}
-
+	
 	public static Cache getCache(String cacheName) {
 		return cacheManager.getCache(cacheName);
 	}

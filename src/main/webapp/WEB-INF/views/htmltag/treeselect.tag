@@ -18,6 +18,7 @@
 @var isLayer = isLayer!'true'; //是否为弹窗
 @var treeSelectId = treeSelectId!'tree'; //树id,即是树对象名称
 @var rootNodeName = rootNodeName!""; //虚拟顶级节点名称
+@var chkboxType = chkboxType!""; //1不选择父节点
 
 @if(isLayer == "true"){
 <div class="clearfix ${class} input-group" style="${style}">
@@ -46,7 +47,7 @@ ${tagBody!}
 			type:"post",
 			data:{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',
 				selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',isLayer:"false",
-				treeSelectId:'${treeSelectId}',rootNodeName:'${rootNodeName}'},
+				treeSelectId:'${treeSelectId}',rootNodeName:'${rootNodeName}',chkboxType:'${chkboxType}'},
 			success:function(data){
 				$("#${treeSelectId}").html(data);
 			}

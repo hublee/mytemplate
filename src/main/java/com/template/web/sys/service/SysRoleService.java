@@ -4,7 +4,10 @@ package com.template.web.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.template.common.base.ServiceMybatis;
+import com.template.common.constant.Constant;
 import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
@@ -16,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,10 +45,9 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 			sysRoleMapper.deleteRoleResourceByRoleId(sysRole.getId());
 			sysRoleMapper.deleteRoleOfficeByRoleId(sysRole.getId());
 			count = this.updateByPrimaryKeySelective(sysRole);
-			if(count > 0) {
-				List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
-				SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
-			}
+			//清除缓存
+			List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
+			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 		}
 		if(sysRole.getResourceIds().length>0){
 			sysRoleMapper.insertRoleResource(sysRole);
@@ -65,9 +66,10 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		sysRoleMapper.deleteUserRoleByRoleId(id);
 		sysRoleMapper.deleteRoleOfficeByRoleId(id);
 		sysRoleMapper.deleteRoleResourceByRoleId(id);
+		int count = this.deleteByPrimaryKey(id);
+		//清除缓存
 		List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(id);
 		SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
-		int count = this.deleteByPrimaryKey(id);
 		return count;
 	}
 	
@@ -80,6 +82,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
 		if(sysRole.getUserIds().length>0) {
 			sysRoleMapper.insertUserRoleByRoleId(sysRole);
+			//清除缓存
 			List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
 			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 		}
@@ -92,6 +95,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	 * @param {"pageNum":"页码","pageSize":"条数","isCount":"是否生成count sql",......}
 	 */
 	public PageInfo<SysRole> findPageInfo(Map<String,Object> params) {
+		params.put(Constant.CACHE_USER_DATASCOPE, SysUserUtils.dataScopeFilterString("so", "sur","user_id"));
         PageHelper.startPage(params);
         List<SysRole> list = sysRoleMapper.findPageInfo(params); 
         return new PageInfo<SysRole>(list);
@@ -139,7 +143,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	* @return userRoleList
 	 */
 	public List<SysRole> findUserRoleListByUserId(Long userId){
-		List<SysRole> userRoles = sysRoleMapper.findUserRoleByUserId(userId);
+		List<SysRole> userRoles = sysRoleMapper.findUserRoleListByUserId(userId);
 		return userRoles;
 	}
 	
@@ -150,12 +154,12 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	 */
 	public Map<Long, SysRole> findUserRoleMapByUserId(Long userId){
 		List<SysRole> roleList = this.findUserRoleListByUserId(userId);
-		Map<Long, SysRole> userRoleMap = new HashMap<Long, SysRole>();
-		if(roleList != null && roleList.size() > 0){
-			for(SysRole role : roleList){
-				userRoleMap.put(role.getId(), role);
+		Map<Long, SysRole> userRoleMap = Maps.uniqueIndex(roleList, new Function<SysRole, Long>() {
+			@Override
+			public Long apply(SysRole sysRole) {
+				return sysRole.getId();
 			}
-		}
+		});
 		return userRoleMap;
 	}
 	

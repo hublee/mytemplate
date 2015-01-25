@@ -36,6 +36,7 @@ public class TagController {
 		model.addAttribute("isLayer", request.getParameter("isLayer")); //是否弹窗模式
 		model.addAttribute("treeSelectId", request.getParameter("treeSelectId")); //ul树的id
 		model.addAttribute("rootNodeName", request.getParameter("rootNodeName")); //顶级节点名称
+		model.addAttribute("chkboxType", request.getParameter("chkboxType"));
 		return "modules/tree-select";
 	}
 	

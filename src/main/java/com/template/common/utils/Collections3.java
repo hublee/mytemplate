@@ -198,4 +198,37 @@ public class Collections3 {
 		return res;
 	}
 	
+	/**
+     * map转换为bean
+     *
+     * @param map
+     * @param beanClass
+     * @return
+     */
+    public static Object map2Bean(Map map, Class<?> beanClass) {
+        try {
+            Object bean = beanClass.newInstance();
+            PropertyUtils.copyProperties(bean, map);
+            return bean;
+        } catch (Exception e) {
+            throw new RuntimeException(beanClass.getCanonicalName() + "类没有默认空的构造方法!");
+        }
+    }
+
+    /**
+     * mapList转换为beanList
+     *
+     * @param mapList
+     * @param beanClass
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public static List<?> maplist2BeanList(List<Map<String,Object>> mapList, Class<?> beanClass) {
+        List list = new ArrayList<Object>(mapList.size());
+        for (Map map : mapList) {
+            list.add(map2Bean(map, beanClass));
+        }
+        return list;
+    }
+	
 }

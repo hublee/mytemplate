@@ -1,4 +1,4 @@
-@var officeList = office.getAllOfficeList(false); //全部公司
+@var userOffice = office.getUserOfficeList(); //用户持有的机构
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#home"> <i
@@ -22,7 +22,7 @@
 						</div>
 						<div class="col-sm-6">
 							<label class="inline">归属机构：</label>
-							<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
+							<#pullDownTree order="one" treeData="${userOffice}" name="officeId" 
 								class="width-80" />
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 									<div id="treeSelectRes" style="width: 40%;display: inline-block;vertical-align: top;float: left"></div>
 								</#treeselect>
 								<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
-									class="width-50" treeSelectId="treeSelectOffice">
+									class="width-50" treeSelectId="treeSelectOffice" chkboxType="1">
 									<div id="treeSelectOffice" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
 								</#treeselect>
 							</td>

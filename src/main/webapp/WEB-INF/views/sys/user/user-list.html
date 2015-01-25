@@ -1,4 +1,3 @@
-@var officeMap = office.getAllOfficeMap();
 <table class="table table-striped table-bordered table-hover nomargin-bottom">
 	<thead>
 		<tr>
@@ -25,7 +24,7 @@
 					>${item.name!}</a>
 				</td>
 				<td class="center">
-					@var sostr = office.getOfficeStrByOfficeId(item.officeId,officeMap);
+					@var sostr = office.getOfficeStrByOfficeId(item.officeId);
 					@if(!isEmpty(sostr)){
 					&nbsp;(${sostr})
 					@}
@@ -42,7 +41,7 @@
 							data-mode="page" data-title="${item.name!}编辑"
 							data-url="${rootPath}/sysuser/edit/showlayer"
 							data-data="{id:'${item.id}'}"
-							data-height="450">
+							data-height="538">
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>
 

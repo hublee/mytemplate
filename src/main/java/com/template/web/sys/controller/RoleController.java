@@ -8,7 +8,6 @@ import java.util.Map;
 import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
-import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
@@ -62,9 +61,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value="binduser",method=RequestMethod.POST)
 	public String toBindUser(Long id,Model model){
 		List<SysUser> users = sysRoleService.findUserByRoleId(id);
-		List<SysOffice> offices = sysOfficeService.select(new SysOffice());
-		model.addAttribute("users", users).addAttribute("roleId", id)
-			.addAttribute("offices", JsonUtils.getInstance().toJson(offices));
+		model.addAttribute("users", users).addAttribute("roleId", id);
 		return "sys/role/role-user";
 	}
 	

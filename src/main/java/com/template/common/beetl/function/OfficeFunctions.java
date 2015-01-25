@@ -1,6 +1,5 @@
 package com.template.common.beetl.function;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,10 +7,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import com.template.common.utils.Collections3;
+import com.google.common.collect.Maps;
+import com.template.common.constant.Constant;
+import com.template.common.utils.CacheUtils;
 import com.template.common.utils.StringConvert;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.service.SysOfficeService;
+import com.template.web.sys.utils.SysUserUtils;
 
 @Component
 public class OfficeFunctions {
@@ -20,35 +22,22 @@ public class OfficeFunctions {
 	private SysOfficeService sysOfficeService;
 	
 	/**
-	 * 全部机构列表(缓存)
-	* @param flag 是否深度copy一个缓存的对象,当操作缓存对象时候要copy
-	* @return
-	 */
-	public List<SysOffice> getAllOfficeList(boolean flag){
-		List<SysOffice> cacheOfficeList = null;
-		if(flag){
-			//深度copy一个缓存集合，防止因操作缓存list造成ehcache共享的线程不安全
-			cacheOfficeList = Collections3.copyTo(sysOfficeService.findAllOffice(),
-					SysOffice.class);
-		}else{
-			cacheOfficeList = sysOfficeService.findAllOffice();
-		}
-		return cacheOfficeList;
-	}
-	
-	/**
 	 * 全部机构 key:机构id  value:机构对象
 	* @return
 	 */
-	public Map<Long, Object> getAllOfficeMap(){
-		Map<Long, Object> map = new HashMap<Long, Object>();
-		List<SysOffice> list = getAllOfficeList(false);
-		if(list!=null && list.size()>0){
-			for(SysOffice so : list){
-				map.put(so.getId(), so);
+	public Map<Long, SysOffice> getAllOfficeMap(){
+		Map<Long, SysOffice> allOfficeMap = CacheUtils.get(Constant.CACHE_SYS_OFFICE, "allOffice");
+		if(allOfficeMap == null){
+			allOfficeMap = Maps.newHashMap();
+			List<SysOffice> list = sysOfficeService.select(new SysOffice());
+			if(list!=null && list.size()>0){
+				for(SysOffice so : list){
+					allOfficeMap.put(so.getId(), so);
+				}
 			}
+			CacheUtils.put(Constant.CACHE_SYS_OFFICE, "allOffice", allOfficeMap);
 		}
-		return map;
+		return allOfficeMap;
 	}
 	
 	/**
@@ -57,16 +46,29 @@ public class OfficeFunctions {
 	* @param offices 全部机构map
 	* @return
 	 */
-	public String getOfficeStrByOfficeId(Long officeId,Map<Long, SysOffice> offices){
-		String[] pids = ((SysOffice)offices.get(officeId)).getParentIds().split(",");
+	public String getOfficeStrByOfficeId(Long officeId){
+		Map<Long, SysOffice> offices = getAllOfficeMap();
 		String str = "";
-		for(String id : pids){
-			SysOffice so = (SysOffice)offices.get(StringConvert.toLong(id));
-			if(so!=null)str+=so.getName()+" - ";
+		if(offices!=null){
+			if(offices.get(officeId) != null){
+				String[] pids = ((SysOffice)offices.get(officeId)).getParentIds().split(",");
+				for(String id : pids){
+					SysOffice so = (SysOffice)offices.get(StringConvert.toLong(id));
+					if(so!=null)str+=so.getName()+" - ";
+				}
+				SysOffice so = (SysOffice)offices.get(officeId);
+				str+=so.getName();
+			}
 		}
-		SysOffice so = (SysOffice)offices.get(officeId);
-		str+=so.getName();
 		return str;
+	}
+	
+	/**
+	 * 得到用户机构
+	* @return
+	 */
+	public List<SysOffice> getUserOfficeList(){
+		return SysUserUtils.getUserOffice();
 	}
 	
 }

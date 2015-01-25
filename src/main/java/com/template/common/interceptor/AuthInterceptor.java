@@ -30,15 +30,20 @@ public class AuthInterceptor implements HandlerInterceptor {
 			path = url.substring(len, url.length());
 		}
 		
-		SysUser sysUser = (SysUser) request.getSession().getAttribute(
-				Constant.SESSION_LOGIN_USER);
+		//把session保存在局部线程中
+		SysUserUtils.setThreadLocalSession(request.getSession());
+		
 		if(!url.matches(ignorePath)){
-			if (sysUser == null) { // 转到登陆页面
+			//获得session中的登陆用户
+			SysUser sessionUser = SysUserUtils.getSessionLoginUser();
+			
+			//获得缓存中的登陆用户
+			SysUser cacheUser = SysUserUtils.getCacheLoginUser();
+			
+			if (sessionUser == null || cacheUser == null) { // 转到登陆页面
 				response.sendRedirect("/" + rootPath + "/notlogin");
 				return false;
 			} else {
-				//激发监听，把当前用户放入局部线程中
-				request.getSession().setAttribute(Constant.SESSION_LOGIN_USER, sysUser);
 				Map<String, SysResource> allRes = BeetlUtils
 						.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
 				SysResource sysResource = allRes.get(path);
@@ -47,9 +52,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 					return true;
 				} 
 				//检测用户认证是否改变，如果认证改变则重置，否则不进行任何操作
-				SysUserUtils.setUserAuth(sysUser);
+				SysUserUtils.setUserAuth();
 				//从缓存中的用户权限
-				Map<String, SysResource> userRes = SysUserUtils.getUserResources(sysUser);
+				Map<String, SysResource> userRes = SysUserUtils.getUserResources();
 				if (userRes.containsKey(path)) {
 					return true;
 				} else {

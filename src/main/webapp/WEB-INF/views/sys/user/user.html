@@ -1,6 +1,5 @@
-@var officeList = office.getAllOfficeList(false); //全部公司
-@var officeMap = office.getAllOfficeMap();
-@var roles = role.getAllRoleList(); //全部角色
+@var userOffice = office.getUserOfficeList(); //用户持有的机构
+@var userRoles = role.getUserRoleList(); //用户角色
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active">
@@ -22,7 +21,7 @@
 				<div class="row padding-tb-10">
 					<div class="col-sm-6">
 						<label class="inline">归属机构：</label>
-						<#pullDownTree order="one" treeData="${officeList}" name="officeId" 
+						<#pullDownTree order="one" treeData="${userOffice}" name="officeId" 
 							class="width-80" cName="officeType" >
 							$("#pullDownTreeCurCidone").val(treeNode.type);
 						</#pullDownTree>
@@ -36,10 +35,10 @@
 					<div class="col-sm-6">
 						<label class="inline">所属角色：</label>
 						<select name="roles" multiple class="chosen-select tag-input-style" id="role-select" data-placeholder="选择角色">
-							@for(role in roles){
+							@for(role in userRoles){
 								<option value="${role.id!}">
 								${role.name!}
-								@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+								@var sostr = office.getOfficeStrByOfficeId(role.officeId);
 								@if(!isEmpty(sostr)){
 								&nbsp;(${sostr})
 								@}
@@ -80,13 +79,13 @@
 					 datatype="*" recheck="password" errormsg="您两次输入的密码不一致！" nullmsg="请输入确认密码！"/>
 				</div>
 				<div class="center padding-10">
-					<label>姓名：</label>
+					<label>真实姓名：</label>
 					<input type="text" class="width-50" name="name" datatype="*"  nullmsg="请输入姓名！"/>
 				</div>
 				<div class="center padding-10">
 					<label>归属机构：</label>
 					<div class="width-50 inline text-left" id="gsoffice">
-						<#pullDownTree order="two" treeData="${officeList}" name="officeId" 
+						<#pullDownTree order="two" treeData="${userOffice}" name="officeId" 
 							class="width-100" isRoot="false" rootNodeName="请选择归属机构" />
 					</div>
 				</div>
@@ -94,10 +93,10 @@
 					<label>所属角色：</label>
 					<div class="width-50 inline text-left">
 						<select name="roleIds" multiple class="chosen-select tag-input-style" id="role-choose" data-placeholder="选择角色">
-						@for(role in roles){
+						@for(role in userRoles){
 							<option value="${role.id!}">
 							${role.name!}
-							@var sostr = office.getOfficeStrByOfficeId(role.officeId,officeMap);
+							@var sostr = office.getOfficeStrByOfficeId(role.officeId);
 							@if(!isEmpty(sostr)){
 								&nbsp;(${sostr})
 							@}

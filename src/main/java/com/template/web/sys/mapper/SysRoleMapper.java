@@ -43,7 +43,7 @@ public interface SysRoleMapper extends Mapper<SysRole> {
 
 	public List<SysUser> findUserByRoleId(Long roleId);
 
-	public List<SysRole> findUserRoleByUserId(Long userId);
+	public List<SysRole> findUserRoleListByUserId(Long userId);
 
 	public List<SysRole> findPageInfo(Map<String, Object> params);
 

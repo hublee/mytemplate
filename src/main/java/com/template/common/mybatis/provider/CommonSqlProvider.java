@@ -8,7 +8,6 @@ import org.apache.ibatis.reflection.MetaObject;
 
 import com.template.common.constant.Constant;
 import com.template.common.mybatis.EntityHelper;
-import com.template.web.sys.utils.SysUserUtils;
 
 
 public class CommonSqlProvider extends BaseProvider{
@@ -35,8 +34,6 @@ public class CommonSqlProvider extends BaseProvider{
 		String sql = "";
 		if(map.containsKey("userDataScope")){
 			sql = map.get("userDataScope").toString();
-		}else{
-			sql = SysUserUtils.singleTableDataScopeFilter();
 		}
 		final String dataScope = sql;
 		return new SQL(){{

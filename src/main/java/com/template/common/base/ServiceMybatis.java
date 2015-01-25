@@ -6,13 +6,13 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.constant.Constant;
 import com.template.common.mybatis.mapper.BaseMapper;
 import com.template.common.spring.utils.SpringContextHolder;
+import com.template.common.utils.Collections3;
 import com.template.common.utils.StringConvert;
 import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +67,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getSessionUser().getId().toString());
+		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId().toString());
 		return mapper.insert(record);
 	}
 
@@ -82,7 +82,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getSessionUser().getId().toString());
+		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId().toString());
 		return mapper.insertSelective(record);
 	}
 
@@ -111,7 +111,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKey(T record) {
 		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getSessionUser().getId().toString());
+		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId().toString());
 		return mapper.updateByPrimaryKey(record);
 	}
 
@@ -122,7 +122,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKeySelective(T record) {
 		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getSessionUser().getId().toString());
+		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId().toString());
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 	
@@ -226,13 +226,8 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	@SuppressWarnings("unchecked")
 	public <E> List<E> findEntityListByDataScope(E record){
-		List<BaseEntity> list = baseMapper.findEntityListByDataScope(record);
-		List<E> beanList = new ArrayList<E>();
-		if(list != null && list.size() > 0){
-			for(BaseEntity be : list){
-				beanList.add((E) be);
-			}
-		}
+		List<Map<String, Object>> list = baseMapper.findEntityListByDataScope(record);
+		List<E> beanList = (List<E>) Collections3.maplist2BeanList(list, record.getClass());
 		return beanList;
 	}
 

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.template.common.base.BaseEntity;
+import com.template.common.constant.Constant;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -65,9 +66,29 @@ public class SysUser extends BaseEntity {
     
     @Transient
     private Long[] roleIds; //角色
+    
+    public SysUser() {
+	}
 
+	public SysUser(Long companyId, String email, String mobile, String name,
+			String no, Long officeId, String password, String phone,
+			String remarks, String username, String userType, Long[] roleIds) {
+		super();
+		this.companyId = companyId;
+		this.email = email;
+		this.mobile = mobile;
+		this.name = name;
+		this.no = no;
+		this.officeId = officeId;
+		this.password = password;
+		this.phone = phone;
+		this.remarks = remarks;
+		this.username = username;
+		this.userType = userType;
+		this.roleIds = roleIds;
+	}
 
-    public void setRoleIds(Long[] roleIds){
+	public void setRoleIds(Long[] roleIds){
     	this.set("roleIds", roleIds);
     }
     
@@ -179,6 +200,20 @@ public class SysUser extends BaseEntity {
    
     public void setUserType(String userType) {
 		this.set("userType", userType);
+    }
+    
+    //是否是超级管理与
+    public boolean isAdmin(){
+    	return Constant.SUPER_ADMIN.equals(this.getUserType())?true:false;
+    }
+    
+    //当前登录用的sessionId
+    public void setLoginSessionId(String sessionId){
+    	this.set("sessionId", sessionId);
+    }
+    
+    public String getLoginSessionId(){
+    	return this.getString("sessionId");
     }
     
 }

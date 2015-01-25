@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
+import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
 
 @Component
@@ -24,15 +25,25 @@ public class AuthUserFunctions {
 			return true;
 		}
 
-		Map<String, SysResource> userRes = SysUserUtils
-				.getUserResources(SysUserUtils.getSessionUser());
-		if (userRes.containsKey(url))
-			return true;
+		Map<String, SysResource> userRes = SysUserUtils.getUserResources();
+		if (userRes.containsKey(url)) return true;
 		return false;
 	}
-
-	public String loginSessionKey() {
-		return Constant.SESSION_LOGIN_USER;
+	
+	/**
+	 * 登录用户
+	* @return
+	 */
+	public SysUser getLoginUser(){
+		return SysUserUtils.getCacheLoginUser();
+	}
+	
+	/**
+	 * 是否为超级管理员
+	* @return
+	 */
+	public boolean isSuper(){
+		return getLoginUser().getUserType().equals(Constant.SUPER_ADMIN)?true:false;
 	}
 
 }
