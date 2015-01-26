@@ -14,7 +14,7 @@ import com.template.common.spring.utils.SpringContextHolder;
 
 public class CacheUtils {
 	
-	private static EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
+	private static final EhCacheCacheManager cacheManager = SpringContextHolder.getBean("cacheManager");;
 
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class CacheUtils {
 	}
 	
 	public static <T> void put(String cacheName,String key,T value,int timeToIdleSeconds){
-		Ehcache cache = cacheManager.getCacheManager().getCache(cacheName);
+		Ehcache cache = getEhcache(cacheName);
 		Element element = new Element(key, value);
 		element.setTimeToIdle(timeToIdleSeconds);
 		cache.put(element);
@@ -41,7 +41,7 @@ public class CacheUtils {
 	
 	@SuppressWarnings("unchecked")
 	public static List<String> getnonExpiredKeys(String cacheName){
-		Ehcache cache = cacheManager.getCacheManager().getCache(cacheName);
+		Ehcache cache = getEhcache(cacheName);
 		return cache.getKeysWithExpiryCheck();
 	}
 	
@@ -58,6 +58,11 @@ public class CacheUtils {
 		if (StringUtils.isNotBlank(key)) {
 			getCache(cacheName).evict(key);
 		}
+	}
+	
+	public static boolean remove(String cacheName,String key){
+		Ehcache cache = getEhcache(cacheName);
+		return cache.remove(key);
 	}
 	
 	/**
@@ -104,8 +109,20 @@ public class CacheUtils {
 		return val==null?false:true;
 	}
 	
+	//通过spring得到缓存管理对象
 	public static Cache getCache(String cacheName) {
 		return cacheManager.getCache(cacheName);
+	}
+	
+	//底层的ehcache的缓存管理对象
+	public static Ehcache getEhcache(String cacheName){
+		Ehcache cache = null;
+		if(cacheManager!=null){
+			cache = cacheManager.getCacheManager().getCache(cacheName);
+		}else{
+			throw new NullPointerException("spring的管理对象cacheManager是null");
+		}
+		return cache;
 	}
 
 }

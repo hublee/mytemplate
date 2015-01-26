@@ -61,7 +61,6 @@ public class OfficeController extends BaseController {
 	/**
 	 * 分页显示
 	* @param params
-	* @return
 	 */
 	@RequestMapping(value="list",method=RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params,Model model){
@@ -73,7 +72,6 @@ public class OfficeController extends BaseController {
 	/**
 	 * 添加或更新
 	* @param params
-	* @return
 	 */
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	public @ResponseBody Integer save(@ModelAttribute SysOffice sysOffice){

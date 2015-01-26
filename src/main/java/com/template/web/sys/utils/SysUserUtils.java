@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -28,6 +30,8 @@ import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
 
 public class SysUserUtils {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SysUserUtils.class);
 
 	static SysResourceService sysResourceService = SpringContextHolder.getBean("sysResourceService");
 	static SysUserService sysUserService = SpringContextHolder.getBean("sysUserService");
@@ -159,7 +163,7 @@ public class SysUserUtils {
 	}
 	
 	//TODO 规划一下
-	public static List<String> getUserDataScope(){
+	/*public static List<String> getUserDataScope(){
 		SysUser sysUser = getCacheLoginUser();
 		List<SysRole> userRoles = getUserRoles();
 		List<String> dataScope = Lists.newArrayList();
@@ -172,7 +176,7 @@ public class SysUserUtils {
 		}else{
 			
 		}
-	}
+	}*/
 	
 	/**
 	 * 数据范围过滤
@@ -254,17 +258,20 @@ public class SysUserUtils {
 	public static void clearAllCachedAuthorizationInfo(List<Long> userIds) {
 		if(CollectionUtils.isNotEmpty(userIds)){
 			for (Long userId : userIds) {
-				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
+				boolean evictRes = CacheUtils.remove(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_RESOURCE + userId);
 				
-				CacheUtils.evict(Constant.CACHE_SYS_RESOURCE,
+				boolean evictMenu = CacheUtils.remove(Constant.CACHE_SYS_RESOURCE,
 						Constant.CACHE_USER_MENU + userId);
 				
-				CacheUtils.evict(Constant.CACHE_SYS_ROLE,
+				boolean evictRole = CacheUtils.remove(Constant.CACHE_SYS_ROLE,
 						Constant.CACHE_USER_ROLE + userId);
 				
-				CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
+				boolean evictOffice = CacheUtils.remove(Constant.CACHE_SYS_OFFICE,
 						Constant.CACHE_USER_OFFICE + userId);
+				if(evictRes&&evictMenu&&evictRole&&evictOffice){
+					logger.debug("用户"+userId+"的菜单、资源、角色、机构缓存全部删除");
+				}
 			}
 		}
 	}

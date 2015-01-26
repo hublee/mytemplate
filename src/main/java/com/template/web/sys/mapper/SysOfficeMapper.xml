@@ -58,7 +58,7 @@
 				t1.name like concat( '%' , #{name} , '%' )
 			</if>
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
-				FIND_IN_SET(#{id},t1.parent_ids) or t1.id = #{id}
+				(FIND_IN_SET(#{id},t1.parent_ids) or t1.id = #{id})
 			</if>
 			<if test="@Ognl@isNotBlank(userDataScope)">
 				and ${userDataScope}

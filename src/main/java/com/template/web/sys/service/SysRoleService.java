@@ -5,6 +5,9 @@ package com.template.web.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.constant.Constant;
@@ -52,7 +55,7 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 		if(sysRole.getResourceIds().length>0){
 			sysRoleMapper.insertRoleResource(sysRole);
 		}
-		if(("9").equals(sysRole.getDataScope()) && sysRole.getOfficeIds().length>0){
+		if(sysRole.getOfficeIds().length>0 && ("9").equals(sysRole.getDataScope())){
 			sysRoleMapper.insertRoleOffice(sysRole);
 		}
 	    return count;
@@ -79,13 +82,19 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	* @return
 	 */
 	public int saveUserRole(SysRole sysRole){
+		//旧的绑定的人员id
+		List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
+		//当前的要绑定的人员id
+		List<Long> curUserIds = Lists.newArrayList(sysRole.getUserIds());
+		userIds.addAll(curUserIds);
+		ImmutableList<Long> mergeList = ImmutableSet.copyOf(userIds).asList();
+		
 		sysRoleMapper.deleteUserRoleByRoleId(sysRole.getId());
 		if(sysRole.getUserIds().length>0) {
 			sysRoleMapper.insertUserRoleByRoleId(sysRole);
-			//清除缓存
-			List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(sysRole.getId());
-			SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 		}
+		//清除缓存
+		SysUserUtils.clearAllCachedAuthorizationInfo(mergeList);
 		return 1;
 	}
 	
