@@ -1,24 +1,24 @@
 var $curmenu,lastIndex;//最后弹窗索引
-var history = Webit.history;
+var webHistory = Webit.history;
 $(function(){
 	
 	var aMenu = $("#sidebar-menu a[id]");
 	aMenu.on("click",function(){
-		var hash = history.get(),href = $(this).attr("href");
+		var hash = webHistory.get(),href = $(this).attr("href");
 		if( ("#"+hash) == href ){
-			history.justShow("#");
-			history.go(hash);
+			webHistory.justShow("#");
+			webHistory.go(hash);
 		}
 		changeMenu($(this));
 	});
 	
 	var $main_content = $("#fill-main-content");
-	history.add("ajax", function(str, action, token) {
+	webHistory.add("ajax", function(str, action, token) {
 	   $main_content.html(loadHtmlPage(str));
 	   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
 	   changeMenu(curMenu);
 	});
-	history.init();
+	webHistory.init();
 	
 	
 	
