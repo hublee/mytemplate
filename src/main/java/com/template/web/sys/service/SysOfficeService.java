@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.constant.Constant;
 import com.template.web.sys.mapper.SysOfficeMapper;
+import com.template.web.sys.mapper.SysRoleMapper;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
@@ -34,6 +35,8 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 
 	@Resource
 	private SysOfficeMapper sysOfficeMapper;
+	@Resource
+	private SysRoleMapper sysRoleMapper;
 	
 	/**
 	 *新增或更新SysOffice
@@ -47,7 +50,14 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		sysOffice.setGrade(String.valueOf(grade));
 		if(null == sysOffice.getId()){
 			count = this.insertSelective(sysOffice);
-			
+			//自动赋权
+			Long roleId = SysUserUtils.autoAddOfficeToRole();
+			if(roleId != null){
+				SysRole sysRole = new SysRole();
+				sysRole.setId(roleId);
+				sysRole.setOfficeIds(new Long[]{sysOffice.getId()});
+				sysRoleMapper.insertRoleOffice(sysRole);
+			}
 		}else{
 			//getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
 			//先更新parentId，此节点的parentIds以更新
@@ -57,7 +67,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 				sysOfficeMapper.updateParentIds(sysOffice); //批量更新子节点的parentIds
 			}
 		}
-		SysUserUtils.clearOfficeAndDataScope(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
+		SysUserUtils.clearCacheOffice(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
 		return count;
 	}
 	
@@ -68,7 +78,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		int userOfficeCount = this.beforeDeleteTreeStructure(id, "officeId", SysUser.class,SysOffice.class);
 		int userCompanyCount = this.beforeDeleteTreeStructure(id, "companyId",  SysUser.class,SysOffice.class);
 		if(userOfficeCount+userCompanyCount<0) return -1;
-		SysUserUtils.clearOfficeAndDataScope(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
+		SysUserUtils.clearCacheOffice(Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
 		return sysOfficeMapper.deleteOfficeByRootId(id);
 	}
 	

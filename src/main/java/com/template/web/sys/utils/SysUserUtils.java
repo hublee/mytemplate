@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
@@ -190,17 +189,16 @@ public class SysUserUtils {
 		return dataScope;
 	}
 	
-	//针对按明细设置自动赋权机构,只持有明细设置的角色
-	public static void test(){
+	//针对按明细设置自动赋权机构,仅且只有按明细设置的角色
+	public static Long autoAddOfficeToRole(){
 		List<String> userScope = getUserDataScope();
 		int count = 0 ;
-		if(userScope != null
-				&& userScope.contains(Constant.DATA_SCOPE_CUSTOM)){
-			count++;
+		for(String s : userScope){
+			if(StringUtils.equals(s, Constant.DATA_SCOPE_CUSTOM)){
+				count++;
+			}
 		}
-		if(count == userScope.size()){
-			
-		}
+		return count == userScope.size()?getUserRoles().get(0).getId():null;
 	}
 	
 	/**
@@ -315,7 +313,7 @@ public class SysUserUtils {
 	/**
 	 * 清除用户机构
 	 */
-	public static void clearOfficeAndDataScope(List<Long> userIds){
+	public static void clearCacheOffice(List<Long> userIds){
 		for (Long userId : userIds) {
 			CacheUtils.evict(Constant.CACHE_SYS_OFFICE,
 					Constant.CACHE_USER_OFFICE + userId);
