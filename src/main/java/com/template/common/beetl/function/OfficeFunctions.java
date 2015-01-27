@@ -1,5 +1,6 @@
 package com.template.common.beetl.function;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.template.common.constant.Constant;
 import com.template.common.utils.CacheUtils;
 import com.template.common.utils.StringConvert;
+import com.template.web.sys.model.SysDict;
 import com.template.web.sys.model.SysOffice;
+import com.template.web.sys.service.SysDictService;
 import com.template.web.sys.service.SysOfficeService;
 import com.template.web.sys.utils.SysUserUtils;
 
@@ -20,6 +24,8 @@ public class OfficeFunctions {
 	
 	@Resource
 	private SysOfficeService sysOfficeService;
+	@Resource
+	private SysDictService sysDictService;
 	
 	/**
 	 * 全部机构 key:机构id  value:机构对象
@@ -69,6 +75,21 @@ public class OfficeFunctions {
 	 */
 	public List<SysOffice> getUserOfficeList(){
 		return SysUserUtils.getUserOffice();
+	}
+	
+	/**
+	 * 用户持有数据范围
+	 */
+	public List<SysDict> getUserDataScope(){
+		List<String> values = SysUserUtils.getUserDataScope();
+		Collection<SysDict> dicts = sysDictService.findAllMultimap().get("sys_data_scope");
+		List<SysDict> resultList = Lists.newArrayList();
+		for(SysDict dict : dicts){
+			if(values.contains(dict.getValue())){
+				resultList.add(dict);
+			}
+		}
+		return resultList;
 	}
 	
 }

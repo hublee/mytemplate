@@ -1,4 +1,5 @@
 @var userOffice = office.getUserOfficeList(); //用户持有的机构
+@var userDataScopeList = office.getUserDataScope(); //用户数据范围
 <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 		<li class="active"><a data-toggle="tab" href="#home"> <i
@@ -18,7 +19,11 @@
 					<div class="row padding-tb-10">
 						<div class="col-sm-6">
 							<label class="inline">数据范围：</label>
-							<#dict width="80%" type="sys_data_scope" isDefault="yes" name="dataScope"/>
+							<#select id="userDataScope" name="dataScope" width="80%">
+								@for(item in userDataScopeList){
+									<option value="${item.value!}">${item.label!}</option>
+								@}
+							</#select>
 						</div>
 						<div class="col-sm-6">
 							<label class="inline">归属机构：</label>
@@ -66,18 +71,25 @@
 						<tr class="FormData">
 							<td class="CaptionTD">数据范围：</td>
 							<td class="DataTD width-100">
-								<#dict type="sys_data_scope" width="50%" id="chosenSelectData" 
-								name="dataScope" isScript="true">
-									$("#chosenSelectData").change(function(){
-										if($(this).val() == 9){
-											$("#treeSelectOffice").show();
-										}else{
-											$("#treeSelectOffice").hide();
-										}
-									})
-									$("#chosenSelectData option[value='9']").attr("selected",true);
-									$("#chosenSelectData").trigger("chosen:updated");
-								</#dict>
+								
+								<#select id="saveUserDataScope" name="dataScope" width="50%">
+									@for(item in userDataScopeList){
+										<option value="${item.value!}">${item.label!}</option>
+									@}
+								</#select>
+								<script type="text/javascript">
+									$(function(){
+										$("#saveUserDataScope").change(function(){
+											if($(this).val() == 9){
+												$("#treeSelectOffice").show();
+											}else{
+												$("#treeSelectOffice").hide();
+											}
+										})
+										$("#saveUserDataScope option[value='9']").attr("selected",true);
+										$("#saveUserDataScope").trigger("chosen:updated");
+									});
+								</script>
 								<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
 							</td>
 						</tr>

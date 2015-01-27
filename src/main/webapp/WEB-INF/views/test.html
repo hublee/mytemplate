@@ -64,3 +64,18 @@ public static String dataScopeFilterString(String officeAlias, String userAlias,
 		}
 		return dataScopeSql;
 	}
+	
+	
+	
+	<#dict type="sys_data_scope" width="50%" id="chosenSelectData" 
+								name="dataScope" isScript="true">
+									$("#chosenSelectData").change(function(){
+										if($(this).val() == 9){
+											$("#treeSelectOffice").show();
+										}else{
+											$("#treeSelectOffice").hide();
+										}
+									})
+									$("#chosenSelectData option[value='9']").attr("selected",true);
+									$("#chosenSelectData").trigger("chosen:updated");
+								</#dict>

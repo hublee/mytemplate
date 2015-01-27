@@ -13,6 +13,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Table;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysAreaMapper;
 import com.template.web.sys.mapper.SysDictMapper;
@@ -78,6 +82,26 @@ public class SysDictService extends ServiceMybatis<SysDict> {
 	public List<SysDict> findSysDictListByParams(SysDict sysDict) {
 		List<SysDict> dicts = this.select(sysDict);
 		return dicts;
+	}
+	
+	@Cacheable(key="'allDictTable'")
+	public Table<String,String, SysDict> findAllDictTable(){
+		List<SysDict> dictList = this.select(new SysDict());
+		Table<String,String, SysDict> tableDicts = HashBasedTable.create();
+		for(SysDict dict : dictList){
+			tableDicts.put(dict.getType(), dict.getValue(), dict);
+		}
+		return tableDicts;
+	}
+	
+	@Cacheable(key="'allDictMultimap'")
+	public Multimap<String, SysDict> findAllMultimap(){
+		List<SysDict> dictList = this.select(new SysDict());
+		Multimap<String, SysDict> multimap = ArrayListMultimap.create();
+		for(SysDict dict : dictList){
+			multimap.put(dict.getType(), dict);
+		}
+		return multimap;
 	}
 
 }
