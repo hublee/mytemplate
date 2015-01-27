@@ -1,5 +1,9 @@
 package com.template.common.constant;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Constant {
 
 	// 删除标记（0：正常；1：删除；2：审核；）
@@ -40,6 +44,8 @@ public class Constant {
 	public static final String DATA_SCOPE_OFFICE = "5";
 	public static final String DATA_SCOPE_SELF = "8";
 	public static final String DATA_SCOPE_CUSTOM = "9";
+	public static final List<String> DATA_SCOPE_ADMIN = Lists.newArrayList("1","2","3","4","5","8","9");
+	
 
 	// 显示/隐藏
 	public static final String SHOW = "1";

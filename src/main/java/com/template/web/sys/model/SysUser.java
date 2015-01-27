@@ -202,18 +202,9 @@ public class SysUser extends BaseEntity {
 		this.set("userType", userType);
     }
     
-    //是否是超级管理与
+    //是否是超级管理员
     public boolean isAdmin(){
     	return Constant.SUPER_ADMIN.equals(this.getUserType())?true:false;
-    }
-    
-    //当前登录用的sessionId
-    public void setLoginSessionId(String sessionId){
-    	this.set("sessionId", sessionId);
-    }
-    
-    public String getLoginSessionId(){
-    	return this.getString("sessionId");
     }
     
 }

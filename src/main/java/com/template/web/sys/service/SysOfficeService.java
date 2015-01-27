@@ -47,6 +47,7 @@ public class SysOfficeService extends ServiceMybatis<SysOffice> {
 		sysOffice.setGrade(String.valueOf(grade));
 		if(null == sysOffice.getId()){
 			count = this.insertSelective(sysOffice);
+			
 		}else{
 			//getParentIds() 当前选择的父节点parentIds , getParentId()父节点的id
 			//先更新parentId，此节点的parentIds以更新

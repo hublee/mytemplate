@@ -1,0 +1,66 @@
+public static String dataScopeFilterString(String officeAlias, String userAlias,String... field){
+		SysUser sysUser = getCacheLoginUser();
+		if(StringUtils.isBlank(officeAlias)) officeAlias = "sys_office";
+		List<String> dataScope = Lists.newArrayList();
+		//List<SysRole> userRoles = getUserRoles();
+		//用户持有的数据范围
+		List<String> userDataScope = getUserDataScope();
+		StringBuilder tempSql = new StringBuilder();
+		String dataScopeSql = "";
+		if(!sysUser.isAdmin()){
+			for(String sr : userDataScope){
+				if(!dataScope.contains(sr.getDataScope()) && StringUtils.isNotBlank(officeAlias)){
+					boolean isDataScopeAll = false;
+					if (Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
+						isDataScopeAll = true;
+					}
+					else if (Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
+						//so.id=1 or so.parentIds like '0,1,%'
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
+						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getCompanyId());
+						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
+					}
+					else if (Constant.DATA_SCOPE_COMPANY.equals(sr.getDataScope())){
+						//or so.id=1 or (so.parent_id=1 and so.type=2)
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
+						tempSql.append(" or ("+officeAlias+".parent_id="+sysUser.getCompanyId());
+						tempSql.append(" and "+officeAlias+".type=2)");
+					}
+					else if (Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(sr.getDataScope())){
+						//or so.id=5 or so.parentIds like '0,1,5,%'
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
+						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getOfficeId());
+						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
+					}
+					else if (Constant.DATA_SCOPE_OFFICE.equals(sr.getDataScope())){
+						//or so.id=5
+						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
+					}
+					else if (Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope())){
+						//or so.id in (1,2,3,4,5)
+						List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
+						tempSql.append(" or "+officeAlias+".id in ("+StringUtils.join(offices, ",")+")");
+					}
+					if (!isDataScopeAll){
+						if (StringUtils.isNotBlank(userAlias)){
+							// or su.id=22
+							if(field==null || field.length==0) field[0] = "id";
+							tempSql.append(" or "+userAlias+"."+field[0]+"="+sysUser.getId());
+						}else {
+							tempSql.append(" or "+officeAlias+".id is null");
+						}
+					}else{
+						// 如果包含全部权限，则去掉之前添加的所有条件，并跳出循环。
+						tempSql.delete(0, tempSql.length());
+						break;
+					}
+					dataScope.add(sr.getDataScope());
+				}
+			}// for end
+			
+			if(StringUtils.isNotBlank(tempSql)){
+				dataScopeSql = "("+tempSql.substring(tempSql.indexOf("or")+2, tempSql.length())+")";
+			}
+		}
+		return dataScopeSql;
+	}

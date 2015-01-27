@@ -66,6 +66,7 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		}else{
 			sysRoleMapper.deleteUserRoleByUserId(sysUser.getId());
 			count = this.updateByPrimaryKeySelective(sysUser);
+			//清除缓存
 			SysUserUtils.clearAllCachedAuthorizationInfo(Arrays.asList(sysUser.getId()));
 			if(CacheUtils.isCacheByKey(Constant.CACHE_SYS_USER, sysUser.getId().toString())){
 				String userType = this.selectByPrimaryKey(sysUser.getId()).getUserType();
