@@ -199,7 +199,7 @@ public class SysUserUtils {
 			}
 		}
 		return count == userScope.size()?getUserRoles().get(0).getId():null;
-	}
+	} 
 	
 	/**
 	 * 数据范围过滤
