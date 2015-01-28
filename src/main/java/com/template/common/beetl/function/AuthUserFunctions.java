@@ -45,5 +45,12 @@ public class AuthUserFunctions {
 	public boolean isSuper(){
 		return getLoginUser().getUserType().equals(Constant.SUPER_ADMIN)?true:false;
 	}
+	
+	/**
+	 * 是否持有所有数据(数据范围，可认为是总管理)
+	 */
+	public boolean hasAllDataScope(){
+		return SysUserUtils.getUserDataScope().contains(Constant.DATA_SCOPE_ALL);
+	}
 
 }

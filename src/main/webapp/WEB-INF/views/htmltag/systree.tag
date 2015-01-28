@@ -10,7 +10,6 @@
 @var width = width!'600';
 @var reloadUrl = reloadUrl!false;
 @var rootNodeName = rootNodeName!"全部";
-@var isSuper = auth.isSuper();
 
 <script type="text/javascript">
 	var setting = {
@@ -147,7 +146,7 @@
 		//树结构初始化
 		nodeList=[]; //清除缓存
 		var treeData = ${treeData};
-		@if(isSuper){
+		@if(auth.hasAllDataScope() || auth.isSuper()){
 			var root = {id:0,name:"${rootNodeName}",open:true};
 			treeData[treeData.length] = root;
 		@}
