@@ -14,7 +14,16 @@
 			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
-					<#dict width="60%" showType="${true}" isDefault="yes"/>
+					@var allDict = dict.getAllDictType();
+					<#select name="type" width="60%">
+						<option value="">全部</option>
+						@for(type in allDict){
+							<option value="${type!}">
+							${type!}
+							</option>
+						@}
+					</#select>
+					
 				</div>
 				<div class="pull-left width-30">
 					<label>描述：</label>

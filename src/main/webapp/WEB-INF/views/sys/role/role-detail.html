@@ -20,7 +20,7 @@
 		<div class="profile-info-name">数据范围</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			<#dict dictMode="showName" value="${sysrole.dataScope!}" type="sys_data_scope"/>
+			${dict.getDictByTypeAndValue("sys_data_scope",sysrole.dataScope).label}
 			</span>
 		</div>
 	</div>

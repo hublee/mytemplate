@@ -19,7 +19,14 @@
 				<tr class="FormData">
 					<td class="CaptionTD">机构类型</td>
 					<td class="DataTD width-100">
-					<#dict value="${office.type!}" type="sys_office_type" />
+					@var officeList = dict.getDictListByType("sys_office_type");
+					<#select name="type">
+						@for(item in officeList){
+							<option value="${item.value!}" ${decode(item.value,office.type!,"selected","")}>
+							${item.label!}
+							</option>
+						@}
+					</#select>
 					</td>
 				</tr>
 				<tr class="FormData">

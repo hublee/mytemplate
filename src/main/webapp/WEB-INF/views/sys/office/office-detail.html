@@ -11,7 +11,7 @@
 		<div class="profile-info-name">机构类型</div>
 		<div class="profile-info-value">
 			<span class="editable editable-click">
-			<#dict dictMode="showName" value="${office.type!}" type="sys_office_type"/>
+			${dict.getDictByTypeAndValue("sys_office_type",office.type).label}
 			</span>
 		</div>
 	</div>

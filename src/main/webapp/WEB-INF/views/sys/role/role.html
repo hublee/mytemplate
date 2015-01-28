@@ -20,6 +20,7 @@
 						<div class="col-sm-6">
 							<label class="inline">数据范围：</label>
 							<#select id="userDataScope" name="dataScope" width="80%">
+								<option value="">全部</option>
 								@for(item in userDataScopeList){
 									<option value="${item.value!}">${item.label!}</option>
 								@}

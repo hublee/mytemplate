@@ -24,7 +24,7 @@
 					>${item.name}</a>
 				</td>
 				<td class="center">
-					<#dict dictMode="showName" value="${item.type!}" type="sys_office_type"/>
+					${dict.getDictByTypeAndValue("sys_office_type",item.type).label}
 				</td>
 				<td class="center">
 					${item.pname!}

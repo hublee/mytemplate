@@ -1,4 +1,5 @@
 @var officeMap = office.getAllOfficeMap();
+@var userDataScopeList = office.getUserDataScope(); //用户数据范围
 <div class="layer">
 	<form name="FormPost" id="role-save" class="FormGrid"  method="post"
 		action="${rootPath}/role/save">
@@ -25,7 +26,12 @@
 				<tr class="FormData">
 					<td class="CaptionTD">数据范围</td>
 					<td class="DataTD width-100">
-						<#dict type="sys_data_scope" width="40%" id="chosenSelectEdit" name="dataScope" isScript="true">
+						<#select id="chosenSelectEdit" name="dataScope" width="40%">
+							@for(item in userDataScopeList){
+								<option value="${item.value!}">${item.label!}</option>
+							@}
+						</#select>
+						<script type="text/javascript">
 							$("#chosenSelectEdit").change(function(){
 								if($(this).val() == 9){
 									$("#treeSelectOfficeEdit").show();
@@ -36,7 +42,8 @@
 							$("#chosenSelectEdit option[value='${sysrole.dataScope!}']").attr("selected",true);
 							$("#chosenSelectEdit option[value='${sysrole.dataScope!}']").trigger('change');
 							$("#chosenSelectEdit").trigger("chosen:updated");
-						</#dict>
+						</script>
+						
 						<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
 					</td>
 				</tr>

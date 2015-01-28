@@ -25,7 +25,14 @@
 				<tr class="FormData">
 					<td class="CaptionTD">区域类型</td>
 					<td class="DataTD width-100">
-					<#dict value="${area.type!}" type="sys_area_type" />
+					@var areaList = dict.getDictListByType("sys_area_type");
+					<#select name="type">
+						@for(item in areaList){
+							<option value="${item.value!}" ${decode(item.value,area.type!,"selected","")}>
+							${item.label!}
+							</option>
+						@}
+					</#select>
 					</td>
 				</tr>
 				<tr class="FormData">

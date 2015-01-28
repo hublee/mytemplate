@@ -27,7 +27,7 @@
 					${item.pname! }
 				</td>
 				<td class="center">
-					<#dict dictMode="showName" value="${item.type!}" type="sys_area_type"/>
+					${dict.getDictByTypeAndValue("sys_area_type",item.type).label}
 				</td>
 				<td class="center">
 					<div class="hidden-sm hidden-xs action-buttons">

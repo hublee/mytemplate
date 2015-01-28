@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.primitives.Ints;
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
@@ -165,20 +166,24 @@ public class SysUserUtils {
 	}
 	
 	/**
-	 * 用户持有的数据范围
+	 * 用户持有的数据范围,包含数据范围小的
 	 */
 	public static List<String> getUserDataScope(){
 		SysUser sysUser = getCacheLoginUser();
 		List<String> dataScope = CacheUtils.get(Constant.CACHE_SYS_OFFICE, 
 				Constant.CACHE_USER_DATASCOPE+sysUser.getId());
 		if(dataScope == null){
-			List<SysRole> userRoles = getUserRoles();
 			dataScope = Lists.newArrayList();
 			if(!sysUser.isAdmin()){
-				for(SysRole sr : userRoles){
-					if(!dataScope.contains(sr.getDataScope())){
-						dataScope.add(sr.getDataScope());
+				List<Integer> dc = Lists.transform(getUserRoles(), new Function<SysRole, Integer>() {
+					@Override
+					public Integer apply(SysRole sysRole) {
+						return Integer.parseInt(sysRole.getDataScope());
 					}
+				});
+				int min = Ints.min(Ints.toArray(dc));
+				for(int i = min,len = Integer.parseInt(Constant.DATA_SCOPE_CUSTOM);i<=len;i++){
+					dataScope.add(i+"");
 				}
 			}else{
 				dataScope = Constant.DATA_SCOPE_ADMIN;
@@ -212,42 +217,42 @@ public class SysUserUtils {
 	public static String dataScopeFilterString(String officeAlias, String userAlias,String... field){
 		SysUser sysUser = getCacheLoginUser();
 		if(StringUtils.isBlank(officeAlias)) officeAlias = "sys_office";
-		//用户持有的数据范围
-		List<String> userDataScope = getUserDataScope();
+		//用户持有的角色
+		List<SysRole> userRoles = getUserRoles();
 		//临时sql保存
 		StringBuilder tempSql = new StringBuilder();
 		//最终生成的sql
 		String dataScopeSql = "";
 		if(!sysUser.isAdmin()){
-			for(String scope : userDataScope){
+			for(SysRole sr : userRoles){
 				if(StringUtils.isNotBlank(officeAlias)){
 					boolean isDataScopeAll = false;
-					if (Constant.DATA_SCOPE_ALL.equals(scope)){
+					if (Constant.DATA_SCOPE_ALL.equals(sr.getDataScope())){
 						isDataScopeAll = true;
 					}
-					else if (Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(scope)){
+					else if (Constant.DATA_SCOPE_COMPANY_AND_CHILD.equals(sr.getDataScope())){
 						//so.id=1 or so.parentIds like '0,1,%'
 						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
 						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getCompanyId());
 						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
 					}
-					else if (Constant.DATA_SCOPE_COMPANY.equals(scope)){
+					else if (Constant.DATA_SCOPE_COMPANY.equals(sr.getDataScope())){
 						//or so.id=1 or (so.parent_id=1 and so.type=2)
 						tempSql.append(" or "+officeAlias+".id="+sysUser.getCompanyId());
 						tempSql.append(" or ("+officeAlias+".parent_id="+sysUser.getCompanyId());
 						tempSql.append(" and "+officeAlias+".type=2)");
 					}
-					else if (Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(scope)){
+					else if (Constant.DATA_SCOPE_OFFICE_AND_CHILD.equals(sr.getDataScope())){
 						//or so.id=5 or so.parentIds like '0,1,5,%'
 						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
 						SysOffice sysOffice = sysOfficeService.selectByPrimaryKey(sysUser.getOfficeId());
 						tempSql.append(" or "+officeAlias+".parent_ids like '"+sysOffice.getParentIds()+sysOffice.getId()+",%'");
 					}
-					else if (Constant.DATA_SCOPE_OFFICE.equals(scope)){
+					else if (Constant.DATA_SCOPE_OFFICE.equals(sr.getDataScope())){
 						//or so.id=5
 						tempSql.append(" or "+officeAlias+".id="+sysUser.getOfficeId());
 					}
-					else if (Constant.DATA_SCOPE_CUSTOM.equals(scope)){
+					else if (Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope())){
 						//or so.id in (1,2,3,4,5)
 						List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
 						tempSql.append(" or "+officeAlias+".id in ("+StringUtils.join(offices, ",")+")");

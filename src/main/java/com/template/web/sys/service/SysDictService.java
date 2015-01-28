@@ -75,15 +75,6 @@ public class SysDictService extends ServiceMybatis<SysDict> {
 		return this.updateDelFlagToDelStatusById(SysDict.class, sysDict.getId());
 	}
 
-	/**
-	 * 根据字典类型查询,做一下缓存
-	 */
-	@Cacheable(key = "'dict'+#sysDict['type']")
-	public List<SysDict> findSysDictListByParams(SysDict sysDict) {
-		List<SysDict> dicts = this.select(sysDict);
-		return dicts;
-	}
-	
 	@Cacheable(key="'allDictTable'")
 	public Table<String,String, SysDict> findAllDictTable(){
 		List<SysDict> dictList = this.select(new SysDict());
