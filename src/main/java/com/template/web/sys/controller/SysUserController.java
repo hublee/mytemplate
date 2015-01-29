@@ -23,7 +23,6 @@ import com.template.web.sys.model.SysRole;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
-import com.template.web.sys.utils.SysUserUtils;
 
 @Controller
 @RequestMapping("${adminPath}/sysuser")
