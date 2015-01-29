@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.template.common.excel.EasyXls;
+import com.template.common.excel.bean.ExcelConfig;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
@@ -46,19 +50,6 @@ public class AreaController {
 	}
 	
 	/**
-	 * 分页显示区域table
-	 * 
-	 * @param params
-	 * @return
-	 */
-	@RequestMapping(value = "list",method = RequestMethod.POST)
-	public String list(@RequestParam Map<String, Object> params, Model model) {
-		PageInfo<SysArea> page = sysAreaService.findPageInfo(params);
-		model.addAttribute("page", page);
-		return "sys/area/area-list";
-	}
-	
-	/**
 	 * 添加或更新区域
 	 * 
 	 * @param params
@@ -81,6 +72,36 @@ public class AreaController {
 			count = sysAreaService.deleteAreaByRootId(id);
 		}
 		return count;
+	}
+	
+	/**
+	 * 分页显示区域table
+	 * 
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "list",method = RequestMethod.POST)
+	public String list(@RequestParam Map<String, Object> params, Model model) {
+		PageHelper.startPage(params);
+		List<SysArea> list = sysAreaService.findPageInfo(params);
+		model.addAttribute("page", new PageInfo<SysArea>(list));
+		return "sys/area/area-list";
+	}
+	
+	@RequestMapping(value = "export", method=RequestMethod.GET)
+	public void export(@RequestParam Map<String, Object> params) throws Exception{
+		List<SysArea> list = sysAreaService.findPageInfo(params);
+		
+		ExcelConfig config = new ExcelConfig.Builder(Map.class)
+		.sheetNum(0)
+		.startRow(1)
+		.sheetName("区域")
+		.separater(",")
+		.addColumn("id,区域Id","code,区域编码","create_by,创建人Id").build();
+		
+		boolean flag = EasyXls.list2Xls(config, 
+    			list,"C:/Documents and Settings/Administrator/桌面" , "区域.xls");
+    	System.out.println(flag);
 	}
 
 	/**

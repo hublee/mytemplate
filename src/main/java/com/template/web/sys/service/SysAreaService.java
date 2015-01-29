@@ -76,11 +76,11 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 *            {"name":"区域名字","id":"区域id"}
 	 * @return
 	 */
-	public PageInfo<SysArea> findPageInfo(Map<String, Object> params) {
-		PageHelper.startPage(params);
+	public List<SysArea> findPageInfo(Map<String, Object> params) {
 		List<SysArea> list = sysAreaMapper.findPageInfo(params);
-		return new PageInfo<SysArea>(list);
+		return list;
 	}
+	
 	
 	/**
 	 * 查询全部的区域

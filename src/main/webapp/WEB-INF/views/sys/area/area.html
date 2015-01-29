@@ -2,16 +2,16 @@
 	<div class="widget-header clearfix">
 		<h5 class="widget-title">区域配置</h5>
 		<div class="widget-toolbar">
-			<a href="#" data-action="fullscreen" class="orange2"> <i
+			<span href="#" data-action="fullscreen" class="orange2"> <i
 				class="ace-icon fa fa-expand"></i>
-			</a>
+			</span>
 		</div>
-		<div class="widget-toolbar no-border width-40" style="padding-top: 2px;">
+		<div class="widget-toolbar  width-40" style="padding-top: 2px;">
 			<form method="post" class="form-search" id="search-form" target="list-page"
 				action="${rootPath}/area/list">
 				<div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
-						<span class=" btn  btn-success btn-sm"
+						<span class=" btn btn-success btn-sm"
 							id="search-all-btn">
 							 显示全部 
 						</span> 
@@ -27,6 +27,9 @@
 				</div>
 				<input type="hidden" name="id" />
 			</form>
+		</div>
+		<div class="widget-toolbar no-border">
+			<span class="btn btn-purple btn-sm">导出excel</span>
 		</div>
 	</div>
 

@@ -30,7 +30,7 @@
 		left join sys_area a2
 		ON a.parent_id=a2.id
 		<where>
-			<if test="name != ''">
+			<if test="@Ognl@isNotBlank(name)">
 				a.name like concat( '%' , #{name} , '%' )
 			</if>
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
