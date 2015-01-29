@@ -13,6 +13,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -604,5 +606,42 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	public static HttpServletResponse downFile(HttpServletResponse response,
+			String filePath, String fileName) throws Exception {
+		File file = new File(filePath);
+		response.setContentType("application/x-download");
+		response.setHeader("Pragma", "public");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		OutputStream out = null;
+		InputStream in = null;
+		// 下面一步不可少
+		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
+		response.addHeader("Content-disposition", "attachment;filename="
+				+ fileName);// 设定输出文件头
+
+		try {
+			out = response.getOutputStream();
+			in = new FileInputStream(file);
+			int len = in.available();
+			byte[] b = new byte[len];
+			in.read(b);
+			out.write(b);
+			out.flush();
+
+		} catch (Exception e) {
+			throw new Exception("下载失败!");
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.close();
+			}
+		}
+		return response;
+	}
+
 
 }

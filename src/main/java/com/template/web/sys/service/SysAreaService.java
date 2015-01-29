@@ -2,8 +2,6 @@
 
 package com.template.web.sys.service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.web.sys.mapper.SysAreaMapper;
 import com.template.web.sys.mapper.SysOfficeMapper;

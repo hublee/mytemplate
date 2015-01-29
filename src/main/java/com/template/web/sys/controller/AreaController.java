@@ -1,9 +1,11 @@
 package com.template.web.sys.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.excel.EasyXls;
 import com.template.common.excel.bean.ExcelConfig;
+import com.template.common.utils.FileUtils;
+import com.template.common.utils.Global;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
@@ -88,8 +92,8 @@ public class AreaController {
 		return "sys/area/area-list";
 	}
 	
-	@RequestMapping(value = "export", method=RequestMethod.GET)
-	public void export(@RequestParam Map<String, Object> params) throws Exception{
+	@RequestMapping(value = "export")
+	public void export(@RequestParam Map<String, Object> params,HttpServletResponse response) throws Exception{
 		List<SysArea> list = sysAreaService.findPageInfo(params);
 		
 		ExcelConfig config = new ExcelConfig.Builder(Map.class)
@@ -97,10 +101,13 @@ public class AreaController {
 		.startRow(1)
 		.sheetName("区域")
 		.separater(",")
-		.addColumn("id,区域Id","code,区域编码","create_by,创建人Id").build();
+		.addColumn("id,区域Id","name,区域名称","code,区域编码").build();
 		
 		boolean flag = EasyXls.list2Xls(config, 
-    			list,"C:/Documents and Settings/Administrator/桌面" , "区域.xls");
+    			list,Global.getUploadRoot("xls") , "区域.xls");
+		
+		FileUtils.downFile(response, Global.getUploadRoot("xls")+"区域.xls", "区域.xls");
+		
     	System.out.println(flag);
 	}
 

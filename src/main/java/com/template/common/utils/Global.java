@@ -18,4 +18,8 @@ public class Global {
 		return SysConstant.getValue("ctxPath");
 	}
 	
+	public static String getUploadRoot(String groupFile){
+		return SysConstant.getValue("upload.root"+"/"+groupFile+"/");
+	}
+	
 }
