@@ -147,6 +147,30 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	}
 	
 	/**
+	 * 当前登录用户的可见的角色
+	 */
+	public List<SysRole> findCurUserRoleList(){
+		Map<String, Object> params = Maps.newHashMap();
+		params.put(Constant.CACHE_USER_DATASCOPE, SysUserUtils.dataScopeFilterString("so", "sur","user_id"));
+		return sysRoleMapper.findPageInfo(params);
+	}
+	
+	/**
+	 * 当前登录用户的可见的角色map形式 
+	 */
+	public Map<Long, SysRole> findCurUserRoleMap(){
+		List<SysRole> list = this.findCurUserRoleList();
+		Map<Long, SysRole> map = Maps.uniqueIndex(list, new Function<SysRole, Long>() {
+			@Override
+			public Long apply(SysRole sysRole) {
+				return sysRole.getId();
+			}
+		});
+		return map;
+	}
+	
+	
+	/**
 	 * 用户的角色List列表
 	* @param userId
 	* @return userRoleList

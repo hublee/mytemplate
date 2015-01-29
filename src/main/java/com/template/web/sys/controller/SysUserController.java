@@ -94,7 +94,7 @@ public class SysUserController {
 		}
 		if(StringUtils.equals("edit", mode)){
 			findUserRoleMap = sysRoleService.findUserRoleMapByUserId(id);
-			rolesMap.putAll(SysUserUtils.getUserRolesMap());
+			rolesMap.putAll(sysRoleService.findCurUserRoleMap());
 			rolesMap.putAll(findUserRoleMap);
 			model.addAttribute("rolesMap", rolesMap)
 				.addAttribute("findUserRoleMap", findUserRoleMap);
