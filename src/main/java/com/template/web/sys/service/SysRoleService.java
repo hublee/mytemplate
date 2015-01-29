@@ -104,7 +104,8 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	 * @param {"pageNum":"页码","pageSize":"条数","isCount":"是否生成count sql",......}
 	 */
 	public PageInfo<SysRole> findPageInfo(Map<String,Object> params) {
-		params.put(Constant.CACHE_USER_DATASCOPE, SysUserUtils.dataScopeFilterString("so", "sur","user_id"));
+		params.put(Constant.CACHE_USER_DATASCOPE, 
+				SysUserUtils.dataScopeFilterString("so", "sur","user_id"));
         PageHelper.startPage(params);
         List<SysRole> list = sysRoleMapper.findPageInfo(params); 
         return new PageInfo<SysRole>(list);
