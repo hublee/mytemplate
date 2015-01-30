@@ -2,9 +2,9 @@
 	<div class="widget-header clearfix">
 		<h5 class="widget-title">区域配置</h5>
 		<div class="widget-toolbar">
-			<span href="#" data-action="fullscreen" class="orange2"> <i
-				class="ace-icon fa fa-expand"></i>
-			</span>
+			<a href="#" data-action="fullscreen" class="orange2"> 
+				<i class="ace-icon fa fa-expand"></i>
+			</a>
 		</div>
 		<div class="widget-toolbar  width-40" style="padding-top: 2px;">
 			<form method="post" class="form-search" id="search-form" target="list-page"
@@ -28,10 +28,62 @@
 				<input type="hidden" name="id" />
 			</form>
 		</div>
-		<div class="widget-toolbar no-border">
-			<span class="btn btn-purple btn-xs" 
-			onclick="Angel.downFile('search-form','${rootPath}/area/export')">导出excel</span>
+		<div class="widget-toolbar">
+			<span class="btn btn-info btn-xs" 
+			onclick="Angel.downloadFile('search-form','${rootPath}/area/export')">导出excel</span>
 		</div>
+		<div class="widget-toolbar no-border">
+			<span class="btn btn-info btn-xs" id="importFile"
+			>导入数据</span>
+		</div>
+		<form id="test" class="no-border width-40"  
+		action="${rootPath}/area/import">
+			<input type="file"  id="id-input-file-1" />
+		</form>
+		<script>
+		$("#importFile").click(function(){
+			$("#test").ajaxSubmit({
+				
+			});
+		});
+		$(function(){
+			$('#id-input-file-1').ace_file_input({
+				btn_choose:'选择excel',
+				btn_change:'导入数据',
+				no_icon:'ace-icon fa fa-cloud-upload',
+				droppable:true,
+				thumbnail:"small"//large | fit
+				,icon_remove:null
+				//,allowExt:["jpeg", "jpg", "png", "gif" , "bmp"]
+				//,allowMime:["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"]
+				//,icon_remove:null//set null, to hide remove/reset button
+				/**,before_change:function(files, dropped) {
+					//Check an example below
+
+					//or examples/file-upload.html
+					return true;
+				}*/
+				/**,before_remove : function() {
+					return true;
+				}*/
+				,
+				preview_error : function(filename, error_code) {
+					alert("dd")
+					//name of the file that failed
+					//error_code values
+					//1 = 'FILE_LOAD_FAILED',
+					//2 = 'IMAGE_LOAD_FAILED',
+					//3 = 'THUMBNAIL_FAILED'
+					//alert(error_code);
+				}
+		
+			}).on('change', function(){
+				//console.log($(this).info.error_count['mime'])
+				console.log($(this).data('ace_input_files'));
+				console.log($(this).data('ace_input_method'));
+			});
+		});
+		</script>
 	</div>
 
 	<div class="widget-body">

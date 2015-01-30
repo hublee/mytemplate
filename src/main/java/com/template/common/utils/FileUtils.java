@@ -616,7 +616,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				"must-revalidate, post-check=0, pre-check=0");
 		OutputStream out = null;
 		InputStream in = null;
-		// 下面一步不可少
 		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
 		response.addHeader("Content-disposition", "attachment;filename="
 				+ fileName);// 设定输出文件头

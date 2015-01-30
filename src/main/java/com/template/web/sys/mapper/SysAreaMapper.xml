@@ -24,7 +24,7 @@
 	</update>
 	
 	<!-- 分页显示筛选查询 -->
-	<select id="findPageInfo" resultType="com.template.web.sys.model.SysArea">
+	<select id="findSysAreaList" resultType="com.template.web.sys.model.SysArea">
 		select <include refid="sysAreaAliasColumns"/>,a2.name pname,a2.id pid
 		from sys_area a
 		left join sys_area a2

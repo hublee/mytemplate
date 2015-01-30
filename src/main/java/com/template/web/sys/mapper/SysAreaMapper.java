@@ -19,6 +19,6 @@ public interface SysAreaMapper extends Mapper<SysArea>{
 	
 	public int deleteAreaByRootId(Long id);
 
-	public List<SysArea> findPageInfo(Map<String, Object> params);
+	public List<SysArea> findSysAreaList(Map<String, Object> params);
 	
 }

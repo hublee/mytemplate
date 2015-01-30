@@ -5,6 +5,8 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -388,7 +390,59 @@ public class XlsUtil {
         }
         return true;
     }
+    
+    /**
+     * 以流的形式导出excel
+    * @param config
+    * @param list
+    * @return 返回输入流
+    * @throws Exception
+     */
+    public static InputStream list2Xls(ExcelConfig config, List<?> list) throws Exception {
+    	ByteArrayOutputStream os = null;
+        try {
+            String[] header = config.getHeaders();
+            String[] names = config.getNames();
+            String[] values;
+            
+            os = new ByteArrayOutputStream(); 
+			
+            WritableWorkbook wb = Workbook.createWorkbook(os);
+            
+            String sheetName = (config.getSheet() != null && !config.getSheet().equals("")) ? config.getSheet() : ("sheet" + config.getSheetNum());
+            WritableSheet sheet = wb.createSheet(sheetName, 0);
 
+            int row = 0;
+            int column = 0;
+            int rowadd = 0;
+            //写入标题
+            if (config.getHeader()) {
+                for (column = 0; column < header.length; column++) {
+                    sheet.addCell(new Label(column, row + rowadd, header[column]));
+                    if (config.getColumn(column).getWidth() != null) {
+                        sheet.setColumnView(column, config.getColumn(column).getWidth() / 7);
+                    }
+                }
+                rowadd++;
+            }
+            //写入内容//行
+            for (row = 0; row < list.size(); row++) {
+                Object rowData = list.get(row);
+                values = getObjValues(rowData, names);
+                //列
+                for (column = 0; column < values.length; column++) {
+                    sheet.addCell(new Label(column, row + rowadd, values[column]));
+                }
+            }
+            wb.write();
+            wb.close();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return new ByteArrayInputStream(os.toByteArray());
+    }
+    
+    
     /**
      * 获取对象指定字段值
      *

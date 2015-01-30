@@ -18,8 +18,17 @@ public class Global {
 		return SysConstant.getValue("ctxPath");
 	}
 	
-	public static String getUploadRoot(String groupFile){
-		return SysConstant.getValue("upload.root"+"/"+groupFile+"/");
+	/**
+	 *  下载的路径
+	* @param groupFile 分组文件夹名
+	 */
+	public static String getDownFileRoot(String groupFile){
+		String dateFile = DateUtils.getDate();
+		StringBuilder builder = new StringBuilder();
+		builder.append(SysConstant.getValue("downfile.rootpath")+"/");
+		builder.append(groupFile+"/");
+		builder.append(dateFile+"/");
+		return builder.toString();
 	}
 	
 }

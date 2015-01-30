@@ -1,10 +1,13 @@
 package com.template.web.sys.controller;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.excel.EasyXls;
 import com.template.common.excel.bean.ExcelConfig;
-import com.template.common.utils.FileUtils;
-import com.template.common.utils.Global;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
@@ -87,30 +91,11 @@ public class AreaController {
 	@RequestMapping(value = "list",method = RequestMethod.POST)
 	public String list(@RequestParam Map<String, Object> params, Model model) {
 		PageHelper.startPage(params);
-		List<SysArea> list = sysAreaService.findPageInfo(params);
+		List<SysArea> list = sysAreaService.findSysAreaList(params);
 		model.addAttribute("page", new PageInfo<SysArea>(list));
 		return "sys/area/area-list";
 	}
 	
-	@RequestMapping(value = "export")
-	public void export(@RequestParam Map<String, Object> params,HttpServletResponse response) throws Exception{
-		List<SysArea> list = sysAreaService.findPageInfo(params);
-		
-		ExcelConfig config = new ExcelConfig.Builder(Map.class)
-		.sheetNum(0)
-		.startRow(1)
-		.sheetName("区域")
-		.separater(",")
-		.addColumn("id,区域Id","name,区域名称","code,区域编码").build();
-		
-		boolean flag = EasyXls.list2Xls(config, 
-    			list,Global.getUploadRoot("xls") , "区域.xls");
-		
-		FileUtils.downFile(response, Global.getUploadRoot("xls")+"区域.xls", "区域.xls");
-		
-    	System.out.println(flag);
-	}
-
 	/**
 	 * 弹窗
 	* @param id
@@ -136,5 +121,59 @@ public class AreaController {
 		return mode.equals("detail")?"sys/area/area-detail":"sys/area/area-save";
 	}
 	
+	/**
+	 * 导出execl
+	 */
+	@RequestMapping(value = "export")
+	public void exportFile(@RequestParam Map<String, Object> params,
+			HttpServletResponse response) throws Exception{
+		
+		List<SysArea> list = sysAreaService.findSysAreaList(params);
+		
+		ExcelConfig config = new ExcelConfig.Builder(Map.class)
+		.sheetNum(0)
+		.startRow(1)
+		.sheetName("区域")
+		.separater(",")
+		.addColumn("id,区域Id","name,区域名称","code,区域编码","pname,上级区域",
+				"parentId,父级编号","parentIds,所有父级编号","type,类型","icon,图标",
+				"delFlag,状态","remarks,备注","createBy,创建人","createDate,创建时间,200",
+				"updateBy,更新者","updateDate,更新时间").build();
+		
+		EasyXls.list2Xls(config,list,"区域.xls",response);
+		
+	}
+	
+	/**
+	 * 导出execl
+	 */
+	@RequestMapping(value = "import")
+	public @ResponseBody void importFile(HttpServletRequest request) throws Exception{
+		
+		InputStream is=null;
+		
+		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
+		Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
+		if(it.hasNext()){//存在上传文件，进行处理
+			Map.Entry<String, MultipartFile> entry = it.next();
+			MultipartFile mFile = entry.getValue();
+			try {
+				is=mFile.getInputStream();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ExcelConfig config = new ExcelConfig.Builder(Map.class)
+		.sheetNum(0)
+		.startRow(1)
+		.addColumn("id","name","code","parentId","parentIds",
+				"type","icon","delFlag","remarks","createBy","createDate",
+				"updateBy","updateDate").build();
+		
+		EasyXls.xls2List(config, is);
+		
+	}
 	
 }

@@ -67,7 +67,8 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId().toString());
+		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.insert(record);
 	}
 
@@ -82,7 +83,8 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.setCreateDate(new Date());
 		record.setUpdateDate(new Date());
 		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId().toString());
+		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.insertSelective(record);
 	}
 
@@ -111,7 +113,8 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKey(T record) {
 		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId().toString());
+		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.updateByPrimaryKey(record);
 	}
 
@@ -122,7 +125,8 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public int updateByPrimaryKeySelective(T record) {
 		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId().toString());
+		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 	

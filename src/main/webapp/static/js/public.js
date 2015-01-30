@@ -333,7 +333,7 @@ var tip={
 	}
 };
 
-Angel.downFile = function(formid,action){
+Angel.downloadFile = function(formid,action){
    var curForm=$("#"+formid);
    var queryParams=curForm.serialize();
    queryParams = decodeURIComponent(queryParams,true);//将中文解码进行还原
