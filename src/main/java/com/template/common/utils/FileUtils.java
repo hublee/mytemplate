@@ -8,17 +8,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.template.common.base.UploadFile;
 import com.template.common.spring.utils.SpringContextHolder;
 
 /**
@@ -607,7 +616,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 	}
 	
-	public static HttpServletResponse downFile(HttpServletResponse response,
+	public static HttpServletResponse downloadFile(HttpServletResponse response,
 			String filePath, String fileName) throws Exception {
 		File file = new File(filePath);
 		response.setContentType("application/x-download");
@@ -640,6 +649,52 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			}
 		}
 		return response;
+	}
+	
+	public static InputStream uploadFile(HttpServletRequest request){
+		InputStream is=null;
+		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
+		Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
+		if(it.hasNext()){//存在上传文件，进行处理
+			Map.Entry<String, MultipartFile> entry = it.next();
+			MultipartFile mFile = entry.getValue();
+			try {
+				is=mFile.getInputStream();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return is;
+	}
+	
+	public static List<UploadFile> multipleUploadFile(String saveDirectory,String fileName,HttpServletRequest request) throws Exception {
+		List<UploadFile> files = new ArrayList<UploadFile>();
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		Map<String, MultipartFile> fMap = multipartRequest.getFileMap();
+		Iterator<String> it = fMap.keySet().iterator();
+		while (it.hasNext()) {
+			String parameterName = it.next();
+			MultipartFile originalFile = fMap.get(parameterName);
+			String originalFilename = originalFile.getOriginalFilename();
+			File dirPath = new File(saveDirectory);
+			if (!dirPath.exists()) {
+				dirPath.mkdirs();
+			}
+			originalFile.transferTo(dirPath);
+
+			UploadFile file = new UploadFile(parameterName, saveDirectory, fileName, originalFilename,
+					originalFile.getContentType());
+			files.add(file);
+		}
+		
+		return files;
+	}
+
+	public static UploadFile singleUploadFile(String saveDirectory,String fileName,HttpServletRequest request) throws Exception {
+		List<UploadFile> files = multipleUploadFile(saveDirectory,fileName,request);
+		return CollectionUtils.isEmpty(files) ? null : files.get(0);
 	}
 
 

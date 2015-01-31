@@ -47,7 +47,9 @@ public class ExcelConfig {
      * 是否导出标题，默认导出
      */
     private Boolean header = Boolean.TRUE;
-
+    
+    private Boolean isImport = Boolean.FALSE;
+    
     @XmlElement(name = "columns")
     private Columns columns;
 
@@ -118,8 +120,16 @@ public class ExcelConfig {
     public void setHeader(Boolean header) {
         this.header = header;
     }
+    
+	public Boolean getIsImport() {
+		return isImport;
+	}
 
-    /**
+	public void setIsImport(Boolean isImport) {
+		this.isImport = isImport;
+	}
+
+	/**
      * 获取excel标题
      *
      * @return
@@ -237,6 +247,12 @@ public class ExcelConfig {
             this.excel.header = header;
             return this;
         }
+        
+        //true 导入
+        public Builder mode(Boolean flag){
+        	this.excel.setIsImport(flag);
+        	return this;
+        }
 
         /**
          * 只能设置一个key
@@ -255,7 +271,7 @@ public class ExcelConfig {
             }
             return this;
         }
-
+        
         public Builder addColumn(Column column) {
             if (column.getType() == null || column.getType().equals("")) {
                 Field field = FieldUtil.getField(clazz, column.getName());
@@ -269,7 +285,7 @@ public class ExcelConfig {
             this.excel.columns.getColumns().add(column);
             return this;
         }
-
+        
         public Builder addColumn(String... names) {
             if (names != null && names.length > 0) {
                 for (String name : names) {
@@ -280,7 +296,11 @@ public class ExcelConfig {
                                 addColumn(new Column(ns[0], ns[0]));
                                 break;
                             case 2:
-                                addColumn(new Column(ns[0], ns[1]));
+                            	if(this.excel.getIsImport()){
+                            		addColumn(new Column(ns[0], ns[1],'1'));
+                            	}else{
+                            		addColumn(new Column(ns[0], ns[1]));
+                            	}
                                 break;
                             case 3:
                                 addColumn(new Column(ns[0], ns[1], Integer.parseInt(ns[2])));
@@ -297,7 +317,7 @@ public class ExcelConfig {
             return this;
         }
 
-       /* public Builder addColumn(String name, String header) {
+        /*public Builder addColumn(String name, String header) {
             return addColumn(new Column(name, header));
         }*/
 

@@ -6,11 +6,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.template.common.excel.bean.ExcelConfig;
 import com.template.common.excel.utils.XlsUtil;
+import com.template.common.utils.Collections3;
 
 /**
  * excel，对导入导出进行封装
@@ -80,9 +82,17 @@ public class EasyXls {
 	 * @return List对象
 	 * @throws Exception
 	 */
-	public static List<?> xls2List(ExcelConfig config, InputStream inputStream)
+	public  static List<?> xls2List(ExcelConfig config, InputStream inputStream)
 			throws Exception {
 		return XlsUtil.xls2List(config, inputStream);
+	}
+	
+	//TODO 增加的
+	@SuppressWarnings("unchecked")
+	public  static <E> List<E> xls2List(ExcelConfig config, InputStream inputStream,Class<E> cl)
+			throws Exception {
+		List<Map<String, Object>> list = (List<Map<String, Object>>) XlsUtil.xls2List(config, inputStream);
+		return (List<E>) Collections3.maplist2BeanList(list, cl);
 	}
 
 	/**

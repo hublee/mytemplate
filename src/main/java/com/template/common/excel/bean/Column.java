@@ -16,12 +16,17 @@ public class Column {
 
     public Column() {
     }
-
+    
     public Column(String name, String header) {
         this.name = name;
         this.header = header;
     }
-
+    
+    public Column(String name, String type,char no) {
+        this.name = name;
+        this.type = type;
+    }
+    
     public Column(String name, String header, Integer width) {
         this(name, header);
         this.width = width;

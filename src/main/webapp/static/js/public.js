@@ -17,7 +17,7 @@ Namespace.register = function(fullNS){
     if (sEval != "") eval(sEval);
 };
 Namespace.register("Angel");
-
+var isIe8 = !(typeof(ie8) == "undefined");
 
 var $curmenu,lastIndex;//最后弹窗索引
 var webHistory = Webit.history;
@@ -344,13 +344,63 @@ Angel.downloadFile = function(formid,action){
 	   var paramName=paramValue[0];
 	   var paramValue=paramValue[1];
 	   var $input=$("<input name='"+paramName+"' value='"+paramValue+"'/>");
-	   $tempForm.append($input);
+		   $tempForm.append($input);
    }
    $("body").append($tempForm);
    $tempForm.attr("action",action);
    $tempForm.attr("method","post");
    $tempForm.submit();
    $tempForm.remove();
+};
+
+Angel.uploadFile = {
+	init:function(fileInput){
+		if(!fileInput.parent().is("form")){
+			var url = fileInput.data("url");
+			fileInput.wrap("<form action='"+url+
+			"' method='post' enctype='multipart/form-data'></form>"); 
+		}
+	},
+	excel:function(target){
+		var $this = $(target),url = $this.data("url"),
+			progress = $($this.data("progressid")),oldTxt = $this.closest(".btn").find("span").text();
+		this.init($this);
+		var form = $this.parent();
+		form.ajaxSubmit({ 
+            dataType: 'json', //数据格式为json
+            beforeSend: function() { //开始上传 
+            	$this.css({"top":"-1000px"});
+            	progress.attr("data-percent","0%");
+                progress.children().eq(0).width("0%");
+                $this.closest(".btn").find("span").text("处理中,请稍后…");
+                if(!isIe8){
+                	progress.show();
+                }
+            }, 
+            uploadProgress: function(event, position, total, percentComplete) { 
+                var percentVal = percentComplete + '%'; //获得进度 
+                progress.attr("data-percent",percentVal);
+                progress.children().eq(0).width(percentVal);
+            }, 
+            success: function(data) { //成功 
+            	$this.css({"top":"0px"});
+            	progress.hide();
+            	$this.closest(".btn").find("span").text(oldTxt);
+            	$this.replaceWith($this.clone());
+            	layer.alert('成功导入'+data+"条数据", 1,function(index){
+            		layer.close(index);
+            		$curmenu.trigger('click');
+            	});
+            }, 
+            error:function(xhr){ //上传失败 
+            	$this.css({"top":"0px"});
+            	progress.hide();
+            	$this.closest(".btn").find("span").text(oldTxt);
+            	$this.replaceWith($this.clone());
+                alert(xhr.responseText); //返回失败信息 
+            } 
+        }); 
+	}
 };
 
 // Find the right method, call on correct element

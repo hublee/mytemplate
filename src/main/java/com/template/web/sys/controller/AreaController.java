@@ -1,8 +1,5 @@
 package com.template.web.sys.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.excel.EasyXls;
 import com.template.common.excel.bean.ExcelConfig;
+import com.template.common.utils.FileUtils;
 import com.template.common.utils.JsonUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
@@ -135,7 +130,7 @@ public class AreaController {
 		.startRow(1)
 		.sheetName("区域")
 		.separater(",")
-		.addColumn("id,区域Id","name,区域名称","code,区域编码","pname,上级区域",
+		.addColumn("name,区域名称","code,区域编码,150,java.lang.String","pname,上级区域",
 				"parentId,父级编号","parentIds,所有父级编号","type,类型","icon,图标",
 				"delFlag,状态","remarks,备注","createBy,创建人","createDate,创建时间,200",
 				"updateBy,更新者","updateDate,更新时间").build();
@@ -145,35 +140,30 @@ public class AreaController {
 	}
 	
 	/**
-	 * 导出execl
+	 * execl导入数据
 	 */
 	@RequestMapping(value = "import")
-	public @ResponseBody void importFile(HttpServletRequest request) throws Exception{
-		
-		InputStream is=null;
-		
-		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
-		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
-		Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator();
-		if(it.hasNext()){//存在上传文件，进行处理
-			Map.Entry<String, MultipartFile> entry = it.next();
-			MultipartFile mFile = entry.getValue();
-			try {
-				is=mFile.getInputStream();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
+	public @ResponseBody void importFile(HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
 		ExcelConfig config = new ExcelConfig.Builder(Map.class)
 		.sheetNum(0)
 		.startRow(1)
-		.addColumn("id","name","code","parentId","parentIds",
-				"type","icon","delFlag","remarks","createBy","createDate",
-				"updateBy","updateDate").build();
+		.separater(",")
+		.mode(true)
+		.addColumn("name","code,java.lang.String","pname",
+				"parentId,java.lang.Long","parentIds","type",
+				"icon","delFlag","remarks",
+				"createBy","createDate,java.util.Date","updateBy",
+				"updateDate,java.util.Date").build();
 		
-		EasyXls.xls2List(config, is);
-		
+		List<SysArea> list= EasyXls.xls2List(config, FileUtils.uploadFile(request),SysArea.class);
+		int count = 0;
+		for(SysArea sysArea : list){
+			sysAreaService.insertSelective(sysArea);
+			count++;
+		}
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(count+"");
 	}
 	
 }
