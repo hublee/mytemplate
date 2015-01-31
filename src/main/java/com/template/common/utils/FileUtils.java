@@ -616,6 +616,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 	}
 	
+	/**
+	 * 下载
+	* @param filePath 文件路径
+	* @param fileName 下载的文件名
+	* @throws Exception
+	 */
 	public static HttpServletResponse downloadFile(HttpServletResponse response,
 			String filePath, String fileName) throws Exception {
 		File file = new File(filePath);
@@ -651,6 +657,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		return response;
 	}
 	
+	/**
+	 * 上传返回输入流
+	* @param request
+	* @return
+	 */
 	public static InputStream uploadFile(HttpServletRequest request){
 		InputStream is=null;
 		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
@@ -668,6 +679,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		return is;
 	}
 	
+	/**
+	 * 多文件上传
+	* @param saveDirectory 保存根路径
+	* @param fileName 保存文件名
+	* @throws Exception
+	 */
 	public static List<UploadFile> multipleUploadFile(String saveDirectory,String fileName,HttpServletRequest request) throws Exception {
 		List<UploadFile> files = new ArrayList<UploadFile>();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -692,6 +709,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		return files;
 	}
 
+	/**
+	 * 单文件上传
+	* @param saveDirectory 保存根路径
+	* @param fileName 保存文件名
+	* @throws Exception
+	 */
 	public static UploadFile singleUploadFile(String saveDirectory,String fileName,HttpServletRequest request) throws Exception {
 		List<UploadFile> files = multipleUploadFile(saveDirectory,fileName,request);
 		return CollectionUtils.isEmpty(files) ? null : files.get(0);
