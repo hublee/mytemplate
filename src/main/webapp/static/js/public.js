@@ -367,7 +367,7 @@ Angel.uploadFile = {
 		this.init($this);
 		var form = $this.parent();
 		form.ajaxSubmit({ 
-            dataType: 'json', //数据格式为json
+            dataType: 'html', 
             beforeSend: function() { //开始上传 
             	$this.css({"top":"-1000px"});
             	progress.attr("data-percent","0%");
@@ -387,7 +387,8 @@ Angel.uploadFile = {
             	progress.hide();
             	$this.closest(".btn").find("span").text(oldTxt);
             	$this.replaceWith($this.clone());
-            	layer.alert('成功导入'+data+"条数据", 1,function(index){
+            	alert(typeof data);
+            	layer.alert(data, 1,function(index){
             		layer.close(index);
             		$curmenu.trigger('click');
             	});
@@ -397,7 +398,7 @@ Angel.uploadFile = {
             	progress.hide();
             	$this.closest(".btn").find("span").text(oldTxt);
             	$this.replaceWith($this.clone());
-                alert(xhr.responseText); //返回失败信息 
+                //alert(xhr.responseText); //返回失败信息 
             } 
         }); 
 	}
