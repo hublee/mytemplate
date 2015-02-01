@@ -43,7 +43,6 @@ public class AreaController {
 
 	/**
 	 * 区域树
-	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "tree", method = RequestMethod.POST)
@@ -54,7 +53,6 @@ public class AreaController {
 
 	/**
 	 * 添加或更新区域
-	 * 
 	 * @param params
 	 * @return
 	 */
@@ -70,7 +68,7 @@ public class AreaController {
 	 *            区域id
 	 * @return
 	 */
-	@RequestMapping(value = "del", method = RequestMethod.POST)
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public @ResponseBody Integer dels(Long id) {
 		Integer count = 0;
 		if (null != id) {
@@ -125,9 +123,9 @@ public class AreaController {
 	/**
 	 * 导出execl
 	 */
-	@RequestMapping(value = "export")
+	@RequestMapping(value = "export",method = RequestMethod.POST)
 	public void exportFile(@RequestParam Map<String, Object> params,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response){
 
 		List<SysArea> list = sysAreaService.findSysAreaList(params);
 
@@ -148,10 +146,11 @@ public class AreaController {
 
 	/**
 	 * execl导入数据
-	 * 
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "import")
+	
+	
+	@RequestMapping(value = "import",method = RequestMethod.POST)
 	public @ResponseBody void importFile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		ExcelConfig config = new ExcelConfig.Builder(Map.class)

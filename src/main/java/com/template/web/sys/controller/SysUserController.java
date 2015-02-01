@@ -57,7 +57,7 @@ public class SysUserController {
 	* @param id 用户id
 	* @return
 	 */
-	@RequestMapping(value="del",method = RequestMethod.POST)
+	@RequestMapping(value="delete",method = RequestMethod.POST)
 	public @ResponseBody Integer del(Long id){
 		return sysUserService.deleteUser(id);
 	}

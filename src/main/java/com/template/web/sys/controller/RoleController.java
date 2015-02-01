@@ -113,7 +113,7 @@ public class RoleController extends BaseController {
 	* @param 
 	* @return
 	 */
-	@RequestMapping(value="del",method=RequestMethod.POST)
+	@RequestMapping(value="delete",method=RequestMethod.POST)
 	public @ResponseBody Integer del(Long id){
 		return sysRoleService.deleteSysRole(id);
 	}

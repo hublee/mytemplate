@@ -11,14 +11,6 @@ public class Global {
 	}
 	
 	/**
-	 * web上下文
-	* @return
-	 */
-	public static String getCtxPath(){
-		return SysConstant.getValue("ctxPath");
-	}
-	
-	/**
 	 *  下载的路径
 	* @param groupFile 分组文件夹名
 	 */

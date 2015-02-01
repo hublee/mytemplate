@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler;
 
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
+import com.template.common.exception.Custom404Exception;
 import com.template.common.utils.Global;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
@@ -22,8 +24,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		String url = request.getRequestURI();
-		String rootPath = Global.getCtxPath() + "/" + Global.getAdminPath();
+		
+		//是否是容器默认servlet，以备404处理
+		if(handler instanceof DefaultServletHttpRequestHandler) return true;
+		
+		String url = request.getRequestURI(); //请求路径
+		String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
+		
 		String path = "";
 		int len = url.indexOf(rootPath)+rootPath.length()+1;
 		if(len <= url.length()){
@@ -41,7 +48,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			SysUser cacheUser = SysUserUtils.getCacheLoginUser();
 			
 			if (sessionUser == null || cacheUser == null) { // 转到登陆页面
-				response.sendRedirect("/" + rootPath + "/notlogin");
+				response.sendRedirect(rootPath + "/notlogin");
 				return false;
 			} else {
 				Map<String, SysResource> allRes = BeetlUtils
@@ -58,7 +65,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 				if (userRes.containsKey(path)) {
 					return true;
 				} else {
-					response.sendRedirect("/" + rootPath + "/notauth");
+					response.sendRedirect(rootPath + "/notauth");
 					return false;
 				}
 			}
@@ -76,7 +83,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-
+		
+		/*String requestRri = request.getRequestURI();
+		String uriPrefix = request.getContextPath() + Global.getAdminPath();
+		System.out.println(requestRri+uriPrefix);*/
 	}
 
 }

@@ -41,7 +41,7 @@ public class DictController {
 	* @param id
 	* @return
 	 */
-	@RequestMapping(value="del",method=RequestMethod.POST)
+	@RequestMapping(value="delete",method=RequestMethod.POST)
 	public @ResponseBody Integer del(@ModelAttribute SysDict sysDict){
 		return sysDictService.deleteSysDict(sysDict);
 	}

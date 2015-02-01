@@ -37,6 +37,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	/**
 	 *新增or更新SysArea
 	 */
+	
 	@CacheEvict(allEntries=true)
 	public int saveSysArea(SysArea sysArea){
 		int count = 0;
@@ -74,7 +75,7 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 	 *            {"name":"区域名字","id":"区域id"}
 	 * @return
 	 */
-	public List<SysArea> findSysAreaList(Map<String, Object> params) {
+	public List<SysArea> findSysAreaList(Map<String, Object> params){
 		List<SysArea> list = sysAreaMapper.findSysAreaList(params);
 		return list;
 	}

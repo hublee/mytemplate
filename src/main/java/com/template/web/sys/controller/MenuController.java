@@ -85,7 +85,7 @@ public class MenuController extends BaseController {
 	* @param resourceId 菜单id
 	* @return
 	 */
-	@RequestMapping(value="del",method=RequestMethod.POST)
+	@RequestMapping(value="delete",method=RequestMethod.POST)
 	public @ResponseBody Integer dels(Long id){
 		Integer count = 0;
 		if(null != id){

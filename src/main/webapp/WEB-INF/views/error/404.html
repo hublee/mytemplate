@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1">
+<meta name="robots" content="follow">
+<title>404</title>
+
+<script type="text/javascript" src="static/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/js/shake.js"></script>
+
+<style>
+body{background: #FFF;}
+.wrapper{position: relative;z-index: 0;transition: all 0.25s ease-in;-webkit-transition: all 0.25s ease-in 0;}
+.bg{width: 980px;height: 600px;margin: 0 auto;overflow: hidden;position: absolute;left: 0;top: 0;}
+.move{display: block;width: 980px;height: 600px;margin: 0 auto;margin-top: 80px;position: relative;overflow: hidden;clear: both;}
+.bg{top: 0;left: 0;z-index: 1;}
+.note{top: 25px;left: 50px;}
+.gallery{height: 265px;width: 317px;top: 5px;left: 670px;background: url(static/img/error/404_gallery.png) no-repeat;}
+.gallery li{position: absolute;display: none;top: 20px;left: 30px;width: 250px;height: 200px;list-style: none;}
+.gallery li.chris{display: block;}
+.nav{display: none;width: 100px;height: 20px;position: absolute;bottom: 30px;right: 50px;}
+.nav a{width: 20px;height: 20px;display: inline-block;background-image: url(static/img/error/nav_404.png);background-repeat: no-repeat;background-position: 0 0 ;}
+.nav a.current{background-position: 0 -20px;}
+.man{top: 140px;left: 380px;}
+.rubbish{top: 420px;left: 730px;cursor: pointer;}
+.plaxify{position: absolute;z-index: 2;}
+.result{width: 30px;height: 30px;background: url(static/img/error/nav_404.png) no-repeat;}
+</style>
+
+<script>
+$(function(){
+	var layers = $('.plaxify');
+
+	$.each(layers, function(index, layer){
+		$(layer).plaxify({
+		  xRange: $(layer).data('xrange') || 0,
+		  yRange: $(layer).data('yrange') || 0,
+		  invert: $(layer).data('invert') || false
+		});
+	});
+
+	$.plax.enable();
+
+	$(".rubbish").click(function(){
+		$(".gallery li").eq(0).toggleClass("chris");
+	});
+	
+})
+</script>
+</head>
+<body>
+	<div id="container">
+		<div class="move">
+			<img class="bg plaxify" src="static/img/error/404.jpg"
+				 width="980" data-xrange="10" data-yrange="2"
+				height="600">
+			<img class="note plaxify"  data-xrange="25"
+				data-yrange="25" height="210" width="230"
+				src="static/img/error/note.png" >
+			<ul class="gallery plaxify" data-xrange="10" data-yrange="10">
+				<li >
+					<a href="#" >
+					<img src="static/img/error/github.png" ></a>
+				</li>
+			</ul>
+			<img class="man plaxify"  title="设计师不在，只好自己作图了 →_→"
+				data-xrange="100" data-yrange="10" height="451" width="301"
+				src="static/img/error/man.png"
+				>
+			<img class="rubbish plaxify" alt="" data-xrange="50" data-yrange="20"
+				height="96" width="143" src="static/img/error/rubbish.png"
+				title="翻翻看有没有线索">
+		</div>
+	</div>
+</body>
+</html>

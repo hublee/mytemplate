@@ -32,7 +32,7 @@
 	<!-- 下面配置一些第三方包的日志过滤级别 -->
 	<logger name="com.template" level="DEBUG" additivity="true"/>
 	<logger name="net.sf.ehcache" level="WARN" />
-	<logger name="org.springframework.web" level="WARN" />
+	<logger name="org.springframework.web" level="DEBUG" />
 	<logger name="org.mybatis" level="WARN" />
 	
 	<root level="INFO">
