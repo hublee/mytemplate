@@ -26,10 +26,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object handler) throws Exception {
 		
 		//是否是容器默认servlet
-		if(handler instanceof DefaultServletHttpRequestHandler) return true;
+		/*if(handler instanceof DefaultServletHttpRequestHandler) {
+			return false;
+		}*/
 		
 		String url = request.getRequestURI(); //请求路径
 		String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
+		
+		System.out.println(url);
 		
 		String path = "";
 		int len = url.indexOf(rootPath)+rootPath.length()+1;

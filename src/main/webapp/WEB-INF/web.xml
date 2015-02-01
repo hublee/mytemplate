@@ -3,12 +3,11 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	
+
 	<!-- 激活Tomcat的defaultServlet来处理静态文件 -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/static/*</url-pattern>
-		<url-pattern>/WEB-INF/views/error/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- 指定Spring的配置文件 -->
@@ -72,7 +71,12 @@
 		<servlet-name>applicationContext</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jsp</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
 
+	<!-- session过期时间 -->
 	<session-config>
 		<session-timeout>20</session-timeout>
 	</session-config>

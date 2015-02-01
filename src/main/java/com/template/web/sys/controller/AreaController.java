@@ -148,8 +148,6 @@ public class AreaController {
 	 * execl导入数据
 	 * @throws IOException
 	 */
-	
-	
 	@RequestMapping(value = "import",method = RequestMethod.POST)
 	public @ResponseBody void importFile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {

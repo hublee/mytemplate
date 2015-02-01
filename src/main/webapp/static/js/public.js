@@ -387,7 +387,6 @@ Angel.uploadFile = {
             	progress.hide();
             	$this.closest(".btn").find("span").text(oldTxt);
             	$this.replaceWith($this.clone());
-            	alert(typeof data);
             	layer.alert(data, 1,function(index){
             		layer.close(index);
             		$curmenu.trigger('click');
