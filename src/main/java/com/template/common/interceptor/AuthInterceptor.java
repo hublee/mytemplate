@@ -25,7 +25,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
-		//是否是容器默认servlet，以备404处理
+		//是否是容器默认servlet
 		if(handler instanceof DefaultServletHttpRequestHandler) return true;
 		
 		String url = request.getRequestURI(); //请求路径
