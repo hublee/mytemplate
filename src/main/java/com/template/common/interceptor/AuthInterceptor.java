@@ -7,12 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler;
 
 import com.template.common.beetl.util.BeetlUtils;
 import com.template.common.constant.Constant;
-import com.template.common.exception.Custom404Exception;
-import com.template.common.utils.Global;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
