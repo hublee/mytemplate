@@ -5,6 +5,7 @@ package com.template.web.sys.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.template.common.base.BaseController;
 import com.github.pagehelper.PageInfo;
 import com.template.common.utils.JsonUtils;
@@ -48,8 +49,7 @@ public class OfficeController extends BaseController {
 	 */
 	@RequestMapping
 	public String toSysOffice(Model model){
-		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(SysUserUtils.getUserOffice()));
+		model.addAttribute("treeList", JSON.toJSONString(SysUserUtils.getUserOffice()));
 		return "sys/office/office";
 	}
 	

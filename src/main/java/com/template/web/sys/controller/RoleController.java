@@ -5,6 +5,7 @@ package com.template.web.sys.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
@@ -131,9 +132,9 @@ public class RoleController extends BaseController {
 			List<Long> resIds = sysRoleService.findResourceIdsByRoleId(id);
 			if(sysRole.getDataScope().equals("9")){
 				List<Long> officeIds = sysRoleService.findOfficeIdsByRoleId(id);
-				model.addAttribute("officeIds", JsonUtils.getInstance().toJson(officeIds));
+				model.addAttribute("officeIds", JSON.toJSON(officeIds));
 			}
-			model.addAttribute("resIds", JsonUtils.getInstance().toJson(resIds));
+			model.addAttribute("resIds",JSON.toJSONString(resIds));
 		}
 		if(StringUtils.equals("detail", mode)){
 			sysRole = sysRoleService.selectByPrimaryKey(id);

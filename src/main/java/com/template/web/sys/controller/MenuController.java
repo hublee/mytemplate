@@ -1,5 +1,6 @@
 package com.template.web.sys.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.BaseController;
 import com.template.common.utils.JsonUtils;
@@ -41,8 +42,7 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping
 	public String toMenu(Model model) {
-		model.addAttribute("treeList",
-				JsonUtils.getInstance().toJson(SysUserUtils.getUserMenus()));
+		model.addAttribute("treeList", JSON.toJSONString(SysUserUtils.getUserMenus()));
 		return "sys/menu/menu";
 	}
 	
