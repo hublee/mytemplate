@@ -24,17 +24,17 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		
+
+        String url = request.getRequestURI(); //请求路径
+        String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
+
 		//是否是容器默认servlet
 		/*if(handler instanceof DefaultServletHttpRequestHandler) {
 			return false;
 		}*/
-		
-		String url = request.getRequestURI(); //请求路径
-		String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
-		
+
 		System.out.println(url);
-		
+
 		String path = "";
 		int len = url.indexOf(rootPath)+rootPath.length()+1;
 		if(len <= url.length()){

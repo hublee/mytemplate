@@ -130,5 +130,5 @@ public class LoginController {
 	public String notLogin(){
 		return "notlogin";
 	}
-	
+
 }

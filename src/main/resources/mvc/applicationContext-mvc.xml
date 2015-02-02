@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd 
-		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx.xsd 
 	    http://www.springframework.org/schema/mvc
          http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/context 
@@ -15,7 +14,7 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="false">
-	
+
 	<!-- 加载配置 -->
 	<context:property-placeholder  ignore-unresolvable="true" location="classpath*:/constants.properties"/>
 
@@ -42,7 +41,7 @@
                     </list>
                 </property>
             </bean>
-            
+
             <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
             <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
@@ -64,16 +63,16 @@
 		<context:include-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
-	
-	<!-- <mvc:view-controller path="/" view-name="redirect:/${adminPath}"/> -->
-	
+
+	<!--<mvc:view-controller path="/" view-name="redirect:/${adminPath}"/>-->
+
 	<!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
-	<!-- <mvc:default-servlet-handler /> -->
-	
+	<!--<mvc:default-servlet-handler />-->
+
 	<mvc:interceptors>
 		<bean class="com.template.common.interceptor.AuthInterceptor" />
 	</mvc:interceptors>
-	
+
 	<!-- 文件上传配置 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
