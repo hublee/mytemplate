@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.template.common.base.BaseController;
-import com.template.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysRole;
