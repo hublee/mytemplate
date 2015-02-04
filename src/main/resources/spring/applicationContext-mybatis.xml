@@ -38,14 +38,19 @@
 
 	<!-- 自动扫描映射器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.template.**.mapper" />
+		<property name="basePackage" value="com.template.**.mapper,com.github.abel533.entity.mapper" />
 	</bean>
-
+	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
 		scope="prototype">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
+	<!-- 定义entityMapper方便直接使用 -->
+	<bean id="entityMapper" class="com.github.abel533.entity.EntityMapper" scope="prototype">
+	    <!-- 使用构造参数引用commonMapper -->
+	    <constructor-arg ref="commonMapper"/>
+	</bean>
 
 	<!-- 通用crud -->
 	<bean class="com.github.abel533.mapperhelper.MapperHelper"
