@@ -5,7 +5,7 @@ package com.template.web.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
-import com.template.common.beetl.util.BeetlUtils;
+import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;

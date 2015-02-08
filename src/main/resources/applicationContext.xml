@@ -22,7 +22,7 @@
 	</context:component-scan>
 	
 	<!-- 启用aop注解 -->
-	<aop:aspectj-autoproxy />
+	<aop:aspectj-autoproxy expose-proxy="true"/>
 	 
     <import resource="classpath*:spring/**.xml" />
     

@@ -4,18 +4,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
-import com.template.common.beetl.util.BeetlUtils;
+import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.CacheUtils;
@@ -30,6 +34,60 @@ import com.template.web.sys.service.SysResourceService;
 import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
 
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:38
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:41
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:42
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:43
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:43
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:44
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:45
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:54
+ * @author  ?
+ */
+/**
+ * @ClassName:SysUserUtils
+ * @Description:TODO(这里用一句话描述这个类的作用)
+ * @date:2015年2月4日 下午8:12:56
+ * @author  ?
+ */
 public class SysUserUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SysUserUtils.class);
@@ -343,21 +401,12 @@ public class SysUserUtils {
 		}
 		return null;
 	}
-	
 
 	/**
-	 * 把session保存到局部线程中
-	 */
-	public static void setThreadLocalSession(HttpSession session) {
-		ThreadLocalUtils.set("session", session);
-	}
-
-	/**
-	 * 得到session
+	 * 得到当前session
 	 */
 	public static HttpSession getSession() {
-		HttpSession session = ThreadLocalUtils.get("session",
-				HttpSession.class);
+		HttpSession session = getCurRequest().getSession();
 		return session;
 	}
 	
@@ -366,6 +415,21 @@ public class SysUserUtils {
 	 */
 	public static SysUser getSessionLoginUser(){
 		return (SysUser) getSession().getAttribute(Constant.SESSION_LOGIN_USER);
+	}
+	
+	/**
+	 * @Title: getCurRequest
+	 * @Description:(获得当前的request) 
+	 * @param:@return 
+	 * @return:HttpServletRequest
+	 */
+	public static HttpServletRequest getCurRequest(){
+		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+		if(requestAttributes != null && requestAttributes instanceof ServletRequestAttributes){
+			ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)requestAttributes;
+			return servletRequestAttributes.getRequest();
+		}
+		return null;
 	}
 
 }

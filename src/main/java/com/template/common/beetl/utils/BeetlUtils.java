@@ -1,4 +1,4 @@
-package com.template.common.beetl.util;
+package com.template.common.beetl.utils;
 
 import java.util.HashMap;
 import java.util.Map;

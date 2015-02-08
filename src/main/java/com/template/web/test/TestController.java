@@ -15,8 +15,10 @@ public class TestController {
 	private SysUserService sysUserService;
 
 	@RequestMapping
-	public String test(){
+	public String test(String name){
+		System.out.println(name);
 		return "test";
 	}
 	
 }
+

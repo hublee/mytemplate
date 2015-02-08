@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.template.common.beetl.util.BeetlUtils;
+import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;

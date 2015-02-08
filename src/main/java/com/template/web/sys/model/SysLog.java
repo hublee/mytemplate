@@ -35,7 +35,7 @@ public class SysLog extends BaseEntity {
     private String requestUri; //request_uri <请求URI>
 
 	
-    private String type; //type <日志类型>
+    private String type; //type <日志类型（1：接入日志；2：错误日志）>
 
 	
     private String userAgent; //user_agent <用户代理>

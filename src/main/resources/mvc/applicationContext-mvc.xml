@@ -19,7 +19,7 @@
 	<context:property-placeholder  ignore-unresolvable="true" location="classpath*:/constants.properties"/>
 
 	<!-- 开启controller层aspect注解支持 -->
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<aop:aspectj-autoproxy expose-proxy="true"/>
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">

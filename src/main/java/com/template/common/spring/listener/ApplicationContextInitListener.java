@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.template.common.beetl.util.BeetlUtils;
+import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.utils.Global;
 import com.template.web.sys.model.SysResource;

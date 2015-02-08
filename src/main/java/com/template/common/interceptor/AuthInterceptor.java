@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.template.common.beetl.util.BeetlUtils;
+import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
@@ -30,16 +30,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return false;
 		}*/
 
-		System.out.println(url);
-
 		String path = "";
 		int len = url.indexOf(rootPath)+rootPath.length()+1;
 		if(len <= url.length()){
 			path = url.substring(len, url.length());
 		}
-		
-		//把session保存在局部线程中
-		SysUserUtils.setThreadLocalSession(request.getSession());
 		
 		if(!url.matches(ignorePath)){
 			//获得session中的登陆用户
