@@ -23,7 +23,6 @@ import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.common.spring.utils.SpringContextHolder;
 import com.template.common.utils.CacheUtils;
-import com.template.common.utils.ThreadLocalUtils;
 import com.template.common.utils.TreeUtils;
 import com.template.web.sys.model.SysOffice;
 import com.template.web.sys.model.SysResource;
@@ -44,48 +43,6 @@ import com.template.web.sys.service.SysUserService;
  * @ClassName:SysUserUtils
  * @Description:TODO(这里用一句话描述这个类的作用)
  * @date:2015年2月4日 下午8:12:41
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:42
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:43
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:43
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:44
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:45
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:54
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:56
  * @author  ?
  */
 public class SysUserUtils {
