@@ -1,12 +1,11 @@
-//Powered By if, Since 2014 - 2020
-
 package com.template.web.sys.model;
 
-import com.template.common.base.BaseEntity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.template.common.base.BaseEntity;
 
 /**
  * 
@@ -18,6 +17,9 @@ import javax.persistence.Table;
 public class SysLog extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	
+    private String description; //description <>
 
 	
     private String exception; //exception <异常信息>
@@ -35,12 +37,20 @@ public class SysLog extends BaseEntity {
     private String requestUri; //request_uri <请求URI>
 
 	
-    private String type; //type <日志类型（1：接入日志；2：错误日志）>
+    private String type; //type <日志类型>
 
 	
     private String userAgent; //user_agent <用户代理>
 
 
+
+	public String getDescription() {
+		return this.getString("description");
+    }
+   
+    public void setDescription(String description) {
+		this.set("description", description);
+    }
 
 	public String getException() {
 		return this.getString("exception");
