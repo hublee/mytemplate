@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -53,8 +54,8 @@ public class SystemLogAspect {
 				for (int i = 0, len = joinPoint.getArgs().length; i < len; i++) {
 					Object info = joinPoint.getArgs()[i];
 					if (info != null) {
-						String paramName = info.getClass().getSimpleName();
-						rs.append("[参数" + (i + 1) + "，类型:" + paramName + "，值:"
+						String paramType = info.getClass().getSimpleName();
+						rs.append("[参数" + (i + 1) + "，类型:" + paramType + "，值:"
 								+ info.toString() + "]");
 					} else {
 						rs.append("[参数" + (i + 1) + "，值:null]");
@@ -75,6 +76,11 @@ public class SystemLogAspect {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
+	}
+	
+	@AfterThrowing(value="serviceAspect()",throwing="e")
+	public void doAfterThrowing(JoinPoint joinPoint,Throwable e){
+		System.out.println("ddd");
 	}
 
 }
