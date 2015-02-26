@@ -80,10 +80,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		
-		 String url = request.getRequestURI(); //请求路径
-	     String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
-	     System.out.println(url+rootPath);
-		
 	}
 
 }
