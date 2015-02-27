@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.template.common.spring.annotation.SystemControllerLog;
+import com.template.common.spring.annotation.Log;
 import com.template.common.utils.IPUtils;
 import com.template.web.sys.model.SysLog;
 import com.template.web.sys.service.SysLogService;
@@ -33,18 +33,23 @@ public class SystemLogAspect {
 			.getLogger(SystemLogAspect.class);
 
 	// Controller层切点
-	@Pointcut("@annotation(com.template.common.spring.annotation.SystemControllerLog)"
+	@Pointcut("@annotation(com.template.common.spring.annotation.Log)"
 			+ " || execution(* com.template.web..*Controller.save*(..))"
 			+ " || execution(* com.template.web..*Controller.delete*(..))")
 	public void controllerAspect() {
 	}
 
-	@Pointcut("@annotation(com.template.common.spring.annotation.SystemServiceLog)")
-	public void serviceAspect() {
-	}
-
 	@AfterReturning(value = "controllerAspect()", returning = "rtv")
 	public void doAfterReturning(JoinPoint joinPoint, Object rtv) {
+		saveLog(joinPoint, null);
+	}
+	
+	@AfterThrowing(value="controllerAspect()",throwing="e")
+	public void doAfterThrowing(JoinPoint joinPoint,Throwable e){
+		saveLog(joinPoint, e);
+	}
+	
+	protected void saveLog(JoinPoint joinPoint,Throwable e){
 		try {
 			HttpServletRequest request = SysUserUtils.getCurRequest();
 			SysLog log = new SysLog();
@@ -67,20 +72,15 @@ public class SystemLogAspect {
 			log.setRequestUri(request.getRequestURI());
 			log.setMethod(request.getMethod());
 			log.setUserAgent(request.getHeader("user-agent"));
+			log.setException(e.toString());
+			log.setType(e==null?SysLog.TYPE_ACCESS:SysLog.TYPE_EXCEPTION);
 			Method m = ((MethodSignature) joinPoint.getSignature()).getMethod();
-			SystemControllerLog sclog = m
-					.getAnnotation(SystemControllerLog.class);
-			if (sclog != null)
-				log.setDescription(sclog.description());
+			Log sclog = m.getAnnotation(Log.class);
+			if (sclog != null) log.setDescription(sclog.description());
 			sysLogService.save(log);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
+		} catch (Exception ex) {
+			LOGGER.error(ex.getMessage());
 		}
-	}
-	
-	@AfterThrowing(value="serviceAspect()",throwing="e")
-	public void doAfterThrowing(JoinPoint joinPoint,Throwable e){
-		System.out.println("ddd");
 	}
 
 }

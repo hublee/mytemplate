@@ -4,6 +4,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.template.common.base.BaseEntity;
 
@@ -42,7 +43,10 @@ public class SysLog extends BaseEntity {
 	
     private String userAgent; //user_agent <用户代理>
 
-
+    @Transient
+    public static final String TYPE_ACCESS = "1"; //操作日志
+    @Transient
+	public static final String TYPE_EXCEPTION = "2"; //异常日志
 
 	public String getDescription() {
 		return this.getString("description");
