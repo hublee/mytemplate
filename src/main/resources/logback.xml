@@ -34,6 +34,7 @@
 	<logger name="net.sf.ehcache" level="WARN" />
 	<logger name="org.springframework.web" level="WARN" />
 	<logger name="org.mybatis" level="WARN" />
+	<logger name="com.github.abel533" level="DEBUG" />
 	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
