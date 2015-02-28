@@ -28,6 +28,7 @@
 				<entry key="office" value-ref="officeFunctions" />
 				<entry key="role" value-ref="roleFunctions" />
 				<entry key="auth" value-ref="authUserFunctions" />
+				<entry key="strutil" value-ref="strutilFunction" />
 			</map>
 		</property>
 	</bean>

@@ -4,12 +4,14 @@ package com.template.web.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
+import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,8 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		if (count > 0) {
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
+			SysUserUtils.clearAllCachedAuthorizationInfo(
+					Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
 		}
 		return count;
 	}
@@ -67,7 +71,8 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 */
 	public int deleteResourceByRootId(Long id) {
 		int count = sysResourceMapper.beforeDeleteResource(id);
-		if (count > 0) return -1;
+		if (count > 0)
+			return -1;
 		int delCount = sysResourceMapper.deleteIdsByRootId(id);
 		if (delCount > 0) {
 			// 重新查找全部资源放入缓存(为了开发时候用)
@@ -78,16 +83,15 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		return delCount;
 	}
 
-
 	/**
 	 * 根据用户id得到用户持有的资源
+	 * 
 	 * @param userId
 	 * @return
 	 */
 	public List<SysResource> findUserResourceByUserId(SysUser sysUser) {
 		return sysResourceMapper.findUserResourceByUserId(sysUser.getId());
 	}
-
 
 	/**
 	 * 菜单管理分页显示筛选查询
@@ -107,7 +111,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 	 * 
 	 * @return
 	 */
-	//TODO 需要排序
+	// TODO 需要排序
 	public LinkedHashMap<String, SysResource> getAllResourcesMap() {
 		// 读取全部资源
 		List<SysResource> resList = this.select(new SysResource());
@@ -124,6 +128,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 获取全部资源list形式
+	 * 
 	 * @return
 	 */
 	public List<SysResource> getAllResourcesList() {

@@ -1,5 +1,7 @@
 package com.template.web.sys.model;
 
+import java.util.Date;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,6 +44,9 @@ public class SysLog extends BaseEntity {
 
 	
     private String userAgent; //user_agent <用户代理>
+    
+	private String createBy; //create_by <创建者>
+	private Date createDate; //create_date <创建时间>
 
     @Transient
     public static final String TYPE_ACCESS = "1"; //操作日志
@@ -112,5 +117,20 @@ public class SysLog extends BaseEntity {
 		this.set("userAgent", userAgent);
     }
 
+    public String getCreateBy() {
+		return this.getString("createBy");
+    }
+   
+    public void setCreateBy(String createBy) {
+		this.set("createBy", createBy);
+    }
+
+	public Date getCreateDate() {
+		return this.getDate("createDate");
+    }
+   
+    public void setCreateDate(Date createDate) {
+		this.set("createDate", createDate);
+    }
 
 }

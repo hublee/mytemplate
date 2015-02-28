@@ -34,7 +34,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public List<T> select(T record) {
-		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		return mapper.select(record);
 	}
 
@@ -44,7 +44,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int selectCount(T record) {
-		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		return mapper.selectCount(record);
 	}
 
@@ -64,10 +64,10 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int insert(T record) {
-		record.setCreateDate(new Date());
-		record.setUpdateDate(new Date());
-		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+		record.set("createDate",new Date() );
+		record.set("updateDate", new Date());
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
+		record.set("createBy", SysUserUtils.getCacheLoginUser().getId()+","+
 				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.insert(record);
 	}
@@ -80,10 +80,10 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int insertSelective(T record) {
-		record.setCreateDate(new Date());
-		record.setUpdateDate(new Date());
-		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
-		record.setCreateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+		record.set("createDate",new Date() );
+		record.set("updateDate", new Date());
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
+		record.set("createBy", SysUserUtils.getCacheLoginUser().getId()+","+
 				SysUserUtils.getCacheLoginUser().getName());
 		return mapper.insertSelective(record);
 	}
@@ -112,9 +112,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int updateByPrimaryKey(T record) {
-		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+		record.set("updateBy",SysUserUtils.getCacheLoginUser().getId()+","+
 				SysUserUtils.getCacheLoginUser().getName());
+		record.set("updateDate", new Date());
 		return mapper.updateByPrimaryKey(record);
 	}
 
@@ -124,9 +124,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int updateByPrimaryKeySelective(T record) {
-		record.setUpdateDate(new Date());
-		record.setUpdateBy(SysUserUtils.getCacheLoginUser().getId()+","+
+		record.set("updateBy",SysUserUtils.getCacheLoginUser().getId()+","+
 				SysUserUtils.getCacheLoginUser().getName());
+		record.set("updateDate", new Date());
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 	
@@ -142,7 +142,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		try {
 			m = bean.newInstance();
 			m.setId(id);
-			m.setDelFlag(Constant.DEL_FLAG_DELETE);
+			m.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -175,7 +175,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @return
 	 */
 	public PageInfo<T> selectPage(int pageNum, int pageSize, T record) {
-		record.setDelFlag(Constant.DEL_FLAG_NORMAL);
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<T>(mapper.select(record));
 	}

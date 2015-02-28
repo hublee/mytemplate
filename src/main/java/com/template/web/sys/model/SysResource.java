@@ -50,6 +50,12 @@ public class SysResource extends BaseEntity {
     
     private String parentIds;
     
+    private String updateBy; //update_by <更新者>
+	private Date updateDate; //update_date <更新时间>
+	private String createBy; //create_by <创建者>
+	private Date createDate; //create_date <创建时间>
+	private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
+    
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
@@ -158,24 +164,43 @@ public class SysResource extends BaseEntity {
 		this.set("oldParentIds", oldParentIds);
     }
     
-    //设置权限码和权限位
-    public void setCodeAndPos(Long maxCode,Integer maxPos){
-    	Integer pos = 0;Long code = 1L;
-    	//没有资源
-		if(null == maxCode){
-			pos = 0;
-			code = 1L;
-		}else{ 
-			if(maxCode >= 1L << 32){ //权限码边界检测
-				pos = maxPos + 1;
-				code = 1L;
-			}else{
-				pos = maxPos;
-				code = maxCode << 1;
-			}
-		}
-		this.setCode(code);
-		this.setPos(maxPos);
-	}
+    public String getCreateBy() {
+		return this.getString("createBy");
+    }
+   
+    public void setCreateBy(String createBy) {
+		this.set("createBy", createBy);
+    }
+
+	public Date getCreateDate() {
+		return this.getDate("createDate");
+    }
+   
+    public void setCreateDate(Date createDate) {
+		this.set("createDate", createDate);
+    }
+    public String getUpdateBy() {
+		return this.getString("updateBy");
+    }
+   
+    public void setUpdateBy(String updateBy) {
+		this.set("updateBy", updateBy);
+    }
+
+	public Date getUpdateDate() {
+		return this.getDate("updateDate");
+    }
+   
+    public void setUpdateDate(Date updateDate) {
+		this.set("updateDate", updateDate);
+    }
+
+    public String getDelFlag() {
+		return this.getString("delFlag");
+    }
+   
+    public void setDelFlag(String delFlag) {
+		this.set("delFlag", delFlag);
+    }
 
 }

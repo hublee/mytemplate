@@ -29,18 +29,20 @@
 			</form>
 		</div>
 		<div class="widget-toolbar">
-			<span class="btn btn-info btn-xs" 
-			onclick="Angel.downloadFile('search-form','${rootPath}/area/export')">导出excel</span>
+			<span class="btn btn-purple btn-xs" 
+			onclick="Angel.downloadFile('search-form','${rootPath}/area/export')">
+			<i class="ace-icon fa fa-cloud-download bigger-130"></i>
+			导出Excel</span>
 		</div>
 		<div class="widget-toolbar no-border">
-			<span class="btn btn-info btn-xs" id="importFile">
+			<span class="btn btn-purple btn-xs" id="importFile">
+				<i class="ace-icon fa fa-cloud-upload bigger-130"></i>
 				<span>导入数据</span>
 				<input type="file" class="phide"  name="excel" 
 				data-url="${rootPath}/area/import" _accept="application/vnd.ms-excel" 
 				data-progressid="#excel-progress"
 				onchange="Angel.uploadFile.excel(this);"/>
 			</span>
-			
 		</div>
 		<div class="widget-toolbar no-border">
 			<div class="progress progress-striped active pos-rel" style="width:200px;display: none;" 

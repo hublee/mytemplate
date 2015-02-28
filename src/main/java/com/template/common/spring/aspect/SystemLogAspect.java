@@ -38,13 +38,18 @@ public class SystemLogAspect {
 			+ " || execution(* com.template.web..*Controller.delete*(..))")
 	public void controllerAspect() {
 	}
+	
+	@Pointcut("@annotation(com.template.common.spring.annotation.Log)"
+			+ " || execution(* com.template.web..*Controller.*(..))")
+	public void throwingAspect(){
+	}
 
 	@AfterReturning(value = "controllerAspect()", returning = "rtv")
 	public void doAfterReturning(JoinPoint joinPoint, Object rtv) {
 		saveLog(joinPoint, null);
 	}
 	
-	@AfterThrowing(value="controllerAspect()",throwing="e")
+	@AfterThrowing(value="throwingAspect()",throwing="e")
 	public void doAfterThrowing(JoinPoint joinPoint,Throwable e){
 		saveLog(joinPoint, e);
 	}

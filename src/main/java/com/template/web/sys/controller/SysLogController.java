@@ -2,7 +2,6 @@
 
 package com.template.web.sys.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.BaseController;
 import com.template.common.excel.EasyXls;
@@ -10,12 +9,15 @@ import com.template.common.excel.bean.ExcelConfig;
 import com.template.common.utils.FileUtils;
 import com.template.web.sys.model.SysLog;
 import com.template.web.sys.service.SysLogService;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,18 +39,17 @@ public class SysLogController extends BaseController {
 	 */
 	@RequestMapping
 	public String toSysLog(Model model){
-		return "文件名/html的名字";
+		return "sys/log/log";
 	}
 	
 	/**
 	 * 分页显示
 	 */
 	@RequestMapping(value="list",method=RequestMethod.POST)
-	public String list(@RequestParam Map<String, Object> params,Model model){
-		PageHelper.startPage(params);
-		List<SysLog> list = sysLogService.findSysLogList(params);
-		model.addAttribute("page", new PageInfo<SysLog>(list));
-		return "table页面html";
+	public String list(int pageNum,int pageSize,@ModelAttribute SysLog sysLog, Model model){
+		PageInfo<SysLog> page = sysLogService.selectPage(pageNum, pageSize, sysLog);
+		model.addAttribute("page", page);
+		return "sys/log/log-list";
 	}
 	
 	/**
@@ -74,9 +75,10 @@ public class SysLogController extends BaseController {
 	 * @param params {"mode":"1.add 2.edit 3.detail}
 	 */
 	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
-	public String layer(Model model){
-		
-		return "";
+	public String layer(Long id,Model model){
+		SysLog sysLog = sysLogService.selectByPrimaryKey(id);
+		model.addAttribute("sysLog", sysLog);
+		return "sys/log/log-detail";
 	}
 	
 	

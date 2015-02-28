@@ -34,6 +34,12 @@ public class SysRole extends BaseEntity {
 
 	
     private String remarks; //remarks <备注信息>
+    
+    private String updateBy; //update_by <更新者>
+	private Date updateDate; //update_date <更新时间>
+	private String createBy; //create_by <创建者>
+	private Date createDate; //create_date <创建时间>
+	private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
 
     @Transient
     private Long[] resourceIds; //持有的资源
@@ -98,5 +104,43 @@ public class SysRole extends BaseEntity {
 		this.set("remarks", remarks);
     }
 
+    public String getCreateBy() {
+		return this.getString("createBy");
+    }
+   
+    public void setCreateBy(String createBy) {
+		this.set("createBy", createBy);
+    }
+
+	public Date getCreateDate() {
+		return this.getDate("createDate");
+    }
+   
+    public void setCreateDate(Date createDate) {
+		this.set("createDate", createDate);
+    }
+    public String getUpdateBy() {
+		return this.getString("updateBy");
+    }
+   
+    public void setUpdateBy(String updateBy) {
+		this.set("updateBy", updateBy);
+    }
+
+	public Date getUpdateDate() {
+		return this.getDate("updateDate");
+    }
+   
+    public void setUpdateDate(Date updateDate) {
+		this.set("updateDate", updateDate);
+    }
+
+    public String getDelFlag() {
+		return this.getString("delFlag");
+    }
+   
+    public void setDelFlag(String delFlag) {
+		this.set("delFlag", delFlag);
+    }
 
 }
