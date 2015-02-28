@@ -47,7 +47,7 @@ public class SysLogController extends BaseController {
 	 */
 	@RequestMapping(value="list",method=RequestMethod.POST)
 	public String list(int pageNum,int pageSize,@ModelAttribute SysLog sysLog, Model model){
-		PageInfo<SysLog> page = sysLogService.selectPage(pageNum, pageSize, sysLog);
+		PageInfo<SysLog> page = sysLogService.selectPage(pageNum, pageSize, sysLog,"id desc");
 		model.addAttribute("page", page);
 		return "sys/log/log-list";
 	}

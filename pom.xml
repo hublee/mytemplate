@@ -10,14 +10,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!--版本 -->
 		<spring.version>4.1.4.RELEASE</spring.version>
+		<beetl.version>2.1.4</beetl.version>
+		<pagehelper.version>3.6.0</pagehelper.version>
+		<mapper.version>2.0.1</mapper.version>
 		<guava.version>18.0</guava.version>
+		<druid.version>1.0.12</druid.version>
+		<fastjson.version>1.2.4</fastjson.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.beetl</groupId>
 			<artifactId>beetl-core</artifactId>
-			<version>2.1.4</version>
+			<version>${beetl.version}</version>
 		</dependency>
 
 		<dependency>
@@ -121,13 +126,13 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.3</version>
+			<version>${fastjson.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.12</version>
+			<version>${druid.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.alibaba</groupId>
@@ -245,13 +250,13 @@
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
-			<version>3.6.0</version>
+			<version>${pagehelper.version}</version>
 		</dependency>
 		<!--通用Mapper -->
 		<dependency>
 			<groupId>com.github.abel533</groupId>
 			<artifactId>mapper</artifactId>
-			<version>2.0.0</version>
+			<version>${mapper.version}</version>
 		</dependency>
 		<!--JPA -->
 		<dependency>

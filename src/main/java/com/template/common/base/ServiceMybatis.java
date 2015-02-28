@@ -1,5 +1,7 @@
 package com.template.common.base;
 
+import com.github.abel533.entity.Example;
+import com.github.abel533.entity.mapper.CommonMapper;
 import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,6 +13,7 @@ import com.template.common.utils.StringConvert;
 import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -27,7 +30,10 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	
 	@Resource
 	protected BaseMapper baseMapper;
-
+	
+	@Resource
+	private SqlSession sqlSession;
+	
 	/**
 	 * 根据实体类不为null的字段进行查询,条件全部使用=号and条件
 	 * 
@@ -178,6 +184,17 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<T>(mapper.select(record));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public PageInfo<T> selectPage(int pageNum, int pageSize, T record,String orderSqlStr) {
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
+		CommonMapper commonMapper = sqlSession.getMapper(CommonMapper.class);
+		Example example = new Example(record.getClass());
+		example.setOrderByClause(orderSqlStr);
+		PageHelper.startPage(pageNum, pageSize);
+		List<T> list = (List<T>) commonMapper.selectByExample(record.getClass(), example);
+		return new PageInfo<T>(list);
 	}
 
 	/**
