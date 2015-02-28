@@ -55,7 +55,7 @@ public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String toLogin() {
 		if(SysUserUtils.getCacheLoginUser() !=null && SysUserUtils.getSessionLoginUser() != null){
-			return "redirect:/index";
+			return "redirect:/"+Global.getAdminPath();
 		}
 		return "login";
 	}
