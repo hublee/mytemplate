@@ -72,7 +72,7 @@ public class SystemLogAspect {
 			log.setRequestUri(request.getRequestURI());
 			log.setMethod(request.getMethod());
 			log.setUserAgent(request.getHeader("user-agent"));
-			log.setException(e.toString());
+			log.setException(e==null?null:e.toString());
 			log.setType(e==null?SysLog.TYPE_ACCESS:SysLog.TYPE_EXCEPTION);
 			Method m = ((MethodSignature) joinPoint.getSignature()).getMethod();
 			Log sclog = m.getAnnotation(Log.class);
