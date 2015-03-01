@@ -4,7 +4,6 @@ package com.template.web.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
@@ -57,8 +56,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 		if (count > 0) {
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
-			SysUserUtils.clearAllCachedAuthorizationInfo(
-					Lists.newArrayList(SysUserUtils.getCacheLoginUser().getId()));
+			SysUserUtils.clearCacheResource();
 		}
 		return count;
 	}
@@ -78,6 +76,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 			// 重新查找全部资源放入缓存(为了开发时候用)
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,
 					this.getAllResourcesMap());
+			SysUserUtils.clearCacheResource();
 		}
 
 		return delCount;

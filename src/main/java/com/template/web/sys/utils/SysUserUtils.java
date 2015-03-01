@@ -323,6 +323,10 @@ public class SysUserUtils {
 		}
 	}
 	
+	public static void clearCacheResource(){
+		CacheUtils.clear(Constant.CACHE_SYS_RESOURCE);
+	}
+	
 	/**
 	 * 清除缓存中的用户
 	 */
