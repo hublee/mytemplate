@@ -33,14 +33,11 @@ public class SystemLogAspect {
 			.getLogger(SystemLogAspect.class);
 
 	// Controller层切点
-	@Pointcut("@annotation(com.template.common.spring.annotation.Log)"
-			+ " || execution(* com.template.web..*Controller.save*(..))"
-			+ " || execution(* com.template.web..*Controller.delete*(..))")
+	@Pointcut("@annotation(com.template.common.spring.annotation.Log)")
 	public void controllerAspect() {
 	}
 	
-	@Pointcut("@annotation(com.template.common.spring.annotation.Log)"
-			+ " || execution(* com.template.web..*Controller.*(..))")
+	@Pointcut("execution(* com.template.web..*Service.*(..))")
 	public void throwingAspect(){
 	}
 
@@ -82,7 +79,7 @@ public class SystemLogAspect {
 			Method m = ((MethodSignature) joinPoint.getSignature()).getMethod();
 			Log sclog = m.getAnnotation(Log.class);
 			if (sclog != null) log.setDescription(sclog.description());
-			sysLogService.save(log);
+			sysLogService.saveSysLog(log);
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage());
 		}

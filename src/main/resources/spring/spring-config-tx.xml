@@ -33,11 +33,13 @@
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
 			<tx:method name="remove*" propagation="REQUIRED" read-only="false"
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
+			<!-- <tx:method name="saveSysLog" propagation="REQUIRES_NEW" read-only="false"
+				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" /> -->
 			<tx:method name="*" read-only="true" rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="pc" expression="execution(* com.template..service.*Service.*(..))" />
+		<aop:pointcut id="pc" expression="execution(* com.template..*Service.*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
 	</aop:config>
 
