@@ -33,8 +33,6 @@
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
 			<tx:method name="remove*" propagation="REQUIRED" read-only="false"
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
-			<!-- <tx:method name="saveSysLog" propagation="REQUIRES_NEW" read-only="false"
-				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" /> -->
 			<tx:method name="*" read-only="true" rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>

@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.template.common.spring.annotation.Log;
@@ -23,6 +24,7 @@ import com.template.web.sys.utils.SysUserUtils;
 
 @Aspect
 @Component
+@Order(0)
 public class SystemLogAspect {
 
 	@Resource
@@ -32,16 +34,15 @@ public class SystemLogAspect {
 	private final static Logger LOGGER = LoggerFactory
 			.getLogger(SystemLogAspect.class);
 
-	// Controller层切点
 	@Pointcut("@annotation(com.template.common.spring.annotation.Log)")
-	public void controllerAspect() {
+	public void accessAspect() {
 	}
 	
 	@Pointcut("execution(* com.template.web..*Service.*(..))")
 	public void throwingAspect(){
 	}
 
-	@AfterReturning(value = "controllerAspect()", returning = "rtv")
+	@AfterReturning(value = "accessAspect()", returning = "rtv")
 	public void doAfterReturning(JoinPoint joinPoint, Object rtv) {
 		saveLog(joinPoint, null);
 	}
@@ -79,6 +80,7 @@ public class SystemLogAspect {
 			Method m = ((MethodSignature) joinPoint.getSignature()).getMethod();
 			Log sclog = m.getAnnotation(Log.class);
 			if (sclog != null) log.setDescription(sclog.description());
+			//log保存到数据库
 			sysLogService.saveSysLog(log);
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage());

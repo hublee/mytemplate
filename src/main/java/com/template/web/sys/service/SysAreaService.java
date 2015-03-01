@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +54,6 @@ public class SysAreaService extends ServiceMybatis<SysArea>{
 				sysAreaMapper.updateParentIds(sysArea); //批量更新子节点的parentIds
 			}
 		}
-		int a = 1/0;
 		return count;
 	}
 	
