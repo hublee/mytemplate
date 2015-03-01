@@ -11,7 +11,7 @@
 		<!--版本 -->
 		<spring.version>4.1.4.RELEASE</spring.version>
 		<beetl.version>2.1.4</beetl.version>
-		<pagehelper.version>3.6.0</pagehelper.version>
+		<pagehelper.version>3.6.1</pagehelper.version>
 		<mapper.version>2.0.1</mapper.version>
 		<guava.version>18.0</guava.version>
 		<druid.version>1.0.12</druid.version>
@@ -110,12 +110,8 @@
 		</dependency>
 
 		<!--spring-json依赖 -->
-		<!--<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-		-->
+		<!--<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
+			<version>2.4.2</version> </dependency> -->
 		<!--spring-aop依赖 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -304,6 +300,17 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>http://oss.sonatype.org/content/repositories/releases</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>nexus</id>
 			<name>local private nexus</name>
 			<url>http://maven.oschina.net/content/groups/public/</url>
@@ -312,7 +319,7 @@
 			</releases>
 			<snapshots>
 				<enabled>false</enabled>
-			</snapshots> 
+			</snapshots>
 		</repository>
 	</repositories>
 </project>
