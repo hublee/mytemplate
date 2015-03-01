@@ -24,6 +24,14 @@ var webHistory = Webit.history;
 $(function(){
 	
 	var aMenu = $("#sidebar-menu a[id]");
+	var tab = $("#breadcrumb");
+	//init tab
+	var uText = $("#sidebar-menu li").find("[href='#"+webHistory.get()+"']").find(">span").text();
+	if(webHistory.get()!=null){
+		tab.append("<li class='active' h='#"+webHistory.get()+"'>"+uText
+				+"<i class='fa fa-times close'></i></li>");
+	}
+	//menu点击
 	aMenu.on("click",function(){
 		var hash = webHistory.get(),href = $(this).attr("href");
 		if( ("#"+hash) == href ){
@@ -31,6 +39,40 @@ $(function(){
 			webHistory.go(hash);
 		}
 		changeMenu($(this));
+		var tabTxt = $(this).find(">span").text();
+		//tab
+		var tabli = tab.find("li[h='"+href+"']");
+		tab.find("li").removeClass("active");
+		if(tabli.size() == 0){
+			tab.append("<li class='active' h='"+href+"'>"+tabTxt+"<i class='fa fa-times close'></i></li>");
+		}else{
+			tabli.addClass("active");
+		}
+	});
+	//tab切换
+	tab.on("click","li",function(){
+		$(this).addClass("active").siblings().removeClass("active");
+		webHistory.go($(this).attr("h"));
+	});
+	//tab关闭
+	tab.on("click","i",function(){
+		var curHash = webHistory.get(),hash = $(this).parent().attr("h");
+		if(("#"+curHash) == hash){
+			var nhash = $(this).parent().next().attr("h");
+			var phash = $(this).parent().prev().attr("h");
+			if(nhash != undefined){
+				$(this).parent().next().addClass("active");
+				hash = nhash;
+			}else if(phash != undefined){
+				$(this).parent().prev().addClass("active");
+				hash = phash;
+			}else{
+				location.href = adminPath;
+			}
+			webHistory.go(hash);
+		}
+		$(this).parent().remove();
+		return false;
 	});
 	
 	var $main_content = $("#fill-main-content");
@@ -40,8 +82,6 @@ $(function(){
 	   changeMenu(curMenu);
 	});
 	webHistory.init();
-	
-	
 	
 });
 
@@ -72,7 +112,8 @@ function changeMenu(obj){
 		pul.attr("class","submenu nav-show").show();
 		$("#sidebar-menu").find("li").removeClass("active");
 		pli.addClass("active");
-		var mtext = pli.children("a").find("span.menu-text");
+		$(".page-header h1").text($this.find(">span").text())
+		/*var mtext = pli.children("a").find("span.menu-text");
 		$("#breadcrumb").empty();
 		mtext.each(function(i){
 			var last = '';
@@ -81,7 +122,7 @@ function changeMenu(obj){
 				$(".page-header h1").text($(this).text());
 			}
 			$("#breadcrumb").append("<li class='active "+last+"'>"+$(this).text()+"</li>");
-		})
+		})*/
 	}
 }
 
