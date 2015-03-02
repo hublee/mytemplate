@@ -28,7 +28,8 @@ $(function(){
 	//init tab
 	var uText = $("#sidebar-menu li").find("[href='#"+webHistory.get()+"']").find(">span").text();
 	if(webHistory.get()!=null){
-		tab.append("<li class='active' h='#"+webHistory.get()+"'>"+uText
+		tab.append("<li class='active' data-toggle='context' data-target='#tab-menu' h='#"
+				+webHistory.get()+"'>"+uText
 				+"<i class='fa fa-times close'></i></li>");
 	}
 	//menu点击
@@ -44,7 +45,8 @@ $(function(){
 		var tabli = tab.find("li[h='"+href+"']");
 		tab.find("li").removeClass("active");
 		if(tabli.size() == 0){
-			tab.append("<li class='active' h='"+href+"'>"+tabTxt+"<i class='fa fa-times close'></i></li>");
+			tab.append("<li class='active' data-toggle='context' data-target='#tab-menu' h='"+href+"'>"
+					+tabTxt+"<i class='fa fa-times close'></i></li>");
 		}else{
 			tabli.addClass("active");
 		}
@@ -74,6 +76,15 @@ $(function(){
 		$(this).parent().remove();
 		return false;
 	});
+	/*$('#tab-menu').on('shown.bs.context',function (e) {
+		 console.log(this)
+	});
+	$('li[data-target="#tab-menu"]').contextmenu({
+		  onItem: function(context, e) {
+			  console.log(context)
+		    alert($(e.target).text());
+		  }
+	});*/
 	
 	var $main_content = $("#fill-main-content");
 	webHistory.add("ajax", function(str, action, token) {
@@ -256,6 +267,8 @@ $(function(){
 	        this.splice(index, 1);  
 	    }  
 	};
+	
+	//document.oncontextmenu=function(){return false;}//屏蔽右键 
 	
 	// 禁用Enter键表单自动提交
 	document.onkeydown = function(event) {
