@@ -44,8 +44,8 @@ $(function(){
 		//tab
 		var tabli = tab.find("li[h='"+href+"']");
 		tab.find("li").removeClass("active");
-		if(tabli.size() == 0){
-			tab.append("<li class='active' data-toggle='context' data-target='#tab-menu' h='"+href+"'>"
+		if(tabli.size() == 0){ //data-toggle='context' data-target='#tab-menu'
+			tab.append("<li class='active'  h='"+href+"'>"
 					+tabTxt+"<i class='fa fa-times close'></i></li>");
 		}else{
 			tabli.addClass("active");
@@ -76,15 +76,15 @@ $(function(){
 		$(this).parent().remove();
 		return false;
 	});
-	/*$('#tab-menu').on('shown.bs.context',function (e) {
-		 console.log(this)
+	//tab右键
+	$('#breadcrumb').contextmenu({
+		scopes:'li',
+		target:'#tab-menu',
+	    onItem: function(context, e) {
+	    	console.log(context)
+	    	alert($(e.target).text());
+	    }
 	});
-	$('li[data-target="#tab-menu"]').contextmenu({
-		  onItem: function(context, e) {
-			  console.log(context)
-		    alert($(e.target).text());
-		  }
-	});*/
 	
 	var $main_content = $("#fill-main-content");
 	webHistory.add("ajax", function(str, action, token) {
