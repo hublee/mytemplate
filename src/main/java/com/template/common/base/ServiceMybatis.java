@@ -43,6 +43,16 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
 		return mapper.select(record);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> select(T record,String orderSqlStr){
+		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
+		CommonMapper commonMapper = sqlSession.getMapper(CommonMapper.class);
+		Example example = new Example(record.getClass());
+		example.setOrderByClause(orderSqlStr);
+		List<Map<String, Object>> mapList = commonMapper.selectByExample(record.getClass(), example);
+		return (List<T>) Collections3.maplist2BeanList(mapList, record.getClass());
+	}
 
 	/**
 	 * 根据实体类不为null的字段查询总数,条件全部使用=号and条件
@@ -186,6 +196,14 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		return new PageInfo<T>(mapper.select(record));
 	}
 	
+	/**
+	 * @Description:(单表分页可排序) 
+	 * @param:@param pageNum
+	 * @param:@param pageSize
+	 * @param:@param record
+	 * @param:@param orderSqlStr (如:id desc)
+	 * @return:PageInfo<T>
+	 */
 	@SuppressWarnings("unchecked")
 	public PageInfo<T> selectPage(int pageNum, int pageSize, T record,String orderSqlStr) {
 		record.set("delFlag", Constant.DEL_FLAG_NORMAL);

@@ -59,7 +59,6 @@ public class SysResource extends BaseEntity {
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
-
 	public Long getCode() {
 		return this.getLong("code");
     }

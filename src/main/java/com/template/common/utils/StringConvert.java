@@ -63,6 +63,7 @@ public class StringConvert extends StringUtils{
 	 * 将下划线风格替换为驼峰风格
 	 */
 	public static String underlineToCamelhump(String name) {
+		if(!name.contains("_")) return name;
 		char[] buffer = name.toCharArray();
 		int count = 0;
 		boolean lastUnderscore = false;
