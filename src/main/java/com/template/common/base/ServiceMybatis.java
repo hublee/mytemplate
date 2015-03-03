@@ -51,16 +51,6 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		Example example = new Example(record.getClass());
 		example.setOrderByClause(orderSqlStr);
 		List<Map<String, Object>> mapList = commonMapper.selectByExample(record.getClass(), example);
-		/*List<T> newList = new ArrayList<T>();
-		for(Map<String, Object> map : mapList){
-			try {
-				T t = (T) record.getClass().newInstance();
-				t.setAll(map);
-				newList.add(t);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}*/
 		return (List<T>) Collections3.maplist2EntityMapList(mapList, record.getClass());
 	}
 
