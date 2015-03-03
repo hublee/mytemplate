@@ -17,6 +17,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.template.common.base.BaseEntity;
+
 /**
  * Collections工具集.
  * 在JDK的Collections和Guava的Collections2后, 命名为Collections3.
@@ -229,6 +231,21 @@ public class Collections3 {
             list.add(map2Bean(map, beanClass));
         }
         return list;
+    }
+    
+    public static <T extends BaseEntity> List<T> maplist2EntityMapList(List<Map<String,Object>> mapList, 
+    		Class<T> beanClass){
+    	List<T> newList = new ArrayList<T>();
+		for(Map<String, Object> map : mapList){
+			try {
+				T t = beanClass.newInstance();
+				t.setAll(map);
+				newList.add(t);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return newList;
     }
 	
 }
