@@ -81,8 +81,13 @@ $(function(){
 		scopes:'li',
 		target:'#tab-menu',
 	    onItem: function(context, e) {
-	    	console.log(context)
-	    	alert($(e.target).text());
+	    	var t = $(e.target).data("right-menu");
+	    	if(t == "all_close"){
+	    		location.href = adminPath;
+	    	}else if(t == "other_close"){
+	    		$(context).addClass("active").siblings().remove();
+	    		webHistory.go($(context).attr("h"));
+	    	}
 	    }
 	});
 	
