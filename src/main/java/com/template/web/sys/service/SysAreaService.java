@@ -25,7 +25,7 @@ import java.util.Map;
  */
 
 @Service("sysAreaService")
-@CacheConfig(cacheNames="sysArea")
+@CacheConfig(cacheNames="sysArea_cache")
 public class SysAreaService extends ServiceMybatis<SysArea>{
 
 	@Resource

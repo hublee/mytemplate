@@ -31,7 +31,7 @@ import com.template.web.sys.model.SysRole;
  */
 
 @Service("sysDictService")
-@CacheConfig(cacheNames = "sysDict")
+@CacheConfig(cacheNames = "sysDict_cache")
 public class SysDictService extends ServiceMybatis<SysDict> {
 
 	@Resource

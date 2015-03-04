@@ -24,10 +24,10 @@ public class Constant {
 	public static final String SUPER_ADMIN = "1"; // 超级管理员
 
 	// 缓存key
-	public static final String CACHE_SYS_RESOURCE = "sysResource"; // 资源的缓存名称
-	public static final String CACHE_SYS_OFFICE = "sysOffice"; //机构的缓存名称
-	public static final String CACHE_SYS_ROLE = "sysRole"; //角色的缓存名称
-	public static final String CACHE_SYS_USER = "sysUser"; //用户缓存名称
+	public static final String CACHE_SYS_RESOURCE = "sysResource_cache"; // 资源的缓存名称
+	public static final String CACHE_SYS_OFFICE = "sysOffice_cache"; //机构的缓存名称
+	public static final String CACHE_SYS_ROLE = "sysRole_cache"; //角色的缓存名称
+	public static final String CACHE_SYS_USER = "sysUser_cache"; //用户缓存名称
 	
 	public static final String CACHE_ALL_RESOURCE = "allSysResource"; // 全部资源key
 	public static final String CACHE_USER_RESOURCE = "userSysResource"; // 用户权限

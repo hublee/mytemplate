@@ -8,18 +8,59 @@
 		timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="true"
 		maxEntriesLocalDisk="100000" />
 
-	<cache name="sysUser" maxEntriesLocalHeap="100" eternal="false" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
-	<cache name="sysArea" maxEntriesLocalHeap="100" eternal="true" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
-	<cache name="sysOffice" maxEntriesLocalHeap="100" eternal="true" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
-	<cache name="sysRole" maxEntriesLocalHeap="100" eternal="true" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
-	<cache name="sysDict" maxEntriesLocalHeap="100" eternal="true" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
-	<cache name="sysResource" maxEntriesLocalHeap="100" eternal="true" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="sysUser_cache"
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
+        
+	<cache name="sysArea_cache" 
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
+        
+	<cache name="sysOffice_cache" 
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
+        
+	<cache name="sysRole_cache" 
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
+        
+	<cache name="sysDict_cache" 
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
+        
+	<cache name="sysResource_cache" 
+		maxEntriesLocalHeap="10000"
+        overflowToDisk="false"
+        eternal="false"
+        diskPersistent="false"
+        timeToLiveSeconds="0"
+        timeToIdleSeconds="0"
+        statistics="true"/>
 		
 	<!--  
     name：Cache的唯一标识  
