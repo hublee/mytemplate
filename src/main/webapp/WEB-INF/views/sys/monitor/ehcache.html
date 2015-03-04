@@ -1,0 +1,50 @@
+@var cacheNames = @ehcacheManager.getCacheNames();
+@for(cacheName in cacheNames){
+	@var cache = @ehcacheManager.getCache(cacheName);
+	@var statistics = @cache.getStatistics();
+	@var cacheHitCount = @statistics.cacheHitCount();
+	@var cacheMissCount = @statistics.cacheMissCount();
+	@var totalCount = cacheHitCount + cacheMissCount;
+	@totalCount = totalCount >0?totalCount:1;
+	@var cacheHitPercent = cacheHitCount * 1.0 / totalCount;
+	@var localHeapHitCount = @statistics.localHeapPutCount();
+	<div class="widget-box">
+		<div class="widget-header">
+			<h5 class="widget-title bigger lighter">
+				<i class="ace-icon fa fa-table"></i> ${cacheName}
+			</h5>
+			<div class="widget-toolbar">
+				<a href="#" data-action="collapse"> <i
+					class="ace-icon fa fa-chevron-up bigger-125"></i>
+				</a>
+			</div>
+		</div>
+		<div class="widget-body">
+			<div class="widget-main no-padding">
+				<table class="table table-striped table-bordered table-hover">
+					<thead class="thin-border-bottom">
+						<tr>
+							<th class="center">总命中率</th>
+							<th class="center">命中次数</th>
+							<th class="center">失效次数</th>
+							<th class="center">内存中对象数量</th>
+							<th class="center">缓存总对象数</th>
+							<th class="center">最后一秒查询完成的执行数</th>
+							<th class="center">最后一次采样的平均执行时间</th>
+							<th class="center">平均获取时间</th>
+						</tr>
+					</thead>
+	
+					<tbody>
+						<tr>
+							<td class="center">${trunc(cacheHitPercent,3)}</td>
+							<td class="center">${cacheHitCount}</td>
+							<td class="center">${cacheMissCount}</td>
+							<td class="center">${localHeapHitCount}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+@}
