@@ -209,8 +209,8 @@ function changeMenu(obj){
 			if(height.substr(height.length-1,1) != "%"){
 				height = parseInt(height)+35+'';
 			}
-			var paddingBottom = (mode=='detail')?'0px':'30px';
-			var loadi;
+			
+			var loadi,layerObj;
 			$.ajax({
 				url:params.url,
 				data:params.data,
@@ -220,6 +220,7 @@ function changeMenu(obj){
 					loadi = layer.load(5,0);
 				}
 			}).done(function(data){
+				var cheight,cwidth;
 				layer.close(loadi);
 				lastIndex = $.layer({
 				    type : 1,
@@ -230,12 +231,16 @@ function changeMenu(obj){
 				    border:[4, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
-				    	layero.find('.xuboxPageHtml').css({
+				    	//
+				    	layerObj = layero;
+				    	//cheight = layero.find("div.layer").outerHeight();
+				    	//cwidth = layero.find("div.layer").outerWidth();
+				    	/*layero.find('.xuboxPageHtml').css({
 				    		'overflowY':'auto',
 				    		'height':layero.height()-35,
 				    		'paddingBottom':paddingBottom
 				    		});
-				    	layero.find('.xubox_page').css({'width':'100%'});
+				    	layero.find('.xubox_page').css({'width':'100%'});*/
 				    },
 				    full:function(layero){
 				    	setTimeout(function() {
@@ -249,6 +254,28 @@ function changeMenu(obj){
 				    	layer.closeTips();
 				    }
 				});
+				var saveTag = layerObj.find('div[tag-form]');
+				var paddingBottom = '0px';
+				if(saveTag.length != 0) {
+					paddingBottom = '-35px';
+				}
+				
+				layerObj.find('.xuboxPageHtml').css({
+		    		'overflowY':'auto',
+		    		//'height':layero.height()-35,
+		    		'paddingBottom':paddingBottom
+		    	});
+				
+				//var paddingBottom = (mode=='detail')?'0px':'30px';
+				var _scrollHeight = $(document).scrollTop();
+				var _windowHeight = $(window).height();
+				var _windowWidth = $(window).width();
+				var oheight = layerObj.find("div.layer").outerHeight()+36+35;
+				var owidth = layerObj.find("div.layer").outerWidth();
+				var _posiTop = (_windowHeight - oheight)/2 + _scrollHeight;
+				var _posiLeft = (_windowWidth - owidth)/2;
+				console.log(owidth+":"+oheight+"--"+_windowHeight+":"+_scrollHeight);
+		    	layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
 			}).fail(function(err){
 				layer.msg('操作失败', 2, 8);
 			});

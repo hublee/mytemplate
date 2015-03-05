@@ -9,7 +9,7 @@
 			<th class="center">内存中对象数</th>
 			<th class="center">硬盘中对象数</th>
 			<th class="center">内存中占用(KB)</th>
-			<th class="center">操作</th>
+			<th class="center">详情</th>
 		</tr>
 	</thead>
 
@@ -26,7 +26,6 @@
 		@var localHeapCount = @statistics.getLocalHeapSize();
 		@var localDiskCount = @statistics.getLocalDiskSize();
 		@var localHeapSize = @statistics.getLocalHeapSizeInBytes();
-		@debug(localHeapSize);
 		<tr>
 			<td class="center">${cacheName}</td>
 			<td class="center">${trunc(cacheHitPercent,3)}</td>
@@ -35,6 +34,16 @@
 			<td class="center">${localHeapCount}</td>
 			<td class="center">${localDiskCount}</td>
 			<td class="center">${trunc(localHeapSize/1024,2)}</td>
+			<td class="center">
+				<div class="hidden-sm hidden-xs action-buttons">
+				<a class="blue" href="javascript:;"
+					data-title="${cacheName}详情" data-mode="detail"
+					data-url="${rootPath}/monitor/ehcache/${cacheName}/detail"
+					data-width="450" data-height="579">
+					<i class="ace-icon fa fa-search-plus bigger-130"></i>
+				</a>
+				</div>
+			</td>
 		</tr>
 	@}
 	</tbody>

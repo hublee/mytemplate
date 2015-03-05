@@ -8,7 +8,7 @@
 @var okText = okText!'确 定';
 
 @if(isHide == "no"){
-<div class="width-100 clearfix" style="bottom: 0px;left: 0px;position:absolute;">
+<div class="width-100 clearfix" tag-form style="bottom: 0px;left: 0px;position:absolute;">
 	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> ${okText}
 	</span>
