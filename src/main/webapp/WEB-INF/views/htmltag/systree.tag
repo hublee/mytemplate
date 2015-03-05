@@ -6,8 +6,8 @@
 @var searchBtn=searchBtn!'search-btn';
 @var searchInput=searchInput!'search-input';
 @var searchAllBtn=searchAllBtn!'search-all-btn';
-@var height = height!'520';
-@var width = width!'600';
+@var height = height!'0';
+@var width = width!'0';
 @var reloadUrl = reloadUrl!false;
 @var rootNodeName = rootNodeName!"全部";
 

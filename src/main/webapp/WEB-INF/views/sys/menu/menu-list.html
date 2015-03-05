@@ -22,9 +22,8 @@
 					<a href="javascript:;" 
 						data-title="${menu.name!}详情" data-mode="detail"
 						data-url="${rootPath}/menu/detail/showlayer"
-						data-data="{id:'${menu.id}'}"
-						data-width="450" data-height="579"
-					>${menu.name!}</a>
+						data-data="{id:'${menu.id}'}" >
+					${menu.name!}</a>
 				</td>
 				<td class="center">
 					${ menu.url!}
@@ -55,7 +54,6 @@
 							data-mode="page" data-title="${menu.name!}编辑"
 							data-url="${rootPath}/menu/edit/showlayer"
 							data-data="{id:'${menu.id}',parentId:'${menu.pid}'}"
-							data-height="530"
 						>
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>

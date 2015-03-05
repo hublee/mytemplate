@@ -1,3 +1,4 @@
+<div class="layer">
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
 		<div class="profile-info-name">角色名称</div>
@@ -32,7 +33,6 @@
 					data-title="<${user.name!}>详情" data-mode="detail"
 					data-url="${rootPath}/sysuser/detail/showlayer"
 					data-data="{id:'${user.id}'}"
-					data-width="600" data-height="477"
 				>${user.name!}
 					${decode(userLP.last,false,'，','')}
 				</a>
@@ -80,4 +80,5 @@
 			<span class="editable editable-click">${sysrole.description!}</span>
 		</div>
 	</div>
+</div>
 </div>

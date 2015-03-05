@@ -1,7 +1,7 @@
 @var order = order!'';
 @var class = class!'width-100 '; //样式
-@var width = width!'350'; //弹窗宽度
-@var height = height!'350'; //弹窗的高度
+@var width = width!'350px'; //弹窗宽度
+@var height = height!'400px'; //弹窗的高度
 @var modelId = modelId!'parentId'; //隐藏要提交的id (实体属性)
 @var modelName = modelName!''; //要提交的name (实体属性)
 @var modelIdValue = modelIdValue!'0'; //id初始值value 

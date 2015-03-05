@@ -154,8 +154,8 @@ function changeMenu(obj){
 			url:undefined, //请求回来弹窗的url
 			data:{}, //请求弹窗携带的参数
 			maxmin:true, //是否输出窗口最小化/全屏/还原按钮。 
-			width:'600',
-			height:'600',
+			width:'0',
+			height:'0',
 			btns:2,
 			btn:['确 定','取 消'],
 			msg:'',
@@ -205,12 +205,7 @@ function changeMenu(obj){
 			},params.title);
 		}
 		if(mode == 'page' || mode == 'detail'){
-			var height = $.trim(params.height),width = $.trim(params.width);
-			if(height.substr(height.length-1,1) != "%"){
-				height = parseInt(height)+35+'';
-			}
-			
-			var loadi,layerObj;
+			var loadi; //加载窗
 			$.ajax({
 				url:params.url,
 				data:params.data,
@@ -220,62 +215,93 @@ function changeMenu(obj){
 					loadi = layer.load(5,0);
 				}
 			}).done(function(data){
-				var cheight,cwidth;
-				layer.close(loadi);
+				var layerObj; //弹窗
+				var increment = 36,dheight = params.height,dwidth = params.width;
+				layer.close(loadi); //关闭加载框
 				lastIndex = $.layer({
 				    type : 1,
 				    title : params.title,
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
-				    area : [width,height],
+				    //area : [dheight,dwidth],
 				    border:[4, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
-				    	//
 				    	layerObj = layero;
-				    	//cheight = layero.find("div.layer").outerHeight();
-				    	//cwidth = layero.find("div.layer").outerWidth();
-				    	/*layero.find('.xuboxPageHtml').css({
-				    		'overflowY':'auto',
-				    		'height':layero.height()-35,
-				    		'paddingBottom':paddingBottom
-				    		});
-				    	layero.find('.xubox_page').css({'width':'100%'});*/
 				    },
 				    full:function(layero){
-				    	setTimeout(function() {
-				    		layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
-				        },101);
+				    	/*setTimeout(function() {
+				    		layerObj.find('.xuboxPageHtml').css({
+					    		'overflowY':'auto',
+					    		'height':layerObj.height()-increment,
+					    	});
+				    		//layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				        },101);*/
 				    },
 				    restore: function(layero){
-				    	layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				    	/*layerObj.find('.xuboxPageHtml').css({
+				    		'overflowY':'auto',
+				    		'height':layerObj.height()-increment,
+				    	});*/
+				    	//layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
 				    },
 				    close: function(index){
 				    	layer.closeTips();
 				    }
 				});
-				var saveTag = layerObj.find('div[tag-form]');
-				var paddingBottom = '0px';
-				if(saveTag.length != 0) {
-					paddingBottom = '-35px';
-				}
-				
-				layerObj.find('.xuboxPageHtml').css({
-		    		'overflowY':'auto',
-		    		//'height':layero.height()-35,
-		    		'paddingBottom':paddingBottom
-		    	});
-				
-				//var paddingBottom = (mode=='detail')?'0px':'30px';
+				var saveTag = layerObj.find('div[tag-save-btn]');
+				if(saveTag.length > 0) increment = 36*2;
 				var _scrollHeight = $(document).scrollTop();
 				var _windowHeight = $(window).height();
 				var _windowWidth = $(window).width();
-				var oheight = layerObj.find("div.layer").outerHeight()+36+35;
+				var oheight = layerObj.find("div.layer").outerHeight()+increment;
 				var owidth = layerObj.find("div.layer").outerWidth();
-				var _posiTop = (_windowHeight - oheight)/2 + _scrollHeight;
-				var _posiLeft = (_windowWidth - owidth)/2;
-				console.log(owidth+":"+oheight+"--"+_windowHeight+":"+_scrollHeight);
+				if(oheight>_windowHeight) oheight = _windowHeight;
+				if(owidth>_windowWidth) owidth = _windowWidth;
+				//默认设置
+				if(dheight!=0 && dheight!="") { //显式的指定高度情况
+					var bf = dheight.indexOf('%');
+					if(bf != -1) { //百分比
+						oheight = parseInt($.trim(dheight.substring (0,bf)))/100.0 * _windowHeight;
+					}else{ //px
+						var px = dheight.indexOf('px');
+						oheight = parseInt($.trim(dheight.substring (0,px)));
+					}
+				}
+				if(dwidth!=0 && dwidth!="") {//显式的指定宽度情况
+					var bf = dwidth.indexOf('%');
+					if(bf != -1){
+						owidth = parseInt($.trim(dwidth.substring (0,bf)))/100.0 * _windowWidth;
+					}else{
+						var px = dwidth.indexOf('px');
+						owidth = parseInt($.trim(dwidth.substring (0,px)));
+					}
+				}else{
+					owidth = 0.46 * _windowWidth;
+				}
+				var _posiTop = _posiLeft = 0;
+				if(oheight != _windowHeight){
+					_posiTop = (_windowHeight - oheight-8)/2;
+				}else{
+					oheight = _windowHeight-8;
+				}
+				if(owidth != _windowWidth){
+					_posiLeft = (_windowWidth - owidth-8)/2;
+				}else{
+					owidth = _windowWidth-8;
+				}
 		    	layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
+		    	
+				var bottom = '0px';
+				if(saveTag.length > 0) {
+					bottom = '-36px';
+				}
+		    	layerObj.find('.xuboxPageHtml').css({
+		    		'overflowY':'auto',
+		    		'height':layerObj.height()-increment,
+		    	});
+		    	saveTag.css({'bottom':bottom});
+		    	layerObj.find(".xubox_page").css({width:'100%'});
 			}).fail(function(err){
 				layer.msg('操作失败', 2, 8);
 			});
