@@ -223,7 +223,7 @@ function changeMenu(obj){
 				    title : params.title,
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
-				    //area : [dheight,dwidth],
+				    area : ['100%','100%'],
 				    border:[4, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
@@ -290,7 +290,7 @@ function changeMenu(obj){
 				}else{
 					owidth = _windowWidth-8;
 				}
-		    	layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
+				layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
 		    	
 				var bottom = '0px';
 				if(saveTag.length > 0) {
@@ -302,6 +302,8 @@ function changeMenu(obj){
 		    	});
 		    	saveTag.css({'bottom':bottom});
 		    	layerObj.find(".xubox_page").css({width:'100%'});
+		    	
+		    	
 			}).fail(function(err){
 				layer.msg('操作失败', 2, 8);
 			});
