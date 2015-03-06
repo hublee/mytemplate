@@ -206,6 +206,7 @@ function changeMenu(obj){
 		}
 		if(mode == 'page' || mode == 'detail'){
 			var loadi; //加载窗
+			var oheight,owidth;
 			$.ajax({
 				url:params.url,
 				data:params.data,
@@ -223,7 +224,7 @@ function changeMenu(obj){
 				    title : params.title,
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
-				    area : ['100%','100%'],
+				    //area : ['99%','100%'],
 				    border:[4, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
@@ -239,10 +240,15 @@ function changeMenu(obj){
 				        },101);*/
 				    },
 				    restore: function(layero){
-				    	/*layerObj.find('.xuboxPageHtml').css({
-				    		'overflowY':'auto',
-				    		'height':layerObj.height()-increment,
-				    	});*/
+				    	layerObj.css({
+				    		'width':owidth,
+				    		'height':oheight
+				    	});
+				    	layerObj.find(".xubox_main").css({
+				    		'width':owidth,
+				    		'height':oheight
+				    	});
+				    	layerObj.find(".xubox_border").width(owidth+8);
 				    	//layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
 				    },
 				    close: function(index){
@@ -254,8 +260,8 @@ function changeMenu(obj){
 				var _scrollHeight = $(document).scrollTop();
 				var _windowHeight = $(window).height();
 				var _windowWidth = $(window).width();
-				var oheight = layerObj.find("div.layer").outerHeight()+increment;
-				var owidth = layerObj.find("div.layer").outerWidth();
+				oheight = layerObj.find("div.layer").outerHeight()+increment;
+				owidth = layerObj.find("div.layer").outerWidth();
 				if(oheight>_windowHeight) oheight = _windowHeight;
 				if(owidth>_windowWidth) owidth = _windowWidth;
 				//默认设置
@@ -277,7 +283,7 @@ function changeMenu(obj){
 						owidth = parseInt($.trim(dwidth.substring (0,px)));
 					}
 				}else{
-					owidth = 0.46 * _windowWidth;
+					//owidth = 0.46 * _windowWidth;
 				}
 				var _posiTop = _posiLeft = 0;
 				if(oheight != _windowHeight){
@@ -290,6 +296,7 @@ function changeMenu(obj){
 				}else{
 					owidth = _windowWidth-8;
 				}
+				
 				layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
 		    	
 				var bottom = '0px';
@@ -302,7 +309,6 @@ function changeMenu(obj){
 		    	});
 		    	saveTag.css({'bottom':bottom});
 		    	layerObj.find(".xubox_page").css({width:'100%'});
-		    	
 		    	
 			}).fail(function(err){
 				layer.msg('操作失败', 2, 8);

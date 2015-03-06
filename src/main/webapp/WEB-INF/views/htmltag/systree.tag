@@ -7,7 +7,7 @@
 @var searchInput=searchInput!'search-input';
 @var searchAllBtn=searchAllBtn!'search-all-btn';
 @var height = height!'0';
-@var width = width!'0';
+@var width = width!'50%';
 @var reloadUrl = reloadUrl!false;
 @var rootNodeName = rootNodeName!"全部";
 

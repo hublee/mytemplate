@@ -4,122 +4,97 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">机构名称</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${office.name!}</span>
+			${office.name!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">机构类型</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${dict.getDictByTypeAndValue("sys_office_type",office.type).label}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">上级机构</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${pOffice.name!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">归属区域</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${area[office.areaId].name!}</span>
+			${area[office.areaId].name!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">图标</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
-			<i class="ace-icon ${office.icon!} blue bigger-120"></i></span>
+			<i class="ace-icon ${office.icon!} blue bigger-120"></i>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">负责人</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.master!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">电话</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.phone!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">邮箱</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.email!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">联系地址</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.address!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">邮政编码</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.zip_code!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">传真</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.fax!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.createBy!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.createDate!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.updateBy!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${office.updateDate!}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">备注</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${office.remarks!}</span>
+			${office.remarks!}
 		</div>
 	</div>
 </div>

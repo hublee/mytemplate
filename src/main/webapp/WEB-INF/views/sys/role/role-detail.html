@@ -2,27 +2,23 @@
 <div class="profile-user-info profile-user-info-striped" >
 	<div class="profile-info-row">
 		<div class="profile-info-name">角色名称</div>
-		<div class="profile-info-value width-85">
-			<span class="editable editable-click">${sysrole.name!}</span>
+		<div class="profile-info-value">
+			${sysrole.name!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">归属机构</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
-				@var roleOffice = office.getOfficeStrByOfficeId(sysrole.officeId);
-				@if(!isEmpty(roleOffice)){
-				&nbsp;(${roleOffice})
-				@}
-			</span>
+			@var roleOffice = office.getOfficeStrByOfficeId(sysrole.officeId);
+			@if(!isEmpty(roleOffice)){
+			&nbsp;(${roleOffice})
+			@}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">数据范围</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 			${dict.getDictByTypeAndValue("sys_data_scope",sysrole.dataScope).label}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
@@ -42,42 +38,40 @@
 	<div class="profile-info-row">
 		<div class="profile-info-name">拥有的权限</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">
 				@for(resource in resources){
 					${resource.name!}
 					${decode(resourceLP.last,false,'，','')}
 				@}
-			</span>
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysrole.createBy!}</span>
+			${sysrole.createBy!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">创建时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysrole.createDate!}</span>
+			${sysrole.createDate!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新者</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysrole.updateBy!}</span>
+			${sysrole.updateBy!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">更新时间</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysrole.updateDate!}</span>
+			${sysrole.updateDate!}
 		</div>
 	</div>
 	<div class="profile-info-row">
 		<div class="profile-info-name">描述</div>
 		<div class="profile-info-value">
-			<span class="editable editable-click">${sysrole.description!}</span>
+			${sysrole.description!}
 		</div>
 	</div>
 </div>
