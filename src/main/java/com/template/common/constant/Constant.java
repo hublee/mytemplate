@@ -54,5 +54,8 @@ public class Constant {
 	// 是/否
 	public static final String YES = "1";
 	public static final String NO = "0";
+	
+	//update or add or delete
+	public static final Integer SUCCESS = 1;
 
 }

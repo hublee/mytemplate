@@ -36,11 +36,19 @@
 			<td class="center">${trunc(localHeapSize/1024,2)}</td>
 			<td class="center">
 				<div class="hidden-sm hidden-xs action-buttons">
-				<a class="blue" href="javascript:;"
-					data-title="${cacheName}详情" data-mode="detail"
-					data-url="${rootPath}/monitor/ehcache/${cacheName}/detail">
-					<i class="ace-icon fa fa-search-plus bigger-130"></i>
-				</a>
+					<a class="blue" href="javascript:;"
+						data-title="${cacheName}缓存的对象列表" data-mode="detail"
+						data-url="${rootPath}/monitor/ehcache/${cacheName}/detail"
+						data-width="30%">
+						<i class="ace-icon fa fa-search-plus bigger-130"></i>
+					</a>
+					<a class="red" href="javascript:void(0);" title="清空全部缓存" id="delcache"
+						data-mode="del" 
+						data-title="删除操作" 
+						data-msg="你确定全部清空此缓存吗?" 
+						data-url="${rootPath}/monitor/ehcache/${cacheName}/clear">
+							<i class="ace-icon fa fa-trash-o bigger-130"></i>
+					</a>
 				</div>
 			</td>
 		</tr>

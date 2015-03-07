@@ -16,17 +16,15 @@
 					<a class="blue" href="javascript:;"
 						data-title="${cacheName} 详情" 
 						data-mode="detail"
-						data-url="${rootPath}/monitor/ehcache/${cacheName}/detail"
-						_data-width="450" 
-						_data-height="300">
+						data-url="${rootPath}/monitor/ehcache/${cacheName}/${key}/detail">
 						<i class="ace-icon fa fa-search-plus bigger-130"></i>
 					</a>
-					<a class="red" href="javascript:void(0);" title="删除" 
+					<a class="red" href="javascript:void(0);" title="删除" id="delcache"
 					data-mode="del" 
 					data-title="删除操作" 
-					data-msg="你确定删除此数据吗?" 
-					data-url="/mytemplate/test/sysuser/delete" 
-					data-data="{id:'2'}">
+					data-msg="你确定删除此缓存对象吗?" 
+					data-url="${rootPath}/monitor/ehcache/${cacheName}/${key}/delete"
+					data-callback="$('#delcache').closest('tr').remove()">
 						<i class="ace-icon fa fa-trash-o bigger-130"></i>
 					</a>
 				</div>

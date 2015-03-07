@@ -44,7 +44,7 @@ $(function(){
 		//tab
 		var tabli = tab.find("li[h='"+href+"']");
 		tab.find("li").removeClass("active");
-		if(tabli.size() == 0){ //data-toggle='context' data-target='#tab-menu'
+		if(tabli.size() == 0){ 
 			tab.append("<li class='active'  h='"+href+"'>"
 					+tabTxt+"<i class='fa fa-times close'></i></li>");
 		}else{
@@ -165,7 +165,6 @@ function changeMenu(obj){
 		params = $.extend(defaults, params);
 		
 		var mode = params.mode;
-		
 		if(undefined != params.closebtn){
 			params.closeBtn = params.closebtn;
 		}
@@ -189,13 +188,24 @@ function changeMenu(obj){
 				}).done(function(data){
 					layer.close(loadi);
         			if(data>0) {
-        				layer.msg('<span class="red bigger-120">删除成功</span>', 1, 1,function(){
-        					if(params.reloadurl){
-        						location.reload();
-        					}else{
-        						$curmenu.trigger('click');
-        					}
-        				});
+        				if(params.success == undefined){
+        					layer.msg('<span class="red bigger-120">删除成功</span>', 1, 1,function(){
+            					if(params.reloadurl){
+            						location.reload();
+            					}else{
+            						$curmenu.trigger('click');
+            						if(params.callback != undefined) {
+            							if(typeof params.callback === "string"){
+            								eval(params.callback)
+            							}else{
+            								params.callback();
+            							}
+            						}
+            					}
+            				});
+        				}else{
+        					params.success();
+        				}
         			}else if(data<0){
         				layer.alert('<span class="red bigger-120">删除失败，数据正在被使用！</span>', 8, !1);
         			}
@@ -203,6 +213,7 @@ function changeMenu(obj){
         			layer.msg('<span class="red bigger-120">删除失败</span>', 2, 8);
         		});
 			},params.title);
+			return false;
 		}
 		if(mode == 'page' || mode == 'detail'){
 			var loadi; //加载窗
