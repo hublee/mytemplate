@@ -218,6 +218,10 @@ function changeMenu(obj){
 			}).done(function(data){
 				var layerObj; //弹窗
 				var increment = 36,dheight = params.height,dwidth = params.width;
+				var _scrollHeight = $(document).scrollTop();
+				var _windowHeight = $(window).height();
+				var _windowWidth = $(window).width();
+				var borderWidth = params.borderwidth==undefined?4:params.borderwidth;
 				layer.close(loadi); //关闭加载框
 				lastIndex = $.layer({
 				    type : 1,
@@ -225,19 +229,13 @@ function changeMenu(obj){
 				    maxmin: params.maxmin,
 				    closeBtn: params.closeBtn,
 				    //area : ['99%','100%'],
-				    border:[4, 0.5, '#888'],
+				    border:[borderWidth, 0.5, '#888'],
 				    page : {html:data},
 				    success:function(layero){
 				    	layerObj = layero;
 				    },
 				    full:function(layero){
-				    	/*setTimeout(function() {
-				    		layerObj.find('.xuboxPageHtml').css({
-					    		'overflowY':'auto',
-					    		'height':layerObj.height()-increment,
-					    	});
-				    		//layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
-				        },101);*/
+				    	layero.find('.xuboxPageHtml').css({'height':_windowHeight-increment-(borderWidth*2)});
 				    },
 				    restore: function(layero){
 				    	layerObj.css({
@@ -248,8 +246,8 @@ function changeMenu(obj){
 				    		'width':owidth,
 				    		'height':oheight
 				    	});
-				    	layerObj.find(".xubox_border").width(owidth+8);
-				    	//layero.find('.xuboxPageHtml').css({'overflowY':'auto','height':layero.height()-35});
+				    	layero.find('.xuboxPageHtml').css({'height':oheight-increment});
+				    	layerObj.find(".xubox_border").width(owidth+8).height(oheight+8);
 				    },
 				    close: function(index){
 				    	layer.closeTips();
@@ -257,9 +255,6 @@ function changeMenu(obj){
 				});
 				var saveTag = layerObj.find('div[tag-save-btn]');
 				if(saveTag.length > 0) increment = 36*2;
-				var _scrollHeight = $(document).scrollTop();
-				var _windowHeight = $(window).height();
-				var _windowWidth = $(window).width();
 				oheight = layerObj.find("div.layer").outerHeight()+increment;
 				owidth = layerObj.find("div.layer").outerWidth();
 				if(oheight>_windowHeight) oheight = _windowHeight;
