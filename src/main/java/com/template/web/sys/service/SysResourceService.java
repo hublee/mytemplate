@@ -107,13 +107,11 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 获取全部资源map形式
-	 * 
 	 * @return
 	 */
-	// TODO 需要排序
 	public LinkedHashMap<String, SysResource> getAllResourcesMap() {
 		// 读取全部资源
-		List<SysResource> resList = this.select(new SysResource(),"sort");
+		List<SysResource> resList = this.select(new SysResource(), "sort");
 		LinkedHashMap<String, SysResource> AllResourceMap = new LinkedHashMap<String, SysResource>();
 		for (SysResource res : resList) {
 			if (StringUtils.isBlank(res.getUrl())) {

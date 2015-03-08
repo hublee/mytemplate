@@ -31,7 +31,7 @@ public class EhcacheMonitorController {
 	@RequestMapping
 	public String toEhcache(Model model) {
 		model.addAttribute("ehcacheManager", ehcacheManager);
-		return "sys/monitor/ehcache";
+		return "sys/monitor/ehcache/ehcache";
 	}
 
 	@RequestMapping("{cacheName}/detail")
@@ -49,7 +49,7 @@ public class EhcacheMonitorController {
 			}
 		}
 		model.addAttribute("keys", showKeys);
-		return "sys/monitor/ehcache-detail";
+		return "sys/monitor/ehcache/ehcache-detail";
 	}
 
 	@RequestMapping("{cacheName}/{key}/detail")
@@ -76,7 +76,7 @@ public class EhcacheMonitorController {
 		model.addAttribute("timeToIdle", element.getTimeToIdle());
 		model.addAttribute("timeToLive", element.getTimeToLive());
 		model.addAttribute("version", element.getVersion());
-		return "sys/monitor/object-detail";
+		return "sys/monitor/ehcache/object-detail";
 	}
 	
 	@RequestMapping("{cacheName}/{key}/delete")

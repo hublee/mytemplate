@@ -1,7 +1,6 @@
 package com.template.common.base;
 
 import com.github.abel533.entity.Example;
-import com.github.abel533.entity.mapper.CommonMapper;
 import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -13,7 +12,6 @@ import com.template.common.utils.StringConvert;
 import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -31,12 +29,9 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	@Resource
 	protected BaseMapper baseMapper;
 	
-	@Resource
-	private SqlSession sqlSession;
 	
 	/**
 	 * 根据实体类不为null的字段进行查询,条件全部使用=号and条件
-	 * 
 	 * @param <T extend T>
 	 */
 	public List<T> select(T record) {
@@ -44,19 +39,15 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		return mapper.select(record);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<T> select(T record,String orderSqlStr){
-		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
-		CommonMapper commonMapper = sqlSession.getMapper(CommonMapper.class);
-		Example example = new Example(record.getClass());
+		Example example = new Example(record.getClass(),false);
+		example.createCriteria().andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
 		example.setOrderByClause(orderSqlStr);
-		List<Map<String, Object>> mapList = commonMapper.selectByExample(record.getClass(), example);
-		return (List<T>) Collections3.maplist2EntityMapList(mapList, record.getClass());
+		return mapper.selectByExample(example);
 	}
-
+	
 	/**
 	 * 根据实体类不为null的字段查询总数,条件全部使用=号and条件
-	 * 
 	 * @param <T extend T>
 	 */
 	public int selectCount(T record) {
@@ -204,14 +195,12 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param:@param orderSqlStr (如:id desc)
 	 * @return:PageInfo<T>
 	 */
-	@SuppressWarnings("unchecked")
 	public PageInfo<T> selectPage(int pageNum, int pageSize, T record,String orderSqlStr) {
-		record.set("delFlag", Constant.DEL_FLAG_NORMAL);
-		CommonMapper commonMapper = sqlSession.getMapper(CommonMapper.class);
-		Example example = new Example(record.getClass());
+		Example example = new Example(record.getClass(),false);
+		example.createCriteria().andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
 		example.setOrderByClause(orderSqlStr);
 		PageHelper.startPage(pageNum, pageSize);
-		List<T> list = (List<T>) commonMapper.selectByExample(record.getClass(), example);
+		List<T> list = mapper.selectByExample(example);
 		return new PageInfo<T>(list);
 	}
 
