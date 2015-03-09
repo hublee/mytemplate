@@ -17,4 +17,5 @@ public interface BaseMapper{
 	
 	@SelectProvider(type=CommonSqlProvider.class,method="findEntityListByDataScope")
 	<T> List<Map<String, Object>> findEntityListByDataScope(@Param("record") T record);
+	
 }

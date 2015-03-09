@@ -39,21 +39,10 @@ $(function(){
 			webHistory.justShow("#");
 			webHistory.go(hash);
 		}
-		changeMenu($(this));
-		var tabTxt = $(this).find(">span").text();
-		//tab
-		var tabli = tab.find("li[h='"+href+"']");
-		tab.find("li").removeClass("active");
-		if(tabli.size() == 0){ 
-			tab.append("<li class='active'  h='"+href+"'>"
-					+tabTxt+"<i class='fa fa-times close'></i></li>");
-		}else{
-			tabli.addClass("active");
-		}
 	});
 	//tab切换
 	tab.on("click","li",function(){
-		$(this).addClass("active").siblings().removeClass("active");
+		//$(this).addClass("active").siblings().removeClass("active");
 		webHistory.go($(this).attr("h"));
 	});
 	//tab关闭
@@ -128,7 +117,19 @@ function changeMenu(obj){
 		pul.attr("class","submenu nav-show").show();
 		$("#sidebar-menu").find("li").removeClass("active");
 		pli.addClass("active");
-		$(".page-header h1").text($this.find(">span").text())
+		$(".page-header h1").text($this.find(">span").text());
+		
+		//tab
+		var tab = $("#breadcrumb"),href = $this.attr("href");
+		var tabTxt = $this.find(">span").text();
+		var tabli = tab.find("li[h='"+href+"']");
+		tab.find("li").removeClass("active");
+		if(tabli.size() == 0){ 
+			tab.append("<li class='active'  h='"+href+"'>"
+					+tabTxt+"<i class='fa fa-times close'></i></li>");
+		}else{
+			tabli.addClass("active");
+		}
 		/*var mtext = pli.children("a").find("span.menu-text");
 		$("#breadcrumb").empty();
 		mtext.each(function(i){
