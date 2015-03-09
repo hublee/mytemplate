@@ -7,7 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 public class SysConstant {
-	private static Resource resource = new ClassPathResource("constants.properties");
+	private static Resource resource = new ClassPathResource("resources.properties");
 	private static Properties props = null;
 	static{
 		try {

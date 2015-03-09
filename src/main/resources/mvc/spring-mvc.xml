@@ -16,7 +16,7 @@
 	default-lazy-init="false">
 
 	<!-- 加载配置 -->
-	<context:property-placeholder  ignore-unresolvable="true" location="classpath*:/constants.properties"/>
+	<context:property-placeholder  ignore-unresolvable="true" location="classpath:resources.properties"/>
 
 	<!-- 开启controller层aspect注解支持 -->
 	<aop:aspectj-autoproxy expose-proxy="true"/>
