@@ -1,6 +1,7 @@
 package com.template.common.base;
 
 import com.github.abel533.entity.Example;
+import com.github.abel533.entity.Example.Criteria;
 import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -41,7 +42,12 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	
 	public List<T> select(T record,String orderSqlStr){
 		Example example = new Example(record.getClass(),false);
-		example.createCriteria().andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
+		for(Map.Entry<String, Object> entry : record.entrySet()){
+			if("".equals(entry.getValue())) continue;
+			criteria.andEqualTo(entry.getKey(), entry.getValue());
+		}
 		example.setOrderByClause(orderSqlStr);
 		return mapper.selectByExample(example);
 	}
@@ -197,7 +203,12 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 */
 	public PageInfo<T> selectPage(int pageNum, int pageSize, T record,String orderSqlStr) {
 		Example example = new Example(record.getClass(),false);
-		example.createCriteria().andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("delFlag", Constant.DEL_FLAG_NORMAL);
+		for(Map.Entry<String, Object> entry : record.entrySet()){
+			if("".equals(entry.getValue())) continue;
+			criteria.andEqualTo(entry.getKey(), entry.getValue());
+		}
 		example.setOrderByClause(orderSqlStr);
 		PageHelper.startPage(pageNum, pageSize);
 		List<T> list = mapper.selectByExample(example);
