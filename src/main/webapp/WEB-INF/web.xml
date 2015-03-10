@@ -61,7 +61,7 @@
 		</init-param>
 		<init-param>
 			<param-name>principalSessionName</param-name>
-			<param-value>username</param-value>
+			<param-value>loginUser</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

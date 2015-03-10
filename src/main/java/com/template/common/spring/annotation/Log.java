@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
+	String entityType();
+	LogType type();
 	String description()  default "";
 }

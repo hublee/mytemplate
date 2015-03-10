@@ -42,7 +42,6 @@ $(function(){
 	});
 	//tab切换
 	tab.on("click","li",function(){
-		//$(this).addClass("active").siblings().removeClass("active");
 		webHistory.go($(this).attr("h"));
 	});
 	//tab关闭
