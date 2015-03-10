@@ -58,6 +58,6 @@ public class Constant {
 	//update or add or delete
 	public static final Integer SUCCESS = 1;
 	
-	public static final String ERROR = "error";
+	public static final String MSG = "msg";
 
 }

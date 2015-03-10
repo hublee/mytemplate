@@ -51,6 +51,10 @@
 	    <!-- 使用构造参数引用commonMapper -->
 	    <constructor-arg ref="commonMapper"/>
 	</bean>
+	
+	<bean id="sqlMapper" class="com.github.abel533.sql.SqlMapper" scope="prototype">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
 
 	<!-- 通用crud -->
 	<bean class="com.github.abel533.mapperhelper.MapperHelper"

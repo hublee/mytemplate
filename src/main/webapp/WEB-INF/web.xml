@@ -60,6 +60,10 @@
 			<param-value>/static/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
 		</init-param>
 		<init-param>
+		    <param-name>profileEnable</param-name>
+		    <param-value>true</param-value>
+		</init-param>
+		<init-param>
 			<param-name>principalSessionName</param-name>
 			<param-value>loginUser</param-value>
 		</init-param>

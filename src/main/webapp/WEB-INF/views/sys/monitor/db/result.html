@@ -1,2 +1,24 @@
 <hr>
-<b class="red">${error!}</b>
+<b class="red">${msg!}</b>
+@if(isEmpty(msg)){
+<table class="table table-striped table-bordered table-hover">	
+	<thead>
+		<tr>
+		@for(item in columns){
+			<th>${item}</th>
+		@}
+		</tr>
+	</thead>
+	<tbody>
+	@for(item in result.list){
+		<tr>
+		@for(value in columns){
+		<td>${item.value}</td>
+		@}
+		</tr>
+	@}
+	</tbody>
+</table>
+<div class="space-8"></div>
+<#paginate page="${result}" />
+@}
