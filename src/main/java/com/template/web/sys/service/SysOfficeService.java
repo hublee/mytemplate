@@ -30,7 +30,7 @@ import java.util.Map;
  */
 
 @Service("sysOfficeService")
-@CacheConfig(cacheNames="sysOffice")
+@CacheConfig(cacheNames="sysOffice_cache")
 public class SysOfficeService extends ServiceMybatis<SysOffice> {
 
 	@Resource

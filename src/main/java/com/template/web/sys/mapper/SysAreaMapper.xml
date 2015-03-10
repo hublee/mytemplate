@@ -34,7 +34,7 @@
 				a.name like concat( '%' , #{name} , '%' )
 			</if>
 			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
-				FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id}
+				(FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id})
 			</if>
 			and a.del_flag = 0
 		</where>
