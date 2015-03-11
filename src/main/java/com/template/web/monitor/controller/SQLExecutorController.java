@@ -18,16 +18,15 @@ import com.github.abel533.sql.SqlMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.template.common.base.BaseEntity;
 import com.template.common.constant.Constant;
 
 @Controller
 @RequestMapping("${adminPath}/monitor/db")
 public class SQLExecutorController {
-
+	
 	@Resource
 	private SqlMapper sqlMapper;
-
+	
 	@RequestMapping("druid")
 	public String showDruid() {
 		return "sys/monitor/db/druid";
