@@ -60,8 +60,8 @@
 			<param-value>/static/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
 		</init-param>
 		<init-param>
-		    <param-name>profileEnable</param-name>
-		    <param-value>true</param-value>
+			<param-name>profileEnable</param-name>
+			<param-value>true</param-value>
 		</init-param>
 		<init-param>
 			<param-name>principalSessionName</param-name>
@@ -103,28 +103,35 @@
 		<servlet-name>applicationContext</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>jsp</servlet-name>
-		<url-pattern>*.html</url-pattern>
-	</servlet-mapping>
 
 	<!-- session过期时间 -->
 	<session-config>
 		<session-timeout>20</session-timeout>
 	</session-config>
 
-	<!-- 错误 页面配置 -->
+	<!-- 错误页面映射 -->
 	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/WEB-INF/views/error/500.html</location>
+		<error-code>404</error-code>
+		<location>/ErrorHandler</location>
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/ErrorHandler</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/WEB-INF/views/error/500.html</location>
+		<location>/WEB-INF/views/error/error.html</location>
 	</error-page>
 	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/views/error/404.html</location>
+		<error-code>503</error-code>
+		<location>/ErrorHandler</location>
 	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/ErrorHandler</location>
+	</error-page>
+	
+	<!-- <servlet-mapping> <servlet-name>jsp</servlet-name> <url-pattern>*.html</url-pattern> 
+		</servlet-mapping> -->
 
 </web-app>

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.abel533.sql.SqlMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Maps;
 import com.template.common.constant.Constant;
 
 @Controller
@@ -80,7 +79,6 @@ public class SQLExecutorController {
 	}
 
 	public String[] test(List<Map<String, Object>> list) {
-		Map<String, Object> map = Maps.newHashMap();
 		List<List<Object>> result = null;
 		String[] columns = null;
 		if (list != null && list.size() > 0) {
@@ -113,8 +111,6 @@ public class SQLExecutorController {
 				result.add(dataList);
 			}
 		}
-		map.put("columns", columns);
-		map.put("result", result);
 		return columns;
 	}
 

@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>  
 <configuration scan="true" scanPeriod="30 minutes" debug="false">
 	<!-- 声明变量 -->
-
+	<property name="log.dir" value="C:/Documents and Settings/Administrator/桌面/syslog" /> 
 	<!-- 控制台输出日志 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder charset="utf-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
@@ -11,24 +11,19 @@
 		</encoder>
 	</appender>
 
-	<!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
-	<!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender"> <layout 
-		class="ch.qos.logback.classic.PatternLayout"> <pattern>%-4relative [%thread] 
-		%-5level %class - %msg%n</pattern> </layout> <File>${log.base}.log</File> 
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
-		<FileNamePattern>${log.base}.log.%i.bak</FileNamePattern> <MinIndex>1</MinIndex> 
-		<MaxIndex>12</MaxIndex> </rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
-		<MaxFileSize>1KB</MaxFileSize> </triggeringPolicy> </appender> -->
-	<!-- <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
-		<filter class="ch.qos.logback.classic.filter.LevelFilter"> <level>ERROR</level> 
-		<OnMismatch>DENY</OnMismatch> <OnMatch>ACCEPT</OnMatch> </filter> <File>${log.base}-err.log</File> 
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
-		<FileNamePattern>${log.base}-err.log.%i.bak</FileNamePattern> <MinIndex>1</MinIndex> 
-		<MaxIndex>3</MaxIndex> </rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
-		<MaxFileSize>1KB</MaxFileSize> </triggeringPolicy> <layout class="ch.qos.logback.classic.PatternLayout"> 
-		<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern> 
-		</layout> </appender> -->
-	<!-- <logger name="com.blueland" level="error" /> -->
+	<!-- 出错日志 appender  -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.dir}/sys-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
 	<!-- 下面配置一些第三方包的日志过滤级别 -->
 	<logger name="com.template" level="DEBUG" additivity="true"/>
 	<logger name="net.sf.ehcache" level="WARN" />
@@ -37,9 +32,12 @@
 	<logger name="com.github.abel533" level="DEBUG" />
 	
 	<root level="INFO">
-		<appender-ref ref="STDOUT" />
-		<!-- <appender-ref ref="FILE" /> -->
-		<!-- <appender-ref ref="FILE-ERROR" /> -->
+		<!-- <appender-ref ref="STDOUT" /> -->
 	</root>
+	
+	<!--错误日志-->
+    <logger name="sys-error" level="info">
+        <appender-ref ref="ERROR"/>
+    </logger>
 
 </configuration>

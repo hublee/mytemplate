@@ -16,7 +16,7 @@ import com.template.web.sys.utils.SysUserUtils;
 
 public class AuthInterceptor implements HandlerInterceptor {
 	
-	private String ignorePath = ".+/(login|code.image|notlogin)";
+	private String ignorePath = ".+/(login|code.image|notlogin|ErrorHandler)";
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
