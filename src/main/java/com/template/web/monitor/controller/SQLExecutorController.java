@@ -2,7 +2,6 @@ package com.template.web.monitor.controller;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.abel533.sql.SqlMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Maps;
 import com.template.common.constant.Constant;
+import com.template.common.utils.StringConvert;
 
 @Controller
 @RequestMapping("${adminPath}/monitor/db")
@@ -64,9 +65,10 @@ public class SQLExecutorController {
 				} else if (isDQL) {
 					PageHelper.startPage(pageNum,pageSize);
 					List<Map<String, Object>> list = sqlMapper.selectList(sql);
-					String[] columns = test(list);
+					Map<String,String[]> columnMode = test(list);
 					PageInfo page = new PageInfo(list);
-					model.addAttribute("columns", columns)
+					model.addAttribute("columns", columnMode.get("columns"))
+						.addAttribute("dbColumns", columnMode.get("dbColumns"))
 						.addAttribute("page", page);
 				}
 			}
@@ -78,9 +80,10 @@ public class SQLExecutorController {
 		return "sys/monitor/db/result";
 	}
 
-	public String[] test(List<Map<String, Object>> list) {
-		List<List<Object>> result = null;
-		String[] columns = null;
+	public Map<String,String[]> test(List<Map<String, Object>> list) {
+		//List<List<Object>> result = null;
+		Map<String,String[]> map = Maps.newHashMap();
+		String[] columns = null,dbColumns = null;
 		if (list != null && list.size() > 0) {
 			Map<String, Object> keyMap = null;
 			int length = 0;
@@ -92,15 +95,19 @@ public class SQLExecutorController {
 			}
 			if (keyMap != null && length > 0) {
 				columns = new String[length];
+				dbColumns = new String[length];
 				Set<Map.Entry<String, Object>> entry = keyMap.entrySet();
 				int i = 0;
 				for (Map.Entry<String, Object> objectEntry : entry) {
 					columns[i] = objectEntry.getKey();
+					dbColumns[i] = StringConvert.camelhumpToUnderline(objectEntry.getKey());
 					i++;
 				}
 			}
 		}
-		if (columns != null && columns.length > 0) {
+		map.put("columns", columns);
+		map.put("dbColumns", dbColumns);
+		/*if (columns != null && columns.length > 0) {
 			result = new ArrayList<List<Object>>();
 			List<Object> dataList;
 			for (Map<String, Object> objectMap : list) {
@@ -110,8 +117,8 @@ public class SQLExecutorController {
 				}
 				result.add(dataList);
 			}
-		}
-		return columns;
+		}*/
+		return map;
 	}
 
 }
