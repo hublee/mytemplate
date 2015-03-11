@@ -1,6 +1,7 @@
 <hr>
 <b class="red">${msg!}</b>
 @if(isEmpty(msg)){
+<div style="overflow-x: scroll;">
 <table class="table table-striped table-bordered table-hover">	
 	<thead>
 		<tr>
@@ -19,6 +20,7 @@
 	@}
 	</tbody>
 </table>
+</div>
 <div class="space-8"></div>
 <#paginate page="${page}" />
 @}

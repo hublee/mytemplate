@@ -49,7 +49,6 @@ public class SysUser extends BaseEntity {
 	
     private Long officeId; //office_id <归属部门>
 
-	
     private String password; //password <密码>
 
 	
