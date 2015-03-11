@@ -20,7 +20,6 @@ public class TestController {
 
 	@RequestMapping
 	public String test(String name){
-		System.out.println(name);
 		return "test";
 	}
 	

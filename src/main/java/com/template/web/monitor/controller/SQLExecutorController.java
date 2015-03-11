@@ -38,6 +38,7 @@ public class SQLExecutorController {
 		return "sys/monitor/db/sqlForm";
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "sql", method = RequestMethod.POST)
 	public String executeSQL(String sql, Integer pageSize, Integer pageNum,
 			final Model model) {
@@ -63,15 +64,12 @@ public class SQLExecutorController {
 					}
 					model.addAttribute(Constant.MSG, mode + "影响行数:" + count);
 				} else if (isDQL) {
-					
-					
 					PageHelper.startPage(pageNum,pageSize);
-					List<Map<String, Object>> list = sqlMapper.select(sql);
-					//Map<String, Object> map = test(list);
+					List<Map<String, Object>> list = sqlMapper.selectList(sql);
 					String[] columns = test(list);
 					PageInfo page = new PageInfo(list);
 					model.addAttribute("columns", columns)
-						.addAttribute("result", page);
+						.addAttribute("page", page);
 				}
 			}
 		} catch (Exception e) {
