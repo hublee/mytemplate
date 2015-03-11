@@ -1,4 +1,8 @@
-<h1 class="center red bigger-200">在新打开的窗口查看</h1>
+@var path = strutil.replace(request.requestURL+"",request.requestURI,ctxPath);
+<a href="${path}/druid" target="_blank"
+class="center red bigger-200 block">在新打开的窗口查看</h1>
 <script>
-
+window.open("${path}/druid")
 </script>
+
+
