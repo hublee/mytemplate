@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("${adminPath}/viewInfo")
+@RequestMapping("${adminPath}/userCenter")
 public class UserCenterController {
 
 	@RequestMapping
 	public String viewInfo(){
-		return "";
+		return "sys/userCenter/userCenter";
 	}
 	
 }

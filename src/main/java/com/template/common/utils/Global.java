@@ -7,7 +7,9 @@ public class Global {
 	* @return
 	 */
 	public static String getAdminPath(){
-		return SysConstant.getValue("adminPath");
+		String adminPath = SysConstant.getValue("adminPath");
+		if(adminPath == null) adminPath="";
+		return adminPath;
 	}
 	
 	/**

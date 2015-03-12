@@ -90,7 +90,7 @@ $(function(){
 });
 
 function loadHtmlPage(path) {
-    path = adminPath + "/" + path;
+    path = rootPath + "/" + path;
     var result;
     $.ajax({
         url: path,

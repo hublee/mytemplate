@@ -56,8 +56,11 @@ public class ApplicationContextInitListener implements
 			//读取全部资源
 			LinkedHashMap<String, SysResource> AllResourceMap = sysResourceService.getAllResourcesMap();
 			// 设置共享变量
-			BeetlUtils.addBeetlSharedVars("adminPath", Global.getAdminPath());
-			BeetlUtils.addBeetlSharedVars("rootPath", ctxPath+"/"+Global.getAdminPath());
+			String adminPath = Global.getAdminPath();
+			String rootPath = ctxPath+"/"+adminPath;
+			BeetlUtils.addBeetlSharedVars("adminPath", adminPath);
+			if("".equals(adminPath)) rootPath = ctxPath;
+			BeetlUtils.addBeetlSharedVars("rootPath", rootPath);
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,AllResourceMap);
 			logger.info("--------------------------------------------------------------------------");
 			logger.info("初始化管理根路径:(key:adminPath,value:"
