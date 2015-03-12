@@ -279,7 +279,7 @@
 				</includes>
 			</resource>
 			<resource>
-				<directory>${basedir}/scr/main/resources</directory>
+				<directory>${basedir}/src/main/resources</directory>
 			</resource>
 		</resources>
 	</build>
