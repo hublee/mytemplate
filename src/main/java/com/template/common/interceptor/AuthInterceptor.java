@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private Set<String> ignorePath = new HashSet<String>(Arrays.asList("/", "/login", "/code.image", "/notlogin", "/ErrorHandler"));
+    private Set<String> ignorePath = new HashSet<String>(Arrays.asList("/login", "/code.image", "/notlogin", "/ErrorHandler"));
 
     @Override
     public boolean preHandle(HttpServletRequest request,
