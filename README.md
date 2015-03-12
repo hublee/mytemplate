@@ -30,17 +30,37 @@ mytemplate简易脚手架提供以下基本功能：
 
 ##技术
 
-- mytemplate使用了Spring + SpringMVC + MyBatis作为基础框架.
+mytemplate使用了
 
-- 使用beetl模板引擎.
+- Servlet 3.0
 
-- 前端使用bootstrap.
+- Spring4
 
-- 数据源使用druid.
+- SpringMVC
 
-- 缓存使用了ehcache.
+- MyBatis
 
-- mytemplate集成了[MyBatis分页插件PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)和[MyBatis通用Mapper](http://git.oschina.net/free/Mapper).
+- 模板引擎beetl.
+
+- 前端bootstrap.
+
+- 数据源druid.
+
+- 缓存ehcache.
+
+- [MyBatis分页插件PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)
+
+- [MyBatis通用Mapper](http://git.oschina.net/free/Mapper).
+
+##启动配置
+
+1. 配置数据库，在项目的`src/main/webapp/`下面有一个<b>sql.sql</b>文件，在mysql中执行该文件，创建数据库
+
+2. 修改数据库配置文件，在`src/main/resources/`下面有一个<b>resources.properties</b>，修改数据库相关信息
+
+3. 将项目部署到Tomcat7+下面启动
+
+4. 输入网址`http://localhost:8080/mytemplate/test/`，用户名/密码:admin/admin
 
 ##系统截图
 
