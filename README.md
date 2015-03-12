@@ -4,7 +4,7 @@
 
 mytemplate是一个简易脚手架，mytemplate简易脚手架项目仍然处于项目开发阶段，还有很多功能没有完成。
 
-mytemplate简易脚手架完全由程序媛<b>Angelia</b>开发。
+感谢@abel533
 
 ##功能
 
@@ -61,6 +61,8 @@ mytemplate使用了
 3. 将项目部署到Tomcat7+下面启动
 
 4. 输入网址`http://localhost:8080/mytemplate/test/`，用户名/密码:admin/admin
+
+5.可自由的配置管理路径，在 <b>resources.properties</b>下属性adminPath,如没有可注释掉或者为空
 
 ##系统截图
 
