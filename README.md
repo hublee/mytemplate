@@ -63,6 +63,14 @@ mytemplate使用了
 
 3. 可自由的配置管理路径，在 <b>resources.properties</b>下属性adminPath,如没有可注释掉或者为空
 
+##演示地址
+
+请大家不要随意的修改和删除重要的配置数据！
+
+演示地址：[http://aieasy.oschina.mopaas.com/login](http://aieasy.oschina.mopaas.com/login)
+
+测试用户：稍后提供...
+
 ##系统截图
 
 ###登录页面
