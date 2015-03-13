@@ -19,6 +19,7 @@ import java.util.Set;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private Set<String> ignorePath = new HashSet<String>(Arrays.asList("/login", "/code.image", "/notlogin", "/ErrorHandler"));
+    private String ignorePathReg = ".+/(login|code.image|notlogin|ErrorHandler)";
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -26,6 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String url = request.getRequestURI(); //请求路径
         String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
+        boolean isEmpty = StringUtils.isEmpty(rootPath);
 
         //是否是容器默认servlet
         /*if(handler instanceof DefaultServletHttpRequestHandler) {
@@ -34,14 +36,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String path = "";
         int len = 0;
-        if (StringUtils.isNotEmpty(rootPath)) {
+        if (!isEmpty) {
             len = url.indexOf(rootPath) + rootPath.length() + 1;
         }
         if (len <= url.length()) {
             path = url.substring(len, url.length());
         }
 
-        if (!ignorePath.contains(path)) {
+        if ((isEmpty&&!ignorePath.contains(path))||(!isEmpty&&!url.matches(ignorePathReg))) {
             //获得session中的登陆用户
             SysUser sessionUser = SysUserUtils.getSessionLoginUser();
 
