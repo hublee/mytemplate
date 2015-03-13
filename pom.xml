@@ -282,6 +282,17 @@
 				<directory>${basedir}/src/main/resources</directory>
 			</resource>
 		</resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <path>/mytemplate</path>
+          <port>9090</port>
+        </configuration>
+      </plugin>
+    </plugins>
 	</build>
 
 	<dependencyManagement>
