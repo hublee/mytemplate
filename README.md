@@ -57,9 +57,9 @@ mytemplate使用了
 
 2. 修改数据库配置文件，在`src/main/resources/`下面有一个<b>resources.properties</b>，修改数据库相关信息
 
-3. 将项目部署到Tomcat7+下面启动
+3. 在项目根路径下打开CMD，执行<b>mvn tomcat7:run</b>服务就会启动，配置的端口为9090，需要修改是在pom.xml中修改即可
 
-4. 输入网址`http://localhost:8080/mytemplate/test/`，用户名/密码:admin/admin
+4. 输入网址`http://localhost:9090/mytemplate/`，用户名/密码:admin/admin
 
 3. 可自由的配置管理路径，在 <b>resources.properties</b>下属性adminPath,如没有可注释掉或者为空
 
