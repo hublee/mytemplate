@@ -66,12 +66,12 @@ public class SysRoleService extends ServiceMybatis<SysRole> {
 	* @param id
 	 */
 	public int deleteSysRole(Long id){
+		List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(id);
 		sysRoleMapper.deleteUserRoleByRoleId(id);
 		sysRoleMapper.deleteRoleOfficeByRoleId(id);
 		sysRoleMapper.deleteRoleResourceByRoleId(id);
 		int count = this.deleteByPrimaryKey(id);
 		//清除缓存
-		List<Long> userIds = sysRoleMapper.findUserIdsByRoleId(id);
 		SysUserUtils.clearAllCachedAuthorizationInfo(userIds);
 		return count;
 	}

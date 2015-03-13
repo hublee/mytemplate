@@ -28,7 +28,7 @@ var ${tree}, ${setting} = {
 		}
 };
 $(document).ready(function(){
-	$.post("${ctxPath}/${adminPath}/${url}", function(zNodes){
+	$.post("${url}", function(zNodes){
 		@if(auth.hasAllDataScope() || auth.isSuper()){
 		var rootName = '${decode(rootNodeName,"","全部",rootNodeName)}';
 		var root = {id:0,name:rootName,open:true};

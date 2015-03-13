@@ -24,6 +24,7 @@ public class TestController {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("/login".indexOf("/"));
         System.out.println(camelhumpToUnderline("userName"));
         System.out.println(camelhumpToUnderline("userPassWord"));
         System.out.println(camelhumpToUnderline("ISO9001"));

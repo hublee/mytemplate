@@ -118,7 +118,7 @@ public class LoginController {
 	public String logout(HttpServletRequest request) {
 		SysUserUtils.clearCacheUser(SysUserUtils.getSessionLoginUser().getId());
 		request.getSession().invalidate();
-		return "redirect:/" + Global.getAdminPath() + "/login";
+		return "redirect:" + Global.getAdminPath() + "/login";
 	}
 	
 	@RequestMapping("notauth")

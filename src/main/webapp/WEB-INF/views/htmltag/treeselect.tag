@@ -8,7 +8,7 @@
 @var modelNameValue = modelNameValue!''; //name初始值value
 @var id = id!('treeselectid'+order); //隐藏要添加的input的id名称,页面多个时候需要指定
 @var nameId = nameId!('treeselectname'+order);  //名称
-@var url = url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
+@var url = rootPath+"/"+url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
 @var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
 @var selectIds = selectIds!''; //默认选择节点
 @var curId = curId!'-1'; //当前节点的id,如要验证不能选择当前节点需要填写,多个时必须填写，详见office-save页面

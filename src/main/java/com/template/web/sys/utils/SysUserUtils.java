@@ -196,7 +196,9 @@ public class SysUserUtils {
 						return Integer.parseInt(sysRole.getDataScope());
 					}
 				});
-				int min = Ints.min(Ints.toArray(dc));
+				int[] dataScopes = Ints.toArray(dc);
+				if(dataScopes.length == 0) return dataScope;
+				int min = Ints.min(dataScopes);
 				for(int i = min,len = Integer.parseInt(Constant.DATA_SCOPE_CUSTOM);i<=len;i++){
 					dataScope.add(i+"");
 				}
@@ -270,6 +272,7 @@ public class SysUserUtils {
 					else if (Constant.DATA_SCOPE_CUSTOM.equals(sr.getDataScope())){
 						//or so.id in (1,2,3,4,5)
 						List<Long> offices = sysOfficeService.findUserDataScopeByUserId(sysUser.getId());
+						if(offices.size() == 0) offices.add(-1L);
 						tempSql.append(" or "+officeAlias+".id in ("+StringUtils.join(offices, ",")+")");
 					}
 					if (!isDataScopeAll){

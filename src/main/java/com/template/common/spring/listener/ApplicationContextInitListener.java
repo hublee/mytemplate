@@ -62,6 +62,7 @@ public class ApplicationContextInitListener implements
 			if("".equals(adminPath)) rootPath = ctxPath;
 			BeetlUtils.addBeetlSharedVars("rootPath", rootPath);
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,AllResourceMap);
+			
 			logger.info("--------------------------------------------------------------------------");
 			logger.info("初始化管理根路径:(key:adminPath,value:"
 					+ BeetlUtils.getBeetlSharedVars("adminPath").toString() + ")");
