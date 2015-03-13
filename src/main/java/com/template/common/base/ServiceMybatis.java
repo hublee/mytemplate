@@ -155,7 +155,7 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 		try {
 			m = bean.newInstance();
 			m.setId(id);
-			m.set("delFlag", Constant.DEL_FLAG_NORMAL);
+			m.set("delFlag", Constant.DEL_FLAG_DELETE);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
