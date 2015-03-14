@@ -61,7 +61,7 @@ mytemplate使用了
 
 4. 输入网址`http://localhost:9090/mytemplate/`，用户名/密码:admin/admin
 
-3. 可自由的配置管理路径，在 <b>resources.properties</b>下属性adminPath,如没有可注释掉或者为空
+3. 可自由的配置管理路径，在 <b>resources.properties</b>下属性adminPath,如没有可为空
 
 ##演示地址
 
