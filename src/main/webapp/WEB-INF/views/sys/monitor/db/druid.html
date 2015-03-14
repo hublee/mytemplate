@@ -1,8 +1,5 @@
 @var path = strutil.replace(request.requestURL+"",request.requestURI,ctxPath);
-<a href="${path}/druid" target="_blank"
-class="center red bigger-200 block">在新打开的窗口查看</h1>
-<script>
-window.open("${path}/druid")
-</script>
+
+<iframe src="${path}/druid" width="100%" height="100%" frameborder="0"></iframe>
 
 
