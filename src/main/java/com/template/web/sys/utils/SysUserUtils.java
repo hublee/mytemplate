@@ -35,13 +35,6 @@ import com.template.web.sys.service.SysUserService;
 
 /**
  * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
- * @date:2015年2月4日 下午8:12:38
- * @author  ?
- */
-/**
- * @ClassName:SysUserUtils
- * @Description:TODO(这里用一句话描述这个类的作用)
  * @date:2015年2月4日 下午8:12:41
  * @author  ?
  */

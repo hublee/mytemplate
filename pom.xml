@@ -7,24 +7,27 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!--版本 -->
-		<spring.version>4.1.4.RELEASE</spring.version> 
+		<!-- version setting -->
+		<spring.version>4.1.4.RELEASE</spring.version>
 		<beetl.version>2.2.0</beetl.version>
 		<pagehelper.version>3.6.3</pagehelper.version>
 		<mapper.version>2.2.0</mapper.version>
+		<shiro.version>1.2.3</shiro.version>
 		<guava.version>18.0</guava.version>
 		<druid.version>1.0.13</druid.version>
 		<fastjson.version>1.2.4</fastjson.version>
+		
+		<!-- other setting -->
+		<jdk.version>1.7</jdk.version>
+		<tomcat.version>2.2</tomcat.version>
+		<webserver.port>9090</webserver.port>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
-		<!-- <dependency>
-			<groupId>org.beetl</groupId>
-			<artifactId>beetl-core</artifactId>
-			<version>${beetl.version}</version>
-		</dependency> -->
-		
+		<!-- <dependency> <groupId>org.beetl</groupId> <artifactId>beetl-core</artifactId> 
+			<version>${beetl.version}</version> </dependency> -->
+
 		<dependency>
 			<groupId>org.beetl</groupId>
 			<artifactId>beetl-core</artifactId>
@@ -43,40 +46,36 @@
 		<!--web -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- apache shiro 相关jar包 -->
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.1</version>
-			<scope>provided</scope>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp.jstl</groupId>
-			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
-			<version>1.2.1</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>2.0</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-aspectj</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.0</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>javax.transaction-api</artifactId>
-			<version>1.2</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 
 		<!--Spring -->
@@ -117,9 +116,6 @@
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
 
-		<!--spring-json依赖 -->
-		<!--<dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
-			<version>2.4.2</version> </dependency> -->
 		<!--spring-aop依赖 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -282,17 +278,29 @@
 				<directory>${basedir}/src/main/resources</directory>
 			</resource>
 		</resources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <path>/mytemplate</path>
-          <port>9090</port>
-        </configuration>
-      </plugin>
-    </plugins>
+		<plugins>
+			<!-- tomcat7插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat.version}</version>
+				<configuration>
+					<path>/${project.artifactId}</path>
+					<port>${webserver.port}</port>
+				</configuration>
+			</plugin>
+			<!-- Compiler 插件, 设定JDK版本 -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+		</plugins>
 	</build>
 
 	<dependencyManagement>
@@ -316,7 +324,7 @@
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
-			</snapshots> 
+			</snapshots>
 		</repository>
 		<repository>
 			<id>sonatype-nexus-releases</id>
@@ -324,7 +332,7 @@
 			<url>http://oss.sonatype.org/content/repositories/releases</url>
 			<releases>
 				<enabled>false</enabled>
-			</releases> 
+			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
