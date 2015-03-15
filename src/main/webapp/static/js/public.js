@@ -21,7 +21,11 @@ var isIe8 = !(typeof(ie8) == "undefined");
 
 var $curmenu,lastIndex;//最后弹窗索引
 var webHistory = Webit.history;
+
 $(function(){
+	
+	$("html").niceScroll({autohidemode:false,zindex:1100,cursorwidth:"9px",
+		 cursorcolor:"rgb(243, 129, 149)",cursorborderradius:"0px"});
 	
 	var aMenu = $("#sidebar-menu a[id]");
 	var tab = $("#breadcrumb");
@@ -105,6 +109,7 @@ function loadHtmlPage(path) {
 
 function changeMenu(obj){
 	$this = $curmenu = obj,pli = $this.parents("li");
+	
 	var $sibling = $this.closest("li[data-level='1']").siblings("li.open");
 	if($sibling.size()>0){
 		$sibling.removeClass("open").find("li.open").removeClass("open");
@@ -129,16 +134,6 @@ function changeMenu(obj){
 		}else{
 			tabli.addClass("active");
 		}
-		/*var mtext = pli.children("a").find("span.menu-text");
-		$("#breadcrumb").empty();
-		mtext.each(function(i){
-			var last = '';
-			if(i==mtext.length-1) {
-				last = 'blue';
-				$(".page-header h1").text($(this).text());
-			}
-			$("#breadcrumb").append("<li class='active "+last+"'>"+$(this).text()+"</li>");
-		})*/
 	}
 }
 
