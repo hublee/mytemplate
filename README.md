@@ -53,7 +53,7 @@ mytemplate使用了
 
 ##启动配置
 
-1. 配置数据库，在项目的`src/main/webapp/`下面有一个<b>sql.sql</b>文件，在mysql中执行该文件，创建数据库
+1. 配置数据库，在项目的`src/main/webapp/`下面有一个<b>mytemplate.sql</b>文件，在mysql中执行该文件，创建数据库
 
 2. 修改数据库配置文件，在`src/main/resources/`下面有一个<b>resources.properties</b>，修改数据库相关信息
 
