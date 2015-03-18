@@ -3,11 +3,8 @@ package com.template.web.sys.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.BaseController;
-import com.template.common.beetl.utils.BeetlUtils;
-import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
-import com.template.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
