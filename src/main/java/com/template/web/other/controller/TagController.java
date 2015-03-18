@@ -1,4 +1,4 @@
-package com.template.web.sys.controller;
+package com.template.web.other.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

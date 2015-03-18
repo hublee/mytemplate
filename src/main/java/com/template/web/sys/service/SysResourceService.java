@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
+import com.template.common.utils.TreeUtils;
 import com.template.web.sys.mapper.SysResourceMapper;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
@@ -84,7 +85,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 根据用户id得到用户持有的资源
-	 * 
 	 * @param userId
 	 * @return
 	 */
@@ -94,9 +94,7 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 菜单管理分页显示筛选查询
-	 * 
-	 * @param params
-	 *            {"name":"菜单名字","id":"菜单id"}
+	 * @param params {"name":"菜单名字","id":"菜单id"}
 	 * @return
 	 */
 	public PageInfo<SysResource> findPageInfo(Map<String, Object> params) {
@@ -125,7 +123,6 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 
 	/**
 	 * 获取全部资源list形式
-	 * 
 	 * @return
 	 */
 	public List<SysResource> getAllResourcesList() {
@@ -133,6 +130,13 @@ public class SysResourceService extends ServiceMybatis<SysResource> {
 				.getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
 		List<SysResource> resList = new ArrayList<SysResource>(allRes.values());
 		return resList;
+	}
+	
+	/**
+	 * 获取菜单树
+	 */
+	public List<SysResource> getMenuTree(){
+		return TreeUtils.toTreeNodeList(getAllResourcesList(),SysResource.class);
 	}
 
 }

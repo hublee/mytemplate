@@ -92,7 +92,7 @@ public class SysUserUtils {
 	}
 	
 	/**
-	 * 登录用户菜单树
+	 * 登录用户菜单
 	 */
 	public static List<SysResource> getUserMenus(){
 		SysUser sysUser = getCacheLoginUser();

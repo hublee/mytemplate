@@ -3,6 +3,8 @@ package com.template.web.sys.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.BaseController;
+import com.template.common.beetl.utils.BeetlUtils;
+import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
 import com.template.web.sys.utils.SysUserUtils;
@@ -17,13 +19,13 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 菜单管理
-* @ClassName: MenuController  
-* @author  
-* @date 2014年10月11日 上午11:38:28 
-*
+ * 
+ * @ClassName: MenuController
+ * @author
+ * @date 2014年10月11日 上午11:38:28
+ *
  */
 
 @Controller
@@ -41,17 +43,18 @@ public class MenuController extends BaseController {
 	 */
 	@RequestMapping
 	public String toMenu(Model model) {
-		model.addAttribute("treeList", JSON.toJSONString(SysUserUtils.getUserMenus()));
+		model.addAttribute("treeList", JSON.toJSONString(sysResourceService.getMenuTree()));
 		return "sys/menu/menu";
 	}
-	
+
 	/**
 	 * 菜单树
-	* @return
+	 * 
+	 * @return
 	 */
-	@RequestMapping(value="tree",method = RequestMethod.POST)
-	public @ResponseBody List<SysResource> tree(){
-		return SysUserUtils.getUserMenus();
+	@RequestMapping(value = "tree", method = RequestMethod.POST)
+	public @ResponseBody List<SysResource> tree() {
+		return sysResourceService.getMenuTree();
 	}
 
 	/**
@@ -67,7 +70,7 @@ public class MenuController extends BaseController {
 		model.addAttribute("page", page);
 		return "sys/menu/menu-list";
 	}
-	
+
 	/**
 	 * 添加或更新菜单
 	 * 
@@ -81,13 +84,15 @@ public class MenuController extends BaseController {
 
 	/**
 	 * 删除菜单及其子菜单
-	* @param resourceId 菜单id
-	* @return
+	 * 
+	 * @param resourceId
+	 *            菜单id
+	 * @return
 	 */
-	@RequestMapping(value="delete",method=RequestMethod.POST)
-	public @ResponseBody Integer dels(Long id){
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	public @ResponseBody Integer dels(Long id) {
 		Integer count = 0;
-		if(null != id){
+		if (null != id) {
 			count = sysResourceService.deleteResourceByRootId(id);
 		}
 		return count;
@@ -95,27 +100,33 @@ public class MenuController extends BaseController {
 
 	/**
 	 * 弹窗
-	* @param id
-	* @param parentId 父类id
-	* @param mode 模式(add,edit,detail)
-	* @param model
-	* @return
+	 * 
+	 * @param id
+	 * @param parentId
+	 *            父类id
+	 * @param mode
+	 *            模式(add,edit,detail)
+	 * @param model
+	 * @return
 	 */
-	@RequestMapping(value="{mode}/showlayer",method=RequestMethod.POST)
-	public String showLayer(Long id,Long parentId,@PathVariable("mode") String mode, Model model){
+	@RequestMapping(value = "{mode}/showlayer", method = RequestMethod.POST)
+	public String showLayer(Long id, Long parentId,
+			@PathVariable("mode") String mode, Model model) {
 		SysResource resource = null, pResource = null;
-		if(StringUtils.equalsIgnoreCase(mode, "add")){
+		if (StringUtils.equalsIgnoreCase(mode, "add")) {
 			pResource = sysResourceService.selectByPrimaryKey(parentId);
-		}else if(StringUtils.equalsIgnoreCase(mode, "edit")){
+		} else if (StringUtils.equalsIgnoreCase(mode, "edit")) {
 			resource = sysResourceService.selectByPrimaryKey(id);
 			pResource = sysResourceService.selectByPrimaryKey(parentId);
-		}else if(StringUtils.equalsIgnoreCase(mode, "detail")){
+		} else if (StringUtils.equalsIgnoreCase(mode, "detail")) {
 			resource = sysResourceService.selectByPrimaryKey(id);
-			pResource = sysResourceService.selectByPrimaryKey(resource.getParentId());
+			pResource = sysResourceService.selectByPrimaryKey(resource
+					.getParentId());
 		}
-		model.addAttribute("pResource", pResource)
-			.addAttribute("sysResource", resource);
-		return mode.equals("detail")?"sys/menu/menu-detail":"sys/menu/menu-save";
+		model.addAttribute("pResource", pResource).addAttribute("sysResource",
+				resource);
+		return mode.equals("detail") ? "sys/menu/menu-detail"
+				: "sys/menu/menu-save";
 	}
 
 }
