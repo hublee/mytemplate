@@ -116,14 +116,12 @@ public class LogUtils {
 
 
 
-    @SuppressWarnings("unchecked")
 	protected static String getParams(HttpServletRequest request) {
         Map<String, String[]> params = request.getParameterMap();
         return JSON.toJSONString(params);
     }
 
 
-    @SuppressWarnings("unchecked")
 	private static String getHeaders(HttpServletRequest request) {
         Map<String, List<String>> headers = Maps.newHashMap();
         Enumeration<String> namesEnumeration = request.getHeaderNames();
