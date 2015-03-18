@@ -56,7 +56,7 @@
 			title:(treeNode.name)+'编辑',
 			height:"${height}",
 			width:"${width}",
-			url:"${rootPath!}/"+"${editUrl}",
+			url:"${ctxPath!}/"+"${editUrl}",
 			data:{"id":treeNode.id,"parentId":treeNode.getParentNode().id}
 		});
 		return false;
@@ -69,7 +69,7 @@
 			mode:'del',
 			msg:'<span class="red bigger-120">你确定删除<'+treeNode.name+'>吗?</span>',
 			title:'删除操作',
-			url:"${rootPath!}/"+'${delUrl}',
+			url:"${ctxPath!}/"+'${delUrl}',
 			data:{"id":id},
 			reloadurl:${reloadUrl}
 		});
@@ -90,7 +90,7 @@
 				title:'添加资源',
 				height:"${height}",
 				width:"${width}",
-				url:"${rootPath!}/"+'${addUrl}',
+				url:"${ctxPath!}/"+'${addUrl}',
 				data:{"parentId":treeNode.id}
 			});
 			return false;

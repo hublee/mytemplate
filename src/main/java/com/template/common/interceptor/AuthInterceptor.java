@@ -41,7 +41,8 @@ public class AuthInterceptor implements HandlerInterceptor {
             } else {
                 Map<String, SysResource> allRes = BeetlUtils
                         .getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-                SysResource sysResource = allRes.get(path);
+                String perPath = path.substring(1);
+                SysResource sysResource = allRes.get(perPath);
                 if (sysResource == null
                         || Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
                     return true;
@@ -50,7 +51,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                 SysUserUtils.setUserAuth();
                 //从缓存中的用户权限
                 Map<String, SysResource> userRes = SysUserUtils.getUserResources();
-                if (userRes.containsKey(path)) {
+                if (userRes.containsKey(perPath)) {
                     return true;
                 } else {
                     response.sendRedirect(ctx + "/notauth");

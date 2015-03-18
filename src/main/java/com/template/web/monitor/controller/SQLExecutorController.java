@@ -21,7 +21,7 @@ import com.template.common.constant.Constant;
 import com.template.common.utils.StringConvert;
 
 @Controller
-@RequestMapping("${adminPath}/monitor/db")
+@RequestMapping("monitor/db")
 public class SQLExecutorController {
 	
 	@Resource

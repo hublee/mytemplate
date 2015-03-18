@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 @Controller
-@RequestMapping("${adminPath}/monitor/jvm")
+@RequestMapping("monitor/jvm")
 public class JvmMonitorController{
 
     @RequestMapping

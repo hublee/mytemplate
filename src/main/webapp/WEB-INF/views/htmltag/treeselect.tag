@@ -8,7 +8,7 @@
 @var modelNameValue = modelNameValue!''; //name初始值value
 @var id = id!('treeselectid'+order); //隐藏要添加的input的id名称,页面多个时候需要指定
 @var nameId = nameId!('treeselectname'+order);  //名称
-@var url = rootPath+"/"+url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
+@var url = ctxPath+"/"+url!''; //树数据url,必填,从管理路径之后添起，如menu/tree
 @var pIdKey = pIdKey!'parentId'; //父级的model中属性名字
 @var selectIds = selectIds!''; //默认选择节点
 @var curId = curId!'-1'; //当前节点的id,如要验证不能选择当前节点需要填写,多个时必须填写，详见office-save页面
@@ -30,7 +30,7 @@
 	>
 	<span class="input-group-btn">
 		<span class="btn btn-purple btn-sm" type="button" style="height: 34px;"
-		data-mode="page" data-url="${rootPath}/tag/treeselect"
+		data-mode="page" data-url="${ctxPath}/tag/treeselect"
 		data-data="{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',rootNodeName:'${rootNodeName}',isLayer:'${isLayer}'}" 
 		data-title="请选择" data-width="${width!}" data-height="${height}">
 			<i class="ace-icon fa fa-search bigger-110"></i>查找
@@ -43,7 +43,7 @@ ${tagBody!}
 	${tagBody!}
 	<script>
 		$.ajax({
-			url:"${rootPath}/tag/treeselect",
+			url:"${ctxPath}/tag/treeselect",
 			type:"post",
 			data:{url:'${url}',id:'${id}',nameId:'${nameId}',pIdKey:'${pIdKey}',
 				selectIds:'${selectIds}',curId:'${curId}',checked:'${checked}',isLayer:"false",

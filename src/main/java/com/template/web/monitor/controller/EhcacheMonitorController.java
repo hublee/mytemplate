@@ -22,7 +22,7 @@ import com.template.common.utils.DateUtils;
 import com.template.common.utils.PrettyMemoryUtils;
 
 @Controller
-@RequestMapping("${adminPath}/monitor/ehcache")
+@RequestMapping("monitor/ehcache")
 public class EhcacheMonitorController {
 
 	@Resource

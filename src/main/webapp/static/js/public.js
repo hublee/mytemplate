@@ -61,7 +61,7 @@ $(function(){
 				$(this).parent().prev().addClass("active");
 				hash = phash;
 			}else{
-				location.href = adminPath;
+				location.href = ctxPath;
 			}
 			webHistory.go(hash);
 		}
@@ -75,7 +75,7 @@ $(function(){
 	    onItem: function(context, e) {
 	    	var t = $(e.target).data("right-menu");
 	    	if(t == "all_close"){
-	    		location.href = adminPath;
+	    		location.href = ctxPath;
 	    	}else if(t == "other_close"){
 	    		$(context).addClass("active").siblings().remove();
 	    		webHistory.go($(context).attr("h"));

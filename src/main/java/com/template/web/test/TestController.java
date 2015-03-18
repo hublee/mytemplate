@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.template.web.sys.service.SysUserService;
 
 @Controller
-@RequestMapping("${adminPath}/test")
+@RequestMapping("test")
 public class TestController {
 	
 	@Resource
