@@ -5,7 +5,6 @@ import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,18 +18,15 @@ import java.util.Set;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private Set<String> ignorePath = new HashSet<String>
-    (Arrays.asList("/login", "/code.image", "/notlogin", "/ErrorHandler"));
+    (Arrays.asList("/login", "/captcha", "/notlogin", "/ErrorHandler"));
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
         String uri = request.getRequestURI(); //请求路径
-        if(StringUtils.equals("/",uri)) uri = "";
-        String url = request.getRequestURL().toString(); //全路径
-        String domain = url.replace(uri,""); //域名
-        String rootPath = BeetlUtils.getBeetlSharedVars("rootPath");
-        String path = url.replace(domain+rootPath,"");
+        String ctx = request.getContextPath();
+        String path = uri.replace(ctx,"");
         
         if(!ignorePath.contains(path)){
             //获得session中的登陆用户
@@ -40,13 +36,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             SysUser cacheUser = SysUserUtils.getCacheLoginUser();
 
             if (sessionUser == null || cacheUser == null) { // 转到登陆页面
-                response.sendRedirect(rootPath + "/notlogin");
+                response.sendRedirect(ctx + "/notlogin");
                 return false;
             } else {
                 Map<String, SysResource> allRes = BeetlUtils
                         .getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
-                String menuStr = url.replace(domain+rootPath+"/","");
-                SysResource sysResource = allRes.get(menuStr);
+                SysResource sysResource = allRes.get(path);
                 if (sysResource == null
                         || Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
                     return true;
@@ -55,10 +50,10 @@ public class AuthInterceptor implements HandlerInterceptor {
                 SysUserUtils.setUserAuth();
                 //从缓存中的用户权限
                 Map<String, SysResource> userRes = SysUserUtils.getUserResources();
-                if (userRes.containsKey(menuStr)) {
+                if (userRes.containsKey(path)) {
                     return true;
                 } else {
-                    response.sendRedirect(rootPath + "/notauth");
+                    response.sendRedirect(ctx + "/notauth");
                     return false;
                 }
             }

@@ -7,7 +7,7 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
-			<form action="${rootPath}/syslog/list" method="post" id="search-form" target="list-page" class="clearfix">
+			<form action="${ctxPath}/syslog/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
 					@var logDict = dict.getDictListByType("sys_log_type");

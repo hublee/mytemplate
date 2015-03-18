@@ -59,7 +59,7 @@
 
 											<div class="space-6"></div>
 
-											<form id="login-form" action="${rootPath}/login" method="post">
+											<form id="login-form" action="${ctxPath}/login" method="post">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -81,7 +81,7 @@
 														<span class="block input-icon input-icon-right">
 															<input type="text" class="form-control width-55 pull-left" name="code" placeholder="验证码" autocomplete="off"
 															datatype="*"  nullmsg="请输入验证码！" data-error="验证码错误"/>
-															<img src="${rootPath!}/code.image?width=120&height=32" onclick="javascript:refresh(this);" id="code"
+															<img src="${ctxPath!}/captcha?width=120&height=32" onclick="javascript:refresh(this);" id="code"
 															class="pull-right" title="点击换一张" style="cursor: pointer;border: 1px solid rgb(181, 181, 181);"/>
 														</span>
 													</label>
@@ -164,7 +164,7 @@
 
 		<script type="text/javascript">
 			function refresh(obj) {
-		        obj.src = "${rootPath!}/code.image?width=120&height=32&"+Math.random();
+		        obj.src = "${ctxPath!}/captcha?width=120&height=32&"+Math.random();
 		    };
 
 			jQuery(function($) {
@@ -184,7 +184,7 @@
 								style : ['background-color:#F26C4F; color:#fff','#F26C4F' ],
 							});
 						}else{
-							window.location.href="${ctxPath!}/${adminPath!}";
+							window.location.href = "${ctxPath!}";
 						}
 					},
 					tiptype : function(msg, o, cssctl) {

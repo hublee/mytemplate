@@ -15,7 +15,7 @@
 				<td class="center">
 					<a href="javascript:;" 
 						data-title="<${item.name!}>详情" data-mode="detail"
-						data-url="${rootPath}/area/detail/showlayer"
+						data-url="${ctxPath}/area/detail/showlayer"
 						data-data="{id:'${item.id}'}"
 					>${item.name}</a>
 				</td>
@@ -32,7 +32,7 @@
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
 							data-mode="page" data-title="<${item.name!}>编辑"
-							data-url="${rootPath}/area/edit/showlayer"
+							data-url="${ctxPath}/area/edit/showlayer"
 							data-data="{id:'${item.id}',parentId:'${item.pid}'}"
 							data-width="50%"
 						>
@@ -42,7 +42,7 @@
 						<a class="red" href="javascript:void(0);" 
 							data-mode="del" data-title="删除操作"
 							data-msg="<span class='red bigger-120'>你确定删除<${item.name!}>吗?</span>"
-							data-url="${rootPath}/area/delete" data-data="{id:'${item.id}'}"
+							data-url="${ctxPath}/area/delete" data-data="{id:'${item.id}'}"
 						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
 						</a>

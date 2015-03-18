@@ -18,7 +18,7 @@
 				<td class="center">
 				<a href="javascript:;" 
 						data-title="<${item.name!}>详情" data-mode="detail"
-						data-url="${rootPath}/sysuser/detail/showlayer"
+						data-url="${ctxPath}/sysuser/detail/showlayer"
 						data-data="{id:'${item.id}'}"
 					>${item.name!}</a>
 				</td>
@@ -38,7 +38,7 @@
 						
 						<a class="green" href="javascript:void(0);" title="编辑"
 							data-mode="page" data-title="${item.name!}编辑"
-							data-url="${rootPath}/sysuser/edit/showlayer"
+							data-url="${ctxPath}/sysuser/edit/showlayer"
 							data-data="{id:'${item.id}'}" data-width="50%">
 							<i class="ace-icon fa fa-pencil bigger-130"></i>
 						</a>
@@ -46,7 +46,7 @@
 						<a class="red" href="javascript:void(0);" title="删除"
 							data-mode="del" data-title="删除操作"
 							data-msg="你确定删除此数据吗?"
-							data-url="${rootPath}/sysuser/delete" data-data="{id:'${item.id}'}">
+							data-url="${ctxPath}/sysuser/delete" data-data="{id:'${item.id}'}">
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>
 						</a>
 					</div>

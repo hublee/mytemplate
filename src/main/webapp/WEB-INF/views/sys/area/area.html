@@ -8,7 +8,7 @@
 		</div>
 		<div class="widget-toolbar  width-40" style="padding-top: 2px;">
 			<form method="post" class="form-search" id="search-form" target="list-page"
-				action="${rootPath}/area/list">
+				action="${ctxPath}/area/list">
 				<div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
 						<span class=" btn btn-success btn-sm"
@@ -30,7 +30,7 @@
 		</div>
 		<div class="widget-toolbar">
 			<span class="btn btn-purple btn-xs" 
-			onclick="Angel.downloadFile('search-form','${rootPath}/area/export')">
+			onclick="Angel.downloadFile('search-form','${ctxPath}/area/export')">
 			<i class="ace-icon fa fa-cloud-upload bigger-130"></i>
 			导出Excel</span>
 		</div>
@@ -39,7 +39,7 @@
 				<i class="ace-icon fa fa-cloud-download bigger-130"></i>
 				<span>导入数据</span>
 				<input type="file" class="phide"  name="excel" 
-				data-url="${rootPath}/area/import" _accept="application/vnd.ms-excel" 
+				data-url="${ctxPath}/area/import" _accept="application/vnd.ms-excel" 
 				data-progressid="#excel-progress"
 				onchange="Angel.uploadFile.excel(this);"/>
 			</span>

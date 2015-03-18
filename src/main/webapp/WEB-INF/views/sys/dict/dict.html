@@ -11,7 +11,7 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
-			<form action="${rootPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
+			<form action="${ctxPath}/dict/list" method="post" id="search-form" target="list-page" class="clearfix">
 				<div class="pull-left width-25">
 					<label>类型：</label>
 					@var allDict = dict.getAllDictType();
@@ -39,7 +39,7 @@
 		</div>
 
 		<div id="profile" class="tab-pane">
-			<form action="${rootPath!}/dict/save" method="post" id="dict-save-form">
+			<form action="${ctxPath!}/dict/save" method="post" id="dict-save-form">
 				<div class="center padding-10">
 					<label>键值：</label>
 					<input type="text" class="width-50" name="value" datatype="*"  nullmsg="请输入键值！"/>

@@ -16,7 +16,7 @@
 					<a class="blue" href="javascript:;"
 						data-title="${cacheName} 详情" 
 						data-mode="detail"
-						data-url="${rootPath}/monitor/ehcache/${cacheName}/${key}/detail"
+						data-url="${ctxPath}/monitor/ehcache/${cacheName}/${key}/detail"
 						data-width="60%">
 						<i class="ace-icon fa fa-search-plus bigger-130"></i>
 					</a>
@@ -24,7 +24,7 @@
 					data-mode="del" 
 					data-title="删除操作" 
 					data-msg="你确定删除此缓存对象吗?" 
-					data-url="${rootPath}/monitor/ehcache/${cacheName}/${key}/delete"
+					data-url="${ctxPath}/monitor/ehcache/${cacheName}/${key}/delete"
 					data-callback="$('#delcache').closest('tr').remove()">
 						<i class="ace-icon fa fa-trash-o bigger-130"></i>
 					</a>

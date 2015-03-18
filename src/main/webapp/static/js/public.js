@@ -94,7 +94,7 @@ $(function(){
 });
 
 function loadHtmlPage(path) {
-    path = rootPath + "/" + path;
+    path = ctxPath + "/" + path;
     var result;
     $.ajax({
         url: path,

@@ -25,7 +25,7 @@ import com.template.web.sys.service.SysRoleService;
 import com.template.web.sys.service.SysUserService;
 
 @Controller
-@RequestMapping("${adminPath}/sysuser")
+@RequestMapping("sysuser")
 public class SysUserController {
 
 	@Resource

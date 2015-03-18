@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping("${adminPath}/role")
+@RequestMapping("role")
 public class RoleController extends BaseController {
 	
 	

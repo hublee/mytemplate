@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="widget-body">
-				<form action="${rootPath!}/role/saveuser" method="post" id="role-user-form">
+				<form action="${ctxPath!}/role/saveuser" method="post" id="role-user-form">
 					<div class="widget-main" id="yxuser">
 						@for(user in users){
 							<div class="checkbox">
@@ -99,7 +99,7 @@ $(function(){
 		yxList[yxuser[i].id] = yxuser[i].name;
 	}
 	function onClickNode(event, treeId, treeNode) {
-		$.post("${rootPath!}/role/officeuser",{'officeId':treeNode.id},function(data){
+		$.post("${ctxPath!}/role/officeuser",{'officeId':treeNode.id},function(data){
 			$("#dxuser").empty();
 			dxList = {};
 			for(var i=0;i<data.length;i++){

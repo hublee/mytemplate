@@ -16,7 +16,7 @@
 	<div class="tab-content">
 		<div id="home" class="tab-pane active clearfix">
 			<#search>
-				<form action="${rootPath}/sysuser/list" method="post" id="search-form" 
+				<form action="${ctxPath}/sysuser/list" method="post" id="search-form" 
 				target="list-page" class="center clearfix">
 				<div class="row padding-tb-10">
 					<div class="col-sm-6">
@@ -62,11 +62,11 @@
 		</div>
 
 		<div id="profile" class="tab-pane">
-			<form action="${rootPath!}/sysuser/save" method="post" id="sysuser-save-form">
+			<form action="${ctxPath!}/sysuser/save" method="post" id="sysuser-save-form">
 				<div class="center padding-10">
 					<label>登录名：</label>
 					<input type="text" class="width-50" name="username" id="username"
-					ajaxurl="${rootPath!}/sysuser/checkname" datatype="*"  nullmsg="请输入登录名！" />
+					ajaxurl="${ctxPath!}/sysuser/checkname" datatype="*"  nullmsg="请输入登录名！" />
 				</div>
 				<div class="center padding-10">
 					<label>密码：</label>

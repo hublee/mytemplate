@@ -27,7 +27,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("${adminPath}/menu")
+@RequestMapping("menu")
 public class MenuController extends BaseController {
 
 	@Resource

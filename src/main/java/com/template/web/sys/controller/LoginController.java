@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.common.constant.Constant;
-import com.template.common.utils.Global;
 import com.template.common.utils.IPUtils;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysResourceService;
@@ -24,7 +23,6 @@ import com.template.web.sys.service.SysUserService;
 import com.template.web.sys.utils.SysUserUtils;
 
 @Controller
-@RequestMapping("${adminPath}")
 public class LoginController {
 
 	@Resource
@@ -55,7 +53,7 @@ public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String toLogin() {
 		if(SysUserUtils.getCacheLoginUser() !=null && SysUserUtils.getSessionLoginUser() != null){
-			return "redirect:/"+Global.getAdminPath();
+			return "redirect:/";
 		}
 		return "login";
 	}
@@ -118,7 +116,7 @@ public class LoginController {
 	public String logout(HttpServletRequest request) {
 		SysUserUtils.clearCacheUser(SysUserUtils.getSessionLoginUser().getId());
 		request.getSession().invalidate();
-		return "redirect:" + Global.getAdminPath() + "/login";
+		return "redirect:/login";
 	}
 	
 	@RequestMapping("notauth")

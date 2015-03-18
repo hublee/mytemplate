@@ -27,7 +27,7 @@
 			@for(user in users){
 				<a href="javascript:void(0);" title="<${user.name!}>详情"
 					data-title="<${user.name!}>详情" data-mode="detail"
-					data-url="${rootPath}/sysuser/detail/showlayer"
+					data-url="${ctxPath}/sysuser/detail/showlayer"
 					data-data="{id:'${user.id}'}"
 				>${user.name!}
 					${decode(userLP.last,false,'，','')}

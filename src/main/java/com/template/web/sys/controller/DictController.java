@@ -15,7 +15,7 @@ import com.template.web.sys.model.SysDict;
 import com.template.web.sys.service.SysDictService;
 
 @Controller
-@RequestMapping("${adminPath}/dict")
+@RequestMapping("dict")
 public class DictController {
 
 	@Resource

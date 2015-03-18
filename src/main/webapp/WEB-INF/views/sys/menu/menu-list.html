@@ -21,7 +21,7 @@
 				<td class="center">
 					<a href="javascript:;" 
 						data-title="${menu.name!}详情" data-mode="detail"
-						data-url="${rootPath}/menu/detail/showlayer"
+						data-url="${ctxPath}/menu/detail/showlayer"
 						data-data="{id:'${menu.id}'}" >
 					${menu.name!}</a>
 				</td>
@@ -52,7 +52,7 @@
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="green" href="javascript:void(0);" 
 							data-mode="page" data-title="${menu.name!}编辑"
-							data-url="${rootPath}/menu/edit/showlayer"
+							data-url="${ctxPath}/menu/edit/showlayer"
 							data-data="{id:'${menu.id}',parentId:'${menu.pid}'}"
 							data-width="50%"
 						>
@@ -62,7 +62,7 @@
 						<a class="red" href="javascript:void(0);" 
 							data-mode="del" data-title="删除操作"
 							data-msg="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
-							data-url="${rootPath}/menu/delete" data-data="{id:'${menu.id}'}"
+							data-url="${ctxPath}/menu/delete" data-data="{id:'${menu.id}'}"
 							data-reloadurl="true"
 						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i>

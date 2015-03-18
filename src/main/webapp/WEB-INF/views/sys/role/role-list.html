@@ -14,7 +14,7 @@
 				<td class="center">
 					<a href="javascript:void(0);"
 						data-mode="detail" data-title="<${item.name!}>角色"
-						data-url="${rootPath}/role/detail/showlayer"
+						data-url="${ctxPath}/role/detail/showlayer"
 						data-data="{id:'${item.id}'}"
 					>${item.name!}</a>
 				</td>
@@ -31,7 +31,7 @@
 					<div class="hidden-sm hidden-xs action-buttons">
 						<a class="pink" href="javascript:void(0);"
 							data-mode="page" data-title="<${item.name!}>角色分配"
-							data-url="${rootPath}/role/binduser"
+							data-url="${ctxPath}/role/binduser"
 							data-data="{id:'${item.id}'}"
 							data-height="600px" data-width="1000px"
 						>
@@ -39,7 +39,7 @@
 						</a>
 						<a class="green" href="javascript:void(0);" 
 							data-mode="page" data-title="<${item.name!}>编辑"
-							data-url="${rootPath}/role/edit/showlayer"
+							data-url="${ctxPath}/role/edit/showlayer"
 							data-data="{id:'${item.id}'}"
 							data-height="80%" data-width="50%">
 							<i class="ace-icon fa fa-pencil bigger-130"></i> 编辑
@@ -48,7 +48,7 @@
 						<a class="red" href="javascript:void(0);" 
 							data-mode="del" data-title="删除操作"
 							data-msg="你确定删除此数据吗?"
-							data-url="${rootPath}/role/delete" data-data="{id:'${item.id}'}"
+							data-url="${ctxPath}/role/delete" data-data="{id:'${item.id}'}"
 						>
 							<i class="ace-icon fa fa-trash-o bigger-130"></i> 删除
 						</a>

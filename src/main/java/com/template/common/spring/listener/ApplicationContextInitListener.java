@@ -15,7 +15,6 @@ import org.springframework.web.context.ServletContextAware;
 
 import com.template.common.beetl.utils.BeetlUtils;
 import com.template.common.constant.Constant;
-import com.template.common.utils.Global;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.service.SysResourceService;
 
@@ -55,22 +54,12 @@ public class ApplicationContextInitListener implements
 			
 			//读取全部资源
 			LinkedHashMap<String, SysResource> AllResourceMap = sysResourceService.getAllResourcesMap();
-			// 设置共享变量
-			String adminPath = Global.getAdminPath();
-			String rootPath = ctxPath+"/"+adminPath;
-			BeetlUtils.addBeetlSharedVars("adminPath", adminPath);
-			if("".equals(adminPath)) rootPath = ctxPath;
-			BeetlUtils.addBeetlSharedVars("rootPath", rootPath);
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,AllResourceMap);
 			
-			logger.info("--------------------------------------------------------------------------");
-			logger.info("初始化管理根路径:(key:adminPath,value:"
-					+ BeetlUtils.getBeetlSharedVars("adminPath").toString() + ")");
-			logger.info("初始化根路径:(key:rootPath,value:"
-					+ BeetlUtils.getBeetlSharedVars("rootPath").toString() + ")");
+			logger.info("根路径:"+ctxPath);
+			
 			logger.info("初始化系统资源:(key:" + Constant.CACHE_ALL_RESOURCE
 					+ ",value:Map<资源url, SysResource>)");
-			logger.info("--------------------------------------------------------------------------");
 		}
 		
 	}

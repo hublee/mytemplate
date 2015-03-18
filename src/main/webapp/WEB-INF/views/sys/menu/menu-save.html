@@ -11,7 +11,7 @@
 
 <div class="layer">
 	<form name="FormPost" id="menu-save" class="FormGrid"  method="post"
-		action="${rootPath}/menu/save">
+		action="${ctxPath}/menu/save">
 		
 		<input type="hidden" value="${sysResource.id!}" name="id"/>
 		<input type="hidden" value="${pResource.parentIds!}" name="parentIds" />
@@ -31,7 +31,7 @@
 				</tr>
 				<tr  class="FormData">
 					<td class="CaptionTD">菜单链接</td>
-					<td class="DataTD"><span class="red" style="width:30%">${rootPath!}/</span>
+					<td class="DataTD"><span class="red" style="width:30%">${ctxPath!}/</span>
 						<input type="text" style="width:58%" id="name" name="url" role="textbox"
 						class="FormElement ui-widget-content ui-corner-all"
 						value="${sysResource.url!}" 

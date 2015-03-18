@@ -29,7 +29,7 @@ import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
 
 @Controller
-@RequestMapping("${adminPath}/area")
+@RequestMapping("area")
 public class AreaController {
 
 	@Resource

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping("${adminPath}/office")
+@RequestMapping("office")
 public class OfficeController extends BaseController {
 	
 	

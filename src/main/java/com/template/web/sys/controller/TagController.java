@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 *
  */
 @Controller
-@RequestMapping("${adminPath}/tag")
+@RequestMapping("tag")
 public class TagController {
 	
 	/**

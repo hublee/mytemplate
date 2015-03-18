@@ -1,16 +1,9 @@
-package com.template.common.utils;
+package com.template.common.constant;
+
+import com.template.common.utils.DateUtils;
+import com.template.common.utils.SysConstant;
 
 public class Global {
-	
-	/**
-	 *管理根路径
-	* @return
-	 */
-	public static String getAdminPath(){
-		String adminPath = SysConstant.getValue("adminPath");
-		if(adminPath == null) adminPath="";
-		return adminPath;
-	}
 	
 	/**
 	 *  下载的路径

@@ -14,10 +14,9 @@ import com.template.common.captcha.ValidateCode;
 
 
 @Controller
-@RequestMapping("${adminPath}")
 public class CaptchaController {
 
-	@RequestMapping("code.image")
+	@RequestMapping("captcha")
 	public void codeImage(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(defaultValue = "120") int width,
