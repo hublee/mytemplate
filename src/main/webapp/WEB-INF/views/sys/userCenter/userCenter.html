@@ -2,7 +2,7 @@
 	<div class="tabbable">
 		<ul class="nav nav-tabs padding-18">
 			<li class="active"><a data-toggle="tab" href="#home"> <i
-					class="green ace-icon fa fa-user bigger-120"></i> 我的资料
+					class="green ace-icon fa fa-file-o bigger-120"></i> 我的资料
 			</a></li>
 		</ul>
 
@@ -65,12 +65,21 @@
 									<span>${sysUser.email!}</span>
 								</div>
 							</div>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name">工号</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.no!}</span>
+								</div>
+							</div>
 
 							<div class="profile-info-row">
 								<div class="profile-info-name">最后登录IP</div>
 
 								<div class="profile-info-value">
 									<span>${sysUser.loginIp!}</span>
+									<label class="red">${sysUser.ipEx!}</label>
 								</div>
 							</div>
 
