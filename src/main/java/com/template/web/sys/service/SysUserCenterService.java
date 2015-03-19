@@ -4,9 +4,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.druid.util.StringUtils;
 import com.template.common.base.ServiceMybatis;
 import com.template.common.beetl.function.OfficeFunctions;
 import com.template.common.utils.IPUtils;
@@ -46,8 +46,11 @@ public class SysUserCenterService extends ServiceMybatis<SysUser> {
 	 * 用户更新资料
 	 */
 	public Integer updateSysuserInfo(SysUser sysUser) {
-		String pwd = PasswordEncoder.encrypt(sysUser.getPassword(),
-				SysUserUtils.getCacheLoginUser().getUsername());
+		String pwd = null;
+		if(StringUtils.isNotBlank(sysUser.getPassword())){
+			pwd = PasswordEncoder.encrypt(sysUser.getPassword(),
+					SysUserUtils.getCacheLoginUser().getUsername());
+		}
 		sysUser.setPassword(pwd);
 		sysUser.setId(SysUserUtils.getCacheLoginUser().getId());
 		return this.updateByPrimaryKeySelective(sysUser);

@@ -17,6 +17,6 @@ public class PasswordEncoder {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(encrypt("123456", "ceshi1"));
+		System.out.println(encrypt("admin", "admin"));
 	}
 }
