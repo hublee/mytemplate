@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysUserCenterService;
+import com.template.web.sys.utils.SysUserUtils;
 
 @Controller
 @RequestMapping("userCenter")
@@ -28,7 +29,12 @@ public class UserCenterController {
 	
 	@RequestMapping(value = "updateInfo",method = RequestMethod.POST)
 	public @ResponseBody Integer updateSysuserInfo(@ModelAttribute SysUser sysUser){
-		return sysUserCenterService.updateSysuserInfo(sysUser);
+		Integer count = sysUserCenterService.updateSysuserInfo(sysUser);
+		if(count>0){
+			SysUserUtils.clearCacheUser(SysUserUtils.getCacheLoginUser().getId());
+			SysUserUtils.getSession().invalidate();
+		}
+		return count;
 	}
 
 }

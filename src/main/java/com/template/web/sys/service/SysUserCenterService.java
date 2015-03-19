@@ -36,7 +36,7 @@ public class SysUserCenterService extends ServiceMybatis<SysUser> {
 		String curIP = IPUtils.getClientAddress(SysUserUtils.getCurRequest());
 		String ipEx = "";
 		if (!StringUtils.equals(sysUser.getLoginIp(), curIP))
-			ipEx = "(当前IP:" + curIP + "，请注意!)";
+			ipEx = "(当前IP为:" + curIP + "，与上次登录IP不一致，请注意!)";
 		sysUser.set("orgStr", orgStr);
 		sysUser.set("ipEx", ipEx);
 		return sysUser;
