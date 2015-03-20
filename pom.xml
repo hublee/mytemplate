@@ -12,7 +12,7 @@
 		<beetl.version>2.2.0</beetl.version>
 		<pagehelper.version>3.6.3</pagehelper.version>
 		<mapper.version>2.2.0</mapper.version>
-		<shiro.version>1.2.3</shiro.version>
+		<!-- <shiro.version>1.2.3</shiro.version> -->
 		<guava.version>18.0</guava.version>
 		<druid.version>1.0.13</druid.version>
 		<fastjson.version>1.2.4</fastjson.version>
@@ -53,7 +53,7 @@
 		</dependency>
 
 		<!-- apache shiro 相关jar包 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>${shiro.version}</version>
@@ -77,7 +77,7 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>${shiro.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!--Spring -->
 		<dependency>

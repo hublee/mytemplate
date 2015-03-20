@@ -1,43 +1,33 @@
 package com.template.test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.template.common.excel.template.PoiTemplate;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+/*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:spring-config.xml",
-        "classpath:spring/spring-config-beetl.xml"
-})
+})*/
 public class TestExcel {
 	
-	@Resource 
-	private PoiTemplate poiTemplate;
-
 	@Test
 	public void testExportExcel() throws IOException{
-		String temp = "C:/Documents and Settings/Administrator/桌面/新建文件夹/poiTemplate/src/test/resources/test.xlsx";
-		String outPath = "C:/Documents and Settings/Administrator/桌面/新建文件夹/poiTemplate/src/test/resources/test1.xlsx";
-		poiTemplate.setPoiTemplate(temp, outPath);
+		String temp = ""; //输入path
+		String outPath = ""; //输出path
+		PoiTemplate poiTemplate = new PoiTemplate(temp,outPath);
+		List<String> list = new ArrayList<String>();
+		for(int i=0;i<100;i++){
+			list.add("test"+i);
+		}
 		poiTemplate.addValue("username", "张三");
 		poiTemplate.addValue("name", "韩流");
-		poiTemplate.writeExcel();
-		
-		String out2 = "C:/Documents and Settings/Administrator/桌面/新建文件夹/poiTemplate/src/test/resources/test2.xlsx";
-		poiTemplate.setPoiTemplate(temp, out2);
-		poiTemplate.addValue("username", "这是test2导出的username");
-		poiTemplate.addValue("name", "这是test2导出的name");
+		poiTemplate.addValue("list", list);
 		poiTemplate.writeExcel();
 	}
 	

@@ -67,11 +67,7 @@ public class PoiTemplate {
 	
 	int moreSheet = 0;//当前新增的sheet数
 
-	TagUtil tagUtil; 
 	
-	public void setTagUtil(TagUtil tagUtil){
-		this.tagUtil = tagUtil;
-	}
 	
 	public PoiTemplate() {
 		super();
@@ -149,13 +145,6 @@ public class PoiTemplate {
 		this.out = new FileOutputStream(out);
 	}
 	
-	public void setPoiTemplate(String temp, String out) throws FileNotFoundException{
-		if(temp.indexOf(".xlsx") > 0){
-			is2007 = true;
-		}
-		this.in = new FileInputStream(new File(temp));
-		this.out = new FileOutputStream(new File(out));
-	}
 
 	/**
 	 * 读取模板中的属性
@@ -179,7 +168,7 @@ public class PoiTemplate {
 						tempCell.cellType = cell.getCellType();
 						tempCell.rowHeight = cell.getRow().getHeightInPoints();
 						if (value instanceof String) {
-							Tag tag = tagUtil.getTag((String) value);
+							Tag tag = TagUtil.getTag((String) value);
 							if(tag != null){
 								tempCell.isTag = true;
 								tempCell.tag = tag;
@@ -228,9 +217,9 @@ public class PoiTemplate {
 		}
 		if(out != null){
 			wb.write(out);
-			wb = null;
 			in.close();
 			out.close();
+			wb = null;
 		}
 	}
 

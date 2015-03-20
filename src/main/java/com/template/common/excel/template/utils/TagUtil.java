@@ -1,30 +1,33 @@
 package com.template.common.excel.template.utils;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import com.template.common.excel.template.tags.ForeachTag;
 import com.template.common.excel.template.tags.Tag;
+
 
 /**
  * 标签处理工具类
+ *
  */
 public class TagUtil {
 
 	public static final String KEY_TAG = "#";
 
-	private Map<String, Tag> tagMap = Collections.emptyMap();
-	
-	public void setRegisterTag(Map<String, Tag> tagMap){
-		this.tagMap = tagMap;
+	private static Map<String, Tag> tagMap = new HashMap<String, Tag>();
+
+	static {
+		registerTag(ForeachTag.class);
 	}
 
 	/**
 	 * 注册标签类
 	 * @param clazz
 	 */
-	public void setRegisterSingleTag(Class<?> clazz){
+	public static void registerTag(Class<?> clazz){
 		Tag tag;
 		try {
 			tag = (Tag) clazz.newInstance();
@@ -39,21 +42,20 @@ public class TagUtil {
 	 * 注册指定包中的标签类
 	 * @param tagPackage
 	 */
-	public void setRegisterTagPackages(String tagPackage){
+	public static void registerTagPackage(String tagPackage){
 		Collection<Class<?>> classs = PackageUtil.getClasses(tagPackage, true);
 		for(Class<?> clazz : classs){
 			if(Tag.class.isAssignableFrom(clazz)) {
-				setRegisterSingleTag(clazz);
+				registerTag(clazz);
 			}
 		}
 	}
-	
 	/**
 	 * 获取字符串中对应的标签对象
 	 * @param str
 	 * @return
 	 */
-	public Tag getTag(String str) {
+	public static Tag getTag(String str) {
 		String tagName = null;
 		if(str != null){
 			int keytag = str.indexOf(KEY_TAG);

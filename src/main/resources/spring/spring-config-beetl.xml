@@ -37,19 +37,5 @@
 		<property name="suffix" value=".html" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
-	
-	<!-- excel tag register -->
-	<bean id="tagUtil" class="com.template.common.excel.template.utils.TagUtil">
-		<property name="registerTag">
-			<map>
-				<entry key="foreachTag" value-ref="foreachTag" />
-			</map>
-		</property>
-	</bean>
-	
-	<!-- excel模板形式 -->
-	<bean id="poiTemplate" class="com.template.common.excel.template.PoiTemplate">
-		<property name="tagUtil" ref="tagUtil"/>
-	</bean>
 
 </beans>

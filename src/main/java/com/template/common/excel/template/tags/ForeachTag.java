@@ -4,15 +4,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.template.common.excel.template.PoiTemplate;
 import com.template.common.excel.template.bean.TempCell;
+
 
 /**
  * 集合循环处理类
  */
-@Component
 public class ForeachTag extends Tag{
 	
 	private static final String KEY = "#foreach";
