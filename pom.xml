@@ -16,6 +16,7 @@
 		<guava.version>18.0</guava.version>
 		<druid.version>1.0.13</druid.version>
 		<fastjson.version>1.2.4</fastjson.version>
+		<poi.version>3.11</poi.version>
 		
 		<!-- other setting -->
 		<jdk.version>1.7</jdk.version>
@@ -115,6 +116,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
 
 		<!--spring-aop依赖 -->
 		<dependency>
@@ -161,6 +166,23 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+		
+		<!-- poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi.version}</version>
 		</dependency>
 
 		<!-- jxl -->
