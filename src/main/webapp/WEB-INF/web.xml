@@ -57,7 +57,7 @@
 		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>blackListURL</param-name>
-			<param-value>/static/**,*.js,*.css,*.jpg,*.gif,*.png,*.ico,/druid/**</param-value>
+			<param-value>/static/**,*.js,*.css,*.jpg,*.gif,*.png,*.ico,/druid/**,/notlogin,/ErrorHandler,/captcha</param-value>
 		</init-param>
 		<init-param>
 			<param-name>whiteListURL</param-name>
