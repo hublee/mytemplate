@@ -136,12 +136,12 @@ public class PoiUtil {
 	}
 	
 	/**
-	 * 到出数据到excel
+	 * 导出数据到excel
 	 * @param data 待导出的数据
 	 * @param os 导出的excel输出流
 	 * @param titleMap 导出的数据的标题与属性名映射
 	 */
-	public static void  writeExcel(List data, OutputStream os, Map<String, String> titleMap){
+	public static void writeExcel(List data, OutputStream os, Map<String, String> titleMap){
 		styleMap.clear();
 		try {
 			// 创建Excel的工作书册 Workbook,对应到一个excel文档  
@@ -149,33 +149,54 @@ public class PoiUtil {
 		    Sheet sheet = null;
 		    Set<String> titles = titleMap.keySet();
 		    List<Method> methods = new ArrayList<Method>();
+		    List<String> keyNames=new ArrayList<String>();
 		    Object o = data.get(0);
-		    Class<?> clazz = o.getClass();
-		    for(String title : titles){
-				Method getMethod = clazz.getMethod("get" + firstCharToUpperCase(titleMap.get(title)));
-				methods.add(getMethod);
-			}
-		    for(int i = 0,j = 0,k = 0;i < data.size();i++, j++, k = 0){
-		    	if(i == 0 || i%65000 == 0){
-		    		sheet = wb.createSheet("sheet" + ((int)i/65000 + 1));
-		    		for(String title : titles){
-		    			setValue(sheet, 0, k++, title);
-		    		}
-		    		k = 0;
-		    		j = 1;
+		    if(o instanceof Map==false){//data不是继承map
+		    	Class<?> clazz = o.getClass();
+		    	for(String title : titles){
+		    		Method getMethod = clazz.getMethod("get" + firstCharToUpperCase(titleMap.get(title)));
+		    		methods.add(getMethod);
 		    	}
-		    	o = data.get(i);
-				for(Method method : methods){
-					Object value = method.invoke(o);
-					setValue(sheet, j, k++, value);
-				}
-		    	
+		    	for(int i = 0,j = 0,k = 0;i < data.size();i++, j++, k = 0){
+		    		if(i == 0 || i%65000 == 0){
+		    			sheet = wb.createSheet("sheet" + ((int)i/65000 + 1));
+		    			for(String title : titles){
+		    				setValue(sheet, 0, k++, title);
+		    			}
+		    			k = 0;
+		    			j = 1;
+		    		}
+		    		o = data.get(i);
+		    		for(Method method : methods){
+		    			Object value = method.invoke(o);
+		    			setValue(sheet, j, k++, value);
+		    		}	
+		    	}
+		    }else{//data继承于map
+		    	for(String title : titles){
+		    		String keyName=titleMap.get(title);
+		    		keyNames.add(keyName);
+		    	}
+		    	for(int i = 0,j = 0,k = 0;i < data.size();i++, j++, k = 0){
+		    		if(i == 0 || i%65000 == 0){
+		    			sheet = wb.createSheet("sheet" + ((int)i/65000 + 1));
+		    			for(String title : titles){
+		    				setValue(sheet, 0, k++, title);
+		    			}
+		    			k = 0;
+		    			j = 1;
+		    		}
+		    		Map map = (Map)data.get(i);
+		    		for(String keyName : keyNames){
+		    			Object value = map.get(keyName);
+		    			setValue(sheet, j, k++, value);
+		    		}	
+		    	}		    	
 		    }
 			wb.write(os);
-		    os.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 	
 	/**
@@ -225,6 +246,7 @@ public class PoiUtil {
 				c = startColumn;
 		    }
 			wb.write(os);
+			
 		    os.close();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -337,7 +359,7 @@ public class PoiUtil {
 			}
 		}else if(value instanceof Date){
 			cell.setCellValue((Date)value);
-			if(style == null) cell.setCellStyle(getFormat(sheet.getWorkbook(), "yyyy年MM月dd日"));
+			if(style == null) cell.setCellStyle(getFormat(sheet.getWorkbook(), "yyyy/MM/dd HH:mm:ss"));
 		}else if(value instanceof String && cellType == Cell.CELL_TYPE_FORMULA){
 			cell.setCellFormula((String) value);
 		}else{

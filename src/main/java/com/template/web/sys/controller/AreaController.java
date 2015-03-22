@@ -1,11 +1,9 @@
 package com.template.web.sys.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
@@ -22,9 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.template.common.excel.EasyXls;
-import com.template.common.excel.bean.ExcelConfig;
-import com.template.common.utils.FileUtils;
+import com.google.common.collect.Maps;
+import com.template.common.excel.ExcelUtils;
 import com.template.web.sys.model.SysArea;
 import com.template.web.sys.service.SysAreaService;
 
@@ -121,26 +118,53 @@ public class AreaController {
 	}
 
 	/**
-	 * 导出execl
+	 * 导出execl (示例)
 	 */
 	@RequestMapping(value = "export",method = RequestMethod.POST)
 	public void exportFile(@RequestParam Map<String, Object> params,
 			HttpServletResponse response){
 
 		List<SysArea> list = sysAreaService.findSysAreaList(params);
-
-		ExcelConfig config = new ExcelConfig.Builder(Map.class)
-				.sheetNum(0)
-				.startRow(1)
-				.sheetName("区域")
-				.separater(",")
-				.addColumn("name,区域名称", "code,区域编码,150,java.lang.String",
-						"pname,上级区域", "parentId,父级编号", "parentIds,所有父级编号",
-						"type,类型", "icon,图标", "delFlag,状态", "remarks,备注",
-						"createBy,创建人", "createDate,创建时间,200", "updateBy,更新者",
-						"updateDate,更新时间").build();
-
-		EasyXls.list2Xls(config, list, "区域.xls", response);
+		
+		Map<String, String> titleMap = Maps.newLinkedHashMap();
+		titleMap.put("区域名称","name");
+		titleMap.put("区域编码","code");
+		titleMap.put("上级区域","pname");
+		titleMap.put("父级编号","parentId");
+		titleMap.put("所有父级编号","parentIds");
+		titleMap.put("类型","type");
+		titleMap.put("图标","icon");
+		titleMap.put("状态","delFlag");
+		titleMap.put("备注","remarks");
+		titleMap.put("创建人","createBy");
+		titleMap.put("创建时间","createDate");
+		titleMap.put("更新者","updateBy");
+		titleMap.put("更新时间","updateDate");
+		
+		try {
+			//流的方式直接下载
+			ExcelUtils.exportExcel(response, "区域.xls", list, titleMap);
+			
+			//生成excel先存到服务器，之后客户端再下载
+			/*String fileName = "区域.xls";
+			String filePath = "E:/develop_software/eclipse64/workspace/mytemplate/src/main/webapp/testExcel/"+fileName;
+			ExcelUtils.exportExcel(response, filePath, fileName, list, titleMap);*/
+			
+			//模板形式
+			/*String fileName = "区域.xlsx";
+			String templatePath = "E:/develop_software/eclipse64/workspace/mytemplate/src/main/webapp/testExcel/test.xlsx";
+			String outPath = "E:/develop_software/eclipse64/workspace/mytemplate/src/main/webapp/testExcel/"+fileName;
+			Map<String, Object> data = Maps.newHashMap();
+			data.put("username", "张三");
+			data.put("name", "韩流");
+			//方式1
+			ExcelUtils.exportExcel(response, templatePath, "区域.xlsx", data);
+			//方式2
+			ExcelUtils.exportExcel(response, templatePath, outPath, fileName, data);*/
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -148,7 +172,7 @@ public class AreaController {
 	 * execl导入数据
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "import",method = RequestMethod.POST)
+	/*@RequestMapping(value = "import",method = RequestMethod.POST)
 	public @ResponseBody void importFile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		ExcelConfig config = new ExcelConfig.Builder(Map.class)
@@ -176,6 +200,6 @@ public class AreaController {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 }

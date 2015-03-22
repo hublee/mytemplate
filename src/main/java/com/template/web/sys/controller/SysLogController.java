@@ -4,26 +4,16 @@ package com.template.web.sys.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.template.common.base.BaseController;
-import com.template.common.excel.EasyXls;
-import com.template.common.excel.bean.ExcelConfig;
-import com.template.common.utils.FileUtils;
 import com.template.web.sys.model.SysLog;
 import com.template.web.sys.service.SysLogService;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -79,71 +69,6 @@ public class SysLogController extends BaseController {
 		SysLog sysLog = sysLogService.selectByPrimaryKey(id);
 		model.addAttribute("sysLog", sysLog);
 		return "sys/log/log-detail";
-	}
-	
-	
-	/**
-	 * 导出execl
-	 */
-	@RequestMapping(value = "export",method = RequestMethod.POST)
-	public void exportFile(@RequestParam Map<String, Object> params,
-			HttpServletResponse response) throws Exception {
-
-		List<SysLog> list = sysLogService.findSysLogList(params);
-
-		ExcelConfig config = new ExcelConfig.Builder(Map.class)
-				.sheetNum(0)
-				.startRow(1)
-				.sheetName("日志")
-				.separater(",")
-				.addColumn(
-					"exception,异常信息,200,java.lang.String",
-					"method,操作方式,200,java.lang.String",
-					"params,操作提交的数据,200,java.lang.String",
-					"remoteAddr,操作IP地址,200,java.lang.String",
-					"requestUri,请求URI,200,java.lang.String",
-					"type,日志类型,200,java.lang.String",
-					"userAgent,用户代理,200,java.lang.String"
-				).build();
-		EasyXls.list2Xls(config, list, "日志.xls", response);
-
-	}
-
-	/**
-	 * execl导入数据
-	 */
-	@RequestMapping(value = "import",method = RequestMethod.POST)
-	public @ResponseBody void importFile(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		ExcelConfig config = new ExcelConfig.Builder(Map.class)
-				.sheetNum(0)
-				.startRow(1)
-				.separater(",")
-				.mode(true)
-				.addColumn(
-					"exception,异常信息,200,java.lang.String",
-					"method,操作方式,200,java.lang.String",
-					"params,操作提交的数据,200,java.lang.String",
-					"remoteAddr,操作IP地址,200,java.lang.String",
-					"requestUri,请求URI,200,java.lang.String",
-					"type,日志类型,200,java.lang.String",
-					"userAgent,用户代理,200,java.lang.String"
-				).build();
-		int count = 0;
-		try {
-			List<SysLog> list = EasyXls.xls2List(config,
-					FileUtils.uploadFile(request), SysLog.class);
-			for (SysLog sysLog : list) {
-				sysLogService.insertSelective(sysLog);
-				count++;
-			}
-			response.setContentType("text/html;charset=utf-8");
-			response.getWriter().write("成功导入"+count + "条数据!");
-		} catch (Exception e) {
-			response.getWriter().write("导入失败");
-			e.printStackTrace();
-		}
-
 	}
 	
 
