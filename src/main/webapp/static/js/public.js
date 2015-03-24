@@ -24,8 +24,8 @@ var webHistory = Webit.history;
 
 $(function(){
 	
-	$("html").niceScroll({autohidemode:false,zindex:1100,cursorwidth:"9px",
-		 cursorcolor:"rgb(243, 129, 149)",cursorborderradius:"0px"});
+	/*$("html").niceScroll({autohidemode:false,zindex:1100,cursorwidth:"9px",
+		 cursorcolor:"rgb(243, 129, 149)",cursorborderradius:"0px"});*/
 	
 	var aMenu = $("#sidebar-menu a[id]");
 	var tab = $("#breadcrumb");

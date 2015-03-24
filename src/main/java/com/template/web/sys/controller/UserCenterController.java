@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.template.common.constant.Constant;
+import com.template.common.utils.CacheUtils;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysUserCenterService;
 import com.template.web.sys.utils.SysUserUtils;
@@ -27,6 +29,10 @@ public class UserCenterController {
 		return "sys/userCenter/userCenter";
 	}
 	
+	/**
+	 * 更新用户信息
+	 * @param sysUser
+s	 */
 	@RequestMapping(value = "updateInfo",method = RequestMethod.POST)
 	public @ResponseBody Integer updateSysuserInfo(@ModelAttribute SysUser sysUser){
 		Integer count = sysUserCenterService.updateSysuserInfo(sysUser);
@@ -35,6 +41,11 @@ public class UserCenterController {
 			SysUserUtils.getSession().invalidate();
 		}
 		return count;
+	}
+	
+	@RequestMapping("conversation")
+	public String conversation(){
+		return "sys/userCenter/conversation";
 	}
 
 }
