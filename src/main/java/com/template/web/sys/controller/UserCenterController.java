@@ -23,8 +23,6 @@ public class UserCenterController {
 	@Resource
 	private SysUserCenterService sysUserCenterService;
 	
-	@Resource TextMessageHandler textMessageHandler;
-
 	@RequestMapping
 	public String viewInfo(Model model) {
 		SysUser sysUser = sysUserCenterService.getSysUserInfo();
@@ -48,7 +46,6 @@ s	 */
 	
 	@RequestMapping("conversation")
 	public String conversation(){
-		textMessageHandler.getOnlineUsers();
 		return "sys/userCenter/conversation";
 	}
 

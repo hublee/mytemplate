@@ -27,24 +27,5 @@
 	<script type="text/javascript" src="${ctxPath}/static/js/jquery.form.js"></script>
 	<script type="text/javascript" src="${ctxPath}/static/js/bootstrap-contextmenu.js"></script>
 	<script type="text/javascript" src="${ctxPath}/static/js/jquery.nicescroll.min.js"></script>
-	<script type="text/javascript" src="${ctxPath}/static/js/sockjs.min.js"></script>
 	<script type="text/javascript" src="${ctxPath}/static/js/public.js"></script>
-	<script>
-	var PATH = "${ctxPath}";
-	var websocket = null;
-	if (window['WebSocket']) 
-		// ws://host:port/project/websocketpath
-		websocket = new WebSocket("ws://" + window.location.host + PATH + '/websocket');
-	else
-		websocket = new new SockJS(PATH + '/websocket/socketjs');
-
-	websocket.onopen = function(event) {
-		alert("ddfd")
-		console.log('open', event);
-	};
-	websocket.onmessage = function(event) {
-		console.log('message', event.data);
-		$('div[message] > ul').append('<li>' + event.data + '</li>');
-	};
-	</script>
 @}		
