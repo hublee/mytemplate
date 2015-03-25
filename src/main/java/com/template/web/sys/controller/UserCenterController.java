@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.template.common.constant.Constant;
 import com.template.common.utils.CacheUtils;
+import com.template.web.socket.TextMessageHandler;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysUserCenterService;
 import com.template.web.sys.utils.SysUserUtils;
@@ -21,6 +22,8 @@ public class UserCenterController {
 
 	@Resource
 	private SysUserCenterService sysUserCenterService;
+	
+	@Resource TextMessageHandler textMessageHandler;
 
 	@RequestMapping
 	public String viewInfo(Model model) {
@@ -45,6 +48,7 @@ s	 */
 	
 	@RequestMapping("conversation")
 	public String conversation(){
+		textMessageHandler.getOnlineUsers();
 		return "sys/userCenter/conversation";
 	}
 
