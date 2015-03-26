@@ -1,2 +1,19 @@
-<a href="http://localhost:8888/mytemplate/druid" target="_blank">asds</a>
 
+<!-- <iframe src="${ctxPath}/cms/article" width="100%" height="100%" frameborder="0"></iframe> -->
+
+
+<a href="javascript:;" id="icon-icon-btn">ueditor test</a>
+
+<script>
+$(function(){
+	$("#icon-icon-btn").click(function(){
+		$.layer({
+		    type: 2,
+		    title: '请单击选择图标',
+		    maxmin: true,
+		    iframe: {src : ctxPath+'/cms/article'},
+		    area: ['1000px' , '550px']
+		}); 
+	});
+});
+</script>

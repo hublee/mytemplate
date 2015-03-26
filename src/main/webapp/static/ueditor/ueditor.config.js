@@ -21,7 +21,8 @@
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
     
-    var rootURL = window.location.protocol+"//"+window.location.host+ctxPath;
+    var cpath = (typeof ctxPath == "undefined") ? parent.ctxPath : ctxPath;
+    var rootURL = window.location.protocol+"//"+window.location.host+cpath;
     
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
