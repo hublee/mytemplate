@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.template.common.constant.Constant;
-import com.template.common.utils.CacheUtils;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.service.SysUserCenterService;
 import com.template.web.sys.utils.SysUserUtils;

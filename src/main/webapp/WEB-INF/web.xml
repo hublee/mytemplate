@@ -7,6 +7,9 @@
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/static/*</url-pattern>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.gif</url-pattern>
 	</servlet-mapping>
 
 	<!-- 指定Spring的配置文件 -->
@@ -51,7 +54,7 @@
 	</filter-mapping>
 
 	<!-- 记录访问日志 -->
-	<filter>
+	<!-- <filter>
 		<filter-name>AccessLogFilter</filter-name>
 		<filter-class>com.template.common.filter.AccessLogFilter</filter-class>
 		<async-supported>true</async-supported>
@@ -68,7 +71,7 @@
 		<filter-name>AccessLogFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<!--druid 监控 -->
 	<filter>
