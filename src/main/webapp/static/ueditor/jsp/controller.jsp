@@ -9,7 +9,6 @@
     request.setCharacterEncoding( "utf-8" );
 	response.setHeader("Content-Type" , "text/html");
 	
-	String rootPath = application.getRealPath( "/" );
 	ApplicationContext appContext = new ClassPathXmlApplicationContext();
 	
 	out.write( new MyActionEnter( request, appContext.getResource(
