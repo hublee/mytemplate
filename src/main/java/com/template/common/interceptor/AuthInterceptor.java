@@ -5,11 +5,13 @@ import com.template.common.constant.Constant;
 import com.template.web.sys.model.SysResource;
 import com.template.web.sys.model.SysUser;
 import com.template.web.sys.utils.SysUserUtils;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Map;
 
 public class AuthInterceptor implements HandlerInterceptor {

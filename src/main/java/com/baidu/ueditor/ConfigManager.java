@@ -17,9 +17,9 @@ import com.baidu.ueditor.define.ActionMap;
 
 /**
  * 配置管理器
- * @author hancong03@baidu.com
  *
  */
+@SuppressWarnings({ "unused"})
 public final class ConfigManager {
 
 	private final String rootPath;

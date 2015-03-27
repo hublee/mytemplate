@@ -2,7 +2,6 @@ package com.baidu.ueditor.define;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public final class AppInfo {
 	
 	public static final int SUCCESS = 0;
@@ -27,6 +26,7 @@ public final class AppInfo {
 	
 	public static final int ILLEGAL = 401;
 
+	@SuppressWarnings("serial")
 	public static Map<Integer, String> info = new HashMap<Integer, String>(){{
 		
 		put( AppInfo.SUCCESS, "SUCCESS" );

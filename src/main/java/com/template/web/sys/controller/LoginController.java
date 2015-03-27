@@ -38,7 +38,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping
+	@RequestMapping(value="/")
 	public String toIndex(Model model, HttpServletRequest request) {
 		request.getSession().removeAttribute("code"); // 清除code
 		if( SysUserUtils.getSessionLoginUser() == null || 
