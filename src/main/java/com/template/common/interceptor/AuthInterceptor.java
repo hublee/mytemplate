@@ -10,15 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private Set<String> ignorePath = new HashSet<String>
-    (Arrays.asList("/login", "/captcha", "/notlogin", "/ErrorHandler"));
+    /*private Set<String> ignorePath = new HashSet<String>
+    (Arrays.asList("/login", "/captcha", "/notlogin", "/ErrorHandler"));*/
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -28,7 +25,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String ctx = request.getContextPath();
         String path = uri.replace(ctx,"");
         
-        if(!ignorePath.contains(path)){
+        //if(!ignorePath.contains(path)){
             //获得session中的登陆用户
             SysUser sessionUser = SysUserUtils.getSessionLoginUser();
 
@@ -43,6 +40,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                         .getBeetlSharedVars(Constant.CACHE_ALL_RESOURCE);
                 String perPath = path.substring(1);
                 SysResource sysResource = allRes.get(perPath);
+                //判断如果url不在数据库中，则默认继续
                 if (sysResource == null
                         || Constant.RESOURCE_COMMON.equals(sysResource.getCommon())) {
                     return true;
@@ -58,8 +56,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                     return false;
                 }
             }
-        }
-        return true;
+        //}
+       // return true;
     }
 
     @Override

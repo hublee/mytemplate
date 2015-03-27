@@ -70,8 +70,26 @@
 	<mvc:default-servlet-handler />
 
 	<mvc:interceptors>
-		<bean class="com.template.common.interceptor.AuthInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/" />
+			<mvc:exclude-mapping path="/login" />
+			<mvc:exclude-mapping path="/notlogin" />
+			<mvc:exclude-mapping path="/captcha" />
+			<mvc:exclude-mapping path="/ErrorHandler" />
+			<mvc:exclude-mapping path="/static/**" />
+			<bean class="com.template.common.interceptor.AuthInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<!-- <bean id="exceptionResolver"
+		class="com.template.common.exception.CustomSimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error/error.html</prop>
+			</props>
+		</property>
+	</bean> -->
 
 	<!-- 文件上传配置 -->
 	<bean id="multipartResolver"

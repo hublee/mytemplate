@@ -6,10 +6,13 @@
 	<!-- 激活Tomcat的defaultServlet来处理静态文件 -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
-		<url-pattern>/static/*</url-pattern>
+		<url-pattern>/static/fonts/*</url-pattern>
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.png</url-pattern>
 		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.ico</url-pattern>
 	</servlet-mapping>
 
 	<!-- 指定Spring的配置文件 -->
@@ -143,7 +146,7 @@
 	</session-config>
 
 	<!-- 错误页面映射 -->
-	<error-page>
+	<!-- <error-page>
 		<error-code>404</error-code>
 		<location>/ErrorHandler</location>
 	</error-page>
@@ -162,7 +165,7 @@
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/ErrorHandler</location>
-	</error-page>
+	</error-page> -->
 
 	<!-- <servlet-mapping> <servlet-name>jsp</servlet-name> <url-pattern>*.html</url-pattern> 
 		</servlet-mapping> -->

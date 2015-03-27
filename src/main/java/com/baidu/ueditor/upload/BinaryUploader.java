@@ -46,7 +46,7 @@ public class BinaryUploader {
             upload.setHeaderEncoding( "UTF-8" );
         }
 
-		/*try {
+		try {
 			
 			FileItemIterator iterator = upload.getItemIterator(request);
 
@@ -77,8 +77,14 @@ public class BinaryUploader {
 			}
 
 			savePath = PathFormat.parse(savePath, originFileName);
+			
+			 String rootPath = conf.get("iamgeRootPath").toString();
+            if(StringUtils.isBlank(rootPath))
+           	rootPath = request.getServletContext().getRealPath("/");
 
-			String physicalPath = (String) conf.get("rootPath") + savePath;
+            String physicalPath = rootPath + savePath;
+
+			//String physicalPath = (String) conf.get("rootPath") + savePath;
 
 			InputStream is = fileStream.openStream();
 			State storageState = StorageManager.saveFileByInputStream(is,
@@ -95,54 +101,51 @@ public class BinaryUploader {
 		} catch (FileUploadException e) {
 			return new BaseState(false, AppInfo.PARSE_REQUEST_ERROR);
 		} catch (IOException e) {
-		}*/
+		}
         
-        try {
-
-        	MultipartHttpServletRequest wrapper = (MultipartHttpServletRequest) request;
-
-        	MultipartFile file = wrapper.getFile("upfile");
-        	
-            String savePath = (String) conf.get("savePath");
-            String originFileName = UUID.randomUUID().toString() + ".jpg";
-            String suffix = FileType.getSuffixByFilename(originFileName);
-
-            originFileName = originFileName.substring(0,originFileName.length() - suffix.length());
-            savePath = savePath + suffix;
-
-            long maxSize = ((Long) conf.get("maxSize")).longValue();
-
-            if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
-                return new BaseState(false, AppInfo.NOT_ALLOW_FILE_TYPE);
-            }
-
-            savePath = PathFormat.parse(savePath, originFileName);
-            
-            String rootPath = conf.get("iamgeRootPath").toString();
-            if(StringUtils.isBlank(rootPath))
-            	rootPath = request.getServletContext().getRealPath("/");
-
-            String physicalPath = rootPath + savePath;
-            
-
-           /* File f = new File(request.getParameter("upfile"));
-            byte[] buf = FileUtils.readFileToByteArray(f);          
-            InputStream is = new ByteArrayInputStream(buf);*/
-            State storageState = StorageManager.saveFileByInputStream(file.getInputStream(),physicalPath, maxSize);
-            //is.close();
-
-
-            if (storageState.isSuccess()) {
-                storageState.putInfo("url", PathFormat.format(savePath));
-                storageState.putInfo("type", suffix);
-                storageState.putInfo("original", originFileName + suffix);
-            }
-
-            return storageState;
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+//        try {
+//
+//        	MultipartHttpServletRequest wrapper = (MultipartHttpServletRequest) request;
+//
+//        	MultipartFile file = wrapper.getFile("upfile");
+//        	
+//            String savePath = (String) conf.get("savePath");
+//            String originFileName = UUID.randomUUID().toString() + ".jpg";
+//            String suffix = FileType.getSuffixByFilename(originFileName);
+//
+//            originFileName = originFileName.substring(0,originFileName.length() - suffix.length());
+//            savePath = savePath + suffix;
+//
+//            long maxSize = ((Long) conf.get("maxSize")).longValue();
+//
+//            if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
+//                return new BaseState(false, AppInfo.NOT_ALLOW_FILE_TYPE);
+//            }
+//
+//            savePath = PathFormat.parse(savePath, originFileName);
+//            
+//            String rootPath = conf.get("iamgeRootPath").toString();
+//            if(StringUtils.isBlank(rootPath))
+//            	rootPath = request.getServletContext().getRealPath("/");
+//
+//            String physicalPath = rootPath + savePath;
+//
+//            InputStream is = file.getInputStream();
+//            State storageState = StorageManager.saveFileByInputStream(is,physicalPath, maxSize);
+//            is.close();
+//
+//
+//            if (storageState.isSuccess()) {
+//                storageState.putInfo("url", PathFormat.format(savePath));
+//                storageState.putInfo("type", suffix);
+//                storageState.putInfo("original", originFileName + suffix);
+//            }
+//
+//            return storageState;
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
         
 		return new BaseState(false, AppInfo.IO_ERROR);
 	}

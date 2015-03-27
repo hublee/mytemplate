@@ -41,6 +41,10 @@ public class LoginController {
 	@RequestMapping
 	public String toIndex(Model model, HttpServletRequest request) {
 		request.getSession().removeAttribute("code"); // 清除code
+		if( SysUserUtils.getSessionLoginUser() == null || 
+				SysUserUtils.getCacheLoginUser() ==null ){
+			return "redirect:/login";
+		}
 		model.addAttribute("menuList", SysUserUtils.getUserMenus());
 		return "index";
 	}
@@ -52,7 +56,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String toLogin() {
-		if(SysUserUtils.getCacheLoginUser() !=null && SysUserUtils.getSessionLoginUser() != null){
+		if( SysUserUtils.getSessionLoginUser() != null && SysUserUtils.getCacheLoginUser() !=null ){
 			return "redirect:/";
 		}
 		return "login";
