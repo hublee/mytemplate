@@ -1,7 +1,5 @@
-
-<script type="text/javascript" src="${ctxPath}/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="${ctxPath}/static/ueditor/ueditor.all.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctxPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<!-- ueditor所需引入 -->
+@layout("/layout/ueditor.html"){}
 
 <!-- 加载编辑器的容器 -->
 <script id="container" name="content" type="text/plain">
@@ -12,5 +10,6 @@
 <script type="text/javascript">
     var ue = UE.getEditor('container');
 </script>
+
 
 
