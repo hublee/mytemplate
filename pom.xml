@@ -333,6 +333,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
