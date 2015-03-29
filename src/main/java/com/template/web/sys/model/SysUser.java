@@ -63,6 +63,8 @@ public class SysUser extends BaseEntity {
 	
     private String userType; //user_type <用户类型>
     
+    private String status; //用户状态  0.正常  1.锁定
+    
     private String updateBy; //update_by <更新者>
 	private Date updateDate; //update_date <更新时间>
 	private String createBy; //create_by <创建者>
@@ -74,7 +76,7 @@ public class SysUser extends BaseEntity {
     
     public SysUser() {
 	}
-
+    
 	public SysUser(Long companyId, String email, String mobile, String name,
 			String no, Long officeId, String password, String phone,
 			String remarks, String username, String userType, Long[] roleIds) {
@@ -107,6 +109,14 @@ public class SysUser extends BaseEntity {
    
     public void setCompanyId(Long companyId) {
 		this.set("companyId", companyId);
+    }
+    
+    public boolean getStatus() {
+		return "0".equals(this.getString("status")) ? true:false;
+    }
+   
+    public void setStatus(String status) {
+		this.set("status", status);
     }
 
 

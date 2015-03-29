@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans 
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/util 
+          http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- realm -->
+	<bean id="userRealm" class="com.template.web.shiro.UserRealm">
+		<!-- 用切面缓存代理了 此处就不缓存了 -->
+		<property name="authenticationCachingEnabled" value="false" />
+		<property name="authorizationCachingEnabled" value="false" />
+	</bean>
+	
+	<!-- 表单提示过滤 -->
+    <bean id="formAuthFilter" class="com.template.web.shiro.FormAuthFilter">
+    	<property name="usernameParam" value="username"/>
+    	<property name="passwordParam" value="password"/>
+    	<property name="rememberMeParam" value="rememberMe"/>
+    </bean>
+    
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
+	    <constructor-arg value="sid"/>  
+	    <property name="httpOnly" value="true"/>  
+	    <property name="maxAge" value="-1"/>
+	</bean>
+	
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
+	    <constructor-arg value="rememberMe"/>  
+	    <property name="httpOnly" value="true"/>  
+	    <property name="maxAge" value="2592000"/>
+	</bean>
+	
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">  
+	    <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>   
+	    <property name="cookie" ref="rememberMeCookie"/>  
+	</bean> 
+	
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
+        <property name="realm" ref="userRealm"/>
+    </bean>
+    
+    <!-- 表单记住我功能 -->
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"/>
+
+	<!-- url地址过滤（用于权限模块） -->
+	<bean id="urlAuthenticationFilter" class="com.template.web.shiro.UrlAuthenticationFilter">
+		<property name="excludeUrls">
+			<list>
+				<value>/</value>
+				<value>/admin/logout.action</value>
+				<value>/admin/system/rbac/user/user_check.action</value>
+				<value>/admin/system/rbac/user/update_password.action</value>
+				<value>/admin/system/rbac/user/info</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Shiro权限过滤配置 -->
+	<bean id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		 <!-- Shiro的核心安全接口,这个属性是必须的 --> 
+		<property name="securityManager" ref="securityManager" />
+		<!-- 要求登录时的链接(可根据项目的URL进行替换),非必须的属性,默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+		<property name="loginUrl" value="/login" />
+		 <!-- 登录成功后要跳转的连接 -->
+		<property name="successUrl" value="/" />
+		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
+		<property name="unauthorizedUrl" value="/notauth" />
+		<property name="filters">
+			<util:map>
+				<entry key="authc" value-ref="formAuthFilter" />
+				<entry key="url" value-ref="urlAuthenticationFilter" />
+			</util:map>
+		</property>
+		<property name="filterChainDefinitions">
+			<value>
+			/static/** = anon
+			/logout = logout
+           	/** = url,authc
+			</value>
+		</property>
+	</bean>
+
+	<!-- Shiro生命周期 -->  
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+</beans>

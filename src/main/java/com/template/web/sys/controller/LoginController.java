@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,20 +35,14 @@ public class LoginController {
 	
 	/**
 	 * 管理主页
-	 * 
-	 * @param model
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(value="/")
 	public String toIndex(Model model, HttpServletRequest request) {
-		request.getSession().removeAttribute("code"); // 清除code
-		if( SysUserUtils.getSessionLoginUser() == null || 
-				SysUserUtils.getCacheLoginUser() ==null ){
-			return "redirect:/login";
+		if(SecurityUtils.getSubject().isRemembered() || SecurityUtils.getSubject().isAuthenticated()){
+			//model.addAttribute("menuList", SysUserUtils.getUserMenus());
+			return "index";
 		}
-		model.addAttribute("menuList", SysUserUtils.getUserMenus());
-		return "index";
+		return "logins";
 	}
 
 	/**
@@ -54,63 +50,14 @@ public class LoginController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = "login")
 	public String toLogin() {
-		if( SysUserUtils.getSessionLoginUser() != null && SysUserUtils.getCacheLoginUser() !=null ){
+		if(SecurityUtils.getSubject().isAuthenticated()){
 			return "redirect:/";
 		}
-		return "login";
+		return "logins";
 	}
 	
-	/**
-	 * 登录验证
-	 * 
-	 * @param username
-	 * @param password
-	 * @param code
-	 * @return
-	 */
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> checkLogin(String username,
-			String password, String code, HttpServletRequest request) {
-
-		Map<String, Object> msg = new HashMap<String, Object>();
-		HttpSession session = request.getSession();
-		code = StringUtils.trim(code);
-		username = StringUtils.trim(username);
-		password = StringUtils.trim(password);
-		Object scode = session.getAttribute("code");
-		String sessionCode = null;
-		if (scode != null)
-			sessionCode = scode.toString();
-		if (!StringUtils.equalsIgnoreCase(code, sessionCode)) {
-			msg.put("error", "验证码错误");
-			return msg;
-		}
-		SysUser user = sysUserService.checkUser(username, password);
-		if (null != user) {
-			
-			session.setAttribute(Constant.SESSION_LOGIN_USER, user);
-			
-			//缓存用户
-			SysUserUtils.cacheLoginUser(user);
-			
-			//设置并缓存用户认证
-			SysUserUtils.setUserAuth();
-			
-			//TODO 暂时，后续移动到日志中
-			//更新用户最后登录ip和date
-			SysUser newUser = new SysUser();
-			newUser.setLoginDate(new Date());
-			newUser.setLoginIp(IPUtils.getClientAddress(request));
-			newUser.setId(user.getId());
-			sysUserService.updateByPrimaryKeySelective(newUser);
-		} else {
-			msg.put("error", "用户名或密码错误");
-		}
-		return msg;
-	}
-
 	/**
 	 * 用户退出
 	 * 
@@ -120,6 +67,16 @@ public class LoginController {
 	public String logout(HttpServletRequest request) {
 		SysUserUtils.clearCacheUser(SysUserUtils.getSessionLoginUser().getId());
 		request.getSession().invalidate();
+		
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			if(subject.isAuthenticated()){
+				subject.logout();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "redirect:/login";
 	}
 	

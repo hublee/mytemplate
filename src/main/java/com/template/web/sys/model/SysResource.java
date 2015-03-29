@@ -26,8 +26,6 @@ public class SysResource extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-    private Long code; //code <权限码 1<<n>
-
     private String common; //common <是否是公共资源(0.权限资源 1.公共资源)>
 
     private String description; //description <描述>
@@ -37,8 +35,6 @@ public class SysResource extends BaseEntity {
     private String name; //name <资源名称>
 
     private Long parentId; //parent_id <父级id>
-
-    private Integer pos; //pos <权限位,相当于对权限分组,从0开始>
 
     private Integer sort; //sort <排序号>
 
@@ -50,6 +46,8 @@ public class SysResource extends BaseEntity {
     
     private String parentIds;
     
+    private String permissionStr; //权限字符串
+    
     private String updateBy; //update_by <更新者>
 	private Date updateDate; //update_date <更新时间>
 	private String createBy; //create_by <创建者>
@@ -58,13 +56,13 @@ public class SysResource extends BaseEntity {
     
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
-
-	public Long getCode() {
-		return this.getLong("code");
+    
+    public String getPermissionStr() {
+		return this.getString("permissionStr");
     }
    
-    public void setCode(Long code) {
-		this.set("code", code);
+    public void setPermissionStr(String permissionStr) {
+		this.set("permissionStr", permissionStr);
     }
 
 	public String getCommon() {
@@ -105,14 +103,6 @@ public class SysResource extends BaseEntity {
    
     public void setParentId(Long parentId) {
 		this.set("parentId", parentId);
-    }
-
-	public Integer getPos() {
-		return this.getInteger("pos");
-    }
-   
-    public void setPos(Integer pos) {
-		this.set("pos", pos);
     }
 
 	public Integer getSort() {

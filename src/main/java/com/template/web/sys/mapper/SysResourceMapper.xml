@@ -3,13 +3,13 @@
 <mapper namespace="com.template.web.sys.mapper.SysResourceMapper">
 
 	<sql id="sysResourceColumns">
-		id,code,common,description,icon,name,parent_id,pos,sort,status,type,url,parent_ids,
+		id,common,description,icon,name,parent_id,sort,status,type,url,parent_ids,
 		update_by,update_date,create_by,create_date,del_flag
 	</sql>
 
 	<sql id="AliasColumns">
-		sr.id,sr.code,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,
-		sr.status,sr.type,sr.url,sr.common,sr.pos,sr.parent_ids,sr.del_flag
+		sr.id,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,
+		sr.status,sr.type,sr.url,sr.common,sr.parent_ids,sr.del_flag
 	</sql>
 	
 	<!-- 修改父节点字符串 -->
@@ -31,7 +31,7 @@
 	
 	<!-- 根据用户id获得持有的资源 -->
 	<select id="findUserResourceByUserId" resultType="com.template.web.sys.model.SysResource">
-		SELECT DISTINCT res.id,res.code,res.pos,res.url,res.type,res.parent_id,
+		SELECT DISTINCT res.id,res.url,res.type,res.parent_id,
 			   res.parent_ids,res.name,res.icon,res.sort
 		FROM sys_resource res 
 			LEFT JOIN sys_role_resource srr ON res.id=srr.resource_id
@@ -42,7 +42,7 @@
 	
 	<!-- 菜单管理分页显示筛选查询 -->
 	<select id="findPageInfo" resultType="com.template.web.sys.model.SysResource">
-		select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,sr.common,sr.pos,
+		select sr.id,sr.description,sr.icon,sr.name,sr.sort,sr.common,
 		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
 		from sys_resource sr
 		left join sys_resource srp

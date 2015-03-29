@@ -59,5 +59,12 @@ public class Constant {
 	public static final Integer SUCCESS = 1;
 	
 	public static final String MSG = "msg";
+	
+	public static final String ERROR_MSG = "errorMsg";
+	
+	public static final String ERROR_MSG_CONTENT = "用户名或者密码错误!!";
+	public static final String USER_LOCKED_MSG = "您已经被冻结,无法进行操作!!";
+	public static final String PASSWORD_VERIFY_ERROR = "密码匹配异常!!";
+	public static final String USER_PASSWORD_VERIFY = "密码验证失败!!";
 
 }

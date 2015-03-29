@@ -121,4 +121,14 @@ public class SysUserService extends ServiceMybatis<SysUser>{
 		return null;
 	}
 	
+	public SysUser login(String username){
+		SysUser sysUser = new SysUser();
+		sysUser.setUsername(username);
+		List<SysUser> users = this.select(sysUser);
+		if(users != null && users.size() == 1 && users.get(0) != null) {
+			return users.get(0);
+		}
+		return null;
+	}
+	
 }

@@ -27,6 +27,7 @@
     <import resource="spring/spring-config-datasource.xml" />
     <import resource="spring/spring-config-tx.xml" />
     <import resource="spring/spring-config-mybatis.xml" />
+    <import resource="spring/spring-config-shiro.xml" />
     <import resource="spring/spring-config-beetl.xml" />
     <import resource="spring/spring-config-cache.xml" />
     <import resource="spring/spring-config-monitor.xml" />

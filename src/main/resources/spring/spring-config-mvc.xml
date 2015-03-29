@@ -8,12 +8,11 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd 
 	    http://www.springframework.org/schema/mvc
-         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop.xsd"
-	default-lazy-init="false">
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- 加载配置 -->
 	<context:property-placeholder  ignore-unresolvable="true" location="classpath:resources.properties"/>
@@ -69,7 +68,7 @@
 	<!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
 	<mvc:default-servlet-handler />
 
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/" />
@@ -80,7 +79,7 @@
 			<mvc:exclude-mapping path="/static/**" />
 			<bean class="com.template.common.interceptor.AuthInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 	
 	<!-- <bean id="exceptionResolver"
 		class="com.template.common.exception.CustomSimpleMappingExceptionResolver">
