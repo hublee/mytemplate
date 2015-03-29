@@ -24,6 +24,12 @@
 	<!-- 启用aop注解 -->
 	<aop:aspectj-autoproxy expose-proxy="true"/>
 	 
-    <import resource="classpath*:spring/**.xml" />
+    <import resource="spring/spring-config-datasource.xml" />
+    <import resource="spring/spring-config-tx.xml" />
+    <import resource="spring/spring-config-mybatis.xml" />
+    <import resource="spring/spring-config-beetl.xml" />
+    <import resource="spring/spring-config-cache.xml" />
+    <import resource="spring/spring-config-monitor.xml" />
+    <import resource="spring/spring-config-task.xml" />
     
 </beans>
