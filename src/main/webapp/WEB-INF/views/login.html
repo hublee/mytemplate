@@ -33,7 +33,7 @@
 		<![endif]-->
 	</head>
 
-	<body class="login-layout">
+	<body class="login-layout blur-login">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -113,20 +113,6 @@
 								</div><!-- /.login-box -->
 							</div><!-- /.position-relative -->
 
-							<div class="navbar-fixed-top align-right">
-								<br />
-								&nbsp;
-								<a id="btn-login-dark" href="#">黑色</a>
-								&nbsp;
-								<span class="blue">/</span>
-								&nbsp;
-								<a id="btn-login-blur" href="#">蓝色</a>
-								&nbsp;
-								<span class="blue">/</span>
-								&nbsp;
-								<a id="btn-login-light" href="#">灰色</a>
-								&nbsp; &nbsp; &nbsp;
-							</div>
 						</div>
 					</div><!-- /.col -->
 				</div><!-- /.row -->
@@ -209,27 +195,6 @@
 					 }
 				});
 				
-				 $('#btn-login-dark').on('click', function(e) {
-					$('body').attr('class', 'login-layout');
-					$('#id-text2').attr('class', 'white');
-					$('#id-company-text').attr('class', 'blue');
-					
-					e.preventDefault();
-				 });
-				 $('#btn-login-light').on('click', function(e) {
-					$('body').attr('class', 'login-layout light-login');
-					$('#id-text2').attr('class', 'grey');
-					$('#id-company-text').attr('class', 'blue');
-					
-					e.preventDefault();
-				 });
-				 $('#btn-login-blur').on('click', function(e) {
-					$('body').attr('class', 'login-layout blur-login');
-					$('#id-text2').attr('class', 'white');
-					$('#id-company-text').attr('class', 'light-blue');
-					
-					e.preventDefault();
-				 });
 			});
 		</script>
 	</body>
