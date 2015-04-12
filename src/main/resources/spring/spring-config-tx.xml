@@ -37,7 +37,7 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config expose-proxy="true" proxy-target-class="true">
-		<aop:pointcut id="pc" expression="execution(* com.template.web..service.*.*(..))" />
+		<aop:pointcut id="pc" expression="execution(* com.gohuinuo.web..service.*.*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
 	</aop:config>
 

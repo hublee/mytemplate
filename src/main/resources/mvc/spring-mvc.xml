@@ -18,6 +18,14 @@
 	<!-- 加载配置 -->
 	<context:property-placeholder  ignore-unresolvable="true" location="classpath:resources.properties"/>
 
+	<!-- 只扫描Controller 注解 -->
+	<context:component-scan base-package="com.gohuinuo.web" use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+            expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
 	<!-- 开启controller层aspect注解支持 -->
 	<aop:aspectj-autoproxy expose-proxy="true"/>
 
@@ -56,14 +64,6 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<!-- 只扫描Controller 注解 -->
-	<context:component-scan base-package="com.template.web" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-		<context:include-filter type="annotation"
-            expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-	</context:component-scan>
-
 	<!--<mvc:view-controller path="/" view-name="redirect:/"/>-->
 
 	<!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
@@ -78,12 +78,12 @@
 			<mvc:exclude-mapping path="/captcha" />
 			<mvc:exclude-mapping path="/ErrorHandler" />
 			<mvc:exclude-mapping path="/static/**" />
-			<bean class="com.template.common.interceptor.AuthInterceptor" />
+			<bean class="com.gohuinuo.common.interceptor.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<!-- <bean id="exceptionResolver"
-		class="com.template.common.exception.CustomSimpleMappingExceptionResolver">
+		class="com.gohuinuo.common.exception.CustomSimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
 				<prop key="java.lang.Exception">error/error.html</prop>

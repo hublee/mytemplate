@@ -18,11 +18,11 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml" />
-		<property name="mapperLocations" value="classpath:com/template/web/**/*.xml" />
+		<property name="mapperLocations" value="classpath:com/gohuinuo/web/**/*.xml" />
 		<property name="plugins">
 			<array>
 				<!-- 转驼峰拦截器 -->
-				<bean class="com.template.common.mybatis.CameHumpInterceptor"/>
+				<bean class="com.gohuinuo.common.mybatis.CameHumpInterceptor"/>
 				<!-- 分页拦截器 -->
 				<bean class="com.github.pagehelper.PageHelper">
 					<property name="properties">
@@ -38,7 +38,7 @@
 
 	<!-- 自动扫描映射器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.template.**.mapper,com.github.abel533.entity.mapper" />
+		<property name="basePackage" value="com.gohuinuo.**.mapper,com.github.abel533.entity.mapper" />
 	</bean>
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"

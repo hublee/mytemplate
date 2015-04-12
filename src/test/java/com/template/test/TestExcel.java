@@ -13,8 +13,8 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.junit.Test;
 
-import com.template.common.excel.template.PoiTemplate;
-import com.template.common.excel.template.utils.PoiUtil;
+import com.gohuinuo.common.excel.template.PoiTemplate;
+import com.gohuinuo.common.excel.template.utils.PoiUtil;
 
 
 /*@RunWith(SpringJUnit4ClassRunner.class)
