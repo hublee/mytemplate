@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-03-26 21:19:53
+Date: 2015-04-12 13:40:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -158,7 +158,7 @@ CREATE TABLE `sys_log` (
   KEY `sys_log_request_uri` (`request_uri`),
   KEY `sys_log_type` (`type`),
   KEY `sys_log_create_date` (`create_date`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='日志表';
 
 -- ----------------------------
 -- Records of sys_log
@@ -168,6 +168,7 @@ INSERT INTO `sys_log` VALUES ('21', '2', '2,超级管理员', '2015-03-01 14:24:
 INSERT INTO `sys_log` VALUES ('22', '2', '2,超级管理员', '2015-03-01 14:25:53', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36', '/mytemplate/test/area/save', 'POST', '[参数1，类型:SysArea，值:{\"updateBy\":\"2,超级管理员\",\"id\":1,\"parentId\":0,\"icon\":\"fa fa-institution\",\"parentIds\":\"0,\",\"oldParentIds\":\"0,\",\"name\":\"中国\",\"remarks\":\"\",\"code\":\"100000\",\"type\":\"1\",\"updateDate\":1425191153080}]', 'java.lang.ArithmeticException: / by zero', null);
 INSERT INTO `sys_log` VALUES ('23', '2', '2,超级管理员', '2015-03-01 14:30:23', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36', '/mytemplate/test/area/save', 'POST', '[参数1，类型:SysArea，值:{\"updateBy\":\"2,超级管理员\",\"id\":1,\"parentId\":0,\"icon\":\"fa fa-institution\",\"parentIds\":\"0,\",\"oldParentIds\":\"0,\",\"name\":\"中国\",\"remarks\":\"\",\"code\":\"100000\",\"type\":\"1\",\"updateDate\":1425191423732}]', 'java.lang.ArithmeticException: / by zero', null);
 INSERT INTO `sys_log` VALUES ('24', '2', '2,超级管理员', '2015-03-01 14:39:04', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36', '/mytemplate/test/area/save', 'POST', '[参数1，类型:SysArea，值:{\"updateBy\":\"2,超级管理员\",\"id\":1,\"parentId\":0,\"icon\":\"fa fa-institution\",\"parentIds\":\"0,\",\"oldParentIds\":\"0,\",\"name\":\"中国\",\"remarks\":\"\",\"code\":\"100000\",\"type\":\"1\",\"updateDate\":1425191923185}]', 'java.lang.ArithmeticException: / by zero', null);
+INSERT INTO `sys_log` VALUES ('25', '2', '2,超级管理员', '2015-03-29 17:18:50', '0:0:0:0:0:0:0:1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36', '/mytemplate/menu/list', 'POST', '[参数1，类型:LinkedHashMap，值:{name=, id=, pageNum=1, pageSize=10, _ORIGINAL_PARAMETER_OBJECT=(this Map), First_PageHelper=0, Second_PageHelper=10}]', 'org.springframework.jdbc.BadSqlGrammarException: \r\n### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'sr.code\' in \'field list\'\r\n### The error may exist in file [E:\\develop_software\\Tomcat\\apache-tomcat-8.0.20\\webapps\\mytemplate\\WEB-INF\\classes\\com\\template\\web\\sys\\mapper\\SysResourceMapper.xml]\r\n### The error may involve defaultParameterMap\r\n### The error occurred while setting parameters\r\n### SQL: select sr.id,sr.code,sr.description,sr.icon,sr.name,sr.sort,sr.common,sr.pos,   sr.status,sr.type,sr.url,srp.name pname,srp.id pid   from sys_resource sr   left join sys_resource srp   ON sr.parent_id=srp.id        ORDER BY sr.update_date desc limit ?,?\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'sr.code\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'sr.code\' in \'field list\'', null);
 
 -- ----------------------------
 -- Table structure for sys_office
@@ -256,9 +257,7 @@ DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `sys_resource` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '资源名称',
-  `pos` bigint(20) DEFAULT NULL COMMENT '权限位,相当于对权限分组,从0开始',
   `common` char(1) DEFAULT '0' COMMENT '是否是公共资源(0.不是 1.是)',
-  `code` bigint(20) DEFAULT NULL COMMENT '权限码 1<<n',
   `icon` varchar(64) DEFAULT NULL COMMENT '图标',
   `sort` int(11) DEFAULT '1' COMMENT '排序号',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父级id',
@@ -272,33 +271,34 @@ CREATE TABLE `sys_resource` (
   `create_by` varchar(64) DEFAULT NULL,
   `update_by` varchar(64) DEFAULT NULL,
   `del_flag` char(1) DEFAULT '0',
+  `permission_str` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_resource
 -- ----------------------------
-INSERT INTO `sys_resource` VALUES ('1', '菜单配置', '0', '0', '1', 'fa fa-list', '1', '188', '0', 'menu', '', '0', '0,188,', null, '2015-03-11 23:12:27', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('181', '区域管理', '0', '0', '128', 'fa fa-globe', '1', '189', '0', 'area', '', '0', '0,189,', null, null, null, null, '0');
-INSERT INTO `sys_resource` VALUES ('188', '系统管理', '0', '0', '16384', 'fa fa-cogs', '1', '0', '0', '', '', '0', '0,', null, '2015-03-12 23:57:18', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('189', '机构用户', '0', '0', '32768', 'fa fa-group', '2', '0', '0', '', '', '0', '0,', null, '2015-01-18 11:00:57', null, null, '0');
-INSERT INTO `sys_resource` VALUES ('190', '字典管理', '0', '0', '65536', 'fa fa-calculator', '1', '188', '0', 'dict', '', '0', '0,188,', null, '2015-03-11 23:12:41', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('192', '机构管理', '0', '0', '131072', 'fa fa-sitemap', '1', '189', '0', 'office', '', '0', '0,189,', null, '2015-03-11 23:08:59', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('193', '用户管理', '0', '0', '262144', 'fa fa-user', '1', '189', '0', 'sysuser', '', '0', '0,189,', null, '2015-03-11 23:07:11', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('194', '角色管理', '0', '0', '524288', 'fa fa-graduation-cap', '2', '189', '0', 'role', '', '0', '0,189,', null, null, null, null, '0');
-INSERT INTO `sys_resource` VALUES ('195', '日志查询', '0', '0', '1048576', 'fa fa-copy', '1', '188', '0', 'syslog', '', '0', '0,188,', null, null, null, null, '0');
-INSERT INTO `sys_resource` VALUES ('200', '测试', '0', '0', '16777216', '', '7', '0', '0', 'test', '', '0', '0,', null, '2015-03-14 20:04:08', null, '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('203', '搜索按钮', '0', '0', '134217728', 'fa fa-angellist', '1', '181', '1', 'sys:area:find', '这是一个按钮级别的示例，页面为添加，请添加@if(auth.hasPermission(\"sys:area:find\")){}测试', '0', '0,189,181,', '2015-01-20 20:50:16', '2015-01-20 20:57:38', '22', '22', '0');
-INSERT INTO `sys_resource` VALUES ('204', '系统监控', null, '0', null, 'fa fa-binoculars', '6', '0', '0', '', '', '0', '0,', '2015-03-03 20:11:10', '2015-03-11 23:12:56', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('205', 'Ehcache监控', null, '0', null, 'fa fa-crosshairs', '1', '204', '0', 'monitor/ehcache', '', '0', '0,204,', '2015-03-03 20:11:19', '2015-03-11 23:15:52', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('206', 'jvm监控', null, '0', null, 'fa fa-flash', '1', '204', '0', 'monitor/jvm', '', '0', '0,204,', '2015-03-08 11:17:00', '2015-03-11 23:20:19', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('207', '执行sql', null, '0', null, 'fa fa-ge', '1', '204', '0', 'monitor/db/sql', '', '0', '0,204,', '2015-03-09 21:07:49', '2015-03-11 23:18:39', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('208', '数据库监控', null, '0', null, 'fa fa-github-alt', '1', '204', '0', 'monitor/db/druid', '', '0', '0,204,', '2015-03-10 21:11:20', '2015-03-11 23:19:56', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('209', '个人中心', null, '0', null, 'fa fa-user', '1', '0', '0', '', '', '0', '0,', '2015-03-12 19:58:59', '2015-03-14 19:39:10', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('210', '我的资料', null, '0', null, 'fa fa-file-o', '1', '209', '0', 'userCenter', '', '0', '0,209,', '2015-03-12 19:59:40', '2015-03-18 22:03:58', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('211', '聊天室', null, '0', null, '', '1', '209', '0', 'userCenter/conversation', '', '0', '0,209,', '2015-03-25 13:27:57', '2015-03-25 13:34:14', '2,超级管理员', '2,超级管理员', '0');
-INSERT INTO `sys_resource` VALUES ('212', 'CMS示例', null, '0', null, 'fa fa-copyright', '1', '0', '0', '', '', '0', '0,', '2015-03-25 16:15:31', '2015-03-25 16:15:31', '2,超级管理员', null, '0');
-INSERT INTO `sys_resource` VALUES ('213', '文章列表', null, '0', null, '', '1', '212', '0', 'cms/article', '', '0', '0,212,', '2015-03-25 16:16:10', '2015-03-25 16:40:14', '2,超级管理员', '2,超级管理员', '0');
+INSERT INTO `sys_resource` VALUES ('1', '菜单配置', '0', 'fa fa-list', '1', '188', '0', 'menu', '', '0', '0,188,', null, '2015-03-11 23:12:27', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('181', '区域管理', '0', 'fa fa-globe', '1', '189', '0', 'area', '', '0', '0,189,', null, null, null, null, '0', null);
+INSERT INTO `sys_resource` VALUES ('188', '系统管理', '0', 'fa fa-cogs', '1', '0', '0', '', '', '0', '0,', null, '2015-03-12 23:57:18', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('189', '机构用户', '0', 'fa fa-group', '2', '0', '0', '', '', '0', '0,', null, '2015-01-18 11:00:57', null, null, '0', null);
+INSERT INTO `sys_resource` VALUES ('190', '字典管理', '0', 'fa fa-calculator', '1', '188', '0', 'dict', '', '0', '0,188,', null, '2015-03-11 23:12:41', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('192', '机构管理', '0', 'fa fa-sitemap', '1', '189', '0', 'office', '', '0', '0,189,', null, '2015-03-11 23:08:59', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('193', '用户管理', '0', 'fa fa-user', '1', '189', '0', 'sysuser', '', '0', '0,189,', null, '2015-03-11 23:07:11', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('194', '角色管理', '0', 'fa fa-graduation-cap', '2', '189', '0', 'role', '', '0', '0,189,', null, null, null, null, '0', null);
+INSERT INTO `sys_resource` VALUES ('195', '日志查询', '0', 'fa fa-copy', '1', '188', '0', 'syslog', '', '0', '0,188,', null, null, null, null, '0', null);
+INSERT INTO `sys_resource` VALUES ('200', '测试', '0', '', '7', '0', '0', 'test', '', '0', '0,', null, '2015-03-14 20:04:08', null, '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('203', '搜索按钮', '0', 'fa fa-angellist', '1', '181', '1', 'sys:area:find', '这是一个按钮级别的示例，页面为添加，请添加@if(auth.hasPermission(\"sys:area:find\")){}测试', '0', '0,189,181,', '2015-01-20 20:50:16', '2015-01-20 20:57:38', '22', '22', '0', null);
+INSERT INTO `sys_resource` VALUES ('204', '系统监控', '0', 'fa fa-binoculars', '6', '0', '0', '', '', '0', '0,', '2015-03-03 20:11:10', '2015-03-11 23:12:56', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('205', 'Ehcache监控', '0', 'fa fa-crosshairs', '1', '204', '0', 'monitor/ehcache', '', '0', '0,204,', '2015-03-03 20:11:19', '2015-03-11 23:15:52', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('206', 'jvm监控', '0', 'fa fa-flash', '1', '204', '0', 'monitor/jvm', '', '0', '0,204,', '2015-03-08 11:17:00', '2015-03-11 23:20:19', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('207', '执行sql', '0', 'fa fa-ge', '1', '204', '0', 'monitor/db/sql', '', '0', '0,204,', '2015-03-09 21:07:49', '2015-03-11 23:18:39', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('208', '数据库监控', '0', 'fa fa-github-alt', '1', '204', '0', 'monitor/db/druid', '', '0', '0,204,', '2015-03-10 21:11:20', '2015-03-11 23:19:56', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('209', '个人中心', '0', 'fa fa-user', '1', '0', '0', '', '', '0', '0,', '2015-03-12 19:58:59', '2015-03-14 19:39:10', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('210', '我的资料', '0', 'fa fa-file-o', '1', '209', '0', 'userCenter', '', '0', '0,209,', '2015-03-12 19:59:40', '2015-03-18 22:03:58', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('211', '聊天室', '0', '', '1', '209', '0', 'userCenter/conversation', '', '0', '0,209,', '2015-03-25 13:27:57', '2015-03-25 13:34:14', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('212', 'CMS示例', '0', 'fa fa-copyright', '1', '0', '0', '', '', '0', '0,', '2015-03-25 16:15:31', '2015-03-25 16:15:31', '2,超级管理员', null, '0', null);
+INSERT INTO `sys_resource` VALUES ('213', '文章列表', '0', '', '1', '212', '0', 'cms/article', '', '0', '0,212,', '2015-03-25 16:16:10', '2015-03-25 16:40:14', '2,超级管理员', '2,超级管理员', '0', null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -425,6 +425,7 @@ CREATE TABLE `sys_user` (
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  `status` char(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `sys_user_office_id` (`office_id`),
   KEY `sys_user_login_name` (`username`),
@@ -436,11 +437,11 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '86f3059b228c8acf99e69734b6bb32cc', '0002', '超级管理员', 'thinkgem@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-03-26 21:16:02', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-03-26 21:16:02', '管理员', '0');
-INSERT INTO `sys_user` VALUES ('22', '1', '1', 'ceshi1', 'd851ea96c7f9d003938f562957be5f60', '', '测试1', '', '', '', '0', '0:0:0:0:0:0:0:1', '2015-03-18 22:00:31', null, '2015-01-17 19:14:05', '22,测试1', '2015-03-18 22:00:31', '', '0');
-INSERT INTO `sys_user` VALUES ('23', '1', '6', 'ceshi3', '053d1c300518bcefb75352d022f45d00', '', '韩流', '', '', '', '0', null, null, '22', '2015-01-25 12:13:04', null, '2015-01-25 12:13:04', '', '0');
-INSERT INTO `sys_user` VALUES ('24', '1', '27', 'ceshi4', '7f8c872d354b49473259f0900113eec5', '', '王五误', '', '', '', '0', null, null, '22', '2015-01-25 13:30:35', null, '2015-01-25 13:30:35', '', '0');
-INSERT INTO `sys_user` VALUES ('25', '1', '2', 'ceshi5', 'd3c884a0dbee705ecd52ce0811fa80d7', '', '测试mapper', '', '', '', '0', null, null, '22', '2015-01-25 21:38:37', null, '2015-01-25 21:38:37', '', '0');
+INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '49a5a1fc22b9f41952fb9901ba5ab42b6c85ceee8ddc35df:a1e19ec86a071c309bc582ce20f7dad688b235c6a0dd1d5b', '0002', '超级管理员', 'thinkgem@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-03-29 17:05:58', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-03-29 17:05:58', '管理员', '0', '0');
+INSERT INTO `sys_user` VALUES ('22', '1', '1', 'ceshi1', 'd851ea96c7f9d003938f562957be5f60', '', '测试1', '', '', '', '0', '0:0:0:0:0:0:0:1', '2015-03-18 22:00:31', null, '2015-01-17 19:14:05', '22,测试1', '2015-03-18 22:00:31', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('23', '1', '6', 'ceshi3', '053d1c300518bcefb75352d022f45d00', '', '韩流', '', '', '', '0', null, null, '22', '2015-01-25 12:13:04', null, '2015-01-25 12:13:04', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('24', '1', '27', 'ceshi4', '7f8c872d354b49473259f0900113eec5', '', '王五误', '', '', '', '0', null, null, '22', '2015-01-25 13:30:35', null, '2015-01-25 13:30:35', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('25', '1', '2', 'ceshi5', 'd3c884a0dbee705ecd52ce0811fa80d7', '', '测试mapper', '', '', '', '0', null, null, '22', '2015-01-25 21:38:37', null, '2015-01-25 21:38:37', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
