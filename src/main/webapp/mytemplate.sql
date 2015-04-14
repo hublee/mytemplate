@@ -10,10 +10,30 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-04-12 13:40:29
+Date: 2015-04-14 22:36:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for maintain_task_definition
+-- ----------------------------
+DROP TABLE IF EXISTS `maintain_task_definition`;
+CREATE TABLE `maintain_task_definition` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) DEFAULT NULL,
+  `cron` varchar(200) DEFAULT NULL,
+  `bean_class` varchar(200) DEFAULT NULL,
+  `bean_name` varchar(200) DEFAULT NULL,
+  `method_name` varchar(200) DEFAULT NULL,
+  `is_start` tinyint(1) DEFAULT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of maintain_task_definition
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_area
@@ -273,7 +293,7 @@ CREATE TABLE `sys_resource` (
   `del_flag` char(1) DEFAULT '0',
   `permission_str` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_resource
@@ -299,6 +319,9 @@ INSERT INTO `sys_resource` VALUES ('210', '我的资料', '0', 'fa fa-file-o', '
 INSERT INTO `sys_resource` VALUES ('211', '聊天室', '0', '', '1', '209', '0', 'userCenter/conversation', '', '0', '0,209,', '2015-03-25 13:27:57', '2015-03-25 13:34:14', '2,超级管理员', '2,超级管理员', '0', null);
 INSERT INTO `sys_resource` VALUES ('212', 'CMS示例', '0', 'fa fa-copyright', '1', '0', '0', '', '', '0', '0,', '2015-03-25 16:15:31', '2015-03-25 16:15:31', '2,超级管理员', null, '0', null);
 INSERT INTO `sys_resource` VALUES ('213', '文章列表', '0', '', '1', '212', '0', 'cms/article', '', '0', '0,212,', '2015-03-25 16:16:10', '2015-03-25 16:40:14', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('215', 'sadasd', '0', 'fa fa-area-chart', '1', '200', '0', '', '', '0', '0,200,', '2015-04-12 14:44:54', '2015-04-12 14:45:26', '2,超级管理员', '2,超级管理员', '0', null);
+INSERT INTO `sys_resource` VALUES ('216', 'asdasd', '0', '', '1', '215', '0', '', '', '0', '0,200,215,', '2015-04-12 14:45:01', '2015-04-12 14:45:01', '2,超级管理员', null, '0', null);
+INSERT INTO `sys_resource` VALUES ('217', '1212', '0', '', '1', '216', '0', '', '', '0', '0,200,215,216,', '2015-04-12 14:45:12', '2015-04-12 14:45:12', '2,超级管理员', null, '0', null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -428,16 +451,16 @@ CREATE TABLE `sys_user` (
   `status` char(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `sys_user_office_id` (`office_id`),
-  KEY `sys_user_login_name` (`username`),
   KEY `sys_user_company_id` (`company_id`),
   KEY `sys_user_update_date` (`update_date`),
-  KEY `sys_user_del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='用户表';
+  KEY `sys_user_del_flag` (`del_flag`),
+  KEY `sys_user_login_name` (`username`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '49a5a1fc22b9f41952fb9901ba5ab42b6c85ceee8ddc35df:a1e19ec86a071c309bc582ce20f7dad688b235c6a0dd1d5b', '0002', '超级管理员', 'thinkgem@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-03-29 17:05:58', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-03-29 17:05:58', '管理员', '0', '0');
+INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '86f3059b228c8acf99e69734b6bb32cc', '0002', '超级管理员', 'thinkgem@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-04-12 15:09:09', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-04-12 15:09:09', '管理员', '0', '0');
 INSERT INTO `sys_user` VALUES ('22', '1', '1', 'ceshi1', 'd851ea96c7f9d003938f562957be5f60', '', '测试1', '', '', '', '0', '0:0:0:0:0:0:0:1', '2015-03-18 22:00:31', null, '2015-01-17 19:14:05', '22,测试1', '2015-03-18 22:00:31', '', '0', '0');
 INSERT INTO `sys_user` VALUES ('23', '1', '6', 'ceshi3', '053d1c300518bcefb75352d022f45d00', '', '韩流', '', '', '', '0', null, null, '22', '2015-01-25 12:13:04', null, '2015-01-25 12:13:04', '', '0', '0');
 INSERT INTO `sys_user` VALUES ('24', '1', '27', 'ceshi4', '7f8c872d354b49473259f0900113eec5', '', '王五误', '', '', '', '0', null, null, '22', '2015-01-25 13:30:35', null, '2015-01-25 13:30:35', '', '0', '0');
