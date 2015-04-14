@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.MethodInvoker;
 
@@ -81,6 +82,7 @@ public class MaintainTaskDefinitionService extends
         startTask(false, taskDefinitionIds);
     }
     
+    @Transactional(readOnly=false)
     private synchronized void startTask(boolean forceStart,
 			Long... taskDefinitionIds) {
 		for (Long taskDefinitionId : taskDefinitionIds) {
@@ -132,6 +134,7 @@ public class MaintainTaskDefinitionService extends
 		};
 	}
     
+	@Transactional(readOnly=false)
     public synchronized void stopTask(boolean forceTermination, Long... taskDefinitionIds) {
         for(Long taskDefinitionId : taskDefinitionIds) {
         	MaintainTaskDefinition td = this.selectByPrimaryKey(taskDefinitionId);

@@ -10,6 +10,7 @@ import com.gohuinuo.common.mybatis.mapper.BaseMapper;
 import com.gohuinuo.common.spring.utils.SpringContextHolder;
 import com.gohuinuo.common.utils.Collections3;
 import com.gohuinuo.common.utils.StringConvert;
+import com.gohuinuo.web.sys.model.SysUser;
 import com.gohuinuo.web.sys.utils.SysUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -125,8 +126,11 @@ public abstract class ServiceMybatis<T extends BaseEntity> implements BaseServic
 	 * @param <T extend T>
 	 */
 	public int updateByPrimaryKey(T record) {
-		record.set("updateBy",SysUserUtils.getCacheLoginUser().getId()+","+
-				SysUserUtils.getCacheLoginUser().getName());
+		SysUser sysUser = SysUserUtils.getCacheLoginUser();
+		if(sysUser != null){
+			record.set("updateBy",sysUser.getId()+","+
+					SysUserUtils.getCacheLoginUser().getName());
+		}
 		record.set("updateDate", new Date());
 		return mapper.updateByPrimaryKey(record);
 	}

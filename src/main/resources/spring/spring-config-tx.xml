@@ -13,6 +13,8 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="false">
+	
+	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
 
 	<!-- 声明式事务管理 -->
 	<bean id="transactionManager"
