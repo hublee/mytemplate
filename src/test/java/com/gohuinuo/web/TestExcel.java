@@ -1,4 +1,4 @@
-package com.template.test;
+package com.gohuinuo.web;
 
 import java.io.File;
 import java.io.FileNotFoundException;
