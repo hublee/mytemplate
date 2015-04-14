@@ -15,6 +15,7 @@ import org.springframework.web.context.ServletContextAware;
 
 import com.gohuinuo.common.beetl.utils.BeetlUtils;
 import com.gohuinuo.common.constant.Constant;
+import com.gohuinuo.web.maintain.dynamictask.service.MaintainTaskDefinitionService;
 import com.gohuinuo.web.sys.model.SysResource;
 import com.gohuinuo.web.sys.service.SysResourceService;
 
@@ -28,6 +29,9 @@ public class ApplicationContextInitListener implements
 
 	@Resource
 	private SysResourceService sysResourceService;
+	
+	@Resource
+	private MaintainTaskDefinitionService maintainTaskDefinitionService;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -55,6 +59,9 @@ public class ApplicationContextInitListener implements
 			//读取全部资源
 			LinkedHashMap<String, SysResource> AllResourceMap = sysResourceService.getAllResourcesMap();
 			BeetlUtils.addBeetlSharedVars(Constant.CACHE_ALL_RESOURCE,AllResourceMap);
+			
+			//初始化任务调度
+			maintainTaskDefinitionService.initTask();
 			
 			logger.info("根路径:"+ctxPath);
 			
