@@ -14,8 +14,6 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="false">
 	
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
-
 	<!-- 声明式事务管理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -35,12 +33,14 @@
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
 			<tx:method name="remove*" propagation="REQUIRED" read-only="false"
 				isolation="READ_COMMITTED" rollback-for="java.lang.Exception" />
-			<tx:method name="*" read-only="true" rollback-for="java.lang.Exception" />
+			<!-- <tx:method name="*" read-only="true" rollback-for="java.lang.Exception" /> -->
 		</tx:attributes>
 	</tx:advice>
 	<aop:config expose-proxy="true" proxy-target-class="true">
 		<aop:pointcut id="pc" expression="execution(* com.gohuinuo.web..service.*.*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
 	</aop:config>
+	
+	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
 
 </beans>
