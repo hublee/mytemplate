@@ -1,19 +1,38 @@
+<script src="${ctxPath!}/static/js/jquery.bootstrap-duallistbox.min.js"></script>
 
-<!-- <iframe src="${ctxPath}/cms/article" width="100%" height="100%" frameborder="0"></iframe> -->
+<form action="${ctxPath!}/duallist" method="post">
+<div class="form-group">
+	<label class="col-sm-3 control-label no-padding-top" for="duallist">
+		Dual listbox </label>
 
+	<div class="col-sm-8">
+		<!-- #section:plugins/input.duallist -->
+		<select multiple="multiple"  name="duallist"
+			id="duallist">
+			<option value="option1">Option 1</option>
+			<option value="option2">Option 2</option>
+			<option value="option3" selected="selected">Option 3</option>
+			<option value="option4">Option 4</option>
+			<option value="option5">Option 5</option>
+			<option value="option6" selected="selected">Option 6</option>
+			<option value="option7">Option 7</option>
+			<option value="option8">Option 8</option>
+			<option value="option9">Option 9</option>
+			<option value="option0">Option 10</option>
+		</select>
 
-<a href="javascript:;" id="icon-icon-btn">ueditor test</a>
-
+		<!-- /section:plugins/input.duallist -->
+		<div class="hr hr-16 hr-dotted"></div>
+	</div>
+</div>
+<input type="submit" value="提交"/>
+</form>
 <script>
-$(function(){
-	$("#icon-icon-btn").click(function(){
-		$.layer({
-		    type: 2,
-		    title: '请单击选择图标',
-		    maxmin: true,
-		    iframe: {src : ctxPath+'/cms/article'},
-		    area: ['1000px' , '600px']
-		}); 
+	var demo2 = $('#duallist').bootstrapDualListbox({
+		nonSelectedListLabel : 'Non-selected',
+		selectedListLabel : 'Selected',
+		preserveSelectionOnMove : 'moved',
+		moveOnSelect : false,
+		nonSelectedFilter : 'ion ([7-9]|[1][0-2])'
 	});
-});
 </script>
