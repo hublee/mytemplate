@@ -1,13 +1,11 @@
 <script src="${ctxPath!}/static/js/jquery.bootstrap-duallistbox.min.js"></script>
 
+<div class="bootstrap-duallistbox-container row moveonselect">
 <form action="${ctxPath!}/duallist" method="post">
 <div class="form-group">
-	<label class="col-sm-3 control-label no-padding-top" for="duallist">
-		Dual listbox </label>
-
 	<div class="col-sm-8">
 		<!-- #section:plugins/input.duallist -->
-		<select multiple="multiple"  name="duallist"
+		<select multiple="multiple" size="10"  name="duallist"
 			id="duallist">
 			<option value="option1">Option 1</option>
 			<option value="option2">Option 2</option>
@@ -27,12 +25,22 @@
 </div>
 <input type="submit" value="提交"/>
 </form>
+</div>
+
 <script>
-	var demo2 = $('#duallist').bootstrapDualListbox({
-		nonSelectedListLabel : 'Non-selected',
-		selectedListLabel : 'Selected',
+	var demo1 = $('#duallist').bootstrapDualListbox({
+		infoTextFiltered: '<span class="label label-purple label-lg">查找出{0}条 /共{1}条</span>',
+		infoTextEmpty:false,
+		infoText:'<span class="label label-purple label-lg">共{0}条数据</span>',
+		filterPlaceHolder:"查找",
+		filterTextClear:"显示全部",
+		moveAllLabel:"移动全部",
+		removeAllLabel:"删除全部",
+		moveSelectedLabel:"移动所选",
+		removeSelectedLabel:"删除所选",
 		preserveSelectionOnMove : 'moved',
 		moveOnSelect : false,
-		nonSelectedFilter : 'ion ([7-9]|[1][0-2])'
 	});
+	var container1 = demo1.bootstrapDualListbox('getContainer');
+	container1.find('.btn').addClass('btn-white btn-info btn-bold');
 </script>
