@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-04-14 22:51:52
+Date: 2015-04-18 22:07:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,11 +29,12 @@ CREATE TABLE `maintain_task_definition` (
   `is_start` tinyint(1) DEFAULT NULL,
   `description` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of maintain_task_definition
 -- ----------------------------
+INSERT INTO `maintain_task_definition` VALUES ('1', '测试1', '0/10 * * * * ? ', 'com.gohuinuo.web.maintain.dynamictask.task.TestTask1', 'testTask1', 'run', '0', null);
 
 -- ----------------------------
 -- Table structure for sys_area
@@ -293,7 +294,7 @@ CREATE TABLE `sys_resource` (
   `del_flag` char(1) DEFAULT '0',
   `permission_str` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_resource
@@ -452,16 +453,16 @@ CREATE TABLE `sys_user` (
   KEY `sys_user_update_date` (`update_date`),
   KEY `sys_user_del_flag` (`del_flag`),
   KEY `sys_user_login_name` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '86f3059b228c8acf99e69734b6bb32cc', '0002', '超级管理员', '@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-04-14 22:45:49', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-04-14 22:45:49', '管理员', '0', '0');
-INSERT INTO `sys_user` VALUES ('22', '1', '1', 'ceshi1', 'd851ea96c7f9d003938f562957be5f60', '', '测试1', '', '', '', '0', '0:0:0:0:0:0:0:1', '2015-03-18 22:00:31', null, '2015-01-17 19:14:05', '22,测试1', '2015-03-18 22:00:31', '', '0', '0');
-INSERT INTO `sys_user` VALUES ('23', '1', '6', 'ceshi3', '053d1c300518bcefb75352d022f45d00', '', '韩流', '', '', '', '0', null, null, '22', '2015-01-25 12:13:04', null, '2015-01-25 12:13:04', '', '0', '0');
-INSERT INTO `sys_user` VALUES ('24', '1', '27', 'ceshi4', '7f8c872d354b49473259f0900113eec5', '', '王五误', '', '', '', '0', null, null, '22', '2015-01-25 13:30:35', null, '2015-01-25 13:30:35', '', '0', '0');
-INSERT INTO `sys_user` VALUES ('25', '1', '2', 'ceshi5', 'd3c884a0dbee705ecd52ce0811fa80d7', '', '测试mapper', '', '', '', '0', null, null, '22', '2015-01-25 21:38:37', null, '2015-01-25 21:38:37', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '86f3059b228c8acf99e69734b6bb32cc', '0002', '超级管理员', '@163.com', '8675', '8675', '1', '0:0:0:0:0:0:0:1', '2015-04-16 21:32:54', '1', '2013-05-27 08:00:00', '2,超级管理员', '2015-04-16 21:32:54', '管理员', '0', '0');
+INSERT INTO `sys_user` VALUES ('22', '1', '1', 'ceshi1', 'd851ea96c7f9d003938f562957be5f60', '', '测试1', '', '2333', '', '0', '0:0:0:0:0:0:0:1', '2015-03-18 22:00:31', null, '2015-01-17 19:14:05', '22,测试1', '2015-03-18 22:00:31', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('23', '1', '6', 'ceshi3', '053d1c300518bcefb75352d022f45d00', '', '韩流', '', '3333', '', '0', null, null, '22', '2015-01-25 12:13:04', null, '2015-01-25 12:13:04', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('24', '1', '27', 'ceshi4', '7f8c872d354b49473259f0900113eec5', '', '王五误', '', '444', '', '0', null, null, '22', '2015-01-25 13:30:35', null, '2015-01-25 13:30:35', '', '0', '0');
+INSERT INTO `sys_user` VALUES ('25', '1', '2', 'ceshi5', 'd3c884a0dbee705ecd52ce0811fa80d7', '', '测试mapper', '', '555', '', '0', null, null, '22', '2015-01-25 21:38:37', null, '2015-01-25 21:38:37', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role
