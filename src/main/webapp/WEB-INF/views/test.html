@@ -44,3 +44,30 @@
 	var container1 = demo1.bootstrapDualListbox('getContainer');
 	container1.find('.btn').addClass('btn-white btn-info btn-bold');
 </script>
+
+<form method="post" class="form-search" id="search-form" target="list-page"
+				action="${ctxPath}/area/list">
+	<div class="input-group" style="line-height: 0px;">
+		<span class="input-group-btn">
+			<span class=" btn btn-success btn-sm"
+				id="search-all-btn">
+				 显示全部 
+			</span> 
+		</span>
+		<input type="text" class="form-control search-query"
+			name="name" placeholder="区域名称" id="search-input">
+			<span class="input-group-btn">
+			<span class="btn  btn-success btn-sm"
+				id="search-btn">
+				搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+			</span>
+		</span>
+	</div>
+	<input type="hidden" name="id" />
+</form>
+<div class="widget-toolbar">
+	<span class="btn btn-purple btn-xs" 
+	onclick="Angel.downloadFile('search-form','${ctxPath}/test/export')">
+	<i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+	导出Excel</span>
+</div>
