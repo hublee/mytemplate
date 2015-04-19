@@ -3,6 +3,7 @@
 package com.gohuinuo.web.sys.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.gohuinuo.common.base.BaseEntity;
 
@@ -75,7 +76,7 @@ public class SysOffice extends BaseEntity {
     
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
-
+    
 	public String getAddress() {
 		return this.getString("address");
     }

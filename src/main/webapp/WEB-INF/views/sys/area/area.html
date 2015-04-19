@@ -16,14 +16,17 @@
 							 显示全部 
 						</span> 
 					</span>
+					
 					<input type="text" class="form-control search-query"
 						name="name" placeholder="区域名称" id="search-input">
-						<span class="input-group-btn">
+					@if(auth.hasPermission("sys:area:find")){
+					<span class="input-group-btn">
 						<span class="btn  btn-success btn-sm"
 							id="search-btn">
 							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
 						</span>
 					</span>
+					@}
 				</div>
 				<input type="hidden" name="id" />
 			</form>
