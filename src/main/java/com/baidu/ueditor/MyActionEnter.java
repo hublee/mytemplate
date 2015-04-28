@@ -14,7 +14,6 @@ import com.baidu.ueditor.hunter.ImageHunter;
 import com.baidu.ueditor.upload.Uploader;
 /**
  * 基于百度ueditor修改。
- * @author Sunxiupeng on 2015年3月14日
  */
 public class MyActionEnter {
 
