@@ -16,8 +16,6 @@ import com.baidu.ueditor.define.ActionMap;
 /**
  * 配置管理器
  * 
- * @author 孙修鹏
- *
  */
 public final class MyConfigManager {
 
