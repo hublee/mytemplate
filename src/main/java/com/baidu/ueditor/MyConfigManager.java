@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baidu.ueditor.define.ActionMap;
 
 /**
- * 配置管理器
+ * 配置管理器 
  * 
  */
 public final class MyConfigManager {
