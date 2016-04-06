@@ -15,6 +15,8 @@ Date: 2015-04-18 22:07:06
 
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE DATABASE mytemplate;
+USE mytemplate;
 -- ----------------------------
 -- Table structure for maintain_task_definition
 -- ----------------------------
