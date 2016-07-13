@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.gohuinuo.web.sys.model.SysResource;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -198,6 +199,20 @@ public class Collections3 {
 		}
 		
 		return res;
+	}
+
+	public static void main(String[] args){
+
+		List<SysResource> resources = new ArrayList<>();
+		SysResource resource = new SysResource();
+		resource.setName("测试菜单");
+		resource.put("aa","bbb");
+		resources.add(resource);
+
+
+		List<SysResource> copyList = copyTo(resources,SysResource.class);
+		System.out.println(copyList.get(0).getName());
+
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class MenuController extends BaseController {
 	 * @return 菜单管理模块html
 	 */
 	@RequestMapping
-	public String toMenu(Model model) {
+	public String toMenu(Model model,HttpServletRequest request) {
+		System.out.println(request.getRequestURL());
 		model.addAttribute("treeList", JSON.toJSONString(sysResourceService.getMenuTree()));
 		return "sys/menu/menu";
 	}

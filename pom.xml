@@ -332,7 +332,7 @@
 					</systemProperties>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>93</port>
+							<port>94</port>
 						</connector>
 					</connectors>
 					<webAppConfig>

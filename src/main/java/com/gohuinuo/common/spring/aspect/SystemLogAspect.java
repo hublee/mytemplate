@@ -22,9 +22,9 @@ import com.gohuinuo.web.sys.model.SysLog;
 import com.gohuinuo.web.sys.service.SysLogService;
 import com.gohuinuo.web.sys.utils.SysUserUtils;
 
-@Aspect
-@Component
-@Order(0)
+//@Aspect
+//@Component
+//@Order(0)
 public class SystemLogAspect {
 
 	@Resource

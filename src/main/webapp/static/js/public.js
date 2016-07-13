@@ -39,6 +39,7 @@ $(function(){
 	//menu点击
 	aMenu.on("click",function(){
 		var hash = webHistory.get(),href = $(this).attr("href");
+		console.log("hash: " + hash);
 		if( ("#"+hash) == href ){
 			webHistory.justShow("#");
 			webHistory.go(hash);
@@ -85,6 +86,7 @@ $(function(){
 	
 	var $main_content = $("#fill-main-content");
 	webHistory.add("ajax", function(str, action, token) {
+
 	   $main_content.html(loadHtmlPage(str));
 	   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
 	   changeMenu(curMenu);
@@ -94,6 +96,7 @@ $(function(){
 });
 
 function loadHtmlPage(path) {
+	console.log("path: " + path);
     path = ctxPath + "/" + path;
     var result;
     $.ajax({

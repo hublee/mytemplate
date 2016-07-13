@@ -49,9 +49,10 @@ public class TreeUtils {
 			}
 		}
 		
-		int max = 0;
+//		int max = 0;
 		for(T node : list){
-			max = Math.max(resolveLevel(node, nodes), max);
+//			max = Math.max(resolveLevel(node, nodes), max);
+			resolveLevel(node, nodes);
 		}
 
 		return (List<T>) root.get("children");
