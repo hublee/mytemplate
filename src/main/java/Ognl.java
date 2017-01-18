@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
+//≤‚ ‘
 public class Ognl {
     public Ognl() {
     }
